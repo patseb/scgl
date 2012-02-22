@@ -22,9 +22,9 @@ typedef struct {
  * create vertex object, allocate and initialize memory
  *
  * @param id	unique vertex identifier
- * @param in	table of edge_t objects which are directed to vertex, can be NULL
+ * @param in	table of edge objects which are directed to vertex, can be NULL
  * @param in_n	in table length, should be 0 if 'in' is NULL
- * @param out	table of edge_t objects which are directed out of vertex, can be NULL
+ * @param out	table of edge objects which are directed out of vertex, can be NULL
  * @param out_n	out table length, should be 0 if 'out' is NULL
  * @return	vertex object for success, NULL for failure
  */
