@@ -35,7 +35,7 @@ typedef struct {
  * @param attr_n	lenght of attributes table
  * @return	pointer to edge object for success, NULL for failure
  */
-edge_t* edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed, double weight, pair_t **attr, unsigned int attr_n);
+edge_t* scgl_edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed, double weight, pair_t **attr, unsigned int attr_n);
 
 #ifdef __cplusplus
 }

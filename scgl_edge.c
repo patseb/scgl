@@ -7,7 +7,7 @@
 #include "scgl_vertex.h"
 
 edge_t*
-edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed, double weight, pair_t **attr, unsigned int attr_n) {
+scgl_edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed, double weight, pair_t **attr, unsigned int attr_n) {
 	edge_t *e;
 	unsigned int i;
 
