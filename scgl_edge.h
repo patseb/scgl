@@ -44,6 +44,15 @@ edge_t* scgl_edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed
  */
 void scgl_edge_destroy(edge_t *edge);
 
+/**
+ * add new attribute to existing edge
+ *
+ * @param edge	edge object
+ * @param key	unique key for indexing attribute
+ * @param value	value to be added
+ */
+void scgl_edge_add_attribute(edge_t *edge, const char *key, void *value);
+
 #ifdef __cplusplus
 }
 #endif

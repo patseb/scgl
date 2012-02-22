@@ -48,3 +48,17 @@ scgl_edge_destroy(edge_t *edge) {
 		edge = NULL;
 	}
 }
+
+void
+scgl_edge_add_attribute(edge_t *edge, const char *key, void *value) {
+	pair_t *p;
+
+	if (edge == NULL)
+		return;
+
+	p->key = (char*)malloc(strlen(key)+1);
+	strcpy(p->key, key);
+	p->value = value;
+
+	list_append(edge->attributes, p);
+}
