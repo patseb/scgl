@@ -26,3 +26,31 @@ vertex_create(char *id, edge_t **in, unsigned int in_n, edge_t **out, unsigned i
 
 	return v;
 }
+
+void
+vertex_destroy(vertex_t *vertex) {
+	edge_t *e;
+
+	if (vertex != NULL) {
+		list_iterator_start(vertex->in);
+		while (list_iterator_hasnext(vertex->in)) {
+			e = (edge_t*) list_iterator_next(vertex->in);
+			if (e != NULL)
+				e->to = NULL;
+		}
+		list_iterator_stop(vertex->in);
+
+		list_iterator_start(vertex->out);
+		while (list_iterator_hasnext(vertex->out)) {
+			e = (edge_t*) list_iterator_next(vertex->out);
+			if (e != NULL)
+				e->from = NULL;
+		}
+		list_iterator_stop(vertex->out);
+
+		list_destroy(vertex->in);
+		list_destroy(vertex->out);
+		free(vertex->id);
+		vertex = NULL;
+	}
+}

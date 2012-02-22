@@ -30,6 +30,13 @@ typedef struct {
  */
 vertex_t* vertex_create(char *id, edge_t **in, unsigned int in_n, edge_t **out, unsigned int out_n)
 
+/**
+ * free memory occupied by vertex object
+ *
+ * @param vertex	vertex object
+ */
+void vertex_destroy(vertex_t *vertex)
+
 #ifdef __cplusplus
 }
 #endif
