@@ -28,7 +28,7 @@ typedef struct {
  *
  * @param id	unique edge identifier
  * @param from	edge source (vertex object)
- * @param from	edge destination (vertex object)
+ * @param to	edge destination (vertex object)
  * @param is_directed 1 means that edge is directed, 0 opposite
  * @param weight	edge weight
  * @param attr	table of pair objects, user-purpose attributes
