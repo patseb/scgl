@@ -76,3 +76,17 @@ scgl_edge_get_attribute(edge_t *edge, const char *key) {
 
 	return p->value;
 }
+
+void
+scgl_edge_foreach_attribute(edge_t *edge, attr_function, void *data) {
+	if (edge == NULL)
+		return;
+
+	list_iterator_start(edge->attributes);
+	while (list_iterator_hasnext(edge->attributes)) {
+		pair_t *attr = (pair_t*) list_iterator_next(edge->attributes);
+		if (attr != NULL)
+			(*function)(attr->key, attr->value, data);
+	}
+	list_iterator_stop(edge->attributes);
+}
