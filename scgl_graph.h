@@ -31,6 +31,13 @@ typedef struct {
  */
 graph_t* scgl_graph_create(char *id, vertex_t **vertexes, unsigned int vertexes_n, edge_t **edges, unsigned int edges_n);
 
+/**
+ * free memory occupied by vertex object. Doesn't free vertexes and edges memory.
+ *
+ * @param graph	graph object
+ */
+void scgl_graph_destroy(graph_t *graph);
+
 #ifdef __cplusplus
 }
 #endif

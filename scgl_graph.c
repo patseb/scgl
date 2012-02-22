@@ -31,3 +31,15 @@ scgl_graph_create(char *id, vertex_t **vertexes, unsigned int vertexes_n, edge_t
 
 	return g;
 }
+
+void
+scgl_graph_destroy(graph_t *graph) {
+	if (graph != NULL) {
+		//deep free - todo
+		list_destroy(graph->vertexes);
+		list_destroy(graph->edges);
+		free(graph->id);
+		free(graph);
+		graph = NULL;
+	}
+}
