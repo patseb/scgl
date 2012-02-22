@@ -60,7 +60,7 @@ void scgl_edge_add_attribute(edge_t *edge, const char *key, void *value);
  * @param key	key corresponding to the requested value
  * @return	value for success, NULL for failure
  */
-void* scgl_edge_get_attribute(edge_t *edge, const char *key) {
+void* scgl_edge_get_attribute(edge_t *edge, const char *key);
 
 #ifdef __cplusplus
 }
