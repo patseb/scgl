@@ -82,6 +82,15 @@ int scgl_graph_get_vertex_count(const graph_t *graph);
  */
 int scgl_graph_add_edge(graph_t *graph, const edge_t *edge);
 
+/**
+ * remove edge from existing graph object
+ *
+ * @param graph	graph object
+ * @param edge_id	edge identifier
+ * @return	deleted edge for success, NULL for failure
+ */
+edge_t* scgl_graph_del_edge(graph_t *graph, const char *edge_id);
+
 #ifdef __cplusplus
 }
 #endif
