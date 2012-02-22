@@ -13,3 +13,13 @@ scgl_pair_create(const char *key, void *value) {
 
 	return p;
 }
+
+void
+pair_destroy(pair_t *pair) {
+	if (pair != NULL) {
+		free(pair->key);
+		free(pair->value);
+		free(pair)
+		pair = NULL;
+	}
+}

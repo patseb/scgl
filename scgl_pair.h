@@ -19,6 +19,13 @@ typedef struct {
  */
 pair_t* scgl_pair_create(const char *key, void *value)
 
+/**
+ * free memory occupied by pair object
+ *
+ * @param pair	pair object
+ */
+void pair_destroy(pair_t *pair)
+
 #ifdef __cplusplus
 }
 #endif
