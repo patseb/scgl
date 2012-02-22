@@ -45,6 +45,15 @@ edge_t* scgl_edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed
 void scgl_edge_destroy(edge_t *edge);
 
 /**
+ * modify edge 'from/to' attribute, function removes relation between edge and old vertex
+ *
+ * @param edge	edge object
+ * @param vertex	vertex
+ * @param number	0 means edit 'from' attribute, 1 means edit 'to' attribute
+ */
+void scgl_edge_set_from(edge_t *edge, const vertex_t *vertex, const unsigned int number);
+
+/**
  * add new attribute to existing edge
  *
  * @param edge	edge object
