@@ -60,18 +60,12 @@ scgl_vertex_add_edge(vertex_t *vertex, const edge_t *edge) {
 	if (vertex == NULL || edge == NULL)
 		return -1;
 
-	if (edge->is_directed) {
-		if (edge->from == vertex)
-			list_append(vertex->out, edge);
-		else if (edge->to == vertex)
-			list_append(vertex->in, edge);
-		else
-			return -1;
-	}
-	else {
-		list_append(vertex->in, edge);
+	if (edge->from == vertex)
 		list_append(vertex->out, edge);
-	}
+	else if (edge->to == vertex)
+		list_append(vertex->in, edge);
+	else
+		return -1;
 
 	return 0;
 }
