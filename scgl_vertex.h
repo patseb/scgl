@@ -37,6 +37,15 @@ vertex_t* vertex_create(char *id, edge_t **in, unsigned int in_n, edge_t **out, 
  */
 void vertex_destroy(vertex_t *vertex)
 
+/**
+ * add edge to existing vertex
+ *
+ * @param vertex	vertex object
+ * @param edge	edge object
+ * @return	0 for success, -1 for failure
+ */
+int vertex_add_edge(vertex_t *vertex, const edge_t *edge)
+
 #ifdef __cplusplus
 }
 #endif
