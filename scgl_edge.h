@@ -85,6 +85,10 @@ typedef void (*attr_function)(char *key, void *value, void *result);
  */
 void scgl_edge_foreach_attribute(edge_t *edge, attr_function, void *result);
 
+/* internal functions section */
+int scgl_edge_seeker(const void *elem, const void *key);
+int scgl_edge_comparator(const void *a, const void *b);
+
 #ifdef __cplusplus
 }
 #endif

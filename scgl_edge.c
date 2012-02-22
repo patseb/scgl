@@ -90,3 +90,37 @@ scgl_edge_foreach_attribute(edge_t *edge, attr_function, void *data) {
 	}
 	list_iterator_stop(edge->attributes);
 }
+
+int
+scgl_edge_seeker(const void *elem, const void *key) {
+	const edge_t *e;
+	if (elem == NULL || key == NULL)
+		return 0;
+
+	e = (edge_t*) elem;
+	return !(strcmp(e->id, (char*)key));
+}
+
+int
+scgl_edge_comparator(const void *a, const void *b) {
+	const edge_t *e1, *e2;
+
+	if (a == NULL && b == NULL)
+		return 0;
+	else if (a == NULL)
+		return -1;
+	else if (b == NULL)
+		return 1;
+
+	e1 = (const edge_t*) a;
+	e2 = (const edge_t*) b;
+
+	if (e1->id == NULL && e2->id == NULL)
+		return 0;
+	else if (e1->id == NULL)
+		return -1;
+	else if (e2->id == NULL)
+		return 1;
+
+	return strcmp(e1->id, e2->id)*(-1);
+}
