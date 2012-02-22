@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-pair_t*
+scgl_pair_t*
 scgl_pair_create(const char *key, void *value) {
-	pair_t *p;
+	scgl_pair_t *p;
 
 	p = (pair_t*) malloc(sizeof(pair_t));
 	p->key = (char*) malloc(strlen(key)+1);
@@ -15,7 +15,7 @@ scgl_pair_create(const char *key, void *value) {
 }
 
 void
-scgl_pair_destroy(pair_t *pair) {
+scgl_pair_destroy(scgl_pair_t *pair) {
 	if (pair != NULL) {
 		free(pair->key);
 		free(pair->value);
@@ -26,17 +26,17 @@ scgl_pair_destroy(pair_t *pair) {
 
 int
 scgl_pair_seeker(const void *elem, const void *key) {
-	const pair_t *p;
+	const scgl_pair_t *p;
 	if (elem == NULL || key == NULL)
 		return 0;
 
-	p = (pair_t*) elem;
+	p = (scgl_pair_t*) elem;
 	return !(strcmp(p->key, (char*)key));
 }
 
 int
 scgl_pair_comparator(const void *a, const void *b) {
-	const pair_t *p1, *p2;
+	const scgl_pair_t *p1, *p2;
 
 	if (a == NULL && b == NULL)
 		return 0;
@@ -45,8 +45,8 @@ scgl_pair_comparator(const void *a, const void *b) {
 	else if (b == NULL)
 		return 1;
 
-	p1 = (const pair_t*) a;
-	p2 = (const pair_t*) b;
+	p1 = (const scgl_pair_t*) a;
+	p2 = (const scgl_pair_t*) b;
 
 	if (p1->key == NULL && p2->key == NULL)
 		return 0;
