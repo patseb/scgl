@@ -15,7 +15,7 @@ scgl_pair_create(const char *key, void *value) {
 }
 
 void
-pair_destroy(pair_t *pair) {
+scgl_pair_destroy(pair_t *pair) {
 	if (pair != NULL) {
 		free(pair->key);
 		free(pair->value);
@@ -25,7 +25,7 @@ pair_destroy(pair_t *pair) {
 }
 
 int
-pair_seeker(const void *elem, const void *key) {
+scgl_pair_seeker(const void *elem, const void *key) {
 	const pair_t *p;
 	if (elem == NULL || key == NULL)
 		return 0;
@@ -35,7 +35,7 @@ pair_seeker(const void *elem, const void *key) {
 }
 
 int
-pair_comparator(const void *a, const void *b) {
+scgl_pair_comparator(const void *a, const void *b) {
 	const pair_t *p1, *p2;
 
 	if (a == NULL && b == NULL)
