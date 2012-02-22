@@ -56,6 +56,15 @@ int scgl_graph_add_vertex(graph_t *graph, const vertex_t *vertex);
  */
 vertex_t* scgl_graph_del_veretex(graph_t *graph, char *vertex_id);
 
+/**
+ * returns vertex from graph using vertex identifier
+ *
+ * @param graph	graph object
+ * @param vertex_id	vertex identifier
+ * @return	vertex for success, NULL for failure
+ */
+vertex_t* scgl_graph_get_vertex(graph_t *graph, char *vertex_id);
+
 #ifdef __cplusplus
 }
 #endif

@@ -69,3 +69,10 @@ scgl_graph_del_veretex(graph_t *graph, char *vertex_id) {
 	//moze zamiast dereference usuwac edge z graph - ale to bez sensu
 	return v;
 }
+
+vertex_t*
+scgl_graph_get_vertex(graph_t *graph, char *vertex_id) {
+	if (graph == NULL || vertex_id == NULL)
+		return NULL;
+	return list_seek(graph->vertexes, vertex_id);
+}
