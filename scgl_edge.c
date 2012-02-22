@@ -33,3 +33,18 @@ scgl_edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed, double
 
 	return e;
 }
+
+void
+scgl_edge_destroy(edge_t *edge) {
+	if (edge != NULL) {
+		if (edge->to != NULL)
+			list_delete(edge->to->in, edge);
+		if (edge->from != NULL)
+			list_delete(edge->from->out, edge);
+
+		list_destroy(edge->attributes);
+		free(edge->id);
+		free(edge);
+		edge = NULL;
+	}
+}

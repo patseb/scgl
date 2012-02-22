@@ -37,6 +37,13 @@ typedef struct {
  */
 edge_t* scgl_edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed, double weight, pair_t **attr, unsigned int attr_n);
 
+/**
+ * free memory occupied by edge object
+ *
+ * @param edge	edge object
+ */
+void scgl_edge_destroy(edge_t *edge);
+
 #ifdef __cplusplus
 }
 #endif
