@@ -63,6 +63,14 @@ int vertex_del_edge(vertex_t *vertex, edge_t *edge)
  */
 int vertex_get_edges_in_count(const vertex_t *vertex)
 
+/**
+ * count edges which are directed out of vertex
+ *
+ * @param vertex	vertex object
+ * @return	number of edges for success, -1 for failure
+ */
+int vertex_get_edges_out_count(const vertex_t *vertex)
+
 #ifdef __cplusplus
 }
 #endif

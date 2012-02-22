@@ -101,3 +101,10 @@ vertex_get_edges_in_count(const vertex_t *vertex) {
 		return -1;
 	return list_size(vertex->in);
 }
+
+int
+vertex_get_edges_out_count(const vertex_t *vertex) {
+	if (vertex == NULL)
+		return -1;
+	return list_size(vertex->out);
+}
