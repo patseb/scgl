@@ -26,8 +26,9 @@ pair_t* scgl_pair_create(const char *key, void *value)
  */
 void pair_destroy(pair_t *pair)
 
-/* internal function */
+/* internal functions section */
 int pair_seeker(const void *elem, const void *key)
+int pair_comparator(const void *a, const void *b)
 
 #ifdef __cplusplus
 }

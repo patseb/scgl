@@ -33,3 +33,27 @@ pair_seeker(const void *elem, const void *key) {
 	p = (pair_t*) elem;
 	return !(strcmp(p->key, (char*)key));
 }
+
+int
+pair_comparator(const void *a, const void *b) {
+	const pair_t *p1, *p2;
+
+	if (a == NULL && b == NULL)
+		return 0;
+	else if (a == NULL)
+		return -1;
+	else if (b == NULL)
+		return 1;
+
+	p1 = (const pair_t*) a;
+	p2 = (const pair_t*) b;
+
+	if (p1->key == NULL && p2->key == NULL)
+		return 0;
+	else if (p1->key == NULL)
+		return -1;
+	else if (p2->key == NULL)
+		return 1;
+
+	return strcmp(p1->key, p2->key)*(-1);
+}
