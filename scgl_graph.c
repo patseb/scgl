@@ -94,7 +94,7 @@ scgl_graph_add_edge(graph_t *graph, const edge_t *edge) {
 }
 
 edge_t*
-graph_del_edge(graph_t *graph, const char *edge_id) {
+scgl_graph_del_edge(graph_t *graph, const char *edge_id) {
 	edge_t *e;
 	e = list_seek(graph->edges, edge_id);
 	if (e != NULL) {
