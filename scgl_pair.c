@@ -23,3 +23,13 @@ pair_destroy(pair_t *pair) {
 		pair = NULL;
 	}
 }
+
+int
+pair_seeker(const void *elem, const void *key) {
+	const pair_t *p;
+	if (elem == NULL || key == NULL)
+		return 0;
+
+	p = (pair_t*) elem;
+	return !(strcmp(p->key, (char*)key));
+}
