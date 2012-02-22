@@ -6,7 +6,7 @@
 #include "scgl_vertex.h"
 
 vertex_t*
-vertex_create(char *id, edge_t **in, unsigned int in_n, edge_t **out, unsigned int out_n) {
+scgl_vertex_create(char *id, edge_t **in, unsigned int in_n, edge_t **out, unsigned int out_n) {
 	vertex_t *v;
 	unsigned int i;
 
@@ -28,7 +28,7 @@ vertex_create(char *id, edge_t **in, unsigned int in_n, edge_t **out, unsigned i
 }
 
 void
-vertex_destroy(vertex_t *vertex) {
+scgl_vertex_destroy(vertex_t *vertex) {
 	edge_t *e;
 
 	if (vertex != NULL) {
@@ -56,7 +56,7 @@ vertex_destroy(vertex_t *vertex) {
 }
 
 int
-vertex_add_edge(vertex_t *vertex, const edge_t *edge) {
+scgl_vertex_add_edge(vertex_t *vertex, const edge_t *edge) {
 	if (vertex == NULL || edge == NULL)
 		return -1;
 
@@ -77,7 +77,7 @@ vertex_add_edge(vertex_t *vertex, const edge_t *edge) {
 }
 
 int
-vertex_del_edge(vertex_t *vertex, edge_t *edge) {
+scgl_vertex_del_edge(vertex_t *vertex, edge_t *edge) {
 	if (vertex == NULL || edge == NULL)
 		return -1;
 
@@ -96,14 +96,14 @@ vertex_del_edge(vertex_t *vertex, edge_t *edge) {
 }
 
 int
-vertex_get_edges_in_count(const vertex_t *vertex) {
+scgl_vertex_get_edges_in_count(const vertex_t *vertex) {
 	if (vertex == NULL)
 		return -1;
 	return list_size(vertex->in);
 }
 
 int
-vertex_get_edges_out_count(const vertex_t *vertex) {
+scgl_vertex_get_edges_out_count(const vertex_t *vertex) {
 	if (vertex == NULL)
 		return -1;
 	return list_size(vertex->out);
