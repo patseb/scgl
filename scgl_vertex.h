@@ -28,14 +28,14 @@ typedef struct {
  * @param out_n	out table length, should be 0 if 'out' is NULL
  * @return	vertex object for success, NULL for failure
  */
-vertex_t* scgl_vertex_create(char *id, edge_t **in, unsigned int in_n, edge_t **out, unsigned int out_n);
+scgl_vertex_t* scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **out, unsigned int out_n);
 
 /**
  * free memory occupied by vertex object
  *
  * @param vertex	vertex object
  */
-void scgl_vertex_destroy(vertex_t *vertex);
+void scgl_vertex_destroy(scgl_vertex_t *vertex);
 
 /**
  * add edge to existing vertex, if edge isn't related with vertex function fails
@@ -44,7 +44,7 @@ void scgl_vertex_destroy(vertex_t *vertex);
  * @param edge	edge object
  * @return	0 for success, -1 for failure
  */
-int scgl_vertex_add_edge(vertex_t *vertex, const edge_t *edge);
+int scgl_vertex_add_edge(scgl_vertex_t *vertex, const scgl_edge_t *edge);
 
 /**
  * remove edge from existing vertex, function also modifies edge (from/to attributes)
@@ -53,7 +53,7 @@ int scgl_vertex_add_edge(vertex_t *vertex, const edge_t *edge);
  * @param edge	edge object
  * @return	0 for success, -1 for failure
  */
-int scgl_vertex_del_edge(vertex_t *vertex, edge_t *edge);
+int scgl_vertex_del_edge(scgl_vertex_t *vertex, scgl_edge_t *edge);
 
 /**
  * count edges which are directed to vertex
@@ -61,7 +61,7 @@ int scgl_vertex_del_edge(vertex_t *vertex, edge_t *edge);
  * @param vertex	vertex object
  * @return	number of edges for success, -1 for failure
  */
-int scgl_vertex_get_edges_in_count(const vertex_t *vertex);
+int scgl_vertex_get_edges_in_count(const scgl_vertex_t *vertex);
 
 /**
  * count edges which are directed out of vertex
@@ -69,7 +69,7 @@ int scgl_vertex_get_edges_in_count(const vertex_t *vertex);
  * @param vertex	vertex object
  * @return	number of edges for success, -1 for failure
  */
-int scgl_vertex_get_edges_out_count(const vertex_t *vertex);
+int scgl_vertex_get_edges_out_count(const scgl_vertex_t *vertex);
 
 #ifdef __cplusplus
 }
