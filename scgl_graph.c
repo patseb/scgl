@@ -104,3 +104,10 @@ scgl_graph_del_edge(graph_t *graph, const char *edge_id) {
 	}
 	return e;
 }
+
+edge_t*
+scgl_graph_get_edge(const graph_t *graph, const char *edge_id) {
+	if (graph == NULL || edge_id == NULL)
+		return NULL;
+	return list_seek(graph->edges, edge_id);
+}
