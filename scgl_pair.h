@@ -10,6 +10,15 @@ typedef struct {
 	void *value;
 } scgl_pair_t;
 
+/**
+ * create pair object, allocate and initialize memory
+ *
+ * @param key	unique identyficator for value
+ * @param value	value indexed by key
+ * @return	pointer to pair object for success, NULL for failure
+ */
+pair_t* scgl_pair_create(const char *key, void *value)
+
 #ifdef __cplusplus
 }
 #endif
