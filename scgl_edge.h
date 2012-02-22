@@ -10,7 +10,7 @@ extern "C" {
 #include "scgl_pair.h"
 
 typedef struct {
-	/* edge identyficator */
+	/* edge identifier */
 	char *id;
 	/* 0 - edge is undirected, edge is 1 directed */
 	int is_directed;

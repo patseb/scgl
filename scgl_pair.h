@@ -13,7 +13,7 @@ typedef struct {
 /**
  * create pair object, allocate and initialize memory
  *
- * @param key	unique identyficator for value
+ * @param key	unique identifier for value
  * @param value	value indexed by key
  * @return	pointer to pair object for success, NULL for failure
  */

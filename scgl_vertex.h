@@ -10,7 +10,7 @@ extern "C" {
 
 /* vertex object */
 typedef struct {
-	/* vertex identyficator */
+	/* vertex identifier */
 	char *id;
 	/* list of edges which are directed to vertex */
 	list_t *in;
@@ -21,7 +21,7 @@ typedef struct {
 /**
  * create vertex object, allocate and initialize memory
  *
- * @param id	unique vertex identyficator
+ * @param id	unique vertex identifier
  * @param in	table of pointers to edge_t objects which are directed to vertex, can be NULL
  * @param in_n	in table length, should be 0 if 'in' is NULL
  * @param out	table of pointers to edge_t objects which are directed out of vertex, can be NULL
