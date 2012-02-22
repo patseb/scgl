@@ -10,7 +10,7 @@ extern "C" {
 #include "scgl_edges.h"
 
 typedef struct {
-	/* graph identyficator */
+	/* graph identifier */
 	char *id;
 	/* list of all graph vertexes */
 	list_t *vertexes;
@@ -48,7 +48,7 @@ void scgl_graph_destroy(graph_t *graph);
 int scgl_graph_add_vertex(graph_t *graph, const vertex_t *vertex);
 
 /**
- * removes vertex from existing graph object
+ * remove vertex from existing graph object
  *
  * @param graph	graph object
  * @param vertex_id	vertex identifier
@@ -57,7 +57,7 @@ int scgl_graph_add_vertex(graph_t *graph, const vertex_t *vertex);
 vertex_t* scgl_graph_del_veretex(graph_t *graph, char *vertex_id);
 
 /**
- * returns vertex from graph using vertex identifier
+ * return vertex from graph using vertex identifier
  *
  * @param graph	graph object
  * @param vertex_id	vertex identifier
@@ -66,7 +66,7 @@ vertex_t* scgl_graph_del_veretex(graph_t *graph, char *vertex_id);
 vertex_t* scgl_graph_get_vertex(graph_t *graph, char *vertex_id);
 
 /**
- * returns amount of vertexes in graph
+ * return amount of vertexes in graph
  *
  * @param graph	graph object
  * @return	amount of vertexes for success, -1 for failure
