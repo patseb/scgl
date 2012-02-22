@@ -46,6 +46,15 @@ void vertex_destroy(vertex_t *vertex)
  */
 int vertex_add_edge(vertex_t *vertex, const edge_t *edge)
 
+/**
+ * remove edge from existing vertex, function also modifies edge (from/to pointers)
+ *
+ * @param vertex	vertex object
+ * @param edge	edge object
+ * @return	0 for success, -1 for failure
+ */
+int vertex_del_edge(vertex_t *vertex, edge_t *edge)
+
 #ifdef __cplusplus
 }
 #endif

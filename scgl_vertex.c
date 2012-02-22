@@ -75,3 +75,22 @@ vertex_add_edge(vertex_t *vertex, const edge_t *edge) {
 
 	return 0;
 }
+
+int
+vertex_del_edge(vertex_t *vertex, edge_t *edge) {
+	if (vertex == NULL || edge == NULL)
+		return -1;
+
+	if (edge->from == vertex) {
+		list_delete(vertex->out, edge);
+		edge->from = NULL;
+	}
+	else if (edge->to == vertex) {
+		list_delete(vertex->in, edge);
+		edge->to = NULL;
+	}
+	else
+		return -1;
+
+	return 0;
+}
