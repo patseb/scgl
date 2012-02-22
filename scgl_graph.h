@@ -100,6 +100,14 @@ edge_t* scgl_graph_del_edge(graph_t *graph, const char *edge_id);
  */
 edge_t* scgl_graph_get_edge(const graph_t *graph, const char *edge_id);
 
+/**
+ * return amount of edges in graph
+ *
+ * @param graph	graph object
+ * @return	amount of edges for success, -1 for failure
+ */
+int scgl_graph_get_edge_count(const graph_t *graph);
+
 #ifdef __cplusplus
 }
 #endif

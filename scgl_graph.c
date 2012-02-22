@@ -111,3 +111,10 @@ scgl_graph_get_edge(const graph_t *graph, const char *edge_id) {
 		return NULL;
 	return list_seek(graph->edges, edge_id);
 }
+
+int
+scgl_graph_get_edge_count(const graph_t *graph) {
+	if (graph == NULL)
+		return -1;
+	return list_size(graph->edges);
+}
