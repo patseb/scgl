@@ -73,6 +73,15 @@ vertex_t* scgl_graph_get_vertex(graph_t *graph, char *vertex_id);
  */
 int scgl_graph_get_vertex_count(const graph_t *graph);
 
+/**
+ * add edge to existing graph object
+ *
+ * @param graph	graph object
+ * @param edge	edge object
+ * @return	0 for success, -1 for failure
+ */
+int scgl_graph_add_edge(graph_t *graph, const edge_t *edge);
+
 #ifdef __cplusplus
 }
 #endif

@@ -83,3 +83,12 @@ scgl_graph_get_vertex_count(const graph_t *graph) {
 		return -1;
 	return list_size(graph->vertexes);
 }
+
+int
+scgl_graph_add_edge(graph_t *graph, const edge_t *edge) {
+	if (graph == NULL || edge == NULL)
+		return -1;
+
+	list_append(graph->edges, edge);
+	return 0;
+}
