@@ -29,14 +29,14 @@ typedef struct {
  * @param edges_n	edges table length, should be 0 if edges is NULL
  * @return	graph object for success, NULL for failure
  */
-graph_t* scgl_graph_create(char *id, vertex_t **vertexes, unsigned int vertexes_n, edge_t **edges, unsigned int edges_n);
+scgl_graph_t* scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, scgl_edge_t **edges, unsigned int edges_n);
 
 /**
  * free memory occupied by vertex object. Doesn't free vertexes and edges memory.
  *
  * @param graph	graph object
  */
-void scgl_graph_destroy(graph_t *graph);
+void scgl_graph_destroy(scgl_graph_t *graph);
 
 /**
  * add vertex to existing graph object
@@ -45,7 +45,7 @@ void scgl_graph_destroy(graph_t *graph);
  * @param vertex	vertex object
  * @return	0 for success, -1 for failure
  */
-int scgl_graph_add_vertex(graph_t *graph, const vertex_t *vertex);
+int scgl_graph_add_vertex(scgl_graph_t *graph, const scgl_vertex_t *vertex);
 
 /**
  * remove vertex from existing graph object
@@ -54,7 +54,7 @@ int scgl_graph_add_vertex(graph_t *graph, const vertex_t *vertex);
  * @param vertex_id	vertex identifier
  * @return	deleted vertex for success, NULL for failure
  */
-vertex_t* scgl_graph_del_veretex(graph_t *graph, char *vertex_id);
+scgl_vertex_t* scgl_graph_del_veretex(scgl_graph_t *graph, char *vertex_id);
 
 /**
  * return vertex from graph using vertex identifier
@@ -63,7 +63,7 @@ vertex_t* scgl_graph_del_veretex(graph_t *graph, char *vertex_id);
  * @param vertex_id	vertex identifier
  * @return	vertex for success, NULL for failure
  */
-vertex_t* scgl_graph_get_vertex(graph_t *graph, char *vertex_id);
+scgl_vertex_t* scgl_graph_get_vertex(scgl_graph_t *graph, char *vertex_id);
 
 /**
  * return amount of vertexes in graph
@@ -71,7 +71,7 @@ vertex_t* scgl_graph_get_vertex(graph_t *graph, char *vertex_id);
  * @param graph	graph object
  * @return	amount of vertexes for success, -1 for failure
  */
-int scgl_graph_get_vertex_count(const graph_t *graph);
+int scgl_graph_get_vertex_count(const scgl_graph_t *graph);
 
 /**
  * add edge to existing graph object
@@ -80,7 +80,7 @@ int scgl_graph_get_vertex_count(const graph_t *graph);
  * @param edge	edge object
  * @return	0 for success, -1 for failure
  */
-int scgl_graph_add_edge(graph_t *graph, const edge_t *edge);
+int scgl_graph_add_edge(scgl_graph_t *graph, const scgl_edge_t *edge);
 
 /**
  * remove edge from existing graph object
@@ -89,7 +89,7 @@ int scgl_graph_add_edge(graph_t *graph, const edge_t *edge);
  * @param edge_id	edge identifier
  * @return	deleted edge for success, NULL for failure
  */
-edge_t* scgl_graph_del_edge(graph_t *graph, const char *edge_id);
+scgl_edge_t* scgl_graph_del_edge(scgl_graph_t *graph, const char *edge_id);
 
 /**
  * return edge from graph using edge identifier
@@ -98,7 +98,7 @@ edge_t* scgl_graph_del_edge(graph_t *graph, const char *edge_id);
  * @param edge_id	edge identifier
  * @return	edge for success, NULL for failure
  */
-edge_t* scgl_graph_get_edge(const graph_t *graph, const char *edge_id);
+scgl_edge_t* scgl_graph_get_edge(const scgl_graph_t *graph, const char *edge_id);
 
 /**
  * return amount of edges in graph
@@ -106,7 +106,7 @@ edge_t* scgl_graph_get_edge(const graph_t *graph, const char *edge_id);
  * @param graph	graph object
  * @return	amount of edges for success, -1 for failure
  */
-int scgl_graph_get_edge_count(const graph_t *graph);
+int scgl_graph_get_edge_count(const scgl_graph_t *graph);
 
 #ifdef __cplusplus
 }

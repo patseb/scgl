@@ -7,12 +7,12 @@
 #include "scgl_vertex.h"
 #include "scgl_graph.h"
 
-graph_t*
-scgl_graph_create(char *id, vertex_t **vertexes, unsigned int vertexes_n, edge_t **edges, unsigned int edges_n) {
-	graph_t *g;
+scgl_graph_t*
+scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, scgl_edge_t **edges, unsigned int edges_n) {
+	scgl_graph_t *g;
 	unsigned int i;
 
-	g = (graph_t*) malloc(sizeof(graph_t));
+	g = (scgl_graph_t*) malloc(sizeof(scgl_graph_t));
 
 	list_init(g->vertexes);
 	list_init(g->edges);
@@ -33,7 +33,7 @@ scgl_graph_create(char *id, vertex_t **vertexes, unsigned int vertexes_n, edge_t
 }
 
 void
-scgl_graph_destroy(graph_t *graph) {
+scgl_graph_destroy(scgl_graph_t *graph) {
 	if (graph != NULL) {
 		//deep free - todo
 		list_destroy(graph->vertexes);
@@ -45,7 +45,7 @@ scgl_graph_destroy(graph_t *graph) {
 }
 
 int
-scgl_graph_add_vertex(graph_t *graph, const vertex_t *vertex) {
+scgl_graph_add_vertex(scgl_graph_t *graph, const scgl_vertex_t *vertex) {
 	if (graph == NULL || vertex == NULL)
 		return -1;
 
@@ -54,12 +54,12 @@ scgl_graph_add_vertex(graph_t *graph, const vertex_t *vertex) {
 	return 0;
 }
 
-vertex_t*
-scgl_graph_del_veretex(graph_t *graph, char *vertex_id) {
+scgl_vertex_t*
+scgl_graph_del_veretex(scgl_graph_t *graph, char *vertex_id) {
 	if (graph == NULL)
 		return NULL;
 
-	vertex_t *v;
+	scgl_vertex_t *v;
 	v = list_seek(graph->vertexes, vertex_id);
 	if (v != NULL)
 		list_delete(graph->vertexes, v);
@@ -70,22 +70,22 @@ scgl_graph_del_veretex(graph_t *graph, char *vertex_id) {
 	return v;
 }
 
-vertex_t*
-scgl_graph_get_vertex(graph_t *graph, char *vertex_id) {
+scgl_vertex_t*
+scgl_graph_get_vertex(scgl_graph_t *graph, char *vertex_id) {
 	if (graph == NULL || vertex_id == NULL)
 		return NULL;
 	return list_seek(graph->vertexes, vertex_id);
 }
 
 int
-scgl_graph_get_vertex_count(const graph_t *graph) {
+scgl_graph_get_vertex_count(const scgl_graph_t *graph) {
 	if (graph == NULL)
 		return -1;
 	return list_size(graph->vertexes);
 }
 
 int
-scgl_graph_add_edge(graph_t *graph, const edge_t *edge) {
+scgl_graph_add_edge(scgl_graph_t *graph, const scgl_edge_t *edge) {
 	if (graph == NULL || edge == NULL)
 		return -1;
 
@@ -93,8 +93,8 @@ scgl_graph_add_edge(graph_t *graph, const edge_t *edge) {
 	return 0;
 }
 
-edge_t*
-scgl_graph_del_edge(graph_t *graph, const char *edge_id) {
+scgl_edge_t*
+scgl_graph_del_edge(scgl_graph_t *graph, const char *edge_id) {
 	edge_t *e;
 	e = list_seek(graph->edges, edge_id);
 	if (e != NULL) {
@@ -105,15 +105,15 @@ scgl_graph_del_edge(graph_t *graph, const char *edge_id) {
 	return e;
 }
 
-edge_t*
-scgl_graph_get_edge(const graph_t *graph, const char *edge_id) {
+scgl_edge_t*
+scgl_graph_get_edge(const scgl_graph_t *graph, const char *edge_id) {
 	if (graph == NULL || edge_id == NULL)
 		return NULL;
 	return list_seek(graph->edges, edge_id);
 }
 
 int
-scgl_graph_get_edge_count(const graph_t *graph) {
+scgl_graph_get_edge_count(const scgl_graph_t *graph) {
 	if (graph == NULL)
 		return -1;
 	return list_size(graph->edges);
