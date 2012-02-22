@@ -62,3 +62,17 @@ scgl_edge_add_attribute(edge_t *edge, const char *key, void *value) {
 
 	list_append(edge->attributes, p);
 }
+
+void*
+scgl_edge_get_attribute(edge_t *edge, const char *key) {
+	pair_t *p;
+
+	if (edge == NULL)
+		return NULL;
+
+	p = list_seek(edge->attributes, key);
+	if (p == NULL)
+		return NULL;
+
+	return p->value;
+}

@@ -53,6 +53,15 @@ void scgl_edge_destroy(edge_t *edge);
  */
 void scgl_edge_add_attribute(edge_t *edge, const char *key, void *value);
 
+/**
+ * get attribute's value for specified key
+ *
+ * @param edge	edge object
+ * @param key	key corresponding to the requested value
+ * @return	value for success, NULL for failure
+ */
+void* scgl_edge_get_attribute(edge_t *edge, const char *key) {
+
 #ifdef __cplusplus
 }
 #endif
