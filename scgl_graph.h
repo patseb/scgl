@@ -38,6 +38,15 @@ graph_t* scgl_graph_create(char *id, vertex_t **vertexes, unsigned int vertexes_
  */
 void scgl_graph_destroy(graph_t *graph);
 
+/**
+ * add vertex to existing graph object
+ *
+ * @param graph	graph object
+ * @param vertex	vertex object
+ * @return	0 for success, -1 for failure
+ */
+int scgl_graph_add_vertex(graph_t *graph, const vertex_t *vertex);
+
 #ifdef __cplusplus
 }
 #endif

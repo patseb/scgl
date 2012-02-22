@@ -43,3 +43,13 @@ scgl_graph_destroy(graph_t *graph) {
 		graph = NULL;
 	}
 }
+
+int
+scgl_graph_add_vertex(graph_t *graph, const vertex_t *vertex) {
+	if (graph == NULL || vertex == NULL)
+		return -1;
+
+	list_append(graph->vertexes, vertex);
+
+	return 0;
+}
