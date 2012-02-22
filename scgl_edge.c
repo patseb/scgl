@@ -7,12 +7,12 @@
 #include "scgl_pair.h"
 #include "scgl_vertex.h"
 
-edge_t*
-scgl_edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed, double weight, pair_t **attr, unsigned int attr_n) {
-	edge_t *e;
+scgl_edge_t*
+scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, double weight, scgl_pair_t **attr, unsigned int attr_n) {
+	scgl_edge_t *e;
 	unsigned int i;
 
-	e = (edge_t*) malloc(sizeof(edge_t));
+	e = (scgl_edge_t*) malloc(sizeof(scgl_edge_t));
 	e->id = (char*) malloc(strlen(id)+1);
 	strcpy(e->id, id);
 
@@ -36,7 +36,7 @@ scgl_edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed, double
 }
 
 void
-scgl_edge_destroy(edge_t *edge) {
+scgl_edge_destroy(scgl_edge_t *edge) {
 	if (edge != NULL) {
 		if (edge->to != NULL)
 			list_delete(edge->to->in, edge);
@@ -51,7 +51,7 @@ scgl_edge_destroy(edge_t *edge) {
 }
 
 void
-scgl_edge_set_vertex(edge_t *edge, const vertex_t *vertex, const unsigned int number) {
+scgl_edge_set_vertex(scgl_edge_t *edge, const scgl_vertex_t *vertex, const unsigned int number) {
 	assert(edge == NULL);
 
 	if (number == 0) {
@@ -69,7 +69,7 @@ scgl_edge_set_vertex(edge_t *edge, const vertex_t *vertex, const unsigned int nu
 }
 
 void
-scgl_edge_add_attribute(edge_t *edge, const char *key, void *value) {
+scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value) {
 	pair_t *p;
 
 	assert(edge == NULL);
@@ -78,7 +78,7 @@ scgl_edge_add_attribute(edge_t *edge, const char *key, void *value) {
 }
 
 void*
-scgl_edge_get_attribute(edge_t *edge, const char *key) {
+scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
 	pair_t *p;
 
 	assert(edge == NULL);
@@ -91,12 +91,12 @@ scgl_edge_get_attribute(edge_t *edge, const char *key) {
 }
 
 void
-scgl_edge_foreach_attribute(edge_t *edge, attr_function, void *data) {
+scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function, void *data) {
 	assert(edge == NULL);
 
 	list_iterator_start(edge->attributes);
 	while (list_iterator_hasnext(edge->attributes)) {
-		pair_t *attr = (pair_t*) list_iterator_next(edge->attributes);
+		pair_t *attr = (scgl_pair_t*) list_iterator_next(edge->attributes);
 		if (attr != NULL)
 			(*function)(attr->key, attr->value, data);
 	}
@@ -109,13 +109,13 @@ scgl_edge_seeker(const void *elem, const void *key) {
 	if (elem == NULL || key == NULL)
 		return 0;
 
-	e = (edge_t*) elem;
+	e = (scgl_edge_t*) elem;
 	return !(strcmp(e->id, (char*)key));
 }
 
 int
 scgl_edge_comparator(const void *a, const void *b) {
-	const edge_t *e1, *e2;
+	const scgl_edge_t *e1, *e2;
 
 	if (a == NULL && b == NULL)
 		return 0;
@@ -124,8 +124,8 @@ scgl_edge_comparator(const void *a, const void *b) {
 	else if (b == NULL)
 		return 1;
 
-	e1 = (const edge_t*) a;
-	e2 = (const edge_t*) b;
+	e1 = (const scgl_edge_t*) a;
+	e2 = (const scgl_edge_t*) b;
 
 	if (e1->id == NULL && e2->id == NULL)
 		return 0;

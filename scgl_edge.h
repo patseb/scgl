@@ -35,14 +35,14 @@ typedef struct {
  * @param attr_n	lenght of attributes table
  * @return	edge object for success, NULL for failure
  */
-edge_t* scgl_edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed, double weight, pair_t **attr, unsigned int attr_n);
+scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, double weight, scgl_pair_t **attr, unsigned int attr_n);
 
 /**
  * free memory occupied by edge object
  *
  * @param edge	edge object
  */
-void scgl_edge_destroy(edge_t *edge);
+void scgl_edge_destroy(scgl_edge_t *edge);
 
 /**
  * modify edge 'from/to' attribute, function removes relation between edge and old vertex
@@ -51,7 +51,7 @@ void scgl_edge_destroy(edge_t *edge);
  * @param vertex	vertex
  * @param number	0 means edit 'from' attribute, 1 means edit 'to' attribute
  */
-void scgl_edge_set_from(edge_t *edge, const vertex_t *vertex, const unsigned int number);
+void scgl_edge_set_from(scgl_edge_t *edge, const scgl_vertex_t *vertex, const unsigned int number);
 
 /**
  * add new attribute to existing edge
@@ -60,7 +60,7 @@ void scgl_edge_set_from(edge_t *edge, const vertex_t *vertex, const unsigned int
  * @param key	unique key for indexing attribute
  * @param value	value to be added
  */
-void scgl_edge_add_attribute(edge_t *edge, const char *key, void *value);
+void scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value);
 
 /**
  * get attribute's value for specified key
@@ -69,7 +69,7 @@ void scgl_edge_add_attribute(edge_t *edge, const char *key, void *value);
  * @param key	key corresponding to the requested value
  * @return	value for success, NULL for failure
  */
-void* scgl_edge_get_attribute(edge_t *edge, const char *key);
+void* scgl_edge_get_attribute(scgl_edge_t *edge, const char *key);
 
 /**
  * a function for operate at attributes
@@ -92,7 +92,7 @@ typedef void (*attr_function)(char *key, void *value, void *result);
  * @param attr_function	pointer to the called function
  * @param result reference to called function result
  */
-void scgl_edge_foreach_attribute(edge_t *edge, attr_function, void *result);
+void scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function, void *result);
 
 /* internal functions section */
 int scgl_edge_seeker(const void *elem, const void *key);
