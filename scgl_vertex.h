@@ -55,6 +55,14 @@ int vertex_add_edge(vertex_t *vertex, const edge_t *edge)
  */
 int vertex_del_edge(vertex_t *vertex, edge_t *edge)
 
+/**
+ * count edges which are directed to vertex
+ *
+ * @param vertex	vertex object
+ * @return	number of edges for success, -1 for failure
+ */
+int vertex_get_edges_in_count(const vertex_t *vertex)
+
 #ifdef __cplusplus
 }
 #endif

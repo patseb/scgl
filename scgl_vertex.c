@@ -94,3 +94,10 @@ vertex_del_edge(vertex_t *vertex, edge_t *edge) {
 
 	return 0;
 }
+
+int
+vertex_get_edges_in_count(const vertex_t *vertex) {
+	if (vertex == NULL)
+		return -1;
+	return list_size(vertex->in);
+}
