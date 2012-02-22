@@ -62,6 +62,20 @@ void scgl_edge_add_attribute(edge_t *edge, const char *key, void *value);
  */
 void* scgl_edge_get_attribute(edge_t *edge, const char *key);
 
+/**
+ * a function for operate at attributes
+ *
+ * Attribute function will be called by foreach attribute loop at specified edge.
+ * It can eg. sum values of all attributes and set edge weight field.
+ *
+ * @param key	reference for key attribute
+ * @param value	reference for value attribute
+ * @param result reference for result storing
+ *
+ * @see scgl_edge_foreach_attribute()
+ */
+typedef void (*attr_function)(char *key, void *value, void *result);
+
 #ifdef __cplusplus
 }
 #endif
