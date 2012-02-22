@@ -31,9 +31,9 @@ typedef struct {
  * @param from	edge destination (vertex object)
  * @param is_directed 1 means that edge is directed, 0 opposite
  * @param weight	edge weight
- * @param attr	table of pointer to pair objects, user-purpose attributes
+ * @param attr	table of pair objects, user-purpose attributes
  * @param attr_n	lenght of attributes table
- * @return	pointer to edge object for success, NULL for failure
+ * @return	edge object for success, NULL for failure
  */
 edge_t* scgl_edge_create(char *id, vertex_t *from, vertex_t *to, int is_directed, double weight, pair_t **attr, unsigned int attr_n);
 

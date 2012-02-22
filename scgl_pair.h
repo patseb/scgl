@@ -15,7 +15,7 @@ typedef struct {
  *
  * @param key	unique identifier for value
  * @param value	value indexed by key
- * @return	pointer to pair object for success, NULL for failure
+ * @return	pair object for success, NULL for failure
  */
 pair_t* scgl_pair_create(const char *key, void *value);
 

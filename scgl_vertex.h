@@ -22,11 +22,11 @@ typedef struct {
  * create vertex object, allocate and initialize memory
  *
  * @param id	unique vertex identifier
- * @param in	table of pointers to edge_t objects which are directed to vertex, can be NULL
+ * @param in	table of edge_t objects which are directed to vertex, can be NULL
  * @param in_n	in table length, should be 0 if 'in' is NULL
- * @param out	table of pointers to edge_t objects which are directed out of vertex, can be NULL
+ * @param out	table of edge_t objects which are directed out of vertex, can be NULL
  * @param out_n	out table length, should be 0 if 'out' is NULL
- * @return	pointer to vertex object for success, NULL for failure
+ * @return	vertex object for success, NULL for failure
  */
 vertex_t* scgl_vertex_create(char *id, edge_t **in, unsigned int in_n, edge_t **out, unsigned int out_n);
 
@@ -47,7 +47,7 @@ void scgl_vertex_destroy(vertex_t *vertex);
 int scgl_vertex_add_edge(vertex_t *vertex, const edge_t *edge);
 
 /**
- * remove edge from existing vertex, function also modifies edge (from/to pointers)
+ * remove edge from existing vertex, function also modifies edge (from/to attributes)
  *
  * @param vertex	vertex object
  * @param edge	edge object
