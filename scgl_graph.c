@@ -76,3 +76,10 @@ scgl_graph_get_vertex(graph_t *graph, char *vertex_id) {
 		return NULL;
 	return list_seek(graph->vertexes, vertex_id);
 }
+
+int
+scgl_graph_get_vertex_count(const graph_t *graph) {
+	if (graph == NULL)
+		return -1;
+	return list_size(graph->vertexes);
+}

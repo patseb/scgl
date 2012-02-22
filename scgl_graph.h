@@ -65,6 +65,14 @@ vertex_t* scgl_graph_del_veretex(graph_t *graph, char *vertex_id);
  */
 vertex_t* scgl_graph_get_vertex(graph_t *graph, char *vertex_id);
 
+/**
+ * returns amount of vertexes in graph
+ *
+ * @param graph	graph object
+ * @return	amount of vertexes for success, -1 for failure
+ */
+int scgl_graph_get_vertex_count(const graph_t *graph);
+
 #ifdef __cplusplus
 }
 #endif
