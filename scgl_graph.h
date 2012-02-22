@@ -47,6 +47,15 @@ void scgl_graph_destroy(graph_t *graph);
  */
 int scgl_graph_add_vertex(graph_t *graph, const vertex_t *vertex);
 
+/**
+ * removes vertex from existing graph object
+ *
+ * @param graph	graph object
+ * @param vertex_id	vertex identifier
+ * @return	deleted vertex for success, NULL for failure
+ */
+vertex_t* scgl_graph_del_veretex(graph_t *graph, char *vertex_id);
+
 #ifdef __cplusplus
 }
 #endif
