@@ -5,6 +5,10 @@
 extern "C" {
 #endif
 
+typedef struct {
+	char *key;
+	void *value;
+} scgl_pair_t;
 
 #ifdef __cplusplus
 }
