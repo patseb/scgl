@@ -38,7 +38,7 @@ vertex_t* scgl_vertex_create(char *id, edge_t **in, unsigned int in_n, edge_t **
 void scgl_vertex_destroy(vertex_t *vertex);
 
 /**
- * add edge to existing vertex
+ * add edge to existing vertex, if edge isn't related with vertex function fails
  *
  * @param vertex	vertex object
  * @param edge	edge object
