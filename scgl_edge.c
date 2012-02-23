@@ -25,6 +25,7 @@ scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_direct
 
 	e->is_directed = is_directed;
 	e->weight = weight;
+	e->attributes = (list_t*) malloc(sizeof(list_t));
 	list_init(e->attributes);
 	list_attributes_seeker(e->attributes, scgl_pair_seeker);
 	list_attributes_comparator(e->attributes, scgl_pair_comparator);
