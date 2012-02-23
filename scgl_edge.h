@@ -6,10 +6,11 @@ extern "C" {
 #endif
 
 #include "simclist.h"
-#include "scgl_vertex.h"
-#include "scgl_pair.h"
 
-typedef struct {
+typedef struct scgl_pair scgl_pair_t;
+typedef struct scgl_vertex scgl_vertex_t;
+
+typedef struct scgl_edge {
 	/* edge identifier */
 	char *id;
 	/* 0 - edge is undirected, edge is 1 directed */

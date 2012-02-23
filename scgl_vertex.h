@@ -6,10 +6,11 @@ extern "C" {
 #endif
 
 #include "simclist.h"
-#include "scgl_edge.h"
+
+typedef struct scgl_edge scgl_edge_t;
 
 /* vertex object */
-typedef struct {
+typedef struct scgl_vertex {
 	/* vertex identifier */
 	char *id;
 	/* list of edges which are directed to vertex */

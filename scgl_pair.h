@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-typedef struct {
+typedef struct scgl_pair {
 	char *key;
 	void *value;
 } scgl_pair_t;
