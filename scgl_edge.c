@@ -91,14 +91,14 @@ scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
 }
 
 void
-scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function, void *data) {
+scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function fun, void *data) {
 	assert(edge == NULL);
 
 	list_iterator_start(edge->attributes);
 	while (list_iterator_hasnext(edge->attributes)) {
 		scgl_pair_t *attr = (scgl_pair_t*) list_iterator_next(edge->attributes);
 		if (attr != NULL)
-			(*function)(attr->key, attr->value, data);
+			(*fun)(attr->key, attr->value, data);
 	}
 	list_iterator_stop(edge->attributes);
 }

@@ -89,10 +89,10 @@ typedef void (*attr_function)(char *key, void *value, void *result);
  * call attr_function for every attribute of edge
  *
  * @param edge	edge object
- * @param attr_function	pointer to the called function
+ * @param fun	pointer to the called function
  * @param result reference to called function result
  */
-void scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function, void *result);
+void scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function fun, void *result);
 
 /* internal functions section */
 int scgl_edge_seeker(const void *elem, const void *key);
