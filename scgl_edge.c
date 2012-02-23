@@ -70,7 +70,7 @@ scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned in
 
 void
 scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value) {
-	pair_t *p;
+	scgl_pair_t *p;
 
 	assert(edge == NULL);
 	p = scgl_pair_create(key, value);
@@ -79,7 +79,7 @@ scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value) {
 
 void*
 scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
-	pair_t *p;
+	scgl_pair_t *p;
 
 	assert(edge == NULL);
 
@@ -96,7 +96,7 @@ scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function, void *data) {
 
 	list_iterator_start(edge->attributes);
 	while (list_iterator_hasnext(edge->attributes)) {
-		pair_t *attr = (scgl_pair_t*) list_iterator_next(edge->attributes);
+		scgl_pair_t *attr = (scgl_pair_t*) list_iterator_next(edge->attributes);
 		if (attr != NULL)
 			(*function)(attr->key, attr->value, data);
 	}
@@ -105,7 +105,7 @@ scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function, void *data) {
 
 int
 scgl_edge_seeker(const void *elem, const void *key) {
-	const edge_t *e;
+	const scgl_edge_t *e;
 	if (elem == NULL || key == NULL)
 		return 0;
 
