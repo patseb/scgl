@@ -15,6 +15,9 @@ scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **
 	v->id = (char*) malloc(strlen(id)+1);
 	strcpy(v->id, id);
 
+	v->in = (list_t*) malloc(sizeof(list_t));
+	v->out = (list_t*) malloc(sizeof(list_t));
+
 	list_init(v->in);
 	list_init(v->out);
 
