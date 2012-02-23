@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "scgl_pair.h"
 
 scgl_pair_t*
 scgl_pair_create(const char *key, void *value) {
