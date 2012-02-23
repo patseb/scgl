@@ -7,7 +7,7 @@ extern "C" {
 
 #include "simclist.h"
 #include "scgl_vertex.h"
-#include "scgl_edges.h"
+#include "scgl_edge.h"
 
 typedef struct {
 	/* graph identifier */
