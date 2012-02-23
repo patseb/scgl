@@ -41,6 +41,8 @@ scgl_graph_destroy(scgl_graph_t *graph) {
 		//deep free - todo
 		list_destroy(graph->vertexes);
 		list_destroy(graph->edges);
+		free(graph->vertexes);
+		free(graph->edges);
 		free(graph->id);
 		free(graph);
 		graph = NULL;

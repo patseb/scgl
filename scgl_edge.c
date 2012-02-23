@@ -45,6 +45,7 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 			list_delete(edge->from->out, edge);
 
 		list_destroy(edge->attributes);
+		free(edge->attributes);
 		free(edge->id);
 		free(edge);
 		edge = NULL;
