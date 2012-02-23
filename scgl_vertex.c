@@ -34,7 +34,7 @@ scgl_vertex_destroy(scgl_vertex_t *vertex) {
 	if (vertex != NULL) {
 		list_iterator_start(vertex->in);
 		while (list_iterator_hasnext(vertex->in)) {
-			e = (edge_t*) list_iterator_next(vertex->in);
+			e = (scgl_edge_t*) list_iterator_next(vertex->in);
 			if (e != NULL)
 				e->to = NULL;
 		}
@@ -42,7 +42,7 @@ scgl_vertex_destroy(scgl_vertex_t *vertex) {
 
 		list_iterator_start(vertex->out);
 		while (list_iterator_hasnext(vertex->out)) {
-			e = (edge_t*) list_iterator_next(vertex->out);
+			e = (scgl_edge_t*) list_iterator_next(vertex->out);
 			if (e != NULL)
 				e->from = NULL;
 		}
