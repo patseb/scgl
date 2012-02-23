@@ -20,7 +20,7 @@ scgl_pair_destroy(scgl_pair_t *pair) {
 	if (pair != NULL) {
 		free(pair->key);
 		free(pair->value);
-		free(pair)
+		free(pair);
 		pair = NULL;
 	}
 }
