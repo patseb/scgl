@@ -7,7 +7,7 @@ scgl_pair_t*
 scgl_pair_create(const char *key, void *value) {
 	scgl_pair_t *p;
 
-	p = (pair_t*) malloc(sizeof(pair_t));
+	p = (scgl_pair_t*) malloc(sizeof(scgl_pair_t));
 	p->key = (char*) malloc(strlen(key)+1);
 	strcpy(p->key, key);
 	p->value = value;
