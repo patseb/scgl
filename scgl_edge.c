@@ -51,7 +51,7 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 }
 
 void
-scgl_edge_set_vertex(scgl_edge_t *edge, const scgl_vertex_t *vertex, const unsigned int number) {
+scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int number) {
 	assert(edge == NULL);
 
 	if (number == 0) {

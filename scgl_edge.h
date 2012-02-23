@@ -51,7 +51,7 @@ void scgl_edge_destroy(scgl_edge_t *edge);
  * @param vertex	vertex
  * @param number	0 means edit 'from' attribute, 1 means edit 'to' attribute
  */
-void scgl_edge_set_from(scgl_edge_t *edge, const scgl_vertex_t *vertex, const unsigned int number);
+void scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int number);
 
 /**
  * add new attribute to existing edge
