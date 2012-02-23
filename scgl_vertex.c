@@ -102,3 +102,39 @@ scgl_vertex_get_edges_out_count(const scgl_vertex_t *vertex) {
 		return -1;
 	return list_size(vertex->out);
 }
+
+int
+scgl_vertex_seeker(const void *elem, const void *key) {
+	const scgl_vertex_t *v;
+	if (elem == NULL || key == NULL)
+			return 0;
+
+	v = (scgl_vertex_t*) elem;
+	return !(strcmp(v->id, (char*)key));
+}
+
+int
+scgl_vertex_comparator(const void *a, const void *b) {
+	const scgl_vertex_t *v1, *v2;
+
+	if (a == NULL && b == NULL)
+		return 0;
+	else if (a == NULL)
+		return -1; 
+	else if (b == NULL)
+		return 1;
+
+	v1 = (const scgl_vertex_t*) a;
+	v2 = (const scgl_vertex_t*) b;
+
+	if (v1->id == NULL && v2->id == NULL)
+		return 0;
+	else if (v1->id == NULL)
+		return -1; 
+	else if (v2->id == NULL)
+		return 1;
+
+	return strcmp(v1->id, v2->id)*(-1);
+}
+
+

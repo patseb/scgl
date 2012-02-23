@@ -71,6 +71,11 @@ int scgl_vertex_get_edges_in_count(const scgl_vertex_t *vertex);
  */
 int scgl_vertex_get_edges_out_count(const scgl_vertex_t *vertex);
 
+
+/* internal functions section */
+int scgl_vertex_seeker(const void *elem, const void *key);
+int scgl_vertex_comparator(const void *a, const void *b);
+
 #ifdef __cplusplus
 }
 #endif
