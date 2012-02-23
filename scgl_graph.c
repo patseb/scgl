@@ -17,11 +17,11 @@ scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, s
 	list_init(g->vertexes);
 	list_init(g->edges);
 
-	list_attributes_seeker(g->vertexes, vertex_seeker);
-	list_attributes_seeker(g->edges, edge_seeker);
+	list_attributes_seeker(g->vertexes, scgl_vertex_seeker);
+	list_attributes_seeker(g->edges, scgl_edge_seeker);
 
-	list_attributes_comparator(g->vertexes, vertex_comparator);
-	list_attributes_comparator(g->edges, edge_comparator);
+	list_attributes_comparator(g->vertexes, scgl_vertex_comparator);
+	list_attributes_comparator(g->edges, scgl_edge_comparator);
 
 	for (i=0; i<vertexes_n; ++i)
 		list_append(g->vertexes,(void*)vertexes[i]);
@@ -95,7 +95,7 @@ scgl_graph_add_edge(scgl_graph_t *graph, const scgl_edge_t *edge) {
 
 scgl_edge_t*
 scgl_graph_del_edge(scgl_graph_t *graph, const char *edge_id) {
-	edge_t *e;
+	scgl_edge_t *e;
 	e = list_seek(graph->edges, edge_id);
 	if (e != NULL) {
 		list_delete(graph->edges, e);
