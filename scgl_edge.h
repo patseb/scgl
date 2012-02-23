@@ -20,7 +20,7 @@ typedef struct scgl_edge {
 	scgl_vertex_t *from;
 	/* edge destination vertex */
 	scgl_vertex_t *to;
-	/* user-purpose list of edge attributes */
+	/* user-purpose list of edge attributes (pair_t objects) */
 	list_t *attributes;
 } scgl_edge_t;
 
