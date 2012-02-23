@@ -44,6 +44,7 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 		if (edge->from != NULL)
 			list_delete(edge->from->out, edge);
 
+		//to do foreach attribute free
 		list_destroy(edge->attributes);
 		free(edge->attributes);
 		free(edge->id);
