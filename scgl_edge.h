@@ -25,6 +25,33 @@ typedef struct scgl_edge {
 } scgl_edge_t;
 
 /**
+ * a function for operate at attributes
+ *
+ * Attribute function will be called by foreach attribute loop at specified edge.
+ * It can eg. sum values of all attributes and set edge weight field.
+ *
+ * @param key	reference for key attribute
+ * @param value	reference for value attribute
+ * @param result reference for result storing
+ *
+ * @see scgl_edge_foreach_attribute()
+ */
+typedef void (*attr_function)(char *key, void *value, void *result);
+
+/**
+ * a function for free occupied memory by attribute values
+ *
+ * Attribute function will be called by foreach attribute loop at specified edge.
+ * Attribute key will be free by scgl_edge_destroy() function.
+ *
+ * @param key	reference for key attribute
+ * @param value	reference for value attribute
+ *
+ * @see scgl_edge_destroy()
+ */
+typedef void (*attr_free_function)(char *key, void *value);
+
+/**
  * create edge object, allocate and initialize memory
  *
  * @param id	unique edge identifier
@@ -72,33 +99,6 @@ void scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value);
  * @return	value for success, NULL for failure
  */
 void* scgl_edge_get_attribute(scgl_edge_t *edge, const char *key);
-
-/**
- * a function for operate at attributes
- *
- * Attribute function will be called by foreach attribute loop at specified edge.
- * It can eg. sum values of all attributes and set edge weight field.
- *
- * @param key	reference for key attribute
- * @param value	reference for value attribute
- * @param result reference for result storing
- *
- * @see scgl_edge_foreach_attribute()
- */
-typedef void (*attr_function)(char *key, void *value, void *result);
-
-/**
- * a function for free occupied memory by attribute values
- *
- * Attribute function will be called by foreach attribute loop at specified edge.
- * Attribute key will be free by scgl_edge_destroy() function.
- *
- * @param key	reference for key attribute
- * @param value	reference for value attribute
- *
- * @see scgl_edge_destroy()
- */
-typedef void (*attr_free_function)(char *key, void *value);
 
 /**
  * call attr_function for every attribute of edge
