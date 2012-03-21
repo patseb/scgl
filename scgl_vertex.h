@@ -33,6 +33,7 @@ scgl_vertex_t* scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n,
 
 /**
  * free memory occupied by vertex object
+ * remove vertex from edge, but doesn't free edge object
  *
  * @param vertex	vertex object
  */
