@@ -22,10 +22,16 @@ scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **
 	list_init(v->out);
 
 	for (i=0; i<in_n; ++i)
-		list_append(v->in, (void*)in[i]);
+		if (in[i] != NULL) {
+			list_append(v->in, (void*)in[i]);
+			in[i]->to = v;
+		}
 
 	for (i=0; i<out_n; ++i)
-		list_append(v->out, (void*)out[i]);
+		if (out[i] != NULL) {
+			list_append(v->out, (void*)out[i]);
+			out[i]->from = v;
+		}
 
 	return v;
 }
