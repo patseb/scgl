@@ -37,7 +37,7 @@ scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_direct
 }
 
 void
-scgl_edge_destroy(scgl_edge_t *edge, attr_free_function fun) {
+scgl_edge_destroy(scgl_edge_t *edge) {
 	if (edge != NULL) {
 		if (edge->to != NULL)
 			list_delete(edge->to->in, edge);
@@ -48,7 +48,7 @@ scgl_edge_destroy(scgl_edge_t *edge, attr_free_function fun) {
 		while (list_iterator_hasnext(edge->attributes)) {
 			scgl_pair_t *attr = (scgl_pair_t*) list_iterator_next(edge->attributes);
 			if (attr != NULL)
-				scgl_pair_destroy(attr, fun);
+				scgl_pair_destroy(attr, edge->attr_free_function);
 		}
 
 		list_destroy(edge->attributes);

@@ -10,20 +10,6 @@ extern "C" {
 typedef struct scgl_pair scgl_pair_t;
 typedef struct scgl_vertex scgl_vertex_t;
 
-typedef struct scgl_edge {
-	/* edge identifier */
-	char *id;
-	/* 0 - edge is undirected, edge is 1 directed */
-	int is_directed;
-	double weight;
-	/* edge source vertex */
-	scgl_vertex_t *from;
-	/* edge destination vertex */
-	scgl_vertex_t *to;
-	/* user-purpose list of edge attributes (pair_t objects) */
-	list_t *attributes;
-} scgl_edge_t;
-
 /**
  * a function for operate at attributes
  *
@@ -51,6 +37,22 @@ typedef void (*attr_function)(char *key, void *value, void *result);
  */
 typedef void (*attr_free_function)(char *key, void *value);
 
+typedef struct scgl_edge {
+	/* edge identifier */
+	char *id;
+	/* 0 - edge is undirected, edge is 1 directed */
+	int is_directed;
+	double weight;
+	/* edge source vertex */
+	scgl_vertex_t *from;
+	/* edge destination vertex */
+	scgl_vertex_t *to;
+	/* user-purpose list of edge attributes (pair_t objects) */
+	list_t *attributes;
+	/* user function which free attribute value memory */
+	attr_free_function *attr_free_fun;
+} scgl_edge_t;
+
 /**
  * create edge object, allocate and initialize memory
  *
@@ -69,9 +71,8 @@ scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, 
  * free memory occupied by edge object
  *
  * @param edge	edge object
- * @param fun   pointer to function which will free memory occupied by attribute value
  */
-void scgl_edge_destroy(scgl_edge_t *edge, attr_free_function fun);
+void scgl_edge_destroy(scgl_edge_t *edge);
 
 /**
  * modify edge 'from/to' attribute, function removes relation between edge and old vertex
