@@ -54,16 +54,16 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 }
 
 void
-scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int number) {
+scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int direction) {
 	assert(edge != NULL);
 
-	if (number == 0) {
+	if (direction == 0) {
 		if (edge->from != NULL)
 				list_delete(edge->from->out, edge);
 		edge->from = vertex;
 		list_append(vertex->out, edge);
 	}
-	else if (number == 1) {
+	else if (direction == 1) {
 		if (edge->to != NULL)
 				list_delete(edge->to->in, edge);
 		edge->to = vertex;
