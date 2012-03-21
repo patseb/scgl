@@ -69,10 +69,6 @@ scgl_graph_del_veretex(scgl_graph_t *graph, char *vertex_id) {
 	v = list_seek(graph->vertexes, vertex_id);
 	if (v != NULL)
 		list_delete(graph->vertexes, v);
-
-	//problem jest taki ze, usuwając node z grafu nie musimy usuwać krawędzi,
-	//ale powinniśmy dereference, ale to zaś "psuje" edge bo co to za edge bez reference,
-	//moze zamiast dereference usuwac edge z graph - ale to bez sensu
 	return v;
 }
 
@@ -103,11 +99,8 @@ scgl_edge_t*
 scgl_graph_del_edge(scgl_graph_t *graph, const char *edge_id) {
 	scgl_edge_t *e;
 	e = list_seek(graph->edges, edge_id);
-	if (e != NULL) {
+	if (e != NULL)
 		list_delete(graph->edges, e);
-		list_delete(e->from->in, e);
-		list_delete(e->from->out, e);
-	}
 	return e;
 }
 
