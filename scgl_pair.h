@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include "scgl_edge.h"
+
 typedef struct scgl_pair {
 	char *key;
 	void *value;
@@ -23,8 +25,9 @@ scgl_pair_t* scgl_pair_create(const char *key, void *value);
  * free memory occupied by pair object
  *
  * @param pair	pair object
+ * @param fun   function which will free value memory
  */
-void scgl_pair_destroy(scgl_pair_t *pair);
+void scgl_pair_destroy(scgl_pair_t *pair, attr_free_function fun);
 
 /* internal functions section */
 int scgl_pair_seeker(const void *elem, const void *key);
