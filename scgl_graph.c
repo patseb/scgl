@@ -15,7 +15,7 @@ scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, s
 	g = (scgl_graph_t*) malloc(sizeof(scgl_graph_t));
 	g->id = (char*) malloc(strlen(id)+1);
 	strcpy(g->id, id);
-	
+
 	g->vertexes = (list_t*) malloc(sizeof(list_t));
 	g->edges = (list_t*) malloc(sizeof(list_t));
 
