@@ -42,8 +42,9 @@ scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, 
  * free memory occupied by edge object
  *
  * @param edge	edge object
+ * @param fun   pointer to function which will free memory occupied by attribute value
  */
-void scgl_edge_destroy(scgl_edge_t *edge);
+void scgl_edge_destroy(scgl_edge_t *edge, attr_free_function fun);
 
 /**
  * modify edge 'from/to' attribute, function removes relation between edge and old vertex
@@ -85,6 +86,19 @@ void* scgl_edge_get_attribute(scgl_edge_t *edge, const char *key);
  * @see scgl_edge_foreach_attribute()
  */
 typedef void (*attr_function)(char *key, void *value, void *result);
+
+/**
+ * a function for free occupied memory by attribute values
+ *
+ * Attribute function will be called by foreach attribute loop at specified edge.
+ * Attribute key will be free by scgl_edge_destroy() function.
+ *
+ * @param key	reference for key attribute
+ * @param value	reference for value attribute
+ *
+ * @see scgl_edge_destroy()
+ */
+typedef void (*attr_free_function)(char *key, void *value);
 
 /**
  * call attr_function for every attribute of edge
