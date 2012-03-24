@@ -48,7 +48,7 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 		while (list_iterator_hasnext(edge->attributes)) {
 			scgl_pair_t *attr = (scgl_pair_t*) list_iterator_next(edge->attributes);
 			if (attr != NULL)
-				scgl_pair_destroy(attr, edge->attr_free_function);
+				scgl_pair_destroy(attr, edge->attr_free_fun);
 		}
 
 		list_destroy(edge->attributes);
