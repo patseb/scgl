@@ -100,7 +100,7 @@ scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
 }
 
 void
-scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function fun, void *data) {
+scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, void *data) {
 	assert(edge != NULL);
 
 	list_iterator_start(edge->attributes);
