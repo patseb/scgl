@@ -61,7 +61,7 @@ scgl_graph_add_vertex(scgl_graph_t *graph, const scgl_vertex_t *vertex) {
 }
 
 void
-scgl_graph_del_veretex(scgl_graph_t *graph, char *vertex_id) {
+scgl_graph_del_vertex(scgl_graph_t *graph, char *vertex_id) {
 	scgl_vertex_t *v;
 	scgl_edge_t *e;
 
