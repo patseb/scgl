@@ -109,13 +109,14 @@ scgl_graph_add_edge(scgl_graph_t *graph, const scgl_edge_t *edge) {
 	return 0;
 }
 
-scgl_edge_t*
+void
 scgl_graph_del_edge(scgl_graph_t *graph, const char *edge_id) {
 	scgl_edge_t *e;
 	e = list_seek(graph->edges, edge_id);
-	if (e != NULL)
+	if (e != NULL) {
 		list_delete(graph->edges, e);
-	return e;
+		scgl_edge_destroy(e);
+	}
 }
 
 scgl_edge_t*
