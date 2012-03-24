@@ -110,6 +110,14 @@ void* scgl_edge_get_attribute(scgl_edge_t *edge, const char *key);
  */
 void scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, void *result);
 
+/**
+ * register function which will free memory for edge attributes
+ *
+ * @param edge	edge object
+ * @param fun	pointer to the function
+ */
+void scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun);
+
 /* internal functions section */
 int scgl_edge_seeker(const void *elem, const void *key);
 int scgl_edge_comparator(const void *a, const void *b);

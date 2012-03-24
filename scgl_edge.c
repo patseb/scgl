@@ -112,6 +112,12 @@ scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, void *
 	list_iterator_stop(edge->attributes);
 }
 
+void
+scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun) {
+	if (edge != NULL)
+		edge->attr_free_fun = fun;
+}
+
 int
 scgl_edge_seeker(const void *elem, const void *key) {
 	const scgl_edge_t *e;
