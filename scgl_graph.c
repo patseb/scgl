@@ -60,15 +60,29 @@ scgl_graph_add_vertex(scgl_graph_t *graph, const scgl_vertex_t *vertex) {
 	return 0;
 }
 
-scgl_vertex_t*
+void
 scgl_graph_del_veretex(scgl_graph_t *graph, char *vertex_id) {
-	if (graph == NULL)
-		return NULL;
-
 	scgl_vertex_t *v;
+	scgl_edge_t *e;
+
+	assert(graph != NULL);
+
 	v = list_seek(graph->vertexes, vertex_id);
-	if (v != NULL)
+	if (v != NULL) {
+		list_iterator_start(v->in);
+		while (list_iterator_hasnext(v->in))
+			scgl_edge_destroy((scgl_edge_t*) list_iterator_next(v->in));
+		list_iterator_stop(v->in);
+
+		list_iterator_start(v->out);
+		while (list_iterator_hasnext(v->out))
+			scgl_edge_destroy((scgl_edge_t*) list_iterator_next(v->out));
+		list_iterator_stop(v->out);
+
 		list_delete(graph->vertexes, v);
+
+		scgl_vertex_destroy(v);
+	}
 	return v;
 }
 

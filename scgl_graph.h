@@ -50,12 +50,15 @@ int scgl_graph_add_vertex(scgl_graph_t *graph, const scgl_vertex_t *vertex);
 
 /**
  * remove vertex from existing graph object
+ * it delete all related edges (edges can't begin/end at nothing)
+ * and call scgl_vertex_free()
  *
  * @param graph	graph object
  * @param vertex_id	vertex identifier
  * @return	deleted vertex for success, NULL for failure
+ * @see scgl_vertex_free()
  */
-scgl_vertex_t* scgl_graph_del_veretex(scgl_graph_t *graph, char *vertex_id);
+void scgl_graph_del_vertex(scgl_graph_t *graph, char *vertex_id);
 
 /**
  * return vertex from graph using vertex identifier
