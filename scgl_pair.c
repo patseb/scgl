@@ -18,7 +18,8 @@ scgl_pair_create(const char *key, void *value) {
 void
 scgl_pair_destroy(scgl_pair_t *pair, attr_free_function fun) {
 	if (pair != NULL) {
-		(*fun)(pair->key, pair->value);
+		if (fun != NULL)
+			(*fun)(pair->key, pair->value);
 		free(pair->key);
 		free(pair);
 		pair = NULL;
