@@ -55,7 +55,6 @@ int scgl_graph_add_vertex(scgl_graph_t *graph, const scgl_vertex_t *vertex);
  *
  * @param graph	graph object
  * @param vertex_id	vertex identifier
- * @return	deleted vertex for success, NULL for failure
  * @see scgl_vertex_free()
  */
 void scgl_graph_del_vertex(scgl_graph_t *graph, char *vertex_id);

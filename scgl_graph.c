@@ -83,7 +83,6 @@ scgl_graph_del_veretex(scgl_graph_t *graph, char *vertex_id) {
 
 		scgl_vertex_destroy(v);
 	}
-	return v;
 }
 
 scgl_vertex_t*
