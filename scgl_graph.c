@@ -40,6 +40,16 @@ scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, s
 void
 scgl_graph_destroy(scgl_graph_t *graph) {
 	if (graph != NULL) {
+		list_iterator_start(graph->edges);
+		while (list_iterator_hasnext(graph->edges))
+			scgl_edge_destroy((scgl_edge_t*) list_iterator_next(graph->edges));
+		list_iterator_stop(graph->edges);
+
+		list_iterator_start(graph->vertexes);
+		while (list_iterator_hasnext(graph->vertexes))
+			scgl_vertex_destroy((scgl_vertex_t*) list_iterator_next(graph->vertexes));
+		list_iterator_stop(graph->vertexes);
+
 		list_destroy(graph->vertexes);
 		list_destroy(graph->edges);
 		free(graph->vertexes);

@@ -33,7 +33,7 @@ typedef struct scgl_graph {
 scgl_graph_t* scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, scgl_edge_t **edges, unsigned int edges_n);
 
 /**
- * free memory occupied by graph object. Doesn't destroy vertexes or edges.
+ * free memory occupied by graph and related vertex/edge objects.
  *
  * @param graph	graph object
  */
