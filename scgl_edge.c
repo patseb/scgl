@@ -89,7 +89,7 @@ scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value) {
 
 	assert(edge != NULL);
 	p = scgl_pair_create(key, value);
-	list_append(edge->attributes, p);
+	list_append(edge->attributes, (void*) p);
 }
 
 void*
