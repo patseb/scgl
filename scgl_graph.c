@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include "simclist.h"
 #include "scgl_edge.h"
 #include "scgl_pair.h"
