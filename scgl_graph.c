@@ -56,6 +56,9 @@ scgl_graph_destroy(scgl_graph_t *graph) {
 		free(graph->vertexes);
 		free(graph->edges);
 		free(graph->id);
+		graph->vertexes = NULL;
+		graph->edges = NULL;
+		graph->id = NULL;
 		free(graph);
 		graph = NULL;
 	}

@@ -21,6 +21,7 @@ scgl_pair_destroy(scgl_pair_t *pair, attr_free_function fun) {
 		if (fun != NULL)
 			(*fun)(pair->key, pair->value);
 		free(pair->key);
+		pair->key = NULL;
 		free(pair);
 		pair = NULL;
 	}

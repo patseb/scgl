@@ -62,6 +62,9 @@ scgl_vertex_destroy(scgl_vertex_t *vertex) {
 		free(vertex->in);
 		free(vertex->out);
 		free(vertex->id);
+		vertex->in = NULL;
+		vertex->out = NULL;
+		vertex->id = NULL;
 		free(vertex);
 		vertex = NULL;
 	}
