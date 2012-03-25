@@ -45,7 +45,7 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 		}
 		if (edge->from != NULL) {
 			list_delete(edge->from->out, edge);
-			edge->from = NULL
+			edge->from = NULL;
 		}
 
 		list_iterator_start(edge->attributes);
@@ -59,7 +59,7 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 		free(edge->attributes);
 		free(edge->id);
 		edge->attributes = NULL;
-		edge->id = NULL
+		edge->id = NULL;
 		free(edge);
 		edge = NULL;
 	}
