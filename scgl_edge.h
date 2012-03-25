@@ -50,7 +50,7 @@ typedef struct scgl_edge {
 	/* user-purpose list of edge attributes (pair_t objects) */
 	list_t *attributes;
 	/* user function which free attribute value memory */
-	attr_free_function *attr_free_fun;
+	attr_free_function attr_free_fun;
 } scgl_edge_t;
 
 /**
