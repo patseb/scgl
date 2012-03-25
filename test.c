@@ -7,6 +7,11 @@
 #include "scgl_edge.h"
 #include "simclist.h"
 
+void my_free(char *key, void *data) {
+	free(data);
+	data = NULL;
+}
+
 int main() {
 	scgl_graph_t *g1;
 	scgl_vertex_t **v;
@@ -25,12 +30,18 @@ int main() {
 
 	e = (scgl_edge_t**) malloc(sizeof(scgl_edge_t) * 4);
 	for(i=0; i<4; ++i) {
-		char buf1[4], buf2[4];
+		char *buf1, *buf2;
+		buf1 = (char*) malloc(4);
 		sprintf(buf1, "E-%d", i);
 		e[i] = scgl_edge_create(buf1, NULL, NULL, 1, i, NULL, 0);
+		free(buf1);
+		buf1 = (char*) malloc(12);
 		sprintf(buf1, "%d", i);
+		buf2 = (char*) malloc(sizeof(char)*4);
 		sprintf(buf2, "ATR");
 		scgl_edge_add_attribute(e[i], buf1, buf2);
+		free(buf1);
+		scgl_edge_attr_free_function(e[i], my_free);
 		scgl_graph_add_edge(g1, e[i]);
 	}
 
@@ -48,8 +59,8 @@ int main() {
 	e[2]->is_directed = 0;
 
 	for(i=0; i<4; ++i) {
-		scgl_edge_destroy(e[i]);
-		scgl_vertex_destroy(v[i]);
+		//scgl_edge_destroy(e[i]);
+		//scgl_vertex_destroy(v[i]); todo sprawdzać NULLe bo gdzieś coś źle 
 	}
 	scgl_graph_destroy(g1);
 	free(v);
