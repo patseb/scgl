@@ -55,6 +55,7 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 			if (p != NULL)
 				scgl_pair_destroy(p, edge->attr_free_fun);
 		}
+		list_iterator_stop(edge->attributes);
 
 		list_destroy(edge->attributes);
 		free(edge->attributes);
