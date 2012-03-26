@@ -65,10 +65,11 @@ scgl_graph_destroy(scgl_graph_t *graph) {
 }
 
 int
-scgl_graph_add_vertex(scgl_graph_t *graph, const scgl_vertex_t *vertex) {
+scgl_graph_add_vertex(scgl_graph_t *graph, scgl_vertex_t *vertex) {
 	if (graph == NULL || vertex == NULL)
 		return -1;
 
+	vertex->owner = graph;
 	list_append(graph->vertexes, vertex);
 
 	return 0;
@@ -114,11 +115,13 @@ scgl_graph_get_vertex_count(const scgl_graph_t *graph) {
 }
 
 int
-scgl_graph_add_edge(scgl_graph_t *graph, const scgl_edge_t *edge) {
+scgl_graph_add_edge(scgl_graph_t *graph, scgl_edge_t *edge) {
 	if (graph == NULL || edge == NULL)
 		return -1;
 
+	edge->owner = graph;
 	list_append(graph->edges, edge);
+
 	return 0;
 }
 

@@ -6,6 +6,7 @@
 #include "scgl_edge.h"
 #include "scgl_pair.h"
 #include "scgl_vertex.h"
+#include "scgl_graph.h"
 
 scgl_edge_t*
 scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, double weight, scgl_pair_t **attr, unsigned int attr_n) {
@@ -15,6 +16,8 @@ scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_direct
 	e = (scgl_edge_t*) malloc(sizeof(scgl_edge_t));
 	e->id = (char*) malloc(strlen(id)+1);
 	strcpy(e->id, id);
+
+	e->owner = NULL;
 
 	e->from = from;
 	e->to = to;
@@ -39,6 +42,8 @@ scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_direct
 void
 scgl_edge_destroy(scgl_edge_t *edge) {
 	scgl_pair_t *p;
+	int pos; 
+	
 	if (edge != NULL) {
 		if (edge->to != NULL) {
 			list_delete(edge->to->in, edge);
@@ -56,6 +61,11 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 				scgl_pair_destroy(p, edge->attr_free_fun);
 		}
 		list_iterator_stop(edge->attributes);
+
+		if (edge->owner != NULL) {
+			pos = list_locate(edge->owner->edges, edge);
+			list_delete_at(edge->owner->edges, pos);
+		}
 
 		list_destroy(edge->attributes);
 		free(edge->attributes);

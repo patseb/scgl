@@ -8,6 +8,7 @@ extern "C" {
 #include "simclist.h"
 
 typedef struct scgl_edge scgl_edge_t;
+typedef struct scgl_graph scgl_graph_t;
 
 /* vertex object */
 typedef struct scgl_vertex {
@@ -17,6 +18,8 @@ typedef struct scgl_vertex {
 	list_t *in;
 	/* list of edges which are directed out of vertex */
 	list_t *out;
+	/* pointer to graph object which contains that vertex */
+	scgl_graph_t *owner;
 } scgl_vertex_t;
 
 /**

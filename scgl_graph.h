@@ -46,7 +46,7 @@ void scgl_graph_destroy(scgl_graph_t *graph);
  * @param vertex	vertex object
  * @return	0 for success, -1 for failure
  */
-int scgl_graph_add_vertex(scgl_graph_t *graph, const scgl_vertex_t *vertex);
+int scgl_graph_add_vertex(scgl_graph_t *graph, scgl_vertex_t *vertex);
 
 /**
  * remove vertex from existing graph object
@@ -83,7 +83,7 @@ int scgl_graph_get_vertex_count(const scgl_graph_t *graph);
  * @param edge	edge object
  * @return	0 for success, -1 for failure
  */
-int scgl_graph_add_edge(scgl_graph_t *graph, const scgl_edge_t *edge);
+int scgl_graph_add_edge(scgl_graph_t *graph, scgl_edge_t *edge);
 
 /**
  * remove edge from existing graph object, and call scgl_edge_destroy()

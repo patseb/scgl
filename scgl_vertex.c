@@ -4,6 +4,7 @@
 #include "simclist.h"
 #include "scgl_edge.h"
 #include "scgl_vertex.h"
+#include "scgl_graph.h"
 
 scgl_vertex_t*
 scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **out, unsigned int out_n) {
@@ -14,6 +15,8 @@ scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **
 
 	v->id = (char*) malloc(strlen(id)+1);
 	strcpy(v->id, id);
+
+	v->owner = NULL;
 
 	v->in = (list_t*) malloc(sizeof(list_t));
 	v->out = (list_t*) malloc(sizeof(list_t));
@@ -39,6 +42,7 @@ scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **
 void
 scgl_vertex_destroy(scgl_vertex_t *vertex) {
 	scgl_edge_t *e;
+	int pos;
 
 	if (vertex != NULL) {
 		list_iterator_start(vertex->in);
@@ -56,6 +60,11 @@ scgl_vertex_destroy(scgl_vertex_t *vertex) {
 				e->from = NULL;
 		}
 		list_iterator_stop(vertex->out);
+
+		if (vertex->owner != NULL) {
+			pos = list_locate(vertex->owner->vertexes, vertex);
+			list_delete_at(vertex->owner->vertexes, pos);
+		}
 
 		list_destroy(vertex->in);
 		list_destroy(vertex->out);
