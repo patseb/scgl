@@ -35,7 +35,7 @@ int main() {
 		sprintf(buf1, "E-%d", i);
 		e[i] = scgl_edge_create(buf1, NULL, NULL, 1, i, NULL, 0);
 		free(buf1);
-		buf1 = (char*) malloc(12);
+		buf1 = (char*) malloc(4);
 		sprintf(buf1, "%d", i);
 		buf2 = (char*) malloc(sizeof(char)*4);
 		sprintf(buf2, "ATR");
@@ -58,9 +58,10 @@ int main() {
 	scgl_edge_set_vertex(e[3], v[0], 1);
 	e[2]->is_directed = 0;
 
+	/* unnecessary */
 	for(i=0; i<4; ++i) {
-		//scgl_edge_destroy(e[i]);
-		//scgl_vertex_destroy(v[i]); todo sprawdzać NULLe bo gdzieś coś źle 
+		scgl_edge_destroy(e[i]);
+		scgl_vertex_destroy(v[i]);
 	}
 	scgl_graph_destroy(g1);
 	free(v);
@@ -68,5 +69,3 @@ int main() {
 
 	return 0;
 }
-
-
