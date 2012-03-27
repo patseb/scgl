@@ -64,7 +64,8 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 
 		if (edge->owner != NULL) {
 			pos = list_locate(edge->owner->edges, edge);
-			list_delete_at(edge->owner->edges, pos);
+			if (pos > 0)
+				list_delete_at(edge->owner->edges, pos);
 		}
 
 		list_destroy(edge->attributes);
