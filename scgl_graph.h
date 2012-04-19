@@ -55,10 +55,10 @@ int scgl_graph_add_vertex(scgl_graph_t *graph, scgl_vertex_t *vertex);
  * and call scgl_vertex_free()
  *
  * @param graph	graph object
- * @param vertex_id	vertex identifier
+ * @param vertex	vertex object
  * @see scgl_vertex_free()
  */
-void scgl_graph_del_vertex(scgl_graph_t *graph, char *vertex_id);
+void scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t* vertex);
 
 /**
  * return vertex from graph using vertex identifier

@@ -75,33 +75,32 @@ scgl_graph_add_vertex(scgl_graph_t *graph, scgl_vertex_t *vertex) {
 }
 
 void
-scgl_graph_del_vertex(scgl_graph_t *graph, char *vertex_id) {
-	scgl_vertex_t *v;
+scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t* vertex) {
 	scgl_edge_t *e;
 
 	assert(graph != NULL);
-	v = list_seek(graph->vertexes, vertex_id);
-	if (v != NULL) {
-		list_iterator_start(v->in);
-		while (list_iterator_hasnext(v->in)) {
-			e = (scgl_edge_t*) list_iterator_next(v->in);
+
+	if (vertex != NULL) {
+		list_iterator_start(vertex->in);
+		while (list_iterator_hasnext(vertex->in)) {
+			e = (scgl_edge_t*) list_iterator_next(vertex->in);
 			scgl_edge_destroy(e);
 			e = NULL;
 		}
-		list_iterator_stop(v->in);
+		list_iterator_stop(vertex->in);
 
-		list_iterator_start(v->out);
-		while (list_iterator_hasnext(v->out)) {
-			e = (scgl_edge_t*) list_iterator_next(v->out);
+		list_iterator_start(vertex->out);
+		while (list_iterator_hasnext(vertex->out)) {
+			e = (scgl_edge_t*) list_iterator_next(vertex->out);
 			scgl_edge_destroy(e);
 			e = NULL;
 		}
-		list_iterator_stop(v->out);
+		list_iterator_stop(vertex->out);
 
-		list_delete(graph->vertexes, v);
+		list_delete(graph->vertexes, vertex);
 
-		scgl_vertex_destroy(v);
-		v = NULL;
+		scgl_vertex_destroy(vertex);
+		vertex = NULL;
 	}
 }
 
