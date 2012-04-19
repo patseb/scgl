@@ -47,14 +47,20 @@ scgl_graph_destroy(scgl_graph_t **graph) {
 		list_iterator_start((*graph)->edges);
 		while (list_iterator_hasnext((*graph)->edges)) {
 			e = (scgl_edge_t*) list_iterator_next((*graph)->edges);
-			scgl_edge_destroy(&e);
+			if (e != NULL) {
+				e->owner = NULL; /* prevents remove edge from edges */
+				scgl_edge_destroy(&e);
+			}
 		}
 		list_iterator_stop((*graph)->edges);
 
 		list_iterator_start((*graph)->vertexes);
 		while (list_iterator_hasnext((*graph)->vertexes)) {
 			v = (scgl_vertex_t*) list_iterator_next((*graph)->vertexes);
-			scgl_vertex_destroy(&v);
+			if (v != NULL) {
+				v->owner = NULL; /* prevents remove vertex from vertexes */
+				scgl_vertex_destroy(&v);
+			}
 		}
 		list_iterator_stop((*graph)->vertexes);
 
