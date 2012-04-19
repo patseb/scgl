@@ -88,8 +88,7 @@ scgl_vertex_add_edge(scgl_vertex_t *vertex, scgl_edge_t *edge, unsigned int endp
 		endpoint = 0;
 	return scgl_edge_set_vertex(edge, vertex, endpoint);
 }
-//może prowadzić do inconsistent, ale z drugiej strony nie mamy jak tym zarządzć tak na prawdę
-//trzeba by zmienić te funkcje żeby dbały o w szystko raczej ....
+
 int
 scgl_vertex_del_edge(scgl_vertex_t *vertex, scgl_edge_t *edge) {
 	if (vertex == NULL || edge == NULL)
@@ -97,10 +96,14 @@ scgl_vertex_del_edge(scgl_vertex_t *vertex, scgl_edge_t *edge) {
 
 	if (edge->from == vertex) {
 		list_delete(vertex->out, edge);
+		if (edge->is_directed == 0)
+			list_delete(vertex->in, edge);
 		edge->from = NULL;
 	}
 	else if (edge->to == vertex) {
 		list_delete(vertex->in, edge);
+		if (edge->is_directed == 0)
+			list_delete(vertex->out, edge);
 		edge->to = NULL;
 	}
 	else
