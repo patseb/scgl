@@ -123,6 +123,11 @@ scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned in
 	return 0;
 }
 
+int
+scgl_edge_del_vertex(scgl_egde_t *edge, scgl_vertex_t *vertex) {
+		return scgl_vertex_del_edge(vertex, edge);
+}
+
 void
 scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value) {
 	scgl_pair_t *p;

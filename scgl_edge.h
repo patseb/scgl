@@ -88,6 +88,15 @@ void scgl_edge_destroy(scgl_edge_t *edge);
 int scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int endpoint);
 
 /**
+ * remove vertex from edge, function also modifies vertex (in/out attributes)
+ * 
+ * @param edge  edge object wich will be modified
+ * @param vertex    vertex object which will be removed
+ * @return  0 for success, -1 for failure
+ */
+int scgl_dedge_del_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex);
+
+/**
  * add new attribute to existing edge
  *
  * @param edge	edge object
