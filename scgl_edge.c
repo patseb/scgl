@@ -52,15 +52,15 @@ scgl_edge_destroy(scgl_edge_t **edge) {
 
 	if (edge != NULL && *edge != NULL) {
 		if ((*edge)->to != NULL) {
-			list_delete((*edge)->to->in, edge);
+			list_delete((*edge)->to->in, *edge);
 			if ((*edge)->is_directed == 0)
-				list_delete((*edge)->to->out, edge);
+				list_delete((*edge)->to->out, *edge);
 			(*edge)->to = NULL;
 		}
 		if ((*edge)->from != NULL) {
-			list_delete((*edge)->from->out, edge);
+			list_delete((*edge)->from->out, *edge);
 			if ((*edge)->is_directed == 0)
-				list_delete((*edge)->from->in, edge);
+				list_delete((*edge)->from->in, *edge);
 			(*edge)->from = NULL;
 		}
 
