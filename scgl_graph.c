@@ -80,23 +80,28 @@ scgl_graph_del_vertex(scgl_graph_t *graph, char *vertex_id) {
 	scgl_edge_t *e;
 
 	assert(graph != NULL);
-//nie wiem czy jakoś magicznie nie powinniśmy zerować ptr, bo w końcu napotkamy out/in==NULL a nie będzie null
-//jeżeli naprawimy vertex_destroy to chyba mozemy go użyć?
 	v = list_seek(graph->vertexes, vertex_id);
 	if (v != NULL) {
 		list_iterator_start(v->in);
-		while (list_iterator_hasnext(v->in))
-			scgl_edge_destroy((scgl_edge_t*) list_iterator_next(v->in));
+		while (list_iterator_hasnext(v->in)) {
+			e = (scgl_edge_t*) list_iterator_next(v->in);
+			scgl_edge_destroy(e);
+			e = NULL;
+		}
 		list_iterator_stop(v->in);
 
 		list_iterator_start(v->out);
-		while (list_iterator_hasnext(v->out))
-			scgl_edge_destroy((scgl_edge_t*) list_iterator_next(v->out));
+		while (list_iterator_hasnext(v->out)) {
+			e = (scgl_edge_t*) list_iterator_next(v->out);
+			scgl_edge_destroy(e);
+			e = NULL;
+		}
 		list_iterator_stop(v->out);
 
 		list_delete(graph->vertexes, v);
 
 		scgl_vertex_destroy(v);
+		v = NULL;
 	}
 }
 
