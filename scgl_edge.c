@@ -124,7 +124,7 @@ scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned in
 }
 
 int
-scgl_edge_del_vertex(scgl_egde_t *edge, scgl_vertex_t *vertex) {
+scgl_edge_del_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex) {
 		return scgl_vertex_del_edge(vertex, edge);
 }
 
