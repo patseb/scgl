@@ -92,7 +92,7 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 
 int
 scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int endpoint) {
-	if (edge != NULL && vertex != NULL)
+	if (edge == NULL || vertex == NULL)
 		return -1;
 
 	if (endpoint == 0) {
