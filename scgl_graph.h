@@ -90,10 +90,10 @@ int scgl_graph_add_edge(scgl_graph_t *graph, scgl_edge_t *edge);
  * remove edge from existing graph object, and call scgl_edge_destroy()
  *
  * @param graph	graph object
- * @param edge_id	edge identifier
+ * @param edge	edge object
  * @see scgl_edge_destroy
  */
-void scgl_graph_del_edge(scgl_graph_t *graph, const char *edge_id);
+void scgl_graph_del_edge(scgl_graph_t *graph, scgl_edge_t *edge);
 
 /**
  * return edge from graph using edge identifier

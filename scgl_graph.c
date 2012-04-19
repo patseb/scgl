@@ -130,12 +130,10 @@ scgl_graph_add_edge(scgl_graph_t *graph, scgl_edge_t *edge) {
 }
 
 void
-scgl_graph_del_edge(scgl_graph_t *graph, const char *edge_id) {
-	scgl_edge_t *e;
-	e = list_seek(graph->edges, edge_id);
-	if (e != NULL) {
-		list_delete(graph->edges, e);
-		scgl_edge_destroy(e);
+scgl_graph_del_edge(scgl_graph_t *graph, scgl_edge_t *edge) {
+	if (graph != NULL && edge != NULL) {
+		list_delete(graph->edges, edge);
+		scgl_edge_destroy(&edge);
 	}
 }
 
