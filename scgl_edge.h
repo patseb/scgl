@@ -72,6 +72,7 @@ scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, 
 
 /**
  * free memory occupied by edge object
+ * remember about set pointer to edge object to NULL after destroy
  *
  * @param edge	edge object
  */
