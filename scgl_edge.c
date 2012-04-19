@@ -87,7 +87,6 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 		edge->attributes = NULL;
 		edge->id = NULL;
 		free(edge);
-		edge = NULL;
 	}
 }
 
