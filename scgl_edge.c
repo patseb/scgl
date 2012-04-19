@@ -21,12 +21,18 @@ scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_direct
 
 	e->from = from;
 	e->to = to;
-	if (from != NULL)
+	if (from != NULL) {
 		list_append(from->out, e);
-	if (to != NULL)
+		if (is_directed == 0)
+			list_append(from->in, e);
+	}
+	if (to != NULL) {
 		list_append(to->in, e);
-
+		if (is_directed == 0)
+			list_append(to->out, e);
+	}
 	e->is_directed = is_directed;
+
 	e->weight = weight;
 	e->attributes = (list_t*) malloc(sizeof(list_t));
 	list_init(e->attributes);
@@ -47,10 +53,14 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 	if (edge != NULL) {
 		if (edge->to != NULL) {
 			list_delete(edge->to->in, edge);
+			if (edge->is_directed == 0)
+				list_delete(edge->to->out, edge);
 			edge->to = NULL;
 		}
 		if (edge->from != NULL) {
 			list_delete(edge->from->out, edge);
+			if (edge->is_directed == 0)
+				list_delete(edge->from->in, edge);
 			edge->from = NULL;
 		}
 
@@ -78,22 +88,37 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 	}
 }
 
-void
-scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int direction) {
-	assert(edge != NULL);
+int
+scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int endpoint) {
+	if (edge != NULL)
+		return -1;
 
-	if (direction == 0) {
-		if (edge->from != NULL)
+	if (endpoint == 0) {
+		if (edge->from != NULL) {
 				list_delete(edge->from->out, edge);
+				if (edge->is_directed == 0)
+					list_delete(edge->from->in, edge);
+		}
 		edge->from = vertex;
 		list_append(vertex->out, edge);
+		if (edge->is_directed == 0)
+			list_append(vertex->in, edge);
 	}
-	else if (direction == 1) {
-		if (edge->to != NULL)
+	else if (endpoint == 1) {
+		if (edge->to != NULL) {
 				list_delete(edge->to->in, edge);
+				if (edge->is_directed == 0)
+					list_delete(edge->to->out, edge);
+		}
 		edge->to = vertex;
 		list_append(vertex->in, edge);
+		if (edge->is_directed == 0)
+			list_append(vertex->out, edge);
 	}
+	else
+		return -1;
+
+	return 0;
 }
 
 void
@@ -135,6 +160,23 @@ void
 scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun) {
 	if (edge != NULL)
 		edge->attr_free_fun = fun;
+}
+
+void
+scgl_edge_set_is_directed(scgl_edge_t *edge, const unsigned int directed) {
+	if (edge != NULL)
+		if (edge->is_directed != directed) {
+			edge->is_directed = directed;
+			if (edge->from != NULL && edge->to != NULL)
+				if (directed == 0) {
+					list_append(edge->from->in, edge);
+					list_append(edge->to->out, edge);
+				}
+				else {
+					list_delete(edge->from->in, edge);
+					list_delete(edge->to->out, edge);
+				}
+		}
 }
 
 int

@@ -82,9 +82,10 @@ void scgl_edge_destroy(scgl_edge_t *edge);
  *
  * @param edge	edge object
  * @param vertex	vertex
- * @param direction	0 means edit 'from' attribute, 1 means edit 'to' attribute
+ * @param endpoint	0 means edge is outgoing from vertex, 1 means edge incoming to vertex, doesn't matter when edge is undirected
+ * @return 0 for success, -1 for failure
  */
-void scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int direction);
+int scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int endpoint);
 
 /**
  * add new attribute to existing edge
@@ -120,6 +121,14 @@ void scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, v
  * @param fun	pointer to the function
  */
 void scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun);
+
+/**
+ * set is_directed attribute in specified edge object
+ * 
+ * @param edge  edge object
+ * @param directed  1 means that edge is directed, 0 opposite
+ */
+void scgl_edge_set_is_directed(scgl_edge_t *edge, const unsigned int directed);
 
 /* internal functions section */
 int scgl_edge_seeker(const void *elem, const void *key);

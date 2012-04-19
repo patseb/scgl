@@ -47,10 +47,10 @@ void scgl_vertex_destroy(scgl_vertex_t *vertex);
  *
  * @param vertex	vertex object
  * @param edge	edge object
- * @param direction edge direction, 0 for edge outgoing from vertex, 1 for edge incoming to vertex
+ * @param endpoint 0 means edit 'from' edge's attribute, 1 means edit 'to' edge's attribute, doesn't matter when edge is undirected
  * @return	0 for success, -1 for failure
  */
-int scgl_vertex_add_edge(scgl_vertex_t *vertex, scgl_edge_t *edge, const unsigned int direction);
+int scgl_vertex_add_edge(scgl_vertex_t *vertex, scgl_edge_t *edge, unsigned int endpoint);
 
 /**
  * remove edge from existing vertex, function also modifies edge (from/to attributes)
