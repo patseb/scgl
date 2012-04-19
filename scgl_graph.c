@@ -39,27 +39,35 @@ scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, s
 }
 
 void
-scgl_graph_destroy(scgl_graph_t *graph) {
-	if (graph != NULL) {
-		list_iterator_start(graph->edges);
-		while (list_iterator_hasnext(graph->edges))
-			scgl_edge_destroy((scgl_edge_t*) list_iterator_next(graph->edges));
-		list_iterator_stop(graph->edges);
+scgl_graph_destroy(scgl_graph_t **graph) {
+	scgl_edge_t *e;
+	scgl_vertex_t *v;
 
-		list_iterator_start(graph->vertexes);
-		while (list_iterator_hasnext(graph->vertexes))
-			scgl_vertex_destroy((scgl_vertex_t*) list_iterator_next(graph->vertexes));
-		list_iterator_stop(graph->vertexes);
+	if (graph != NULL && *graph != NULL) {
+		list_iterator_start((*graph)->edges);
+		while (list_iterator_hasnext((*graph)->edges)) {
+			e = (scgl_edge_t*) list_iterator_next((*graph)->edges);
+			scgl_edge_destroy(&e);
+		}
+		list_iterator_stop((*graph)->edges);
 
-		list_destroy(graph->vertexes);
-		list_destroy(graph->edges);
-		free(graph->vertexes);
-		free(graph->edges);
-		free(graph->id);
-		graph->vertexes = NULL;
-		graph->edges = NULL;
-		graph->id = NULL;
-		free(graph);
+		list_iterator_start((*graph)->vertexes);
+		while (list_iterator_hasnext((*graph)->vertexes)) {
+			v = (scgl_vertex_t*) list_iterator_next((*graph)->vertexes);
+			scgl_vertex_destroy(&v);
+		}
+		list_iterator_stop((*graph)->vertexes);
+
+		list_destroy((*graph)->vertexes);
+		list_destroy((*graph)->edges);
+		free((*graph)->vertexes);
+		free((*graph)->edges);
+		free((*graph)->id);
+		(*graph)->vertexes = NULL;
+		(*graph)->edges = NULL;
+		(*graph)->id = NULL;
+		free(*graph);
+		*graph = NULL;
 	}
 }
 
