@@ -73,7 +73,7 @@ scgl_edge_destroy(scgl_edge_t **edge) {
 		list_iterator_stop((*edge)->attributes);
 
 		if ((*edge)->owner != NULL)
-			list_delete((*edge)->owner->edges, edge);
+			list_delete((*edge)->owner->edges, *edge);
 
 		list_destroy((*edge)->attributes);
 		free((*edge)->attributes);
