@@ -71,12 +71,15 @@ scgl_edge_destroy(scgl_edge_t *edge) {
 				scgl_pair_destroy(p, edge->attr_free_fun);
 		}
 		list_iterator_stop(edge->attributes);
-
+/*
 		if (edge->owner != NULL) {
 			pos = list_locate(edge->owner->edges, edge);
 			if (pos > 0)
 				list_delete_at(edge->owner->edges, pos);
 		}
+*/
+		if (edge->owner != NULL)
+			list_delete(edge->owner->edges, edge);
 
 		list_destroy(edge->attributes);
 		free(edge->attributes);

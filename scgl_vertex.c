@@ -60,12 +60,15 @@ scgl_vertex_destroy(scgl_vertex_t *vertex) {
 				e->from = NULL;
 		}
 		list_iterator_stop(vertex->out);
-
+/*
 		if (vertex->owner != NULL) {
 			pos = list_locate(vertex->owner->vertexes, vertex);
 			if (pos > 0)
 				list_delete_at(vertex->owner->vertexes, pos);
 		}
+*/
+		if (vertex->ovner != NULL)
+			list_delete(vertex->owner->vertexes, vertex);
 
 		list_destroy(vertex->in);
 		list_destroy(vertex->out);
