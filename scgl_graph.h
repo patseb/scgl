@@ -34,6 +34,7 @@ scgl_graph_t* scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int
 
 /**
  * free memory occupied by graph and related vertex/edge objects.
+ * remember about set pointer to graph object to NULL after destroy
  *
  * @param graph	graph object
  */
