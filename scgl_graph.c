@@ -84,23 +84,20 @@ scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t* vertex) {
 		list_iterator_start(vertex->in);
 		while (list_iterator_hasnext(vertex->in)) {
 			e = (scgl_edge_t*) list_iterator_next(vertex->in);
-			scgl_edge_destroy(e);
-			e = NULL;
+			scgl_edge_destroy(&e);
 		}
 		list_iterator_stop(vertex->in);
 
 		list_iterator_start(vertex->out);
 		while (list_iterator_hasnext(vertex->out)) {
 			e = (scgl_edge_t*) list_iterator_next(vertex->out);
-			scgl_edge_destroy(e);
-			e = NULL;
+			scgl_edge_destroy(&e);
 		}
 		list_iterator_stop(vertex->out);
 
 		list_delete(graph->vertexes, vertex);
 
-		scgl_vertex_destroy(vertex);
-		vertex = NULL;
+		scgl_vertex_destroy(&vertex);
 	}
 }
 
