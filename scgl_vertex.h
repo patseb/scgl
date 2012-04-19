@@ -37,11 +37,10 @@ scgl_vertex_t* scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n,
 /**
  * free memory occupied by vertex object
  * remove relation between vertex and edge, but doesn't free edge object
- * remember about set pointer to vertex object to NULL after detroy
  * 
  * @param vertex	vertex object
  */
-void scgl_vertex_destroy(scgl_vertex_t *vertex);
+void scgl_vertex_destroy(scgl_vertex_t **vertex);
 
 /**
  * add edge to existing vertex, function modify edge from/to attributes according to direction parameter

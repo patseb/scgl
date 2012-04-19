@@ -46,47 +46,42 @@ scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_direct
 }
 
 void
-scgl_edge_destroy(scgl_edge_t *edge) {
+scgl_edge_destroy(scgl_edge_t **edge) {
 	scgl_pair_t *p;
 	int pos;
 
-	if (edge != NULL) {
-		if (edge->to != NULL) {
-			list_delete(edge->to->in, edge);
-			if (edge->is_directed == 0)
-				list_delete(edge->to->out, edge);
-			edge->to = NULL;
+	if (edge != NULL && *edge != NULL) {
+		if ((*edge)->to != NULL) {
+			list_delete((*edge)->to->in, edge);
+			if ((*edge)->is_directed == 0)
+				list_delete((*edge)->to->out, edge);
+			(*edge)->to = NULL;
 		}
-		if (edge->from != NULL) {
-			list_delete(edge->from->out, edge);
-			if (edge->is_directed == 0)
-				list_delete(edge->from->in, edge);
-			edge->from = NULL;
+		if ((*edge)->from != NULL) {
+			list_delete((*edge)->from->out, edge);
+			if ((*edge)->is_directed == 0)
+				list_delete((*edge)->from->in, edge);
+			(*edge)->from = NULL;
 		}
 
-		list_iterator_start(edge->attributes);
-		while (list_iterator_hasnext(edge->attributes)) {
-			p = (scgl_pair_t*) list_iterator_next(edge->attributes);
+		list_iterator_start((*edge)->attributes);
+		while (list_iterator_hasnext((*edge)->attributes)) {
+			p = (scgl_pair_t*) list_iterator_next((*edge)->attributes);
 			if (p != NULL)
-				scgl_pair_destroy(p, edge->attr_free_fun);
+				scgl_pair_destroy(p, (*edge)->attr_free_fun);
 		}
-		list_iterator_stop(edge->attributes);
-/*
-		if (edge->owner != NULL) {
-			pos = list_locate(edge->owner->edges, edge);
-			if (pos > 0)
-				list_delete_at(edge->owner->edges, pos);
-		}
-*/
-		if (edge->owner != NULL)
-			list_delete(edge->owner->edges, edge);
+		list_iterator_stop((*edge)->attributes);
 
-		list_destroy(edge->attributes);
-		free(edge->attributes);
-		free(edge->id);
-		edge->attributes = NULL;
-		edge->id = NULL;
-		free(edge);
+		if ((*edge)->owner != NULL)
+			list_delete((*edge)->owner->edges, edge);
+
+		list_destroy((*edge)->attributes);
+		free((*edge)->attributes);
+		free((*edge)->id);
+		(*edge)->attributes = NULL;
+		(*edge)->id = NULL;
+		free(*edge);
+		*edge = NULL;
 	}
 }
 

@@ -40,45 +40,40 @@ scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **
 }
 
 void
-scgl_vertex_destroy(scgl_vertex_t *vertex) {
+scgl_vertex_destroy(scgl_vertex_t **vertex) {
 	scgl_edge_t *e;
 	int pos;
 
-	if (vertex != NULL) {
-		list_iterator_start(vertex->in);
-		while (list_iterator_hasnext(vertex->in)) {
-			e = (scgl_edge_t*) list_iterator_next(vertex->in);
+	if ((*vertex) != NULL) {
+		list_iterator_start((*vertex)->in);
+		while (list_iterator_hasnext((*vertex)->in)) {
+			e = (scgl_edge_t*) list_iterator_next((*vertex)->in);
 			if (e != NULL)
 				e->to = NULL;
 		}
-		list_iterator_stop(vertex->in);
+		list_iterator_stop((*vertex)->in);
 
-		list_iterator_start(vertex->out);
-		while (list_iterator_hasnext(vertex->out)) {
-			e = (scgl_edge_t*) list_iterator_next(vertex->out);
+		list_iterator_start((*vertex)->out);
+		while (list_iterator_hasnext((*vertex)->out)) {
+			e = (scgl_edge_t*) list_iterator_next((*vertex)->out);
 			if (e != NULL)
 				e->from = NULL;
 		}
-		list_iterator_stop(vertex->out);
-/*
-		if (vertex->owner != NULL) {
-			pos = list_locate(vertex->owner->vertexes, vertex);
-			if (pos > 0)
-				list_delete_at(vertex->owner->vertexes, pos);
-		}
-*/
-		if (vertex->owner != NULL)
-			list_delete(vertex->owner->vertexes, vertex);
+		list_iterator_stop((*vertex)->out);
 
-		list_destroy(vertex->in);
-		list_destroy(vertex->out);
-		free(vertex->in);
-		free(vertex->out);
-		free(vertex->id);
-		vertex->in = NULL;
-		vertex->out = NULL;
-		vertex->id = NULL;
-		free(vertex);
+		if ((*vertex)->owner != NULL)
+			list_delete((*vertex)->owner->vertexes, vertex);
+
+		list_destroy((*vertex)->in);
+		list_destroy((*vertex)->out);
+		free((*vertex)->in);
+		free((*vertex)->out);
+		free((*vertex)->id);
+		(*vertex)->in = NULL;
+		(*vertex)->out = NULL;
+		(*vertex)->id = NULL;
+		free(*vertex);
+		*vertex = NULL;
 	}
 }
 
