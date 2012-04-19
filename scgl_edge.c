@@ -130,6 +130,16 @@ scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value) {
 	list_append(edge->attributes, (void*) p);
 }
 
+void
+scgl_edge_del_attribute(scgl_edge_t *edge, const char *key) {
+	scgl_pair_t *p;
+
+	p = list_seek(edge->attributes, key);
+	if (p != NULL)
+		scgl_pair_destroy(p, edge->attr_free_fun);
+	free(p);
+}
+
 void*
 scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
 	scgl_pair_t *p;

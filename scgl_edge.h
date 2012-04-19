@@ -97,6 +97,14 @@ int scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigne
 void scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value);
 
 /**
+ * remove attribute from edge
+ *
+ * @param edge	edge object
+ * @param key	unique key for locate attribute
+ */
+void scgl_edge_del_attribute(scgl_edge_t *edge, const char *key);
+
+/**
  * get attribute's value for specified key
  *
  * @param edge	edge object
