@@ -85,9 +85,7 @@ scgl_edge_destroy(scgl_edge_t **edge) {
 
 char*
 scgl_edge_get_id(const scgl_edge_t *edge) {
-	if (edge == NULL)
-		return NULL;
-	return edge->id;
+	return (edge == NULL ? NULL : edge->id);
 }
 
 void
@@ -105,9 +103,7 @@ scgl_edge_set_id(scgl_edge_t *edge, const char *id) {
 
 cost_type_t
 scgl_edge_get_cost(const scgl_edge_t *edge) {
-	if (edge == NULL)
-		return -1;
-	return edge->cost;
+	return (edge == NULL ? -1 : edge->cost);
 }
 
 void
@@ -159,7 +155,7 @@ scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned in
 
 int
 scgl_edge_del_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex) {
-		return scgl_vertex_del_edge(vertex, edge);
+	return scgl_vertex_del_edge(vertex, edge);
 }
 
 void
@@ -199,17 +195,12 @@ scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
 
 int
 scgl_edge_get_attributes_count(const scgl_edge_t *edge) {
-	if (edge == NULL)
-		return -1;
-	return list_size(edge->attributes);
+	return (edge == NULL ? -1 : list_size(edge->attributes));
 }
 
 scgl_pair_t*
 scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i) {
-	if (edge != NULL)
-		return list_get_at(edge->attributes, i);
-	else
-		return NULL;
+	return (edge == NULL ? NULL : list_get_at(edge->attributes, i);
 }
 
 void
