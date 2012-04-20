@@ -132,8 +132,6 @@ void scgl_vertex_dump(scgl_vertex_t *vertex, FILE *fp);
 /* internal functions section */
 int scgl_vertex_seeker(const void *elem, const void *key);
 int scgl_vertex_comparator(const void *a, const void *b);
-static void scgl_vertex_dump_edge(scgl_edge_t* edge, void *data);
-
 
 #ifdef __cplusplus
 }
