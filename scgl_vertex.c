@@ -174,6 +174,8 @@ scgl_vertex_dump(scgl_vertex_t *vertex, FILE *fp) {
 	        vertex->id,
 	        (vertex->in ? scgl_vertex_get_edges_in_count(vertex) : 0));
 	scgl_vertex_foreach_edge(vertex, 0, scgl_vertex_dump_edge, fp);
+	fprintf(fp, "\tOutgoing edges (%d):", (vertex->out ? scgl_vertex_get_edges_out_count(vertex) : 0));
+	scgl_vertex_foreach_edge(vertex, 1, scgl_vertex_dump_edge, fp);
 }
 
 int
