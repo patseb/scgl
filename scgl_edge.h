@@ -174,7 +174,8 @@ void scgl_edge_set_is_directed(scgl_edge_t *edge, const unsigned int directed);
  * @param fun   function which will print attributes, last parameter (result), should be casted as FILE* type for fprintf - eg.:
  * void
  * edge_attribute_dump(char *key, void *value, void *fp) {
- *  fprintf((FILE*)fp, "%s : %s \n", key, (char*)value);
+ *  if (fp != NULL)
+ *      fprintf((FILE*)fp, "%s : %s \n", key, (char*)value);
  * }
  *
  * @see scgl_edge_foreach_attribute
