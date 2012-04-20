@@ -27,6 +27,18 @@ scgl_pair_destroy(scgl_pair_t *pair, attr_free_function fun) {
 	}
 }
 
+char*
+scgl_pair_get_key(const scgl_pair_t* pair) {
+	if (pair != NULL)
+		return pair->key;
+}
+
+void*
+scgl_pair_get_value(const scgl_pair_t* pair) {
+	if (pair != NULL)
+		return pair->value;
+}
+
 int
 scgl_pair_seeker(const void *elem, const void *key) {
 	const scgl_pair_t *p;

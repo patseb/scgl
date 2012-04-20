@@ -29,6 +29,22 @@ scgl_pair_t* scgl_pair_create(const char *key, void *value);
  */
 void scgl_pair_destroy(scgl_pair_t *pair, attr_free_function fun);
 
+/**
+ * return key argument from pair object
+ *
+ * @pair    reference to pair object
+ * @return reference to key
+ */
+char* scgl_pair_get_key(const scgl_pair_t* pair);
+
+/**
+ * return value argument from pair object
+ *
+ * @pair    reference to pair object
+ * @return reference to value
+ */
+void* scgl_pair_get_value(const scgl_pair_t* pair);
+
 /* internal functions section */
 int scgl_pair_seeker(const void *elem, const void *key);
 int scgl_pair_comparator(const void *a, const void *b);
