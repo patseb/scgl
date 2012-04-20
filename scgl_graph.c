@@ -29,7 +29,7 @@ scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, s
 	list_attributes_comparator(g->edges, scgl_edge_comparator);
 
 	for (i=0; i<vertexes_n; ++i)
-		list_append(g->vertexes,(void*)vertexes[i]);
+		list_append(g->vertexes, (void*)vertexes[i]);
 
 	for (i=0; i<edges_n; ++i)
 		list_append(g->edges, (void*)edges[i]);
