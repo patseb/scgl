@@ -42,7 +42,6 @@ scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **
 void
 scgl_vertex_destroy(scgl_vertex_t **vertex) {
 	scgl_edge_t *e;
-	int pos;
 
 	if (vertex != NULL && *vertex != NULL) {
 		list_iterator_start((*vertex)->in);
