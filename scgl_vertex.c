@@ -123,7 +123,7 @@ scgl_vertex_get_edges_out_count(const scgl_vertex_t *vertex) {
 
 scgl_edge_t*
 scgl_vertex_get_edge_in_at(const scgl_vertex_t *vertex, unsigned int i) {
-	if (vertex != NULL && vertex->in != NULL)
+	if (vertex != NULL)
 		return list_get_at(vertex->in, i);
 	else
 		return NULL;
@@ -131,7 +131,7 @@ scgl_vertex_get_edge_in_at(const scgl_vertex_t *vertex, unsigned int i) {
 
 scgl_edge_t*
 scgl_vertex_get_edge_out_at(const scgl_vertex_t *vertex, unsigned int i) {
-	if (vertex != NULL && vertex->out != NULL)
+	if (vertex != NULL)
 		return list_get_at(vertex->out, i);
 	else
 		return NULL;
@@ -158,7 +158,7 @@ scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int direction, ed
 
 static void
 scgl_vertex_dump_edge(scgl_edge_t* edge, void *data) {
-	if (edge != NULL && data != NULL) {
+	if (edge != NULL) {
 		fprintf((FILE*)data, " %s", edge->id);
 	}
 }
