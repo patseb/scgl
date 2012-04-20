@@ -191,6 +191,27 @@ scgl_edge_set_is_directed(scgl_edge_t *edge, const unsigned int directed) {
 		}
 }
 
+void
+scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_foreach_function fun) {
+	if (edge == NULL || fp == NULL)
+		return;
+
+	fprintf(fp,
+	        "Edge: %s \n"
+	            "\tWeight: %.2f \n"
+	            "\tDirected: %s \n"
+	            "\tEndpoint 1: %s \n"
+	            "\tEndpoint 2: %s \n"
+	            "\tAttributes: \n",
+	        edge->id,
+	        edge->weight,
+	        (edge->is_directed == 1 ? "Yes" : "No"),
+	        (edge->from ? edge->from->id : NULL),
+	        (edge->to ? edge->to->id : NULL));
+
+	scgl_edge_foreach_attribute(edge, fun, fp);
+}
+
 int
 scgl_edge_seeker(const void *elem, const void *key) {
 	const scgl_edge_t *e;

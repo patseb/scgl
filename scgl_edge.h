@@ -147,6 +147,21 @@ void scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun);
  */
 void scgl_edge_set_is_directed(scgl_edge_t *edge, const unsigned int directed);
 
+/**
+ * print edge object to stream
+ *
+ * @param edge  edge object
+ * @param fp    object containing information to control a stream
+ * @param fun   function which will print attributes, last parameter (result), should be casted as FILE* type for fprintf - eg.:
+ * void
+ * edge_attribute_dump(char *key, void *value, void *fp) {
+ *  fprintf((FILE*)fp, "%s : %s \n", key, (char*)value);
+ * }
+ *
+ * @see scgl_edge_foreach_attribute
+ */
+void scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_foreach_function fun);
+
 /* internal functions section */
 int scgl_edge_seeker(const void *elem, const void *key);
 int scgl_edge_comparator(const void *a, const void *b);
