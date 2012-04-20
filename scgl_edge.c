@@ -164,7 +164,7 @@ scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, void *
 
 	list_iterator_start(edge->attributes);
 	while (list_iterator_hasnext(edge->attributes)) {
-		*attr = (scgl_pair_t*) list_iterator_next(edge->attributes);
+		attr = (scgl_pair_t*) list_iterator_next(edge->attributes);
 		if (attr != NULL)
 			(*fun)(attr->key, attr->value, data);
 	}
