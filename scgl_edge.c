@@ -8,7 +8,7 @@
 #include "scgl_graph.h"
 
 scgl_edge_t*
-scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, double weight, scgl_pair_t **attr, unsigned int attr_n) {
+scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, weight_type_t weight, scgl_pair_t **attr, unsigned int attr_n) {
 	scgl_edge_t *e;
 	unsigned int i;
 
@@ -219,7 +219,7 @@ scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_foreach_function fun) {
 
 	fprintf(fp,
 	        "Edge: %s \n"
-	            "\tWeight: %.2f \n"
+	            "\tWeight: " weight_fmt "\n"
 	            "\tDirected: %s \n"
 	            "\tEndpoint 1: %s \n"
 	            "\tEndpoint 2: %s \n"

@@ -40,7 +40,8 @@ struct scgl_edge {
 	char *id;
 	/* 0 - edge is undirected, edge is 1 directed */
 	int is_directed;
-	double weight;
+	/* edge cost/weight, by default it's int type */
+	weight_type_t weight;
 	/* edge source vertex */
 	scgl_vertex_t *from;
 	/* edge destination vertex */
@@ -65,7 +66,7 @@ struct scgl_edge {
  * @param attr_n	lenght of attributes table
  * @return	edge object for success, NULL for failure
  */
-scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, double weight, scgl_pair_t **attr, unsigned int attr_n);
+scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, weight_type_t weight, scgl_pair_t **attr, unsigned int attr_n);
 
 /**
  * free memory occupied by edge object
