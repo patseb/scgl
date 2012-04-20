@@ -76,6 +76,23 @@ scgl_graph_destroy(scgl_graph_t **graph) {
 	}
 }
 
+char *
+scgl_graph_get_id(const scgl_graph_t *graph) {
+	return (graph == NULL ? NULL : graph->id);
+}
+
+void
+scgl_graph_set_id(scgl_graph_t *graph, const char *id) {
+	if (graph == NULL || id == NULL)
+		return;
+
+	if (graph->id != NULL)
+		free(graph->id);
+	graph->id = (char*) malloc(strlen(id)+1);
+
+	strcpy(graph->id, id);
+}
+
 int
 scgl_graph_add_vertex(scgl_graph_t *graph, scgl_vertex_t *vertex) {
 	if (graph == NULL || vertex == NULL)

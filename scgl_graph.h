@@ -38,6 +38,23 @@ scgl_graph_t* scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int
 void scgl_graph_destroy(scgl_graph_t **graph);
 
 /**
+ * return graph's id
+ *
+ * @param graph  reference to graph object
+ * @return  graph's id or NULL for failure
+ *      */
+char* scgl_graph_get_id(const scgl_graph_t *graph);
+
+/**
+ * set graph's id
+ * functions copy string content
+ *
+ * @param graph  reference to graph object
+ * @param id    new id
+ */
+void scgl_graph_set_id(scgl_graph_t *graph, const char *id);
+
+/**
  * add vertex to existing graph object
  *
  * @param graph	graph object
