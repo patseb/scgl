@@ -12,6 +12,11 @@ void my_free(char *key, void *data) {
 	data = NULL;
 }
 
+void edge_attr_dump(char *key, void *value, void *fp) {
+	if (fp != NULL)
+		fprintf((FILE*)fp, "\t\t%s : %s \n", key, (char*)value);
+}
+
 int main() {
 	scgl_graph_t *g1;
 	scgl_vertex_t **v;
@@ -33,7 +38,7 @@ int main() {
 		char *buf1, *buf2;
 		buf1 = (char*) malloc(10);
 		sprintf(buf1, "E-%d", i);
-		e[i] = scgl_edge_create(buf1, NULL, NULL, 1, i, NULL, 0);
+		e[i] = scgl_edge_create(buf1, NULL, NULL, 1, 12.0, NULL, 0);
 		free(buf1);
 		buf1 = (char*) malloc(10);
 		sprintf(buf1, "%d", i);
@@ -58,14 +63,14 @@ int main() {
 	scgl_edge_set_vertex(e[3], v[0], 1);
 
 	//e[2]->is_directed = 0;
+	scgl_graph_dump(g1, stdout, edge_attr_dump);
 
 	/* unnecessary */
-	//for(i=0; i<n; ++i)
-		//scgl_edge_destroy(&e[i]);
-
+	for(i=0; i<n; ++i)
+		scgl_edge_destroy(&e[i]);
 	/* unnecessary */
-	//for(i=0; i<n-1; ++i)
-		//scgl_vertex_destroy(&v[i]);
+	for(i=0; i<n-1; ++i)
+		scgl_vertex_destroy(&v[i]);
 
 	scgl_graph_destroy(&g1);
 
