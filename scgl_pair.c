@@ -31,12 +31,16 @@ char*
 scgl_pair_get_key(const scgl_pair_t* pair) {
 	if (pair != NULL)
 		return pair->key;
+	else
+		return NULL;
 }
 
 void*
 scgl_pair_get_value(const scgl_pair_t* pair) {
 	if (pair != NULL)
 		return pair->value;
+	else
+		return NULL;
 }
 
 int

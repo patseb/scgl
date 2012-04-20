@@ -33,7 +33,7 @@ void scgl_pair_destroy(scgl_pair_t *pair, attr_free_function fun);
  * return key argument from pair object
  *
  * @pair    reference to pair object
- * @return reference to key
+ * @return reference to key, NULL for failure
  */
 char* scgl_pair_get_key(const scgl_pair_t* pair);
 
@@ -41,7 +41,7 @@ char* scgl_pair_get_key(const scgl_pair_t* pair);
  * return value argument from pair object
  *
  * @pair    reference to pair object
- * @return reference to value
+ * @return reference to value, NULL for failure
  */
 void* scgl_pair_get_value(const scgl_pair_t* pair);
 
