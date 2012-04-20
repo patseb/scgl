@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include "simclist.h"
+#include "scgl_edge.h"
 
 typedef struct scgl_edge scgl_edge_t;
 typedef struct scgl_vertex scgl_vertex_t;
@@ -132,6 +133,15 @@ scgl_edge_t* scgl_graph_get_edge_at(const scgl_graph_t *graph, unsigned int i);
  * @return	amount of edges for success, -1 for failure
  */
 int scgl_graph_get_edge_count(const scgl_graph_t *graph);
+
+/**
+ * print graph object to stream
+ *
+ * @param graph reference to graph object
+ * @param fp    object containing information to control a stream
+ * @fun function to print edge's attributes
+ */
+void scgl_graph_dump(scgl_graph_t *graph, FILE *fp, attr_foreach_function fun);
 
 #ifdef __cplusplus
 }

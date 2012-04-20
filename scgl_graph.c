@@ -175,3 +175,21 @@ scgl_graph_get_edge_count(const scgl_graph_t *graph) {
 		return -1;
 	return list_size(graph->edges);
 }
+
+void
+scgl_graph_dump(scgl_graph_t *graph, FILE *fp, attr_foreach_function fun) {
+	int i, n;
+
+	if (graph == NULL || fp == NULL)
+		return;
+
+	fprintf(fp, "Graph: %s \n", graph->id);
+
+	n = scgl_graph_get_edge_count(graph);
+	for (i=0 ; i<n; ++i)
+		scgl_edge_dump(scgl_graph_get_edge_at(graph, i), fp, fun);
+
+	n = scgl_graph_get_vertex_count(graph);
+	for (i=0; i<n; ++i)
+		scgl_vertex_dump(scgl_graph_get_vertex_at(graph, i), fp);
+}
