@@ -69,6 +69,17 @@ void scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t* vertex);
 scgl_vertex_t* scgl_graph_get_vertex(scgl_graph_t *graph, char *vertex_id);
 
 /**
+ * return an vertex at give position
+ *
+ * @param graph reference to graph object
+ * @param i [0, vertex_count-1] position index of the element
+ * @return  reference to vertex or NULL for failure
+ *
+ * @see scgl_graph_get_edge_count()
+ */
+scgl_vertex_t* scgl_graph_get_vertex_at(const scgl_graph_t *graph, unsigned int i);
+
+/**
  * return amount of vertexes in graph
  *
  * @param graph	graph object

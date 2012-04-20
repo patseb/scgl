@@ -122,6 +122,13 @@ scgl_graph_get_vertex(scgl_graph_t *graph, char *vertex_id) {
 	return list_seek(graph->vertexes, vertex_id);
 }
 
+scgl_vertex_t*
+scgl_graph_get_vertex_at(const scgl_graph_t *graph, unsigned int i) {
+	if (graph == NULL || graph->vertexes == NULL)
+		return NULL;
+	return list_get_at(graph->vertexes, i);
+}
+
 int
 scgl_graph_get_vertex_count(const scgl_graph_t *graph) {
 	if (graph == NULL)
