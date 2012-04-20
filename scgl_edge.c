@@ -95,8 +95,7 @@ scgl_edge_set_id(scgl_edge_t *edge, const char *id) {
 
 	if (edge->id != NULL)
 		free(edge->id);
-	else
-		edge->id = (char*) malloc(strlen(id)+1);
+	edge->id = (char*) malloc(strlen(id)+1);
 
 	strcpy(edge->id, id);
 }
