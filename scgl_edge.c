@@ -160,7 +160,7 @@ scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i) {
 	if (edge != NULL && edge->attributes != NULL)
 		return list_get_at(edge->attributes, i);
 	else
-		retur NULL;
+		return NULL;
 }
 
 void
