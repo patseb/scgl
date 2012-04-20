@@ -126,7 +126,7 @@ void* scgl_edge_get_attribute(scgl_edge_t *edge, const char *key);
  * return an attribute at given position
  *
  * @param edge	edge object
- * @param i	[0, edges_attribute_count-1] position index of tehe element
+ * @param i	[0, edges_attribute_count-1] position index of the element
  * @return	reference to attribute pair or NULL for failure
  *
  * @see scgl_edge_get_attributes_count()
