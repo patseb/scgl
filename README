@@ -14,3 +14,5 @@ make MFLAGS='-Dcost_type="{type}" -Dcost_fmt=\"{printf format}\"'
 eg.
 make MFLAGS='-Dcost_type="double" -Dcost_fmt=\"%4.2f\"'
 make MFLAGS='-Dcost_type="int" -Dcost_fmt=\"%d\"'
+
+It's recommended that cost type was scalar
