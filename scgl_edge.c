@@ -155,6 +155,13 @@ scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
 	return p->value;
 }
 
+int
+scgl_edge_get_attributes_count(const scgl_edge_t *edge) {
+	if (edge == NULL || edge->attributes == NULL)
+		return -1;
+	return list_size(edge->attribtutes);
+}
+
 scgl_pair_t*
 scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i) {
 	if (edge != NULL && edge->attributes != NULL)

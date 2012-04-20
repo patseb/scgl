@@ -134,6 +134,14 @@ void* scgl_edge_get_attribute(scgl_edge_t *edge, const char *key);
 scgl_pair_t* scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i);
 
 /**
+ * count edge's attributes
+ *
+ * @param edge  reference to edge object
+ * @return number of attributes, -1 for failure
+ */
+int scgl_edge_get_attributes_count(const scgl_edge_t *edge);
+
+/**
  * call fun function for every attribute of edge
  *
  * @param edge	edge object
