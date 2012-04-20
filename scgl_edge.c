@@ -159,7 +159,7 @@ int
 scgl_edge_get_attributes_count(const scgl_edge_t *edge) {
 	if (edge == NULL || edge->attributes == NULL)
 		return -1;
-	return list_size(edge->attribtutes);
+	return list_size(edge->attributes);
 }
 
 scgl_pair_t*
