@@ -126,9 +126,28 @@ scgl_vertex_get_edge_in_at(const scgl_vertex_t *vertex, unsigned int i) {
 	return list_get_at(vertex->in, i);
 }
 
-scgl_edget_t*
+scgl_edge_t*
 scgl_vertex_get_edge_out_at(const scgl_vertex_t *vertex, unsigned int i) {
 	return list_get_at(vertex->out, i);
+}
+
+void
+scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int direction, edge_foreach_function fun, void *data) {
+	list_t *l;
+	scgl_edge_t *e;
+
+	if (vertex == NULL || (direction != 0 && direction != 1))
+		return;
+
+	l = direction ? vertex->out : vertex->in;
+	if (l != NULL) {
+		list_iterator_start(l);
+		while (list_iterator_hasnext(l)) {
+			e = (scgl_edge_t*) list_iterator_next(l);
+			if (e != NULL)
+				(*fun)(e, data);
+		}
+	}
 }
 
 int

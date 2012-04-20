@@ -10,6 +10,18 @@ extern "C" {
 typedef struct scgl_edge scgl_edge_t;
 typedef struct scgl_graph scgl_graph_t;
 
+/**
+ * a function for operate at vertex's edges
+ *
+ * Edge function will be called by foreach edge loop at specified vertex.
+ *
+ * @param edge  reference for edge object
+ * @data    reference for additional data, or result storing
+ *
+ * @see scgl_vertex_foreach_edge()
+ */
+typedef void (*edge_foreach_function)(scgl_edge_t *edge, void *data);
+
 /* vertex object */
 typedef struct scgl_vertex {
 	/* vertex identifier */
@@ -86,7 +98,7 @@ int scgl_vertex_get_edges_out_count(const scgl_vertex_t *vertex);
  *
  * @see scgl_vertex_get_edges_in_count()
  */
-int scgl_vertex_get_edge_in_at(const scgl_vertex_t *vertex, unsigned int i);
+scgl_edge_t* scgl_vertex_get_edge_in_at(const scgl_vertex_t *vertex, unsigned int i);
 
 /**
  * retrun an outgoing (from vertex) edge at a given position
@@ -97,11 +109,23 @@ int scgl_vertex_get_edge_in_at(const scgl_vertex_t *vertex, unsigned int i);
  *
  * @see scgl_vertex_get_edges_out_count()
  */
-int scgl_vertex_get_edge_out_at(const scgl_vertex_t *vertex, unsigned int i);
+scgl_edge_t* scgl_vertex_get_edge_out_at(const scgl_vertex_t *vertex, unsigned int i);
+
+/**
+ * call fun function for every edge in vertex
+ *
+ * @param vertex    reference to vertex object
+ * @param direction 0 for incoming edges, 1 for outgoing edges
+ * @param fun   reference to the called function
+ * @param result    reference to user data
+ */
+void scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int direction, edge_foreach_function fun, void *data);
 
 /* internal functions section */
 int scgl_vertex_seeker(const void *elem, const void *key);
 int scgl_vertex_comparator(const void *a, const void *b);
+
+
 
 #ifdef __cplusplus
 }
