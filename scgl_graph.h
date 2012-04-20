@@ -83,7 +83,7 @@ scgl_vertex_t* scgl_graph_get_vertex_at(const scgl_graph_t *graph, unsigned int 
  * @param graph	graph object
  * @return	amount of vertexes for success, -1 for failure
  */
-int scgl_graph_get_vertex_count(const scgl_graph_t *graph);
+int scgl_graph_get_vertexes_count(const scgl_graph_t *graph);
 
 /**
  * add edge to existing graph object
@@ -129,7 +129,7 @@ scgl_edge_t* scgl_graph_get_edge_at(const scgl_graph_t *graph, unsigned int i);
  * @param graph	graph object
  * @return	amount of edges for success, -1 for failure
  */
-int scgl_graph_get_edge_count(const scgl_graph_t *graph);
+int scgl_graph_get_edges_count(const scgl_graph_t *graph);
 
 /**
  * print graph object to stream

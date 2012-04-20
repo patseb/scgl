@@ -130,7 +130,7 @@ scgl_graph_get_vertex_at(const scgl_graph_t *graph, unsigned int i) {
 }
 
 int
-scgl_graph_get_vertex_count(const scgl_graph_t *graph) {
+scgl_graph_get_vertexes_count(const scgl_graph_t *graph) {
 	if (graph == NULL)
 		return -1;
 	return list_size(graph->vertexes);
@@ -170,7 +170,7 @@ scgl_graph_get_edge_at(const scgl_graph_t *graph, unsigned int i) {
 }
 
 int
-scgl_graph_get_edge_count(const scgl_graph_t *graph) {
+scgl_graph_get_edges_count(const scgl_graph_t *graph) {
 	if (graph == NULL)
 		return -1;
 	return list_size(graph->edges);
@@ -185,11 +185,11 @@ scgl_graph_dump(scgl_graph_t *graph, FILE *fp, attr_foreach_function fun) {
 
 	fprintf(fp, "Graph: %s \n", graph->id);
 
-	n = scgl_graph_get_edge_count(graph);
+	n = scgl_graph_get_edges_count(graph);
 	for (i=0 ; i<n; ++i)
 		scgl_edge_dump(scgl_graph_get_edge_at(graph, i), fp, fun);
 
-	n = scgl_graph_get_vertex_count(graph);
+	n = scgl_graph_get_vertexes_count(graph);
 	for (i=0; i<n; ++i)
 		scgl_vertex_dump(scgl_graph_get_vertex_at(graph, i), fp);
 }
