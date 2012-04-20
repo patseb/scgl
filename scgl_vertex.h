@@ -53,6 +53,23 @@ scgl_vertex_t* scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n,
 void scgl_vertex_destroy(scgl_vertex_t **vertex);
 
 /**
+ * return vertex's id
+ *
+ * @param vertex  reference to vertex object
+ * @return  vertex's id or NULL for failure
+ */
+char* scgl_vertex_get_id(const scgl_vertex_t *vertex);
+
+/**
+ * set vertex's id
+ * functions copy string content
+ *
+ * @param vertex  reference to vertex object
+ * @param id    new id
+ */
+void scgl_vertex_set_id(scgl_vertex_t *vertex, const char *id);
+
+/**
  * add edge to existing vertex, function modify edge from/to attributes according to direction parameter
  *
  * @param vertex	vertex object

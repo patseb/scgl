@@ -76,6 +76,23 @@ scgl_vertex_destroy(scgl_vertex_t **vertex) {
 	}
 }
 
+char*
+scgl_vertex_get_id(const scgl_vertex_t *vertex) {
+	return (vertex == NULL ? NULL : vertex->id);
+}
+
+void
+scgl_vertex_set_id(scgl_vertex_t *vertex, const char *id) {
+	if (vertex == NULL || id == NULL)
+		return;
+
+	if (vertex->id != NULL)
+		free(vertex->id);
+	vertex->id = (char*) malloc(strlen(id)+1);
+
+	strcpy(vertex->id, id);
+}
+
 int
 scgl_vertex_add_edge(scgl_vertex_t *vertex, scgl_edge_t *edge, unsigned int endpoint) {
 	if (endpoint != 0 && endpoint != 1)
@@ -108,32 +125,22 @@ scgl_vertex_del_edge(scgl_vertex_t *vertex, scgl_edge_t *edge) {
 
 int
 scgl_vertex_get_edges_in_count(const scgl_vertex_t *vertex) {
-	if (vertex == NULL)
-		return -1;
-	return list_size(vertex->in);
+	return (vertex == NULL ? -1 : list_size(vertex->in));
 }
 
 int
 scgl_vertex_get_edges_out_count(const scgl_vertex_t *vertex) {
-	if (vertex == NULL)
-		return -1;
-	return list_size(vertex->out);
+	return (vertex == NULL ? -1 : list_size(vertex->out));
 }
 
 scgl_edge_t*
 scgl_vertex_get_edge_in_at(const scgl_vertex_t *vertex, unsigned int i) {
-	if (vertex != NULL)
-		return list_get_at(vertex->in, i);
-	else
-		return NULL;
+	return (vertex == NULL ? NULL : list_get_at(vertex->in, i));
 }
 
 scgl_edge_t*
 scgl_vertex_get_edge_out_at(const scgl_vertex_t *vertex, unsigned int i) {
-	if (vertex != NULL)
-		return list_get_at(vertex->out, i);
-	else
-		return NULL;
+	return (vertex == NULL ? NULL : list_get_at(vertex->out, i));
 }
 
 void
