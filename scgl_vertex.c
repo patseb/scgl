@@ -156,6 +156,26 @@ scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int direction, ed
 	}
 }
 
+static void
+scgl_vertex_dump_edge(scgl_edge_t* edge, void *data) {
+	if (edge != NULL && data != NULL) {
+		fprintf((FILE*)data, " %s", edge->id);
+	}
+}
+
+void
+scgl_vertex_dump(scgl_vertex_t *vertex, FILE *fp) {
+	if (vertex == NULL || fp == NULL)
+		return;
+
+	fprintf(fp,
+	        "Vertex: %s \n",
+	            "\tIncoming edges (%d):",
+	        vertex->id,
+	        (vertex->in ? scgl_vertex_get_edges_in_count(vertex) : 0));
+	scgl_vertex_foreach_edge(vertex, 0, scgl_vertex_dump_edge, fp);
+}
+
 int
 scgl_vertex_seeker(const void *elem, const void *key) {
 	const scgl_vertex_t *v;

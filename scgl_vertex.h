@@ -121,10 +121,18 @@ scgl_edge_t* scgl_vertex_get_edge_out_at(const scgl_vertex_t *vertex, unsigned i
  */
 void scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int direction, edge_foreach_function fun, void *data);
 
+/**
+ * print vertex object to stream
+ *
+ * @param vertex    reference to vertex object
+ * @param fp    object containing information to control a stream
+ */
+void scgl_vertex_dump(scgl_vertex_t *vertex, FILE *fp);
+
 /* internal functions section */
 int scgl_vertex_seeker(const void *elem, const void *key);
 int scgl_vertex_comparator(const void *a, const void *b);
-
+static void scgl_vertex_dump_edge(scgl_edge_t* edge, void *data);
 
 
 #ifdef __cplusplus
