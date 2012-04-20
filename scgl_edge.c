@@ -8,7 +8,7 @@
 #include "scgl_graph.h"
 
 scgl_edge_t*
-scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, weight_type_t weight, scgl_pair_t **attr, unsigned int attr_n) {
+scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, cost_type_t cost, scgl_pair_t **attr, unsigned int attr_n) {
 	scgl_edge_t *e;
 	unsigned int i;
 
@@ -32,7 +32,7 @@ scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_direct
 	}
 	e->is_directed = is_directed;
 
-	e->weight = weight;
+	e->cost = cost;
 	e->attributes = (list_t*) malloc(sizeof(list_t));
 	list_init(e->attributes);
 	list_attributes_seeker(e->attributes, scgl_pair_seeker);
@@ -219,13 +219,13 @@ scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_foreach_function fun) {
 
 	fprintf(fp,
 	        "Edge: %s \n"
-	            "\tWeight: " weight_fmt "\n"
+	            "\tCost: " cost_fmt "\n"
 	            "\tDirected: %s \n"
 	            "\tEndpoint 1: %s \n"
 	            "\tEndpoint 2: %s \n"
 	            "\tAttributes: \n",
 	        edge->id,
-	        edge->weight,
+	        edge->cost,
 	        (edge->is_directed == 1 ? "Yes" : "No"),
 	        (edge->from ? edge->from->id : NULL),
 	        (edge->to ? edge->to->id : NULL));

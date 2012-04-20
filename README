@@ -7,10 +7,10 @@ Contact
 -------
 Feel free to email if you find a bug or request some feature: patseb at gmail dot com
 
-How to change weight type
--------------------------
-make MFLAGS='-Dweight_type="{type}" -Dweight_fmt=\"{printf format}\"'
+How to change edge's cost type
+------------------------------
+make MFLAGS='-Dcost_type="{type}" -Dcost_fmt=\"{printf format}\"'
 
 eg.
-make MFLAGS='-Dweight_type="double" -Dweight_fmt=\"%4.2f\"'
-make MFLAGS='-Dweight_type="int" -Dweight_fmt=\"%d\"'
+make MFLAGS='-Dcost_type="double" -Dcost_fmt=\"%4.2f\"'
+make MFLAGS='-Dcost_type="int" -Dcost_fmt=\"%d\"'

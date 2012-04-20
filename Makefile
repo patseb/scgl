@@ -1,7 +1,7 @@
 CC:=gcc
 CFLAGS:=-g3 -Wall -pedantic -std=c99
 LDFLAGS:=
-MFLAGS:=-Dweight_type="int" -Dweight_fmt=\"%d\"
+MFLAGS:=-Dcost_type="int" -Dcost_fmt=\"%d\"
 SOURCES:=simclist.c scgl_edge.c scgl_pair.c scgl_vertex.c scgl_graph.c
 OBJECTS:=$(SOURCES:.c=.o)
 EXECUTABLE:=test

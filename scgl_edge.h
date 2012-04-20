@@ -12,7 +12,7 @@ extern "C" {
  * a function for operate at attributes
  *
  * Attribute function will be called by foreach attribute loop at specified edge.
- * It can eg. sum values of all attributes and set edge weight field.
+ * It can eg. sum values of all attributes and set edge cost field.
  *
  * @param key	reference for key attribute
  * @param value	reference for value attribute
@@ -40,8 +40,8 @@ struct scgl_edge {
 	char *id;
 	/* 0 - edge is undirected, edge is 1 directed */
 	int is_directed;
-	/* edge cost/weight, by default it's int type */
-	weight_type_t weight;
+	/* edge cost, by default it's int type */
+	cost_type_t cost;
 	/* edge source vertex */
 	scgl_vertex_t *from;
 	/* edge destination vertex */
@@ -61,12 +61,12 @@ struct scgl_edge {
  * @param from	edge source (vertex object)
  * @param to	edge destination (vertex object)
  * @param is_directed 1 means that edge is directed, 0 opposite
- * @param weight	edge weight
+ * @param cost	edge cost
  * @param attr	table of pair objects, user-purpose attributes
  * @param attr_n	lenght of attributes table
  * @return	edge object for success, NULL for failure
  */
-scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, weight_type_t weight, scgl_pair_t **attr, unsigned int attr_n);
+scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, cost_type_t cost, scgl_pair_t **attr, unsigned int attr_n);
 
 /**
  * free memory occupied by edge object
