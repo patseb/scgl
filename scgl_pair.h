@@ -5,12 +5,13 @@
 extern "C" {
 #endif
 
+#include "scgl_def.h"
 #include "scgl_edge.h"
 
-typedef struct scgl_pair {
+struct scgl_pair {
 	char *key;
 	void *value;
-} scgl_pair_t;
+};
 
 /**
  * create pair object, allocate and initialize memory

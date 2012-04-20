@@ -6,10 +6,7 @@ extern "C" {
 #endif
 
 #include "simclist.h"
-
-typedef struct scgl_pair scgl_pair_t;
-typedef struct scgl_vertex scgl_vertex_t;
-typedef struct scgl_graph scgl_graph_t;
+#include "scgl_def.h"
 
 /**
  * a function for operate at attributes
@@ -38,7 +35,7 @@ typedef void (*attr_foreach_function)(char *key, void *value, void *result);
  */
 typedef void (*attr_free_function)(char *key, void *value);
 
-typedef struct scgl_edge {
+struct scgl_edge {
 	/* edge identifier */
 	char *id;
 	/* 0 - edge is undirected, edge is 1 directed */
@@ -54,7 +51,7 @@ typedef struct scgl_edge {
 	list_t *attributes;
 	/* user function which free attribute value memory */
 	attr_free_function attr_free_fun;
-} scgl_edge_t;
+};
 
 /**
  * create edge object, allocate and initialize memory

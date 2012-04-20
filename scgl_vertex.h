@@ -6,9 +6,7 @@ extern "C" {
 #endif
 
 #include "simclist.h"
-
-typedef struct scgl_edge scgl_edge_t;
-typedef struct scgl_graph scgl_graph_t;
+#include "scgl_def.h"
 
 /**
  * a function for operate at vertex's edges
@@ -23,7 +21,7 @@ typedef struct scgl_graph scgl_graph_t;
 typedef void (*edge_foreach_function)(scgl_edge_t *edge, void *data);
 
 /* vertex object */
-typedef struct scgl_vertex {
+struct scgl_vertex {
 	/* vertex identifier */
 	char *id;
 	/* list of edges which are directed to vertex */
@@ -32,7 +30,7 @@ typedef struct scgl_vertex {
 	list_t *out;
 	/* pointer to graph object which contains that vertex */
 	scgl_graph_t *owner;
-} scgl_vertex_t;
+};
 
 /**
  * create vertex object, allocate and initialize memory
