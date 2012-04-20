@@ -123,12 +123,18 @@ scgl_vertex_get_edges_out_count(const scgl_vertex_t *vertex) {
 
 scgl_edge_t*
 scgl_vertex_get_edge_in_at(const scgl_vertex_t *vertex, unsigned int i) {
-	return list_get_at(vertex->in, i);
+	if (vertex != NULL && vertex->in != NULL)
+		return list_get_at(vertex->in, i);
+	else
+		return NULL;
 }
 
 scgl_edge_t*
 scgl_vertex_get_edge_out_at(const scgl_vertex_t *vertex, unsigned int i) {
-	return list_get_at(vertex->out, i);
+	if (vertex != NULL && vertex->out != NULL)
+		return list_get_at(vertex->out, i);
+	else
+		return NULL;
 }
 
 void
