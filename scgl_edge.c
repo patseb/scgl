@@ -200,7 +200,7 @@ scgl_edge_get_attributes_count(const scgl_edge_t *edge) {
 
 scgl_pair_t*
 scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i) {
-	return (edge == NULL ? NULL : list_get_at(edge->attributes, i);
+	return (edge == NULL ? NULL : list_get_at(edge->attributes, i));
 }
 
 void
