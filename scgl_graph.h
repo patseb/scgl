@@ -66,7 +66,7 @@ void scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t* vertex);
  * @param vertex_id	vertex identifier
  * @return	vertex for success, NULL for failure
  */
-scgl_vertex_t* scgl_graph_get_vertex(scgl_graph_t *graph, char *vertex_id);
+scgl_vertex_t* scgl_graph_get_vertex(const scgl_graph_t *graph, const char *vertex_id);
 
 /**
  * return an vertex at give position

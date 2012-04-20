@@ -116,7 +116,7 @@ scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t* vertex) {
 }
 
 scgl_vertex_t*
-scgl_graph_get_vertex(scgl_graph_t *graph, char *vertex_id) {
+scgl_graph_get_vertex(const scgl_graph_t *graph, const char *vertex_id) {
 	if (graph == NULL || vertex_id == NULL)
 		return NULL;
 	return list_seek(graph->vertexes, vertex_id);
