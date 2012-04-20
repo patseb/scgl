@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 #include "simclist.h"
 #include "scgl_edge.h"
 #include "scgl_pair.h"
@@ -92,7 +91,8 @@ void
 scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t* vertex) {
 	scgl_edge_t *e;
 
-	assert(graph != NULL);
+	if (graph == NULL)
+		return;
 
 	if (vertex != NULL) {
 		list_iterator_start(vertex->in);

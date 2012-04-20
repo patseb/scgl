@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 #include "simclist.h"
 #include "scgl_edge.h"
 #include "scgl_pair.h"
@@ -127,7 +126,9 @@ void
 scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value) {
 	scgl_pair_t *p;
 
-	assert(edge != NULL);
+	if (edge == NULL)
+		return;
+
 	p = scgl_pair_create(key, value);
 	list_append(edge->attributes, (void*) p);
 }
@@ -146,7 +147,8 @@ void*
 scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
 	scgl_pair_t *p;
 
-	assert(edge != NULL);
+	if (edge == NULL)
+		return NULL;
 
 	p = list_seek(edge->attributes, key);
 	if (p == NULL)
