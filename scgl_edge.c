@@ -47,7 +47,6 @@ scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_direct
 void
 scgl_edge_destroy(scgl_edge_t **edge) {
 	scgl_pair_t *p;
-	int pos;
 
 	if (edge != NULL && *edge != NULL) {
 		if ((*edge)->to != NULL) {
@@ -196,10 +195,10 @@ scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun) {
 
 void
 scgl_edge_set_is_directed(scgl_edge_t *edge, const unsigned int directed) {
-	if (edge != NULL)
+	if (edge != NULL) {
 		if (edge->is_directed != directed) {
 			edge->is_directed = directed;
-			if (edge->from != NULL && edge->to != NULL)
+			if (edge->from != NULL && edge->to != NULL) {
 				if (directed == 0) {
 					list_append(edge->from->in, edge);
 					list_append(edge->to->out, edge);
@@ -208,7 +207,9 @@ scgl_edge_set_is_directed(scgl_edge_t *edge, const unsigned int directed) {
 					list_delete(edge->from->in, edge);
 					list_delete(edge->to->out, edge);
 				}
+			}
 		}
+	}
 }
 
 void
