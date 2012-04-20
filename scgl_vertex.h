@@ -77,6 +77,27 @@ int scgl_vertex_get_edges_in_count(const scgl_vertex_t *vertex);
  */
 int scgl_vertex_get_edges_out_count(const scgl_vertex_t *vertex);
 
+/**
+ * retrun an incoming (to vertex) edge at a given position
+ *
+ * @param vertex	vertex object
+ * @param i [0, edges_in_count-1] position index of the element
+ * @return	reference to edge, or NULL for failure
+ *
+ * @see scgl_vertex_get_edges_in_count()
+ */
+int scgl_vertex_get_edge_in_at(const scgl_vertex_t *vertex, unsigned int i);
+
+/**
+ * retrun an outgoing (from vertex) edge at a given position
+ *
+ * @param vertex	vertex object
+ * @param i [0, edges_out_count-1] position index of the element
+ * @return	reference to edge, or NULL for failure
+ *
+ * @see scgl_vertex_get_edges_out_count()
+ */
+int scgl_vertex_get_edge_out_at(const scgl_vertex_t *vertex, unsigned int i);
 
 /* internal functions section */
 int scgl_vertex_seeker(const void *elem, const void *key);
