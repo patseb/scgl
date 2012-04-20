@@ -123,6 +123,17 @@ void scgl_edge_del_attribute(scgl_edge_t *edge, const char *key);
 void* scgl_edge_get_attribute(scgl_edge_t *edge, const char *key);
 
 /**
+ * return an attribute at given position
+ *
+ * @param edge	edge object
+ * @param i	[0, edges_attribute_count-1] position index of tehe element
+ * @return	reference to attribute pair or NULL for failure
+ *
+ * @see scgl_edge_get_attributes_count()
+ */
+scgl_pair_t* scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i);
+
+/**
  * call fun function for every attribute of edge
  *
  * @param edge	edge object
