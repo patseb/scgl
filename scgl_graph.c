@@ -155,6 +155,13 @@ scgl_graph_get_edge(const scgl_graph_t *graph, const char *edge_id) {
 	return list_seek(graph->edges, edge_id);
 }
 
+scgl_edge_t*
+scgl_graph_get_edge_at(const scgl_graph_t *graph, unsigned int i) {
+	if (graph == NULL || graph->edges == NULL)
+		return NULL;
+	return list_get_at(graph->edges, i);
+}
+
 int
 scgl_graph_get_edge_count(const scgl_graph_t *graph) {
 	if (graph == NULL)

@@ -104,6 +104,17 @@ void scgl_graph_del_edge(scgl_graph_t *graph, scgl_edge_t *edge);
 scgl_edge_t* scgl_graph_get_edge(const scgl_graph_t *graph, const char *edge_id);
 
 /**
+ * return an edge at give position
+ *
+ * @param graph reference to graph object
+ * @param i [0, edges_count-1] position index of the element
+ * @return  reference to edge or NULL for failure
+ *
+ * @see scgl_graph_get_edge_count()
+ */
+scgl_edge_t* scgl_graph_get_edge_at(const scgl_graph_t *graph, unsigned int i);
+
+/**
  * return amount of edges in graph
  *
  * @param graph	graph object
