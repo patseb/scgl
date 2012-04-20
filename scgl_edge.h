@@ -76,6 +76,48 @@ scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, 
 void scgl_edge_destroy(scgl_edge_t **edge);
 
 /**
+ * return edge's id
+ *
+ * @param edge  reference to edge object
+ * @return  edge's id or NULL for failure
+ */
+char* scgl_edge_get_id(const scgl_edge_t *edge);
+
+/**
+ * set edge's id
+ * functions copy string content
+ *
+ * @param edge  reference to edge object
+ * @param id    new id
+ */
+void scgl_edge_set_id(scgl_edge_t *edge, const char *id);
+
+/**
+ * return edge's cost
+ *
+ * @param edge  reference to edge object
+ * @return  edge's cost, -1 for failure
+ */
+cost_type_t scgl_edge_get_cost(const scgl_edge_t *edge);
+
+/**
+ * set edge's cost
+ *
+ * @param edge  reference to edge object
+ * @param cost  new cost
+ */
+void scgl_edge_set_cost(scgl_edge_t *edge, const cost_type_t cost);
+
+/**
+ * return reference to one of edge's endpoint
+ *
+ * @param edge  reference to edge object
+ * @param endpoint  0 - function returns 'from' vertex, 1 - function returns 'to' vertex
+ * @return  reference to choosen vertex of NULL for failure
+ */
+scgl_vertex_t* scgl_edge_get_vertex(scgl_edge_t *edge, const unsigned int endpoint);
+
+/**
  * modify edge 'from/to' attribute, function removes relation between edge and old vertex
  *
  * @param edge	edge object
@@ -157,8 +199,16 @@ void scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, v
 void scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun);
 
 /**
+ * return edge's is_directed attribute
+ *
+ * @param edge  reference to edge object
+ * @return  1 means edge is directed, 0 means undirected, -1 for failure
+ */
+int scgl_edge_get_is_directed(const scgl_edge_t* edge);
+
+/**
  * set is_directed attribute in specified edge object
- * 
+ *
  * @param edge  edge object
  * @param directed  1 means that edge is directed, 0 opposite
  */

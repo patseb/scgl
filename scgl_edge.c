@@ -83,6 +83,47 @@ scgl_edge_destroy(scgl_edge_t **edge) {
 	}
 }
 
+char*
+scgl_edge_get_id(const scgl_edge_t *edge) {
+	if (edge == NULL)
+		return NULL;
+	return edge->id;
+}
+
+void
+scgl_edge_set_id(scgl_edge_t *edge, const char *id) {
+	if (edge == NULL || id == NULL)
+		return;
+
+	if (edge->id != NULL)
+		free(edge->id);
+	else
+		edge->id = (char*) malloc(strlen(id)+1);
+
+	strcpy(edge->id, id);
+}
+
+cost_type_t
+scgl_edge_get_cost(const scgl_edge_t *edge) {
+	if (edge == NULL)
+		return -1;
+	return edge->cost;
+}
+
+void
+scgl_edge_set_cost(scgl_edge_t *edge, const cost_type_t cost) {
+	if (edge == NULL)
+		return;
+	edge->cost = cost;
+}
+
+scgl_vertex_t*
+scgl_edge_get_vertex(scgl_edge_t *edge, const unsigned int endpoint) {
+	if (edge == NULL)
+		return NULL;
+	return (endpoint == 0 ? edge->from : (endpoint == 1 ? edge->to : NULL));
+}
+
 int
 scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int endpoint) {
 	if (edge == NULL || vertex == NULL)
@@ -191,6 +232,11 @@ void
 scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun) {
 	if (edge != NULL)
 		edge->attr_free_fun = fun;
+}
+
+int
+scgl_edge_get_is_directed(const scgl_edge_t *edge) {
+	return (edge == NULL ? -1 : edge->is_directed);
 }
 
 void
