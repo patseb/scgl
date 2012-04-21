@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "simclist.h"
+#include "scgl_list.h"
 #include "scgl_edge.h"
 #include "scgl_vertex.h"
 #include "scgl_graph.h"
@@ -18,21 +18,20 @@ scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **
 
 	v->owner = NULL;
 
-	v->in = (list_t*) malloc(sizeof(list_t));
-	v->out = (list_t*) malloc(sizeof(list_t));
-
-	list_init(v->in);
-	list_init(v->out);
+	v->in = (scgl_list_t*) malloc(sizeof(scgl_list_t));
+	v->out = (scgl_list_t*) malloc(sizeof(scgl_list_t));
+	INIT_LIST_HEAD(&v->in->list);
+	INIT_LIST_HEAD(&v->out->list);
 
 	for (i=0; i<in_n; ++i)
 		if (in[i] != NULL) {
-			list_append(v->in, (void*)in[i]);
+			scgl_list_add(&v->in->list, in[i]);
 			in[i]->to = v;
 		}
 
 	for (i=0; i<out_n; ++i)
 		if (out[i] != NULL) {
-			list_append(v->out, (void*)out[i]);
+			scgl_list_add(&v->out->list, out[i]);
 			out[i]->from = v;
 		}
 
@@ -41,30 +40,27 @@ scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **
 
 void
 scgl_vertex_destroy(scgl_vertex_t **vertex) {
-	scgl_edge_t *e;
+	list_head_t *i;
+	scgl_list_t *tmp;
 
 	if (vertex != NULL && *vertex != NULL) {
-		list_iterator_start((*vertex)->in);
-		while (list_iterator_hasnext((*vertex)->in)) {
-			e = (scgl_edge_t*) list_iterator_next((*vertex)->in);
-			if (e != NULL)
-				e->to = NULL;
+		if ((*vertex)->in != NULL) {
+			list_for_each(i, &(*vertex)->in->list) {
+				tmp = list_entry(i, scgl_list_t, list);
+				scgl_vertex_del_edge(*vertex, (scgl_edge_t*)tmp->data);
+			}
 		}
-		list_iterator_stop((*vertex)->in);
 
-		list_iterator_start((*vertex)->out);
-		while (list_iterator_hasnext((*vertex)->out)) {
-			e = (scgl_edge_t*) list_iterator_next((*vertex)->out);
-			if (e != NULL)
-				e->from = NULL;
+		if ((*vertex)->out != NULL) {
+			list_for_each(i, &(*vertex)->out->list) {
+				tmp = list_entry(i, scgl_list_t, list);
+				scgl_vertex_del_edge(*vertex, (scgl_edge_t*)tmp->data);
+			}
 		}
-		list_iterator_stop((*vertex)->out);
 
 		if ((*vertex)->owner != NULL)
-			list_delete((*vertex)->owner->vertexes, *vertex);
+			scgl_list_delete(&(*vertex)->owner->vertexes->list, *vertex);
 
-		list_destroy((*vertex)->in);
-		list_destroy((*vertex)->out);
 		free((*vertex)->in);
 		free((*vertex)->out);
 		free((*vertex)->id);
@@ -106,15 +102,15 @@ scgl_vertex_del_edge(scgl_vertex_t *vertex, scgl_edge_t *edge) {
 		return -1;
 
 	if (edge->from == vertex) {
-		list_delete(vertex->out, edge);
+		scgl_list_delete(&vertex->out->list, edge);
 		if (edge->is_directed == 0)
-			list_delete(vertex->in, edge);
+			scgl_list_delete(&vertex->in->list, edge);
 		edge->from = NULL;
 	}
 	else if (edge->to == vertex) {
-		list_delete(vertex->in, edge);
+		scgl_list_delete(&vertex->in->list, edge);
 		if (edge->is_directed == 0)
-			list_delete(vertex->out, edge);
+			scgl_list_delete(&vertex->out->list, edge);
 		edge->to = NULL;
 	}
 	else
@@ -125,39 +121,40 @@ scgl_vertex_del_edge(scgl_vertex_t *vertex, scgl_edge_t *edge) {
 
 int
 scgl_vertex_get_edges_in_count(const scgl_vertex_t *vertex) {
-	return (vertex == NULL ? -1 : list_size(vertex->in));
+	return (vertex == NULL ? -1 : scgl_list_count(&vertex->in->list));
 }
 
 int
 scgl_vertex_get_edges_out_count(const scgl_vertex_t *vertex) {
-	return (vertex == NULL ? -1 : list_size(vertex->out));
+	return (vertex == NULL ? -1 : scgl_list_count(&vertex->out->list));
 }
 
 scgl_edge_t*
 scgl_vertex_get_edge_in_at(const scgl_vertex_t *vertex, unsigned int i) {
-	return (vertex == NULL ? NULL : list_get_at(vertex->in, i));
+	//return (vertex == NULL ? NULL : list_get_at(vertex->in, i));
+	return NULL;
 }
 
 scgl_edge_t*
 scgl_vertex_get_edge_out_at(const scgl_vertex_t *vertex, unsigned int i) {
-	return (vertex == NULL ? NULL : list_get_at(vertex->out, i));
+	//return (vertex == NULL ? NULL : list_get_at(vertex->out, i));
+	return NULL;
 }
 
 void
 scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int direction, edge_foreach_function fun, void *data) {
-	list_t *l;
-	scgl_edge_t *e;
+	scgl_list_t *tmp;
+	list_head_t *l, *i;
 
 	if (vertex == NULL || (direction != 0 && direction != 1))
 		return;
 
-	l = direction ? vertex->out : vertex->in;
+	l = direction ? &vertex->out->list : &vertex->in->list;
 	if (l != NULL) {
-		list_iterator_start(l);
-		while (list_iterator_hasnext(l)) {
-			e = (scgl_edge_t*) list_iterator_next(l);
-			if (e != NULL)
-				(*fun)(e, data);
+		list_for_each(i, l) {
+			tmp = list_entry(i, scgl_list_t, list);
+			if (tmp != NULL)
+				(*fun)((scgl_edge_t*)tmp->data, data);
 		}
 	}
 }

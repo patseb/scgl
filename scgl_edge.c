@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "simclist.h"
+#include "scgl_list.h"
 #include "scgl_edge.h"
 #include "scgl_pair.h"
 #include "scgl_vertex.h"
@@ -21,24 +21,23 @@ scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_direct
 	e->from = from;
 	e->to = to;
 	if (from != NULL) {
-		list_append(from->out, e);
+		scgl_list_add(&from->out->list, e);
 		if (is_directed == 0)
-			list_append(from->in, e);
+			scgl_list_add(&from->in->list, e);
 	}
 	if (to != NULL) {
-		list_append(to->in, e);
+		scgl_list_add(&to->in->list, e);
 		if (is_directed == 0)
-			list_append(to->out, e);
+			scgl_list_add(&to->out->list, e);
 	}
 	e->is_directed = is_directed;
 
 	e->cost = cost;
-	e->attributes = (list_t*) malloc(sizeof(list_t));
-	list_init(e->attributes);
-	list_attributes_seeker(e->attributes, scgl_pair_seeker);
-	list_attributes_comparator(e->attributes, scgl_pair_comparator);
+	e->attributes = (scgl_list_t*) malloc(sizeof(scgl_list_t));
+	INIT_LIST_HEAD(&e->attributes->list);
 	for (i=0; i<attr_n; ++i)
-		list_append(e->attributes, (void*)attr[i]);
+		scgl_list_add(&e->attributes->list, attr[i]);
+
 	e->attr_free_fun = NULL;
 
 	return e;
@@ -46,34 +45,33 @@ scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_direct
 
 void
 scgl_edge_destroy(scgl_edge_t **edge) {
-	scgl_pair_t *p;
+	scgl_list_t *tmp;
+	list_head_t *i, *j;
 
 	if (edge != NULL && *edge != NULL) {
 		if ((*edge)->to != NULL) {
-			list_delete((*edge)->to->in, *edge);
+			scgl_list_delete(&(*edge)->to->in->list, *edge);
 			if ((*edge)->is_directed == 0)
-				list_delete((*edge)->to->out, *edge);
+				scgl_list_delete(&(*edge)->to->out->list, *edge);
 			(*edge)->to = NULL;
 		}
 		if ((*edge)->from != NULL) {
-			list_delete((*edge)->from->out, *edge);
+			scgl_list_delete(&(*edge)->from->out->list, *edge);
 			if ((*edge)->is_directed == 0)
-				list_delete((*edge)->from->in, *edge);
+				scgl_list_delete(&(*edge)->from->in->list, *edge);
 			(*edge)->from = NULL;
 		}
 
-		list_iterator_start((*edge)->attributes);
-		while (list_iterator_hasnext((*edge)->attributes)) {
-			p = (scgl_pair_t*) list_iterator_next((*edge)->attributes);
-			if (p != NULL)
-				scgl_pair_destroy(p, (*edge)->attr_free_fun);
-		}
-		list_iterator_stop((*edge)->attributes);
-
 		if ((*edge)->owner != NULL)
-			list_delete((*edge)->owner->edges, *edge);
+			scgl_list_delete(&(*edge)->owner->edges->list, *edge);
 
-		list_destroy((*edge)->attributes);
+		list_for_each_safe(i, j, &(*edge)->attributes->list) {
+			tmp = list_entry(i, scgl_list_t, list);
+			list_del(i);
+			scgl_pair_destroy((scgl_pair_t*)tmp->data, (*edge)->attr_free_fun);
+			free(tmp);
+		}
+
 		free((*edge)->attributes);
 		free((*edge)->id);
 		(*edge)->attributes = NULL;
@@ -126,25 +124,25 @@ scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned in
 
 	if (endpoint == 0) {
 		if (edge->from != NULL) {
-				list_delete(edge->from->out, edge);
+				scgl_list_delete(&edge->from->out->list, edge);
 				if (edge->is_directed == 0)
-					list_delete(edge->from->in, edge);
+					scgl_list_delete(&edge->from->in->list, edge);
 		}
 		edge->from = vertex;
-		list_append(vertex->out, edge);
+		scgl_list_add(&vertex->out->list, edge);
 		if (edge->is_directed == 0)
-			list_append(vertex->in, edge);
+			scgl_list_add(&vertex->in->list, edge);
 	}
 	else if (endpoint == 1) {
 		if (edge->to != NULL) {
-				list_delete(edge->to->in, edge);
+				scgl_list_delete(&edge->to->in->list, edge);
 				if (edge->is_directed == 0)
-					list_delete(edge->to->out, edge);
+					scgl_list_delete(&edge->to->out->list, edge);
 		}
 		edge->to = vertex;
-		list_append(vertex->in, edge);
+		scgl_list_add(&vertex->in->list, edge);
 		if (edge->is_directed == 0)
-			list_append(vertex->out, edge);
+			scgl_list_add(&vertex->out->list, edge);
 	}
 	else
 		return -1;
@@ -165,57 +163,74 @@ scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value) {
 		return;
 
 	p = scgl_pair_create(key, value);
-	list_append(edge->attributes, (void*) p);
+	scgl_list_add(&edge->attributes->list, p);
 }
 
 void
 scgl_edge_del_attribute(scgl_edge_t *edge, const char *key) {
-	scgl_pair_t *p;
+	list_head_t *i;
+	scgl_list_t *tmp;
 
-	p = list_seek(edge->attributes, key);
-	if (p != NULL)
-		scgl_pair_destroy(p, edge->attr_free_fun);
-	free(p);
+	list_for_each(i, &edge->attributes->list) {
+		tmp = list_entry(i, scgl_list_t, list);
+		if (strcmp(((scgl_pair_t*)tmp->data)->key, key)) {
+			scgl_pair_destroy((scgl_pair_t*)tmp, edge->attr_free_fun);
+			break;
+		}
+	}
+	free(tmp);
 }
 
 void*
 scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
-	scgl_pair_t *p;
+	list_head_t *i;
+	scgl_list_t *tmp;
 
-	if (edge == NULL)
-		return NULL;
-
-	p = list_seek(edge->attributes, key);
-	if (p == NULL)
-		return NULL;
-
-	return p->value;
+	list_for_each(i, &edge->attributes->list) {
+		tmp = list_entry(i, scgl_list_t, list);
+		if (strcmp(((scgl_pair_t*)tmp)->key, key)) {
+			return (scgl_pair_t*)tmp->data;
+		}
+	}
+	return NULL;
 }
 
 int
 scgl_edge_get_attributes_count(const scgl_edge_t *edge) {
-	return (edge == NULL ? -1 : list_size(edge->attributes));
+	return (edge == NULL ? -1 : scgl_list_count(&edge->attributes->list));
 }
 
 scgl_pair_t*
 scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i) {
-	return (edge == NULL ? NULL : list_get_at(edge->attributes, i));
+	unsigned int k = 0;
+	list_head_t *j;
+	scgl_list_t *tmp;
+
+	list_for_each(j, &edge->attributes->list) {
+		if (i == k++) {
+			tmp = list_entry(j, scgl_list_t, list);
+			return (scgl_pair_t*)tmp->data;
+		}
+	}
+	return NULL;
 }
 
 void
 scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, void *data) {
 	scgl_pair_t *attr;
+	list_head_t *i;
+	scgl_list_t *tmp;
 
 	if (edge == NULL)
 		return;
 
-	list_iterator_start(edge->attributes);
-	while (list_iterator_hasnext(edge->attributes)) {
-		attr = (scgl_pair_t*) list_iterator_next(edge->attributes);
-		if (attr != NULL)
+	list_for_each(i, &edge->attributes->list) {
+		tmp = list_entry(i, scgl_list_t, list);
+		if (tmp->data != NULL) {
+			attr = (scgl_pair_t*)tmp->data;
 			(*fun)(attr->key, attr->value, data);
+		}
 	}
-	list_iterator_stop(edge->attributes);
 }
 
 void
@@ -236,12 +251,12 @@ scgl_edge_set_is_directed(scgl_edge_t *edge, const unsigned int directed) {
 			edge->is_directed = directed;
 			if (edge->from != NULL && edge->to != NULL) {
 				if (directed == 0) {
-					list_append(edge->from->in, edge);
-					list_append(edge->to->out, edge);
+					scgl_list_add(&edge->from->in->list, edge);
+					scgl_list_add(&edge->to->out->list, edge);
 				}
 				else {
-					list_delete(edge->from->in, edge);
-					list_delete(edge->to->out, edge);
+					scgl_list_delete(&edge->from->in->list, edge);
+					scgl_list_delete(&edge->to->out->list, edge);
 				}
 			}
 		}

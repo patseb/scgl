@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-#include "simclist.h"
 #include "scgl_edge.h"
 #include "scgl_def.h"
 
@@ -13,9 +12,9 @@ struct scgl_graph {
 	/* graph identifier */
 	char *id;
 	/* list of all graph vertexes */
-	list_t *vertexes;
+	scgl_list_t *vertexes;
 	/* list of all graph edges */
-	list_t *edges;
+	scgl_list_t *edges;
 };
 
 /**

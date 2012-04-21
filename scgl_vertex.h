@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-#include "simclist.h"
 #include "scgl_def.h"
 
 /**
@@ -25,9 +24,9 @@ struct scgl_vertex {
 	/* vertex identifier */
 	char *id;
 	/* list of edges which are directed to vertex */
-	list_t *in;
+	scgl_list_t *in;
 	/* list of edges which are directed out of vertex */
-	list_t *out;
+	scgl_list_t *out;
 	/* pointer to graph object which contains that vertex */
 	scgl_graph_t *owner;
 };

@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-#include "simclist.h"
 #include "scgl_def.h"
 
 /**
@@ -54,7 +53,7 @@ struct scgl_edge {
 	/* pointer to graph object which contains that edge */
 	scgl_graph_t *owner;
 	/* user-purpose list of edge attributes (pair_t objects) */
-	list_t *attributes;
+	scgl_list_t *attributes;
 	/* user function which free attribute value memory */
 	attr_free_function attr_free_fun;
 };
