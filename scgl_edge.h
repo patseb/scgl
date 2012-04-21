@@ -9,7 +9,12 @@ extern "C" {
 #include "scgl_def.h"
 
 /**
- * a function for operate at attributes
+ * definiton of edge cost attribute type
+ * it should be used whenever you want to manipulate edges cost
+ */
+typedef cost_type cost_type_t;
+
+/* a function for operate at attributes
  *
  * Attribute function will be called by foreach attribute loop at specified edge.
  * It can eg. sum values of all attributes and set edge cost field.
