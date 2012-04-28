@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include "list.h"
 #include "scgl_def.h"
 
 /**
@@ -41,19 +42,26 @@ typedef void (*attr_free_function)(char *key, void *value);
 
 struct scgl_edge {
 	/* edge identifier */
-	char *id;
+	//char *id;
 	/* 0 - edge is undirected, edge is 1 directed */
-	int is_directed;
+	//int is_directed;
+	scgl_edge_t *sibling;
 	/* edge cost, by default it's int type */
 	cost_type_t cost;
 	/* edge source vertex */
 	scgl_vertex_t *from;
+	/* list head which will be connected with vertex out list */
+	list_head_t from_list;
 	/* edge destination vertex */
 	scgl_vertex_t *to;
+	/* list head which will be connected with vertex in list */
+	list_head_t to_list;
 	/* pointer to graph object which contains that edge */
-	scgl_graph_t *owner;
-	/* user-purpose list of edge attributes (pair_t objects) */
-	scgl_list_t *attributes;
+	//scgl_graph_t *owner;
+	/* list head which will be connected with graph edges list */
+	list_head_t owner_list;
+	/* user-purpose list of edge attributes (attr_t objects) */
+	list_head_t attributes;
 	/* user function which free attribute value memory */
 	attr_free_function attr_free_fun;
 };
@@ -64,13 +72,13 @@ struct scgl_edge {
  * @param id	unique edge identifier
  * @param from	edge source (vertex object)
  * @param to	edge destination (vertex object)
- * @param is_directed 1 means that edge is directed, 0 opposite
+ * @param undirected 1 means that edge is undirected, 0 opposite
  * @param cost	edge cost
- * @param attr	table of pair objects, user-purpose attributes
+ * @param attr	table of attr objects, user-purpose attributes
  * @param attr_n	lenght of attributes table
  * @return	edge object for success, NULL for failure
  */
-scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, cost_type_t cost, scgl_pair_t **attr, unsigned int attr_n);
+scgl_edge_t* scgl_edge_create(scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, cost_type_t cost, scgl_attr_t **attr, unsigned int attr_n);
 
 /**
  * free memory occupied by edge object
@@ -80,21 +88,12 @@ scgl_edge_t* scgl_edge_create(char *id, scgl_vertex_t *from, scgl_vertex_t *to, 
 void scgl_edge_destroy(scgl_edge_t **edge);
 
 /**
- * return edge's id
  *
- * @param edge  reference to edge object
- * @return  edge's id or NULL for failure
+ * free memory occupied by edge's sibling (for inner purpose)
+ * 
+ * 
  */
-char* scgl_edge_get_id(const scgl_edge_t *edge);
-
-/**
- * set edge's id
- * functions copy string content
- *
- * @param edge  reference to edge object
- * @param id    new id
- */
-void scgl_edge_set_id(scgl_edge_t *edge, const char *id);
+//void scgl_edge_destroy_sibling(scgl_edge_t **edge);
 
 /**
  * return edge's cost
@@ -147,7 +146,7 @@ int scgl_dedge_del_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex);
  * @param key	unique key for indexing attribute
  * @param value	value to be added
  */
-void scgl_edge_add_attribute(scgl_edge_t *edge, const char *key, void *value);
+void scgl_edge_add_attribute(scgl_edge_t *edge, char *key, void *value);
 
 /**
  * remove attribute from edge
@@ -171,11 +170,11 @@ void* scgl_edge_get_attribute(scgl_edge_t *edge, const char *key);
  *
  * @param edge	edge object
  * @param i	[0, edges_attribute_count-1] position index of the element
- * @return	reference to attribute pair or NULL for failure
+ * @return	reference to attribute attr or NULL for failure
  *
  * @see scgl_edge_get_attributes_count()
  */
-scgl_pair_t* scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i);
+scgl_attr_t* scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i);
 
 /**
  * count edge's attributes
@@ -203,20 +202,20 @@ void scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, v
 void scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun);
 
 /**
- * return edge's is_directed attribute
+ * return if edge is undirected or not
  *
  * @param edge  reference to edge object
- * @return  1 means edge is directed, 0 means undirected, -1 for failure
+ * @return  1 means edge is udirected, 0 means directed, -1 for failure
  */
-int scgl_edge_get_is_directed(const scgl_edge_t* edge);
+int scgl_edge_get_undirected(const scgl_edge_t* edge);
 
 /**
- * set is_directed attribute in specified edge object
+ * make an edge undirected or directed
  *
  * @param edge  edge object
- * @param directed  1 means that edge is directed, 0 opposite
+ * @param directed  1 means that edge is undirected, 0 opposite
  */
-void scgl_edge_set_is_directed(scgl_edge_t *edge, const unsigned int directed);
+void scgl_edge_set_undirected(scgl_edge_t *edge, const unsigned int undirected);
 
 /**
  * print edge object to stream
@@ -233,10 +232,6 @@ void scgl_edge_set_is_directed(scgl_edge_t *edge, const unsigned int directed);
  * @see scgl_edge_foreach_attribute
  */
 void scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_foreach_function fun);
-
-/* internal functions section */
-int scgl_edge_seeker(const void *elem, const void *key);
-int scgl_edge_comparator(const void *a, const void *b);
 
 #ifdef __cplusplus
 }

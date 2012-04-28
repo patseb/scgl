@@ -24,11 +24,13 @@ struct scgl_vertex {
 	/* vertex identifier */
 	char *id;
 	/* list of edges which are directed to vertex */
-	scgl_list_t *in;
+	list_head_t in;
 	/* list of edges which are directed out of vertex */
-	scgl_list_t *out;
+	list_head_t out;
 	/* pointer to graph object which contains that vertex */
-	scgl_graph_t *owner;
+	//scgl_graph_t *owner;
+	/* list which will be connected with graph vertexes list */
+	list_head_t owner_list;
 };
 
 /**
@@ -66,7 +68,7 @@ char* scgl_vertex_get_id(const scgl_vertex_t *vertex);
  * @param vertex  reference to vertex object
  * @param id    new id
  */
-void scgl_vertex_set_id(scgl_vertex_t *vertex, const char *id);
+void scgl_vertex_set_id(scgl_vertex_t *vertex, char *id);
 
 /**
  * add edge to existing vertex, function modify edge from/to attributes according to direction parameter
@@ -144,7 +146,6 @@ void scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int directio
 void scgl_vertex_dump(scgl_vertex_t *vertex, FILE *fp);
 
 /* internal functions section */
-int scgl_vertex_seeker(const void *elem, const void *key);
 int scgl_vertex_comparator(const void *a, const void *b);
 
 #ifdef __cplusplus

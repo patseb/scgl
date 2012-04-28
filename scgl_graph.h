@@ -12,9 +12,9 @@ struct scgl_graph {
 	/* graph identifier */
 	char *id;
 	/* list of all graph vertexes */
-	scgl_list_t *vertexes;
+	list_head_t vertexes;
 	/* list of all graph edges */
-	scgl_list_t *edges;
+	list_head_t edges;
 };
 
 /**
@@ -51,7 +51,7 @@ char* scgl_graph_get_id(const scgl_graph_t *graph);
  * @param graph  reference to graph object
  * @param id    new id
  */
-void scgl_graph_set_id(scgl_graph_t *graph, const char *id);
+void scgl_graph_set_id(scgl_graph_t *graph, char *id);
 
 /**
  * add vertex to existing graph object
@@ -71,7 +71,7 @@ int scgl_graph_add_vertex(scgl_graph_t *graph, scgl_vertex_t *vertex);
  * @param vertex	vertex object
  * @see scgl_vertex_free()
  */
-void scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t* vertex);
+void scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t **vertex);
 
 /**
  * return vertex from graph using vertex identifier
@@ -117,16 +117,7 @@ int scgl_graph_add_edge(scgl_graph_t *graph, scgl_edge_t *edge);
  * @param edge	edge object
  * @see scgl_edge_destroy
  */
-void scgl_graph_del_edge(scgl_graph_t *graph, scgl_edge_t *edge);
-
-/**
- * return edge from graph using edge identifier
- *
- * @param graph	graph object
- * @param edge_id	edge identifier
- * @return	edge for success, NULL for failure
- */
-scgl_edge_t* scgl_graph_get_edge(const scgl_graph_t *graph, const char *edge_id);
+void scgl_graph_del_edge(scgl_graph_t *graph, scgl_edge_t **edge);
 
 /**
  * return an edge at give position

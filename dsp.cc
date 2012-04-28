@@ -6,7 +6,7 @@ using namespace std;
 using namespace boost;
 
 typedef
-adjacency_list_traits<vecS, vecS, undirectedS>::vertex_descriptor
+adjacency_list_traits<vecS, vecS, directedS>::vertex_descriptor
 Vertex;
 
 typedef
@@ -16,9 +16,14 @@ typedef graph_traits<Graph>::edge_descriptor Edge;
 
 int main()
 {
-	Graph g(6);
+
+	int a;
+	Graph g(1000);
 
 	for (int i=0; i<1000; ++i) {
 		Edge x = add_edge(i, i+1, g).first;
-		get(edge_weight, g, x) = i; }
+		get(edge_weight, g, x) = i; 
+	}
+	cout << "LOL";
+	cin >> a;
 }
