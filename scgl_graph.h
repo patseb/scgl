@@ -33,9 +33,17 @@ scgl_graph_t* scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int
  * free memory occupied by graph and related vertex/edge objects.
  *
  * @param graph	graph object
+ * @param fun   user function which will free memory occupied by edge's attributes
  */
-void scgl_graph_destroy(scgl_graph_t **graph);
+void scgl_graph_destroy(scgl_graph_t **graph, attr_function fun);
 
+/**
+ * copy graph object, all graph's vertexes and edges are copied too (their ids and attributes too)
+ *
+ * @param graph reference to graph object
+ * @return reference to copied graph or NULL for failure
+ */
+scgl_graph_t* scgl_graph_copy(const scgl_graph_t *graph);
 /**
  * return graph's id
  *
@@ -69,9 +77,10 @@ int scgl_graph_add_vertex(scgl_graph_t *graph, scgl_vertex_t *vertex);
  *
  * @param graph	graph object
  * @param vertex	vertex object
+ * @param fun   user function which will free memory occupied by edge's attriubtes (called when destroying edges)
  * @see scgl_vertex_free()
  */
-void scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t **vertex);
+void scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t **vertex, attr_function fun);
 
 /**
  * return vertex from graph using vertex identifier
@@ -115,9 +124,10 @@ int scgl_graph_add_edge(scgl_graph_t *graph, scgl_edge_t *edge);
  *
  * @param graph	graph object
  * @param edge	edge object
+ * @param fun   user function which will free memory occupied by edge's attributes
  * @see scgl_edge_destroy
  */
-void scgl_graph_del_edge(scgl_graph_t *graph, scgl_edge_t **edge);
+void scgl_graph_del_edge(scgl_graph_t *graph, scgl_edge_t **edge, attr_function fun);
 
 /**
  * return an edge at give position
@@ -145,7 +155,7 @@ int scgl_graph_get_edges_count(const scgl_graph_t *graph);
  * @param fp    object containing information to control a stream
  * @fun function to print edge's attributes
  */
-void scgl_graph_dump(scgl_graph_t *graph, FILE *fp, attr_foreach_function fun);
+void scgl_graph_dump(scgl_graph_t *graph, FILE *fp, attr_function fun);
 
 #ifdef __cplusplus
 }

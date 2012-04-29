@@ -28,7 +28,7 @@ scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, s
 }
 
 void
-scgl_graph_destroy(scgl_graph_t **graph) {
+scgl_graph_destroy(scgl_graph_t **graph, attr_function fun) {
 	scgl_edge_t *e;
 	scgl_vertex_t *v;
 	list_head_t *i, *j;
@@ -36,7 +36,7 @@ scgl_graph_destroy(scgl_graph_t **graph) {
 	if (graph != NULL && *graph != NULL) {
 		list_for_each_safe(i, j, &(*graph)->edges) {
 			e = list_entry(i, scgl_edge_t, owner_list);
-			scgl_edge_destroy(&e);
+			scgl_edge_destroy(&e, fun);
 		}
 
 		list_for_each_safe(i, j, &(*graph)->vertexes) {
@@ -49,6 +49,59 @@ scgl_graph_destroy(scgl_graph_t **graph) {
 		free(*graph);
 		*graph = NULL;
 	}
+}
+
+scgl_graph_t*
+scgl_graph_copy(const scgl_graph_t *graph) {
+	scgl_graph_t *g;
+	list_head_t *i;
+	scgl_vertex_t **v, *from = NULL, *to = NULL;
+	scgl_edge_t *e1, *e2;
+	char *id = NULL;
+	unsigned int j, n;
+
+	if (graph != NULL) {
+		if (graph->id != NULL) {
+			id = (char*) malloc(strlen(graph->id)+1);
+			strcpy(id, graph->id);
+		}
+		g = scgl_graph_create(id, NULL, 0, NULL, 0);
+
+		n = list_count(&graph->vertexes);
+		v = (scgl_vertex_t**) malloc(sizeof(scgl_vertex_t*)*n*2);
+		j = 0;
+		list_for_each(i, &graph->vertexes) {
+			v[j] = list_entry(i, scgl_vertex_t, owner_list);
+			id = NULL;
+			if (v[j]->id != NULL) {
+				id = (char*) malloc(strlen(v[j]->id)+1);
+				strcpy(id, v[j]->id);
+			}
+			v[j+1] = scgl_vertex_create(id, NULL, 0, NULL, 0);
+			scgl_graph_add_vertex(g, v[j+1]);
+			j += 2;
+		}
+
+		list_for_each(i, &graph->edges) {
+			e1 = list_entry(i, scgl_edge_t, owner_list);
+			for (j=0; j<n*2; j+=2)
+				if (v[j] == e1->from) {
+					from = v[j+1];
+					break;
+				}
+			for (j=0; j<n*2;j+=2)
+				if (v[j] == e1->to) {
+					to = v[j+1];
+					break;
+				}
+			e2 = scgl_edge_create(from, to, (e1->sibling != NULL ? 1 : 0), e1->cost, NULL, 0);
+			//copy attributes by copy_fun parameter
+			scgl_graph_add_edge(g, e2);
+		}
+		free(v);
+		return g;
+	}
+	return NULL;
 }
 
 char *
@@ -78,7 +131,7 @@ scgl_graph_add_vertex(scgl_graph_t *graph, scgl_vertex_t *vertex) {
 }
 
 void
-scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t **vertex) {
+scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t **vertex, attr_function fun) {
 	scgl_edge_t *e;
 	list_head_t *i, *j;
 
@@ -88,12 +141,12 @@ scgl_graph_del_vertex(scgl_graph_t *graph, scgl_vertex_t **vertex) {
 	if (vertex != NULL && *vertex != NULL) {
 		list_for_each_safe(i, j, &(*vertex)->in) {
 			e = list_entry(i, scgl_edge_t, to_list);
-			scgl_edge_destroy(&e);
+			scgl_edge_destroy(&e, fun);
 		}
 
 		list_for_each_safe(i, j, &(*vertex)->out) {
 			e = list_entry(i, scgl_edge_t, from_list);
-			scgl_edge_destroy(&e);
+			scgl_edge_destroy(&e, fun);
 		}
 
 		scgl_vertex_destroy(vertex);
@@ -154,9 +207,9 @@ scgl_graph_add_edge(scgl_graph_t *graph, scgl_edge_t *edge) {
 }
 
 void
-scgl_graph_del_edge(scgl_graph_t *graph, scgl_edge_t **edge) {
+scgl_graph_del_edge(scgl_graph_t *graph, scgl_edge_t **edge, attr_function fun) {
 	if (graph != NULL && edge != NULL) {
-		scgl_edge_destroy(edge);
+		scgl_edge_destroy(edge, fun);
 	}
 }
 
@@ -184,7 +237,7 @@ scgl_graph_get_edges_count(const scgl_graph_t *graph) {
 }
 
 void
-scgl_graph_dump(scgl_graph_t *graph, FILE *fp, attr_foreach_function fun) {
+scgl_graph_dump(scgl_graph_t *graph, FILE *fp, attr_function fun) {
 	int i, n;
 
 	if (graph == NULL || fp == NULL)
