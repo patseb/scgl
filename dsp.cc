@@ -24,6 +24,4 @@ int main()
 		Edge x = add_edge(i, i+1, g).first;
 		get(edge_weight, g, x) = i; 
 	}
-	cout << "LOL";
-	cin >> a;
 }
