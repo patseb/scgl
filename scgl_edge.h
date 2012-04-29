@@ -16,35 +16,23 @@ typedef cost_type cost_type_t;
 
 /* a function for operate at attributes
  *
- * Attribute function will be called by foreach attribute loop at specified edge.
- * It can eg. sum values of all attributes and set edge cost field.
+ * It can eg.:
+ *  - sum values of all attributes and set edge cost field
+ *  - free memory occupied by key and value
+ *  - dump data to specified stream (data pointer)
  *
  * @param key	reference for key attribute
  * @param value	reference for value attribute
- * @param result reference for result storing
+ * @param data reference for additional data or result storing
  *
  * @see scgl_edge_foreach_attribute()
- */
-typedef void (*attr_foreach_function)(char *key, void *value, void *result);
-
-/**
- * a function for free occupied memory by attribute values
- *
- * Attribute function will be called by foreach attribute loop at specified edge.
- * Attribute key will be free by scgl_edge_destroy() function.
- *
- * @param key	reference for key attribute
- * @param value	reference for value attribute
- *
  * @see scgl_edge_destroy()
+ * @see scgl_edge_dump()
  */
-typedef void (*attr_free_function)(char *key, void *value);
+typedef void (*attr_function)(char *key, void *value, void *data);
 
 struct scgl_edge {
-	/* edge identifier */
-	//char *id;
-	/* 0 - edge is undirected, edge is 1 directed */
-	//int is_directed;
+	/* edge's sibling, created when edge is undirected */
 	scgl_edge_t *sibling;
 	/* edge cost, by default it's int type */
 	cost_type_t cost;
@@ -62,8 +50,6 @@ struct scgl_edge {
 	list_head_t owner_list;
 	/* user-purpose list of edge attributes (attr_t objects) */
 	list_head_t attributes;
-	/* user function which free attribute value memory */
-	attr_free_function attr_free_fun;
 };
 
 /**
@@ -84,16 +70,9 @@ scgl_edge_t* scgl_edge_create(scgl_vertex_t *from, scgl_vertex_t *to, int is_dir
  * free memory occupied by edge object
  *
  * @param edge	edge object
+ * @param fun   user function which will free memory occupied by attributes
  */
-void scgl_edge_destroy(scgl_edge_t **edge);
-
-/**
- *
- * free memory occupied by edge's sibling (for inner purpose)
- * 
- * 
- */
-//void scgl_edge_destroy_sibling(scgl_edge_t **edge);
+void scgl_edge_destroy(scgl_edge_t **edge, attr_function fun);
 
 /**
  * return edge's cost
@@ -153,8 +132,9 @@ void scgl_edge_add_attribute(scgl_edge_t *edge, char *key, void *value);
  *
  * @param edge	edge object
  * @param key	unique key for locate attribute
+ * @param fun   user function which will free memory occupied by edge's attributes
  */
-void scgl_edge_del_attribute(scgl_edge_t *edge, const char *key);
+void scgl_edge_del_attribute(scgl_edge_t *edge, const char *key, attr_function fun);
 
 /**
  * get attribute's value for specified key
@@ -191,15 +171,7 @@ int scgl_edge_get_attributes_count(const scgl_edge_t *edge);
  * @param fun	pointer to the called function
  * @param result reference to called function result
  */
-void scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, void *result);
-
-/**
- * register function which will free memory for edge attributes
- *
- * @param edge	edge object
- * @param fun	pointer to the function
- */
-void scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun);
+void scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function fun, void *result);
 
 /**
  * return if edge is undirected or not
@@ -231,7 +203,7 @@ void scgl_edge_set_undirected(scgl_edge_t *edge, const unsigned int undirected);
  *
  * @see scgl_edge_foreach_attribute
  */
-void scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_foreach_function fun);
+void scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_function fun);
 
 #ifdef __cplusplus
 }

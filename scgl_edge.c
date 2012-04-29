@@ -57,7 +57,6 @@ scgl_edge_create(scgl_vertex_t *from, scgl_vertex_t *to, int undirected, cost_ty
 
 	for (i=0; i<attr_n; ++i)
 		list_add(&attr[i]->list, &e->attributes);
-	e->attr_free_fun = NULL;
 
 	return e;
 }
@@ -77,7 +76,7 @@ scgl_edge_destroy_sibling(scgl_edge_t **edge) {
 }
 
 void
-scgl_edge_destroy(scgl_edge_t **edge) {
+scgl_edge_destroy(scgl_edge_t **edge, attr_function fun) {
 	scgl_attr_t *tmp;
 	list_head_t *i, *j;
 
@@ -91,7 +90,7 @@ scgl_edge_destroy(scgl_edge_t **edge) {
 
 		list_for_each_safe(i, j, &(*edge)->attributes) {
 			tmp = list_entry(i, scgl_attr_t, list);
-			scgl_attr_destroy(&tmp, (*edge)->attr_free_fun);
+			scgl_attr_destroy(&tmp, fun);
 		}
 
 		scgl_edge_destroy_sibling(&(*edge)->sibling);
@@ -175,14 +174,14 @@ scgl_edge_add_attribute(scgl_edge_t *edge, char *key, void *value) {
 }
 
 void
-scgl_edge_del_attribute(scgl_edge_t *edge, const char *key) {
+scgl_edge_del_attribute(scgl_edge_t *edge, const char *key, attr_function fun) {
 	list_head_t *i;
 	scgl_attr_t *tmp;
 
 	list_for_each(i, &edge->attributes) {
 		tmp = list_entry(i, scgl_attr_t, list);
 		if (strcmp(tmp->key, key)) {
-			scgl_attr_destroy(&tmp, edge->attr_free_fun);
+			scgl_attr_destroy(&tmp, fun);
 			break;
 		}
 	}
@@ -224,7 +223,7 @@ scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i) {
 }
 
 void
-scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, void *data) {
+scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function fun, void *data) {
 	list_head_t *i;
 	scgl_attr_t *tmp;
 
@@ -235,12 +234,6 @@ scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_foreach_function fun, void *
 		tmp = list_entry(i, scgl_attr_t, list);
 		(*fun)(tmp->key, tmp->value, data);
 	}
-}
-
-void
-scgl_edge_attr_free_function(scgl_edge_t *edge, attr_free_function fun) {
-	if (edge != NULL)
-		edge->attr_free_fun = fun;
 }
 
 int
@@ -259,7 +252,7 @@ scgl_edge_set_undirected(scgl_edge_t *edge, unsigned int undirected) {
 }
 
 void
-scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_foreach_function fun) {
+scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_function fun) {
 	if (edge == NULL || fp == NULL)
 		return;
 

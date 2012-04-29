@@ -25,12 +25,13 @@ struct scgl_attr {
 scgl_attr_t* scgl_attr_create(char *key, void *value);
 
 /**
- * free memory occupied by attr object
+ * free memory occupied by attr object, calling user attr_free_function
+ * function set pointers to key/value to NULL
  *
  * @param attr	attr object
- * @param fun   function which will free value memory
+ * @param fun   user function which will free key/value memory
  */
-void scgl_attr_destroy(scgl_attr_t **attr, attr_free_function fun);
+void scgl_attr_destroy(scgl_attr_t **attr, attr_function fun);
 
 /**
  * return key argument from attr object

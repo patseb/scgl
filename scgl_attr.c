@@ -16,10 +16,10 @@ scgl_attr_create(char *key, void *value) {
 }
 
 void
-scgl_attr_destroy(scgl_attr_t **attr, attr_free_function fun) {
+scgl_attr_destroy(scgl_attr_t **attr, attr_function fun) {
 	if (attr != NULL && *attr != NULL) {
 		if (fun != NULL)
-			(*fun)((*attr)->key, (*attr)->value);
+			(*fun)((*attr)->key, (*attr)->value, NULL);
 		list_del(&(*attr)->list);
 		(*attr)->key = NULL;
 		(*attr)->value = NULL;
