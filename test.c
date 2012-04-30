@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include "scgl_algorithms.h"
 #include "scgl_graph.h"
 #include "scgl_vertex.h"
 #include "scgl_edge.h"
@@ -20,7 +21,7 @@ int main() {
 	scgl_graph_t *g1;//, *g2;
 	scgl_vertex_t **v;
 	scgl_edge_t **e;
-	unsigned int i, n = 1000;
+	unsigned int i, n = 3;
 	char *buf;
 
 	buf = (char*) malloc(3);
@@ -40,7 +41,7 @@ int main() {
 		//char buf[10];
 		//buf = (char*) malloc(6);
 		//sprintf(buf, "E-%d", i);
-		e[i] = scgl_edge_create(NULL, NULL, 0, i, NULL, 0);
+		e[i] = scgl_edge_create(NULL, NULL, 0, i+1, NULL, 0);
 		//free(buf);
 		//char *buf1 = (char*) malloc(10);
 		//sprintf(buf1, "%d", i);
@@ -50,10 +51,12 @@ int main() {
 		scgl_graph_add_edge(g1, e[i]);
 	}
 
-	for(i=0; i<n-1; ++i) {
-		scgl_edge_set_vertex(e[i], v[i], 0);
-		scgl_edge_set_vertex(e[i], v[i+1], 1);
-	}
+	//for(i=0; i<n-1; ++i) {
+		scgl_edge_set_vertex(e[0], v[0], 0);
+		scgl_edge_set_vertex(e[0], v[1], 1);
+		scgl_edge_set_vertex(e[1], v[1], 0);
+		scgl_edge_set_vertex(e[1], v[2], 1);
+	//}
 /*
 	scgl_edge_destroy(&e[0]);
 	scgl_edge_set_undirected(e[1], 1);
@@ -66,7 +69,20 @@ int main() {
 	scgl_graph_del_edge(g1, &e[3]); 
 */
 
-	//scgl_graph_dump(g1, stdout, edge_attr_dump);
+	scgl_graph_dump(g1, stdout, edge_attr_dump);
+
+	unsigned int *p = NULL;
+	cost_type *d = NULL;
+	scgl_dijkstra(g1, v[0], &p, &d);
+	printf("pred = ");
+	for(i=0; i<n; ++i)
+		printf("%d, ", p[i]);
+	printf("\ndist = ");
+	for(i=0; i<n; ++i)
+		printf("%d, ", d[i]);
+	printf("\n");
+	free(p);
+	free(d);
 	//g2 = scgl_graph_copy(g1);
 	//scgl_graph_dump(g2, stdout, edge_attr_dump);
 
