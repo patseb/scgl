@@ -189,7 +189,7 @@ scgl_graph_get_vertex_at(const scgl_graph_t *graph, unsigned int i) {
 	return NULL;
 }
 
-int
+unsigned int
 scgl_graph_get_vertexes_count(const scgl_graph_t *graph) {
 	if (graph == NULL)
 		return -1;
@@ -229,10 +229,10 @@ scgl_graph_get_edge_at(const scgl_graph_t *graph, unsigned int i) {
 	return NULL;
 }
 
-int
+unsigned int
 scgl_graph_get_edges_count(const scgl_graph_t *graph) {
 	if (graph == NULL)
-		return -1;
+		return 0;
 	return list_count(&graph->edges);
 }
 
