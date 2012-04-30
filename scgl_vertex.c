@@ -185,7 +185,7 @@ scgl_vertex_dump(scgl_vertex_t *vertex, FILE *fp) {
 	if (vertex == NULL || fp == NULL)
 		return;
 
-	fprintf(fp, "Vertex: %s \n", vertex->id);
+	fprintf(fp, "Vertex: [%s] %p \n", vertex->id, (void*)vertex);
 
 	fprintf(fp, "\tIncoming edges (%d):", scgl_vertex_get_edges_in_count(vertex));
 	scgl_vertex_foreach_edge(vertex, 0, scgl_vertex_dump_edge, fp);
