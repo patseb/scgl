@@ -19,10 +19,10 @@ scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, s
 	INIT_LIST_HEAD(&g->edges);
 
 	for (i=0; i<vertexes_n; ++i)
-		list_add(&vertexes[i]->owner_list, &g->vertexes);
+		list_add_tail(&vertexes[i]->owner_list, &g->vertexes);
 
 	for (i=0; i<edges_n; ++i)
-		list_add(&edges[i]->owner_list, &g->edges);
+		list_add_tail(&edges[i]->owner_list, &g->edges);
 
 	return g;
 }
@@ -125,7 +125,7 @@ scgl_graph_add_vertex(scgl_graph_t *graph, scgl_vertex_t *vertex) {
 	if (graph == NULL || vertex == NULL)
 		return -1;
 
-	list_add(&vertex->owner_list, &graph->vertexes);
+	list_add_tail(&vertex->owner_list, &graph->vertexes);
 
 	return 0;
 }
@@ -201,7 +201,7 @@ scgl_graph_add_edge(scgl_graph_t *graph, scgl_edge_t *edge) {
 	if (graph == NULL || edge == NULL)
 		return -1;
 
-	list_add(&edge->owner_list, &graph->edges);
+	list_add_tail(&edge->owner_list, &graph->edges);
 
 	return 0;
 }

@@ -23,9 +23,9 @@ scgl_edge_create_sibling(scgl_vertex_t* from, scgl_vertex_t* to, cost_type_t cos
 	e->cost = cost;
 
 	if (from != NULL)
-		list_add(&e->from_list, &from->out);
+		list_add_tail(&e->from_list, &from->out);
 	if (to != NULL)
-		list_add(&e->to_list, &to->in);
+		list_add_tail(&e->to_list, &to->in);
 
 	return e;
 }
@@ -45,9 +45,9 @@ scgl_edge_create(scgl_vertex_t *from, scgl_vertex_t *to, int undirected, cost_ty
 	e->from = from;
 	e->to = to;
 	if (from != NULL)
-		list_add(&e->from_list, &from->out);
+		list_add_tail(&e->from_list, &from->out);
 	if (to != NULL)
-		list_add(&e->to_list, &to->in);
+		list_add_tail(&e->to_list, &to->in);
 
 	e->sibling = NULL;
 	if (undirected == 1)
@@ -56,7 +56,7 @@ scgl_edge_create(scgl_vertex_t *from, scgl_vertex_t *to, int undirected, cost_ty
 	e->cost = cost;
 
 	for (i=0; i<attr_n; ++i)
-		list_add(&attr[i]->list, &e->attributes);
+		list_add_tail(&attr[i]->list, &e->attributes);
 
 	return e;
 }
@@ -132,9 +132,9 @@ scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned in
 				list_del(&edge->sibling->to_list);
 		}
 		edge->from = vertex;
-		list_add(&edge->from_list, &vertex->out);
+		list_add_tail(&edge->from_list, &vertex->out);
 		if (edge->sibling != NULL) {
-			list_add(&edge->sibling->to_list, &vertex->in);
+			list_add_tail(&edge->sibling->to_list, &vertex->in);
 			edge->sibling->to = vertex;
 		}
 	}
@@ -145,9 +145,9 @@ scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned in
 				list_del(&edge->sibling->from_list);
 		}
 		edge->to = vertex;
-		list_add(&edge->to_list, &vertex->in);
+		list_add_tail(&edge->to_list, &vertex->in);
 		if (edge->sibling != NULL) {
-			list_add(&edge->sibling->from_list, &vertex->out);
+			list_add_tail(&edge->sibling->from_list, &vertex->out);
 			edge->sibling->from = vertex;
 		}
 	}
@@ -170,7 +170,7 @@ scgl_edge_add_attribute(scgl_edge_t *edge, char *key, void *value) {
 		return;
 
 	p = scgl_attr_create(key, value);
-	list_add(&p->list, &edge->attributes);
+	list_add_tail(&p->list, &edge->attributes);
 }
 
 void
