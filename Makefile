@@ -2,7 +2,7 @@ CC:=gcc
 CFLAGS:=-g3 -Wall -pedantic -std=c99
 LDFLAGS:=
 MFLAGS:=-Dcost_type="int"
-SOURCES:=scgl_attr.c scgl_edge.c scgl_vertex.c scgl_graph.c
+SOURCES:=pqueue.c scgl_attr.c scgl_edge.c scgl_vertex.c scgl_graph.c scgl_algorithms.c
 OBJECTS:=$(SOURCES:.c=.o)
 EXECUTABLE:=test
 
