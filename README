@@ -9,10 +9,25 @@ Feel free to email if you find a bug or request some feature: patseb at gmail do
 
 How to change edge's cost type
 ------------------------------
-make MFLAGS='-Dcost_type="{type}" -Dcost_fmt=\"{printf format}\"'
+make MFLAGS='-Dcost_type="{type}"'
 
 eg.
-make MFLAGS='-Dcost_type="double" -Dcost_fmt=\"%4.2f\"'
-make MFLAGS='-Dcost_type="int" -Dcost_fmt=\"%d\"'
+make MFLAGS='-Dcost_type="long double"'
+make MFLAGS='-Dcost_type="short"'
 
-It's recommended that cost type was scalar
+It's recommended that cost type was scalar type.
+Makefile will choose printf format by itself for:
+	- short
+	- unsigned short
+	- int
+	- unsigned int
+	- long
+	- unsigned long
+	- long long
+	- unsigned long long
+	- float
+	- double
+	- long double
+
+If your cost type isn't on list, you can change printf format by:
+make MFLAGS='-Dcost_type="{type}" -Dcost_fmt=\"{printf format}\"'
