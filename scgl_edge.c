@@ -176,14 +176,15 @@ scgl_edge_add_attribute(scgl_edge_t *edge, char *key, void *value) {
 void
 scgl_edge_del_attribute(scgl_edge_t *edge, const char *key, attr_function fun) {
 	list_head_t *i;
-	scgl_attr_t *tmp;
+	scgl_attr_t *tmp = NULL;
 
 	list_for_each(i, &edge->attributes) {
 		tmp = list_entry(i, scgl_attr_t, list);
-		if (strcmp(tmp->key, key)) {
-			scgl_attr_destroy(&tmp, fun);
-			break;
-		}
+		if (tmp != NULL)
+			if (strcmp(tmp->key, key)) {
+				scgl_attr_destroy(&tmp, fun);
+				break;
+			}
 	}
 	free(tmp);
 }
