@@ -17,17 +17,17 @@ make MFLAGS='-Dcost_type="short"'
 
 It's recommended that cost type was scalar type.
 Makefile will choose printf format by itself for:
-	- short
-	- unsigned short
-	- int
-	- unsigned int
-	- long
-	- unsigned long
-	- long long
-	- unsigned long long
-	- float
-	- double
-	- long double
+ - short
+ - unsigned short
+ - int
+ - unsigned int
+ - long
+ - unsigned long
+ - long long
+ - unsigned long long
+ - float
+ - double
+ - long double
 
 If your cost type isn't on list, you can change printf format by:
 make MFLAGS='-Dcost_type="{type}" -Dcost_fmt=\"{printf format}\"'
