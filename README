@@ -16,7 +16,7 @@ make MFLAGS='-Dcost_type="long double"'
 make MFLAGS='-Dcost_type="short"'
 
 It's recommended that cost type was scalar type.
-Makefile will choose printf format by itself for:
+Makefile will choose printf format and MAX value by itself for types:
  - short
  - unsigned short
  - int
@@ -29,5 +29,5 @@ Makefile will choose printf format by itself for:
  - double
  - long double
 
-If your cost type isn't on list, you can change printf format by:
-make MFLAGS='-Dcost_type="{type}" -Dcost_fmt=\"{printf format}\"'
+If your cost type isn't on list, you can change printf format and MAX value by:
+make MFLAGS='-Dcost_type="{TYPE}" -Dcost_fmt=\"{FORMAT}\" -Dcost_max={VALUE}'
