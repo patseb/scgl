@@ -121,3 +121,14 @@ void pqueue_heapify(PQueue *q, size_t idx) {
 		pqueue_heapify(q, lrg_idx);
 	}
 }
+
+void pqueue_change_data(PQueue *q, int (*cmp)(const void *d1, const void *d2), void *old_data, void (*swp)(void **d1, void **d2), void *new_data) {
+	size_t i;
+	for(i=0; i<q->size; ++i) {
+		if (cmp(q->data[i], old_data)) {
+			swp(&q->data[i], &new_data);
+			pqueue_heapify(q, 0);
+			break;
+		}
+	}
+}

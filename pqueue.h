@@ -48,4 +48,6 @@ void pqueue_enqueue(PQueue *q, const void *data);
 /** Removes the element with the greatest priority from within the Queue */
 void *pqueue_dequeue(PQueue *q);
 
+void pqueue_change_data(PQueue *q, int (*cmp)(const void *d1, const void *d2), void *old_data, void (*swp)(void **d1, void **d2), void *new_data);
+
 #endif
