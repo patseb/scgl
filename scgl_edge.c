@@ -52,7 +52,6 @@ scgl_edge_create(scgl_vertex_t *from, scgl_vertex_t *to, int undirected, cost_ty
 	e->sibling = NULL;
 	if (undirected == 1)
 		e->sibling = scgl_edge_create_sibling(to, from, cost, e);
-
 	e->cost = cost;
 
 	for (i=0; i<attr_n; ++i)
@@ -111,6 +110,8 @@ scgl_edge_set_cost(scgl_edge_t *edge, const cost_type_t cost) {
 	if (edge == NULL)
 		return;
 	edge->cost = cost;
+	if (edge->sibling != NULL)
+		edge->sibling->cost = cost;
 }
 
 scgl_vertex_t*
