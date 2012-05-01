@@ -7,6 +7,7 @@
 #include "scgl_algorithms.h"
 #include "pqueue.h"
 #include <limits.h>
+#include <float.h>
 #include <assert.h>
 
 typedef struct pair {
@@ -25,20 +26,30 @@ static int cmp(const void *d1, const void *d2) {
 	return ((pair_t*)d2)->dist - ((pair_t*)d1)->dist;
 }
 
+static int find_data(const void *d1, const void *d2) {
+	return (((pair_t*)d1)->id == (*(unsigned int*)d2));
+}
+
+static void swap_data(void **d1, void **d2) {
+	free(*d1);
+	*d1 = *d2;
+}
+
 static unsigned int graph_get_vertex_num(const scgl_graph_t *graph, const scgl_vertex_t *vertex) {
 	list_head_t *i;
 	scgl_vertex_t *u;
 	unsigned int j = 0;
-	//assert(graph == NULL || vertex == NULL);
-	list_for_each(i, &graph->vertexes) {
-		u = list_entry(i, scgl_vertex_t, owner_list);
-		if (vertex == u)
-			break;
-		++j;
+	if(graph != NULL || vertex != NULL) {
+		list_for_each(i, &graph->vertexes) {
+			u = list_entry(i, scgl_vertex_t, owner_list);
+			if (vertex == u)
+				break;
+			++j;
+		}
 	}
 	return j;
 }
-//zrobić w MAKEFILE MAX_
+
 void
 scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int **p, cost_type **d) {
 	list_head_t *i;
@@ -57,7 +68,7 @@ scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int **p, c
 		*p = (unsigned int*) malloc(sizeof(unsigned int)*n);
 		c = (char*) malloc(n);
 		for (j=0; j<n; ++j) {
-			(*d)[j] = 999;
+			(*d)[j] = cost_max;
 			(*p)[j] = j;
 			c[j] = 'w';
 		}
@@ -80,8 +91,9 @@ scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int **p, c
 						pair = pair_new(v_i, (*d)[v_i]);
 						pqueue_enqueue(q, pair);
 					}
-					else if (c[v_i] == 'g')
-						;//decrease-key, znajdź V_i i dist na MAX??
+					else if (c[v_i] == 'g') {
+						pqueue_change_data(q, find_data, &v_i, swap_data, pair_new(v_i, cost_max));
+					}
 				}
 			}
 			c[u_i] = 'b';
