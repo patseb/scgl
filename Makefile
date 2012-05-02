@@ -55,13 +55,5 @@ $(OBJECTS): $(SOURCES)
 	$(CC) $(CFLAGS) $(MFLAGS) -c $*.c -o $@
 
 clean:
-	rm -rf *.o test
-
-#ifneq (,$(findstring long,$(COST_TYPE))) 
-#%	ifneq (,$(findstring long long,$(COST_TYPE))) 
-#%		override MFLAGS:=-Dcost_fmt=\"%lld\" -Dcost_max=LLONG_MAX 
-#%	endif 
-#%		override MFLAGS:=-Dcost_fmt=\"%ld\" -Dcost_max=LONG_MAX 
-#%	endif 
-#%endif OR 
-#%ifneq (long long,$(findstring long long,$(COST_TYPE))) override MFLAGS="EXACTMATCH" endif –  
+	rm -rf test
+	rm -rf src/*.o
