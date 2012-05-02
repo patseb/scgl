@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
-#include "scgl_edge.h"
 #include "scgl_vertex.h"
 #include "scgl_graph.h"
 

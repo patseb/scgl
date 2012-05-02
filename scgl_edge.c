@@ -2,11 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "list.h"
 #include "scgl_edge.h"
 #include "scgl_attr.h"
 #include "scgl_vertex.h"
-#include "scgl_graph.h"
 
 static scgl_edge_t*
 scgl_edge_create_sibling(scgl_vertex_t* from, scgl_vertex_t* to, cost_type_t cost, scgl_edge_t *sibling) {
