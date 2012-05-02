@@ -1,45 +1,45 @@
 CC:=gcc
-CFLAGS:=-g3 -Wall -pedantic -std=c99
+CFLAGS:=-s -O2 -Wall -pedantic -std=c99
 LDFLAGS:=
-MFLAGS:=-Dcost_type="int"
+MFLAGS:=
+COST_TYPE:=ui
 SOURCES:=pqueue.c scgl_attr.c scgl_edge.c scgl_vertex.c scgl_graph.c scgl_algorithms.c
 OBJECTS:=$(SOURCES:.c=.o)
 EXECUTABLE:=test
 
-ifneq (,$(findstring short,$(MFLAGS)))
-	override MLAGS+=-Dcost_fmt=\"%hd\" -Dcost_max=SHRT_MAX
+ifneq (,$(findstring s,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="short" -Dcost_fmt=\"%hd\" -Dcost_max=SHRT_MAX
 endif
-ifneq (,$(findstring unsigned short,$(MFLAGS)))
-	override MFLAGS+=-Dcost_fmt=\"%hd\" -Dcost_max=USHRT_MAX
+ifneq (,$(findstring us,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="unsigned short" -Dcost_fmt=\"%hd\" -Dcost_max=USHRT_MAX
 endif
-ifneq (,$(findstring int,$(MFLAGS)))
-	override MFLAGS+=-Dcost_fmt=\"%d\" -Dcost_max=INT_MAX
+ifneq (,$(findstring i,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="int" -Dcost_fmt=\"%d\" -Dcost_max=INT_MAX
 endif
-	ifneq (,$(findstring unsigned int,$(MFLAGS)))
-	override MFLAGS+=-Dcost_fmt=\"%d\" -Dcost_max=UINT_MAX
+ifneq (,$(findstring ui,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="unsigned int" -Dcost_fmt=\"%d\" -Dcost_max=UINT_MAX
 endif
-ifneq (,$(findstring long,$(MFLAGS)))
-	override MFLAGS+=-Dcost_fmt=\"%ld\" -Dcost_max=LONG_MAX
+ifneq (,$(findstring long,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="long" -Dcost_fmt=\"%ld\" -Dcost_max=LONG_MAX
 endif
-ifneq (,$(findstring unsigned long,$(MFLAGS)))
-	override MFLAGS+=-Dcost_fmt=\"%ld\" -Dcost_max=ULONG_MAX
+ifneq (,$(findstring ul,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="unsigned long" -Dcost_fmt=\"%ld\" -Dcost_max=ULONG_MAX
 endif
-ifneq (,$(findstring long long,$(MFLAGS)))
-	override MFLAGS+=-Dcost_fmt=\"%lld\" -Dcost_max=LLONG_MAX
+ifneq (,$(findstring ll,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="long long" -Dcost_fmt=\"%lld\" -Dcost_max=LLONG_MAX
 endif
-ifneq (,$(findstring unsigned long long,$(MFLAGS)))
-	override MFLAGS+=-Dcost_fmt=\"%lld\" -Dcost_max=ULLONG_MAX
+ifneq (,$(findstring ull,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="unsigned long long" -Dcost_fmt=\"%lld\" -Dcost_max=ULLONG_MAX
 endif
-ifneq (,$(findstring float,$(MFLAGS)))
-	override MFLAGS+=-Dcost_fmt=\"%f\" -Dcost_max=FLT_MAX
+ifneq (,$(findstring f,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="float" -Dcost_fmt=\"%f\" -Dcost_max=FLT_MAX
 endif
-ifneq (,$(findstring double,$(MFLAGS)))
-	override MFLAGS+=-Dcost_fmt=\"%f\" -Dcost_max=DBL_MAX
+ifneq (,$(findstring d,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="double" -Dcost_fmt=\"%f\" -Dcost_max=DBL_MAX
 endif
-ifneq (,$(findstring long double,$(MFLAGS)))
-	override MFLAGS+=-Dcost_fmt=\"%Lf\" -Dcost_max=LDBL_MAX
+ifneq (,$(findstring ld,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="long double" -Dcost_fmt=\"%Lf\" -Dcost_max=LDBL_MAX
 endif
-
 
 all: $(EXECUTABLE)
 
@@ -51,3 +51,12 @@ $(OBJECTS): $(SOURCES)
 
 clean:
 	rm -rf *.o test
+
+#ifneq (,$(findstring long,$(COST_TYPE))) 
+#%	ifneq (,$(findstring long long,$(COST_TYPE))) 
+#%		override MFLAGS:=-Dcost_fmt=\"%lld\" -Dcost_max=LLONG_MAX 
+#%	endif 
+#%		override MFLAGS:=-Dcost_fmt=\"%ld\" -Dcost_max=LONG_MAX 
+#%	endif 
+#%endif OR 
+#%ifneq (long long,$(findstring long long,$(COST_TYPE))) override MFLAGS="EXACTMATCH" endif –  

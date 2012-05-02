@@ -9,25 +9,25 @@ Feel free to email if you find a bug or request some feature: patseb at gmail do
 
 How to change edge's cost type
 ------------------------------
-make MFLAGS='-Dcost_type="{type}"'
+make COST_TYPE={TYPE}
 
 eg.
-make MFLAGS='-Dcost_type="long double"'
-make MFLAGS='-Dcost_type="short"'
+make COST_TYPE=s
+make COST_TYPE=ull
 
 It's recommended that cost type was scalar type.
-Makefile will choose printf format and MAX value by itself for types:
- - short
- - unsigned short
- - int
- - unsigned int
- - long
- - unsigned long
- - long long
- - unsigned long long
- - float
- - double
- - long double
+Makefile will choose printf format and MAX value by itself for types (COST_TYPE):
+ - short (s)
+ - unsigned short (us)
+ - int (i) 
+ - unsigned int (ui)
+ - long (l)
+ - unsigned long (ul)
+ - long long (ll)
+ - unsigned long long (ull)
+ - float (f)
+ - double (d)
+ - long double (ld)
 
 If your cost type isn't on list, you can change printf format and MAX value by:
 make MFLAGS='-Dcost_type="{TYPE}" -Dcost_fmt=\"{FORMAT}\" -Dcost_max={VALUE}'
