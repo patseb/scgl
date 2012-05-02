@@ -1,9 +1,14 @@
 CC:=gcc
-CFLAGS:=-s -O2 -Wall -pedantic -std=c99
+CFLAGS:=-Iinclude/ -s -O2 -Wall -pedantic -std=c99
 LDFLAGS:=
 MFLAGS:=
 COST_TYPE:=ui
-SOURCES:=pqueue.c scgl_attr.c scgl_edge.c scgl_vertex.c scgl_graph.c scgl_algorithms.c
+SOURCES:=src/pqueue.c \
+		 src/scgl_attr.c \
+		 src/scgl_edge.c \
+		 src/scgl_vertex.c \
+		 src/scgl_graph.c \
+		 src/scgl_algorithms.c
 OBJECTS:=$(SOURCES:.c=.o)
 EXECUTABLE:=test
 
