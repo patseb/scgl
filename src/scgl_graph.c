@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
+#include "scgl_attr.h"
 #include "scgl_vertex.h"
 #include "scgl_graph.h"
 
@@ -51,13 +52,14 @@ scgl_graph_destroy(scgl_graph_t **graph, attr_function fun) {
 }
 
 scgl_graph_t*
-scgl_graph_copy(const scgl_graph_t *graph) {
+scgl_graph_copy(const scgl_graph_t *graph, attr_function fun) {
+	list_head_t *i, *j;
 	scgl_graph_t *g;
-	list_head_t *i;
 	scgl_vertex_t **v, *from = NULL, *to = NULL;
 	scgl_edge_t *e1, *e2;
+	scgl_attr_t *a1, *a2;
 	char *id = NULL;
-	unsigned int j, n;
+	unsigned int k, n;
 
 	if (graph != NULL) {
 		if (graph->id != NULL) {
@@ -68,33 +70,37 @@ scgl_graph_copy(const scgl_graph_t *graph) {
 
 		n = list_count(&graph->vertexes);
 		v = (scgl_vertex_t**) malloc(sizeof(scgl_vertex_t*)*n*2);
-		j = 0;
+		k = 0;
 		list_for_each(i, &graph->vertexes) {
-			v[j] = list_entry(i, scgl_vertex_t, owner_list);
+			v[k] = list_entry(i, scgl_vertex_t, owner_list);
 			id = NULL;
-			if (v[j]->id != NULL) {
-				id = (char*) malloc(strlen(v[j]->id)+1);
-				strcpy(id, v[j]->id);
+			if (v[k]->id != NULL) {
+				id = (char*) malloc(strlen(v[k]->id)+1);
+				strcpy(id, v[k]->id);
 			}
-			v[j+1] = scgl_vertex_create(id, NULL, 0, NULL, 0);
-			scgl_graph_add_vertex(g, v[j+1]);
-			j += 2;
+			v[k+1] = scgl_vertex_create(id, NULL, 0, NULL, 0);
+			scgl_graph_add_vertex(g, v[k+1]);
+			k += 2;
 		}
 
 		list_for_each(i, &graph->edges) {
 			e1 = list_entry(i, scgl_edge_t, owner_list);
-			for (j=0; j<n*2; j+=2)
-				if (v[j] == e1->from) {
-					from = v[j+1];
+			for (k=0; k<n*2; k+=2)
+				if (v[k] == e1->from) {
+					from = v[k+1];
 					break;
 				}
-			for (j=0; j<n*2;j+=2)
-				if (v[j] == e1->to) {
-					to = v[j+1];
+			for (k=0; k<n*2; k+=2)
+				if (v[k] == e1->to) {
+					to = v[k+1];
 					break;
 				}
 			e2 = scgl_edge_create(from, to, (e1->sibling != NULL ? 1 : 0), e1->cost, NULL, 0);
-			//copy attributes by copy_fun parameter
+			list_for_each(j, &e1->attributes) {
+				a1 = list_entry(j, scgl_attr_t, list);
+				(*fun)(a1->key, a1->value, (void**)&a2);
+				scgl_edge_add_attribute_object(e2, a2);
+			}
 			scgl_graph_add_edge(g, e2);
 		}
 		free(v);
