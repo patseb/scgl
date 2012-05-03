@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
+#include <float.h>
+#include <assert.h>
 #include "list.h"
 #include "scgl_graph.h"
 #include "scgl_vertex.h"
 #include "scgl_edge.h"
 #include "scgl_algorithms.h"
 #include "pqueue.h"
-#include <limits.h>
-#include <float.h>
-#include <assert.h>
 
 typedef struct pair {
 	unsigned int id;
 	cost_type dist;
 } pair_t;
 
-static pair_t* pair_new(unsigned int id, cost_type dist) {
+static pair_t* pair_new(unsigned int id, cost_type_t dist) {
 	pair_t *p = (pair_t*) malloc(sizeof(pair_t));
 	p->id = id;
 	p->dist = dist;
@@ -51,7 +51,7 @@ static unsigned int graph_get_vertex_num(const scgl_graph_t *graph, const scgl_v
 }
 
 void
-scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int **p, cost_type **d) {
+scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int **p, cost_type_t **d) {
 	list_head_t *i;
 	scgl_vertex_t *u;
 	scgl_edge_t *e;
