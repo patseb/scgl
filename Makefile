@@ -1,5 +1,5 @@
 CC:=gcc
-CFLAGS:=-Iinclude/ -O2 -Wall -pedantic -std=c99
+CFLAGS:=-Iinclude/ -g3 -Wall -pedantic -std=c99
 LDFLAGS:=
 MFLAGS:=
 COST_TYPE:=ui
@@ -24,7 +24,7 @@ endif
 ifneq (,$(findstring ui,$(COST_TYPE)))
 	override MFLAGS:=-Dcost_type="unsigned int" -Dcost_fmt=\"%d\" -Dcost_max=UINT_MAX
 endif
-ifneq (,$(findstring long,$(COST_TYPE)))
+ifneq (,$(findstring l,$(COST_TYPE)))
 	override MFLAGS:=-Dcost_type="long" -Dcost_fmt=\"%ld\" -Dcost_max=LONG_MAX
 endif
 ifneq (,$(findstring ul,$(COST_TYPE)))
