@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
+#include <limits.h>
+#include <float.h>
 #include "scgl_edge.h"
 #include "scgl_attr.h"
 #include "scgl_vertex.h"
@@ -99,7 +100,8 @@ scgl_edge_destroy(scgl_edge_t **edge, attr_function fun) {
 
 cost_type_t
 scgl_edge_get_cost(const scgl_edge_t *edge) {
-	assert(edge == NULL);
+	if (edge == NULL)
+		return cost_max;
 	return edge->cost;
 }
 

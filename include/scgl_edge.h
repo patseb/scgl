@@ -77,7 +77,7 @@ void scgl_edge_destroy(scgl_edge_t **edge, attr_function fun);
  * return edge's cost
  *
  * @param edge  reference to edge object
- * @return  edge's cost, -1 for failure
+ * @return  edge's cost, COST_MAX for failure
  */
 cost_type_t scgl_edge_get_cost(const scgl_edge_t *edge);
 

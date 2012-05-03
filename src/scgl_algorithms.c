@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <float.h>
-#include <assert.h>
 #include "list.h"
 #include "scgl_graph.h"
 #include "scgl_vertex.h"
