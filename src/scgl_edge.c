@@ -53,8 +53,9 @@ scgl_edge_create(scgl_vertex_t *from, scgl_vertex_t *to, int undirected, cost_ty
 		e->sibling = scgl_edge_create_sibling(to, from, cost, e);
 	e->cost = cost;
 
-	for (i=0; i<attr_n; ++i)
-		list_add_tail(&attr[i]->list, &e->attributes);
+	if (attr != NULL)
+		for (i=0; i<attr_n; ++i)
+			list_add_tail(&attr[i]->list, &e->attributes);
 
 	return e;
 }
@@ -175,6 +176,15 @@ scgl_edge_add_attribute(scgl_edge_t *edge, char *key, void *value) {
 }
 
 void
+scgl_edge_add_attribute_object(scgl_edge_t *edge, scgl_attr_t *attr) {
+	if (edge == NULL)
+		return;
+
+	list_add_tail(&attr->list, &edge->attributes);
+}
+
+
+void
 scgl_edge_del_attribute(scgl_edge_t *edge, const char *key, attr_function fun) {
 	list_head_t *i;
 	scgl_attr_t *tmp = NULL;
@@ -190,7 +200,7 @@ scgl_edge_del_attribute(scgl_edge_t *edge, const char *key, attr_function fun) {
 	free(tmp);
 }
 
-void*
+scgl_attr_t*
 scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
 	list_head_t *i;
 	scgl_attr_t *tmp;
@@ -234,7 +244,7 @@ scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function fun, void *data) {
 
 	list_for_each(i, &edge->attributes) {
 		tmp = list_entry(i, scgl_attr_t, list);
-		(*fun)(tmp->key, tmp->value, data);
+		(*fun)(tmp->key, tmp->value, &data);
 	}
 }
 
@@ -261,13 +271,14 @@ scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_function fun) {
 	fprintf(fp,
 	        "Edge: %p \n"
 	            "\tCost: " cost_fmt "\n"
-	            "\tUndirected: %s \n"
+	            "\tUndirected: %s %p \n"
 	            "\tFrom: %s \n"
 	            "\tTo: %s \n"
 	            "\tAttributes: \n",
 	        (void*)edge,
 	        edge->cost,
 	        (edge->sibling != NULL ? "Yes" : "No"),
+	        (edge->sibling != NULL ? (void*)edge->sibling : NULL),
 	        (edge->from ? edge->from->id : NULL),
 	        (edge->to ? edge->to->id : NULL));
 

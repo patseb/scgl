@@ -30,7 +30,7 @@ typedef cost_type cost_type_t;
  * @see scgl_edge_destroy()
  * @see scgl_edge_dump()
  */
-typedef void (*attr_function)(char *key, void *value, void *data);
+typedef void (*attr_function)(char *key, void *value, void **data);
 
 /** edge object */
 struct scgl_edge {
@@ -127,6 +127,14 @@ int scgl_dedge_del_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex);
 void scgl_edge_add_attribute(scgl_edge_t *edge, char *key, void *value);
 
 /**
+ * add new attribute to existing edge
+ *
+ * @param edge	edge object
+ * @param attr	refernece to new attribute
+ */
+void scgl_edge_add_attribute_object(scgl_edge_t *edge, scgl_attr_t *attr);
+
+/**
  * remove attribute from edge
  *
  * @param edge	edge object
@@ -140,9 +148,9 @@ void scgl_edge_del_attribute(scgl_edge_t *edge, const char *key, attr_function f
  *
  * @param edge	edge object
  * @param key	key corresponding to the requested value
- * @return	value for success, NULL for failure
+ * @return	reference to attribute object for success, NULL for failure
  */
-void* scgl_edge_get_attribute(scgl_edge_t *edge, const char *key);
+void* scgl_edge_get_attribute_value(scgl_edge_t *edge, const char *key);
 
 /**
  * return an attribute at given position
