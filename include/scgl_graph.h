@@ -42,9 +42,11 @@ void scgl_graph_destroy(scgl_graph_t **graph, attr_function fun);
  * copy graph object, all graph's vertexes and edges are copied too (their ids and attributes too)
  *
  * @param graph reference to graph object
+ * @param fun   function which will copy each edge attribute, store new scgl_attr_t in data parameter
  * @return reference to copied graph or NULL for failure
  */
-scgl_graph_t* scgl_graph_copy(const scgl_graph_t *graph);
+scgl_graph_t* scgl_graph_copy(const scgl_graph_t *graph, attr_function fun);
+
 /**
  * return graph's id
  *
