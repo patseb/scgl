@@ -10,8 +10,11 @@ extern "C" {
 #include "scgl_edge.h"
 
 struct scgl_attr {
+	/** list head which will be connected with attribute owner list */
 	list_head_t list;
+	/** attribute key */
 	char *key;
+	/** attribute value */
 	void *value;
 };
 
@@ -36,7 +39,7 @@ void scgl_attr_destroy(scgl_attr_t **attr, attr_function fun);
 /**
  * return key argument from attr object
  *
- * @attr    reference to attr object
+ * @param attr    reference to attr object
  * @return reference to key, NULL for failure
  */
 char* scgl_attr_get_key(const scgl_attr_t* attr);
@@ -44,13 +47,10 @@ char* scgl_attr_get_key(const scgl_attr_t* attr);
 /**
  * return value argument from attr object
  *
- * @attr    reference to attr object
+ * @param attr    reference to attr object
  * @return reference to value, NULL for failure
  */
 void* scgl_attr_get_value(const scgl_attr_t* attr);
-
-/* internal functions section */
-int scgl_attr_comparator(const void *a, const void *b);
 
 #ifdef __cplusplus
 }

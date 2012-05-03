@@ -14,7 +14,8 @@ extern "C" {
  */
 typedef cost_type cost_type_t;
 
-/* a function for operate at attributes
+/**
+ * a function for operate at attributes
  *
  * It can eg.:
  *  - sum values of all attributes and set edge cost field
@@ -31,31 +32,29 @@ typedef cost_type cost_type_t;
  */
 typedef void (*attr_function)(char *key, void *value, void *data);
 
+/** edge object */
 struct scgl_edge {
-	/* edge's sibling, created when edge is undirected */
+	/** edge's sibling, created when edge is undirected */
 	scgl_edge_t *sibling;
-	/* edge cost, by default it's int type */
+	/** edge cost, by default it's int type */
 	cost_type_t cost;
-	/* edge source vertex */
+	/** edge source vertex */
 	scgl_vertex_t *from;
-	/* list head which will be connected with vertex out list */
+	/** list head which will be connected with vertex out list */
 	list_head_t from_list;
-	/* edge destination vertex */
+	/** edge destination vertex */
 	scgl_vertex_t *to;
-	/* list head which will be connected with vertex in list */
+	/** list head which will be connected with vertex in list */
 	list_head_t to_list;
-	/* pointer to graph object which contains that edge */
-	//scgl_graph_t *owner;
-	/* list head which will be connected with graph edges list */
+	/** list head which will be connected with graph edges list */
 	list_head_t owner_list;
-	/* user-purpose list of edge attributes (attr_t objects) */
+	/** user-purpose list of edge attributes (attr_t objects) */
 	list_head_t attributes;
 };
 
 /**
  * create edge object, allocate and initialize memory
  *
- * @param id	unique edge identifier
  * @param from	edge source (vertex object)
  * @param to	edge destination (vertex object)
  * @param undirected 1 means that edge is undirected, 0 opposite
@@ -64,7 +63,7 @@ struct scgl_edge {
  * @param attr_n	lenght of attributes table
  * @return	edge object for success, NULL for failure
  */
-scgl_edge_t* scgl_edge_create(scgl_vertex_t *from, scgl_vertex_t *to, int is_directed, cost_type_t cost, scgl_attr_t **attr, unsigned int attr_n);
+scgl_edge_t* scgl_edge_create(scgl_vertex_t *from, scgl_vertex_t *to, int undirected, cost_type_t cost, scgl_attr_t **attr, unsigned int attr_n);
 
 /**
  * free memory occupied by edge object
@@ -185,7 +184,7 @@ int scgl_edge_get_undirected(const scgl_edge_t* edge);
  * make an edge undirected or directed
  *
  * @param edge  edge object
- * @param directed  1 means that edge is undirected, 0 opposite
+ * @param undirected  1 means that edge is undirected, 0 opposite
  */
 void scgl_edge_set_undirected(scgl_edge_t *edge, const unsigned int undirected);
 
@@ -201,7 +200,7 @@ void scgl_edge_set_undirected(scgl_edge_t *edge, const unsigned int undirected);
  *      fprintf((FILE*)fp, "%s : %s \n", key, (char*)value);
  * }
  *
- * @see scgl_edge_foreach_attribute
+ * @see scgl_edge_foreach_attribute()
  */
 void scgl_edge_dump(scgl_edge_t *edge, FILE *fp, attr_function fun);
 

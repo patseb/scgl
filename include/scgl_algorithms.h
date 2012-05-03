@@ -18,8 +18,8 @@ extern "C" {
  * You can get reference to vertex by scgl_graph_get_vertex_at()
  *
  * @param graph reference to graph object
- * @param scr   reference to source vertex
- * @praram p    reference to predecessors table, function will allocate enought memory (vertexes count)
+ * @param src   reference to source vertex
+ * @param p    reference to predecessors table, function will allocate enought memory (vertexes count)
  * @param d     reference to distance table, function will allocate enought memory (vertexex count)
  *
  * @see scgl_graph_get_vertex_at()

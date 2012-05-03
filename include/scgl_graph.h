@@ -8,12 +8,13 @@ extern "C" {
 #include "scgl_edge.h"
 #include "scgl_def.h"
 
+/** graph object */
 struct scgl_graph {
-	/* graph identifier */
+	/** graph identifier */
 	char *id;
-	/* list of all graph vertexes */
+	/** list of all graph vertexes */
 	list_head_t vertexes;
-	/* list of all graph edges */
+	/** list of all graph edges */
 	list_head_t edges;
 };
 
@@ -22,7 +23,7 @@ struct scgl_graph {
  *
  * @param id	unique graph identifier
  * @param vertexes	table of vertex objects, can be NULL
- * @param vetexes_n	vertexes table length, should be 0 if vertexes is NULL
+ * @param vertexes_n	vertexes table length, should be 0 if vertexes is NULL
  * @param edges	table of edge objects, can be NULL
  * @param edges_n	edges table length, should be 0 if edges is NULL
  * @return	graph object for success, NULL for failure
@@ -153,7 +154,7 @@ unsigned int scgl_graph_get_edges_count(const scgl_graph_t *graph);
  *
  * @param graph reference to graph object
  * @param fp    object containing information to control a stream
- * @fun function to print edge's attributes
+ * @param fun function to print edge's attributes
  */
 void scgl_graph_dump(scgl_graph_t *graph, FILE *fp, attr_function fun);
 

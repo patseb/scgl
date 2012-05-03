@@ -13,23 +13,21 @@ extern "C" {
  * Edge function will be called by foreach edge loop at specified vertex.
  *
  * @param edge  reference for edge object
- * @data    reference for additional data, or result storing
+ * @param data    reference for additional data, or result storing
  *
  * @see scgl_vertex_foreach_edge()
  */
 typedef void (*edge_foreach_function)(scgl_edge_t *edge, void *data);
 
-/* vertex object */
+/** vertex object */
 struct scgl_vertex {
-	/* vertex identifier */
+	/** vertex identifier */
 	char *id;
-	/* list of edges which are directed to vertex */
+	/** list of edges which are directed to vertex */
 	list_head_t in;
-	/* list of edges which are directed out of vertex */
+	/** list of edges which are directed out of vertex */
 	list_head_t out;
-	/* pointer to graph object which contains that vertex */
-	//scgl_graph_t *owner;
-	/* list which will be connected with graph vertexes list */
+	/** list which will be connected with graph vertexes list */
 	list_head_t owner_list;
 };
 
@@ -133,7 +131,8 @@ scgl_edge_t* scgl_vertex_get_edge_out_at(const scgl_vertex_t *vertex, unsigned i
  * @param vertex    reference to vertex object
  * @param direction 0 for incoming edges, 1 for outgoing edges
  * @param fun   reference to the called function
- * @param result    reference to user data
+ * @param data  reference to additional user data (eg. result store, or stream pointer)
+ * @result    reference to user data
  */
 void scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int direction, edge_foreach_function fun, void *data);
 
@@ -144,9 +143,6 @@ void scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int directio
  * @param fp    object containing information to control a stream
  */
 void scgl_vertex_dump(scgl_vertex_t *vertex, FILE *fp);
-
-/* internal functions section */
-int scgl_vertex_comparator(const void *a, const void *b);
 
 #ifdef __cplusplus
 }
