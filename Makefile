@@ -1,5 +1,5 @@
 CC:=gcc
-CFLAGS:=-Iinclude/ -s -O2 -Wall -pedantic -std=c99
+CFLAGS:=-Iinclude/ -O2 -Wall -pedantic -std=c99
 LDFLAGS:=
 MFLAGS:=
 COST_TYPE:=ui
@@ -10,7 +10,7 @@ SOURCES:=src/pqueue.c \
 		 src/scgl_graph.c \
 		 src/scgl_algorithms.c
 OBJECTS:=$(SOURCES:.c=.o)
-EXECUTABLE:=test
+LIBRARY:=scgl
 
 ifneq (,$(findstring s,$(COST_TYPE)))
 	override MFLAGS:=-Dcost_type="short" -Dcost_fmt=\"%hd\" -Dcost_max=SHRT_MAX
@@ -46,14 +46,16 @@ ifneq (,$(findstring ld,$(COST_TYPE)))
 	override MFLAGS:=-Dcost_type="long double" -Dcost_fmt=\"%Lf\" -Dcost_max=LDBL_MAX
 endif
 
-all: $(EXECUTABLE)
+all: $(LIBRARY)
 
-$(EXECUTABLE): test.c $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(MFLAGS) $^ -o $@
+$(LIBRARY): $(OBJECTS)
+#$(CC) $(CFLAGS) $(LDFLAGS) $(MFLAGS) $^ -o $@
+	ar sr lib/lib$(LIBRARY).a $^
 
 $(OBJECTS): $(SOURCES)
 	$(CC) $(CFLAGS) $(MFLAGS) -c $*.c -o $@
 
 clean:
-	rm -rf test
 	rm -rf src/*.o
+	rm -rf lib/libscgl.a
+	rm -rf lib/libscgl.so
