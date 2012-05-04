@@ -1,14 +1,15 @@
+TOPDIR=./
 CC:=gcc
-CFLAGS:=-Iinclude/ -g3 -Wall -pedantic -std=c99
+CFLAGS:=-I$(TOPDIR)include/ -g3 -Wall -pedantic -std=c99
 LDFLAGS:=
 MFLAGS:=
 COST_TYPE:=ui
-SOURCES:=src/pqueue.c \
-		 src/scgl_attr.c \
-		 src/scgl_edge.c \
-		 src/scgl_vertex.c \
-		 src/scgl_graph.c \
-		 src/scgl_algorithms.c
+SOURCES:=$(TOPDIR)src/pqueue.c \
+		$(TOPDIR)src/scgl_attr.c \
+		$(TOPDIR)src/scgl_edge.c \
+		$(TOPDIR)src/scgl_vertex.c \
+		$(TOPDIR)src/scgl_graph.c \
+		$(TOPDIR)src/scgl_algorithms.c
 OBJECTS:=$(SOURCES:.c=.o)
 LIBRARY:=scgl
 
@@ -50,12 +51,14 @@ all: $(LIBRARY)
 
 $(LIBRARY): $(OBJECTS)
 #$(CC) $(CFLAGS) $(LDFLAGS) $(MFLAGS) $^ -o $@
-	ar sr lib/lib$(LIBRARY).a $^
+	ar sr $(TOPDIR)lib/lib$(LIBRARY).a $^
 
 $(OBJECTS): $(SOURCES)
 	$(CC) $(CFLAGS) $(MFLAGS) -c $*.c -o $@
 
+tests: $(LIBRARY)
+	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)testsuite/tests/tests.c -o tests $(TOPDIR)lib/libscgl.a
+
 clean:
-	rm -rf src/*.o
-	rm -rf lib/libscgl.a
-	rm -rf lib/libscgl.so
+	rm -rf $(TOPDIR)src/*.o
+	rm -rf $(TOPDIR)lib/libscgl.a
