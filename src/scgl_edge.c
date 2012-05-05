@@ -126,7 +126,7 @@ scgl_edge_get_vertex(scgl_edge_t *edge, const unsigned int endpoint) {
 }
 
 int
-scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int endpoint) {
+scgl_edge_add_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int endpoint) {
 	if (edge == NULL || vertex == NULL)
 		return -1;
 

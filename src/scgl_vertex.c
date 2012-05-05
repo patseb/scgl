@@ -79,7 +79,7 @@ int
 scgl_vertex_add_edge(scgl_vertex_t *vertex, scgl_edge_t *edge, unsigned int endpoint) {
 	if (endpoint != 0 && endpoint != 1)
 		endpoint = 0;
-	return scgl_edge_set_vertex(edge, vertex, endpoint);
+	return scgl_edge_add_vertex(edge, vertex, endpoint);
 }
 
 int

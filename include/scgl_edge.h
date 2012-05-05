@@ -106,7 +106,7 @@ scgl_vertex_t* scgl_edge_get_vertex(scgl_edge_t *edge, const unsigned int endpoi
  * @param endpoint	0 means edge is outgoing from vertex, 1 means edge incoming to vertex, doesn't matter when edge is undirected
  * @return 0 for success, -1 for failure
  */
-int scgl_edge_set_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int endpoint);
+int scgl_edge_add_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigned int endpoint);
 
 /**
  * remove vertex from edge, function also modifies vertex (in/out attributes)
