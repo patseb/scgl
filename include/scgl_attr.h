@@ -19,35 +19,35 @@ struct scgl_attr {
 };
 
 /**
- * create attr object, allocate and initialize memory
+ * create attribute object, allocate and initialize memory
  *
  * @param key	unique identifier for value
  * @param value	value indexed by key
- * @return	attr object for success, NULL for failure
+ * @return	attribute object for success, NULL for failure
  */
 scgl_attr_t* scgl_attr_create(char *key, void *value);
 
 /**
- * free memory occupied by attr object, calling user attr_free_function
+ * free memory occupied by attribute object, calling user attr_free_function
  * function set pointers to key/value to NULL
  *
- * @param attr	attr object
+ * @param attr	attribute object
  * @param fun   user function which will free key/value memory
  */
 void scgl_attr_destroy(scgl_attr_t **attr, attr_function fun);
 
 /**
- * return key argument from attr object
+ * return key argument from attribute object
  *
- * @param attr    reference to attr object
+ * @param attr    reference to attribute object
  * @return reference to key, NULL for failure
  */
 char* scgl_attr_get_key(const scgl_attr_t* attr);
 
 /**
- * return value argument from attr object
+ * return value argument from attribute object
  *
- * @param attr    reference to attr object
+ * @param attr    reference to attribute object
  * @return reference to value, NULL for failure
  */
 void* scgl_attr_get_value(const scgl_attr_t* attr);
