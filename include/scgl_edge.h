@@ -115,7 +115,7 @@ int scgl_edge_add_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex, const unsigne
  * @param vertex    vertex object which will be removed
  * @return  0 for success, -1 for failure
  */
-int scgl_dedge_del_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex);
+int scgl_edge_del_vertex(scgl_edge_t *edge, scgl_vertex_t *vertex);
 
 /**
  * add new attribute to existing edge
