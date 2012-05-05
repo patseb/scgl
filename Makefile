@@ -57,8 +57,10 @@ $(OBJECTS): $(SOURCES)
 	$(CC) $(CFLAGS) $(MFLAGS) -c $*.c -o $@
 
 tests: $(LIBRARY)
-	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)testsuite/tests/tests.c -o tests $(TOPDIR)lib/libscgl.a
+	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)tests/scgl.test/tests.c -o $(TOPDIR)tests/scgl.test/tests.out $(TOPDIR)lib/libscgl.a
+	runtest --tool scgl TEST_APP=$(TOPDIR)tests/scgl.test/tests.out --srcdir=./tests/ --outdir=./tests/ --all test01.exp test02.exp test03.exp test04.exp test05.exp
 
 clean:
 	rm -rf $(TOPDIR)src/*.o
 	rm -rf $(TOPDIR)lib/libscgl.a
+	rm -rf $(TOPDIR)testsuite/tests/tests
