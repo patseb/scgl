@@ -1,0 +1,34 @@
+global TEST_APP
+set test_data {
+	{"vertex create/destroy"        "v 1" "^test 0$"}
+	{"vertex set/get ID"            "v 2" "^test_get test_set$"}
+	{"edge create/destroy"          "e 1" "^0 1 123 123 0$"}
+	{"edge get/set cost"            "e 2" "^123 321$"}
+	{"edge add/get/del vertex"      "e 3" "^\\d+ 0 0 \\d+ 0 \\d+ \\d+ 0$"}
+	{"vertex get edge"              "v 3" "^\\d+ 0 0 0 \\d+ 0$"}
+	{"vertex edges count"           "v 4" "^0 0 1 0 1 1$"}
+	{"vertex foreach edge"          "v 5" "^1 2 $"}
+	{"attribute create/destroy"     "a 1" "^key value 0$"}
+	{"attribute get/set key"        "a 2" "^key key2.$"}
+	{"attribute get/set value"      "a 3" "1"}
+	{"edge add/get/del attributes"  "e 4" "1"}
+	{"edge attributes count"        "e 5" "1"}
+	{"edge foreach attribute"       "e 6" "1"}
+	{"edge set/get (un)directed"    "e 7" "1"}
+	{"graph create/destroy"         "g 1" "1"}
+	{"graph get/set ID"             "g 2" "1"}
+	{"graph add/get/del vertex"     "g 3" "1"}
+	{"graph add/get/del edge"       "g 4" "1"}
+	{"graph vertexes count"         "g 5" "1"}
+	{"graph edges count"            "g 6" ""}
+	{"graph copy"                   "g 7" ""}
+	{"graph dijkstra test"          "d 1" ""}
+}
+
+foreach pattern $test_data {
+	eval "spawn $TEST_APP [lindex $pattern 1]"
+	expect {
+		-re [lindex $pattern 2] { pass [lindex $pattern 0] }
+		default { fail [lindex $pattern 0] }
+	}
+}
