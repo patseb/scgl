@@ -32,6 +32,7 @@ scgl_graph_t* scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int
 
 /**
  * free memory occupied by graph and related vertex/edge objects.
+ * id memory will be freed
  *
  * @param graph	graph object
  * @param fun   user function which will free memory occupied by edge's attributes
