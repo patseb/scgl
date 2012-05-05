@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include <limits.h>
 #include <float.h>
 #include "scgl_edge.h"
@@ -12,6 +13,7 @@ scgl_edge_create_sibling(scgl_vertex_t* from, scgl_vertex_t* to, cost_type_t cos
 	scgl_edge_t *e;
 
 	e = (scgl_edge_t*) malloc(sizeof(scgl_edge_t));
+	assert(e != NULL);
 
 	INIT_LIST_HEAD(&e->from_list);
 	INIT_LIST_HEAD(&e->to_list);
@@ -35,6 +37,7 @@ scgl_edge_create(scgl_vertex_t *from, scgl_vertex_t *to, int undirected, cost_ty
 	unsigned int i;
 
 	e = (scgl_edge_t*) malloc(sizeof(scgl_edge_t));
+	assert(e != NULL);
 
 	INIT_LIST_HEAD(&e->attributes);
 	INIT_LIST_HEAD(&e->from_list);

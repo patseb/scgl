@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include "list.h"
 #include "scgl_attr.h"
 #include "scgl_vertex.h"
@@ -12,6 +13,7 @@ scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, s
 	unsigned int i;
 
 	g = (scgl_graph_t*) malloc(sizeof(scgl_graph_t));
+	assert(g != NULL);
 
 	g->id = id;
 
@@ -64,18 +66,21 @@ scgl_graph_copy(const scgl_graph_t *graph, attr_function fun) {
 	if (graph != NULL) {
 		if (graph->id != NULL) {
 			id = (char*) malloc(strlen(graph->id)+1);
+			assert(id != NULL);
 			strcpy(id, graph->id);
 		}
 		g = scgl_graph_create(id, NULL, 0, NULL, 0);
 
 		n = list_count(&graph->vertexes);
 		v = (scgl_vertex_t**) malloc(sizeof(scgl_vertex_t*)*n*2);
+		assert(v != NULL);
 		k = 0;
 		list_for_each(i, &graph->vertexes) {
 			v[k] = list_entry(i, scgl_vertex_t, owner_list);
 			id = NULL;
 			if (v[k]->id != NULL) {
 				id = (char*) malloc(strlen(v[k]->id)+1);
+				assert(id != NULL);
 				strcpy(id, v[k]->id);
 			}
 			v[k+1] = scgl_vertex_create(id, NULL, 0, NULL, 0);

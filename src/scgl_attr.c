@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include "scgl_attr.h"
 
 scgl_attr_t*
@@ -8,6 +9,7 @@ scgl_attr_create(char *key, void *value) {
 	scgl_attr_t *p;
 
 	p = (scgl_attr_t*) malloc(sizeof(scgl_attr_t));
+	assert(p != NULL);
 	INIT_LIST_HEAD(&p->list);
 	p->key = key;
 	p->value = value;

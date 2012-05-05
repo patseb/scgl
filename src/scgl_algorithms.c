@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <float.h>
+#include <assert.h>
 #include "list.h"
 #include "scgl_graph.h"
 #include "scgl_vertex.h"
@@ -16,6 +17,7 @@ typedef struct pair {
 
 static pair_t* pair_new(unsigned int id, cost_type_t dist) {
 	pair_t *p = (pair_t*) malloc(sizeof(pair_t));
+	assert(p != NULL);
 	p->id = id;
 	p->dist = dist;
 	return p;
@@ -64,8 +66,11 @@ scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int **p, c
 		q = pqueue_new(cmp, n);
 		u_i = graph_get_vertex_num(graph, src);
 		*d = (cost_type*) malloc(sizeof(cost_type)*n);
+		assert(*d != NULL);
 		*p = (unsigned int*) malloc(sizeof(unsigned int)*n);
+		assert(*p != NULL);
 		c = (char*) malloc(n);
+		assert(c != NULL);
 		for (j=0; j<n; ++j) {
 			(*d)[j] = cost_max;
 			(*p)[j] = j;

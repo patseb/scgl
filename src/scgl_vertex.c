@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include "scgl_edge.h"
 #include "scgl_vertex.h"
 
@@ -10,6 +11,7 @@ scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **
 	unsigned int i;
 
 	v = (scgl_vertex_t*) malloc(sizeof(scgl_vertex_t));
+	assert(v != NULL);
 
 	INIT_LIST_HEAD(&v->in);
 	INIT_LIST_HEAD(&v->out);
