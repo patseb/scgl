@@ -17,7 +17,7 @@ extern "C" {
  *
  * @see scgl_vertex_foreach_edge()
  */
-typedef void (*edge_foreach_function)(scgl_edge_t *edge, void *data);
+typedef void (*edge_foreach_function)(scgl_edge_t *edge, void **data);
 
 /** vertex object */
 struct scgl_vertex {

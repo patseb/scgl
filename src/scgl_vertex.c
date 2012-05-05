@@ -160,13 +160,13 @@ scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int direction, ed
 	if (direction) {
 		list_for_each(i, &vertex->out) {
 			tmp = list_entry(i, scgl_edge_t, from_list);
-			(*fun)(tmp, data);
+			(*fun)(tmp, &data);
 		}
 	}
 	else {
 		list_for_each(i, &vertex->in) {
 			tmp = list_entry(i, scgl_edge_t, to_list);
-			(*fun)(tmp, data);
+			(*fun)(tmp, &data);
 		}
 	}
 }
