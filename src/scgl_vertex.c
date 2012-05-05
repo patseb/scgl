@@ -172,7 +172,7 @@ scgl_vertex_foreach_edge(const scgl_vertex_t *vertex, unsigned int direction, ed
 }
 
 static void
-scgl_vertex_dump_edge(scgl_edge_t *edge, void *data) {
+scgl_vertex_dump_edge(scgl_edge_t *edge, void **data) {
 	if (edge != NULL) {
 		if (edge->sibling != NULL)
 			fprintf((FILE*)data, " %p(s: %p)", (void*)edge, (void*)edge->sibling);
