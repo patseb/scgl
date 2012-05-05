@@ -1,25 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
-#include "scgl_algorithms.h"
-#include "scgl_graph.h"
-#include "scgl_vertex.h"
-#include "scgl_edge.h"
+#include "scgl.h"
 
-void my_free(char *key, void *value, void *data) {
+void edge_attr_free(char *key, void *value, void **data) {
 	free(value);
-	free(key);
+	//free(key);
 }
 
-void edge_attr_dump(char *key, void *value, void *fp) {
-	if (fp != NULL)
-		fprintf((FILE*)fp, "\t\t%s : %s \n", key, (char*)value);
+void edge_attr_dump(char *key, void *value, void **fp) {
+	if (fp != NULL && *fp != NULL)
+		fprintf((FILE*)*fp, "\t\t%s : %s \n", key, (char*)value);
+}
+
+void edge_attr_copy(char *key, void *value, void **data) {
+	scgl_attr_t *a;
+	char *k, *v;
+	if (data != NULL) {
+		k = (char*) malloc(strlen(key)+1);
+		v = (char*) malloc(strlen((char*)value)+1);
+		strcpy(k, key);
+		strcpy(v, (char*)value);
+		a = scgl_attr_create(k, v);
+		*data = a;
+	}
 }
 
 int main() {
 	scgl_graph_t *g1;//, *g2;
 	scgl_vertex_t **v;
+		//free(buf1);
 	scgl_edge_t **e;
 	unsigned int i, n = 13, m = 22;
 	char *buf;
@@ -38,16 +48,13 @@ int main() {
 
 	e = (scgl_edge_t**) malloc(sizeof(scgl_edge_t*) * m);
 	for(i=0; i<m; ++i) {
-		//char buf[10];
-		//buf = (char*) malloc(6);
-		//sprintf(buf, "E-%d", i);
+		buf = (char*) malloc(6);
+		sprintf(buf, "E-%d", i);
 		e[i] = scgl_edge_create(NULL, NULL, 1, 0, NULL, 0);
 		//free(buf);
-		//char *buf1 = (char*) malloc(10);
-		//sprintf(buf1, "%d", i);
-		//scgl_edge_add_attribute(e[i], "ATR", buf);
-		//free(buf1);
-		//scgl_edge_attr_free_function(e[i], my_free);
+		char *buf1 = (char*) malloc(10);
+		sprintf(buf1, "%d", i);
+		scgl_edge_add_attribute(e[i], buf, buf1);
 		scgl_graph_add_edge(g1, e[i]);
 	}
 
@@ -118,7 +125,7 @@ int main() {
 		scgl_edge_set_cost(e[19], 2);
 		scgl_edge_set_cost(e[20], 7);
 		scgl_edge_set_cost(e[21], 17);
-	//}
+	//}*/
 /*
 	scgl_edge_destroy(&e[0]);
 	scgl_edge_set_undirected(e[1], 1);
@@ -145,18 +152,19 @@ int main() {
 	printf("\n");
 	free(p);
 	free(d);
-	//g2 = scgl_graph_copy(g1);
-	//scgl_graph_dump(g2, stdout, edge_attr_dump);
+
+	scgl_graph_t *g2 = scgl_graph_copy(g1, edge_attr_copy);
+	scgl_graph_dump(g2, stdout, edge_attr_dump);
 
 	/* unnecessary */
-	for(i=0; i<m; ++i)
-		scgl_edge_destroy(&e[i], my_free);
+//	for(i=0; i<m; ++i)
+//		scgl_edge_destroy(&e[i], edge_attr_free);
 	/* unnecessary */
-	for(i=0; i<n; ++i)
-		scgl_vertex_destroy(&v[i]);
+//	for(i=0; i<n; ++i)
+//		scgl_vertex_destroy(&v[i]);
 
-	scgl_graph_destroy(&g1, my_free);
-	//scgl_graph_destroy(&g2, my_free);
+	scgl_graph_destroy(&g1, edge_attr_free);
+	scgl_graph_destroy(&g2, edge_attr_free);
 
 	free(v);
 	free(e);
