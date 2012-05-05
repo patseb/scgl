@@ -23,6 +23,7 @@ scgl_attr_destroy(scgl_attr_t **attr, attr_function fun) {
 		if (fun != NULL)
 			(*fun)((*attr)->key, (*attr)->value, NULL);
 		list_del(&(*attr)->list);
+		free((*attr)->key);
 		(*attr)->key = NULL;
 		(*attr)->value = NULL;
 		free(*attr);
@@ -38,12 +39,28 @@ scgl_attr_get_key(const scgl_attr_t* attr) {
 		return NULL;
 }
 
+void
+scgl_attr_set_key(scgl_attr_t* attr, char *key) {
+	if (attr != NULL) {
+		free(attr->key);
+		attr->key = key;
+	}
+}
+
 void*
 scgl_attr_get_value(const scgl_attr_t* attr) {
 	if (attr != NULL)
 		return attr->value;
 	else
 		return NULL;
+}
+
+void
+scgl_attr_set_value(scgl_attr_t* attr, void *value, attr_function fun) {
+	if (attr != NULL && fun != NULL) {
+		(*fun)(attr->key, attr->value, NULL);
+		attr->value = value;
+	}
 }
 
 int
