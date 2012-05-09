@@ -203,23 +203,18 @@ scgl_edge_del_attribute(scgl_edge_t *edge, const char *key, attr_function fun) {
 	free(tmp);
 }
 
-scgl_attr_t*
-scgl_edge_get_attribute(scgl_edge_t *edge, const char *key) {
+void*
+scgl_edge_get_attribute_value(scgl_edge_t *edge, const char *key) {
 	list_head_t *i;
 	scgl_attr_t *tmp;
 
 	list_for_each(i, &edge->attributes) {
 		tmp = list_entry(i, scgl_attr_t, list);
 		if (strcmp(tmp->key, key)) {
-			return tmp;
+			return tmp->value;
 		}
 	}
 	return NULL;
-}
-
-int
-scgl_edge_get_attributes_count(const scgl_edge_t *edge) {
-	return (edge == NULL ? -1 : list_count(&edge->attributes));
 }
 
 scgl_attr_t*
@@ -235,6 +230,11 @@ scgl_edge_get_attribute_at(const scgl_edge_t *edge, unsigned int i) {
 		}
 	}
 	return NULL;
+}
+
+int
+scgl_edge_get_attributes_count(const scgl_edge_t *edge) {
+	return (edge == NULL ? -1 : list_count(&edge->attributes));
 }
 
 void
