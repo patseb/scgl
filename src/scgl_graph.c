@@ -173,7 +173,7 @@ scgl_graph_get_vertex(const scgl_graph_t *graph, const char *vertex_id) {
 
 	list_for_each(i, &graph->vertexes) {
 		tmp = list_entry(i, scgl_vertex_t, owner_list);
-		if (strcmp(tmp->id, vertex_id))
+		if (!strcmp(tmp->id, vertex_id))
 			return tmp;
 	}
 

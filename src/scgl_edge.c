@@ -195,7 +195,7 @@ scgl_edge_del_attribute(scgl_edge_t *edge, const char *key, attr_function fun) {
 	list_for_each(i, &edge->attributes) {
 		tmp = list_entry(i, scgl_attr_t, list);
 		if (tmp != NULL)
-			if (strcmp(tmp->key, key)) {
+			if (!strcmp(tmp->key, key)) {
 				scgl_attr_destroy(&tmp, fun);
 				break;
 			}
@@ -210,7 +210,7 @@ scgl_edge_get_attribute_value(scgl_edge_t *edge, const char *key) {
 
 	list_for_each(i, &edge->attributes) {
 		tmp = list_entry(i, scgl_attr_t, list);
-		if (strcmp(tmp->key, key)) {
+		if (!strcmp(tmp->key, key)) {
 			return tmp->value;
 		}
 	}
