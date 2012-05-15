@@ -5,10 +5,10 @@
 extern "C" {
 #endif
 
-#include "scgl_attr.h"
 #include "scgl_edge.h"
 #include "scgl_vertex.h"
 #include "scgl_graph.h"
+#include "scgl_attr.h"
 
 #ifdef __cplusplus
 }
