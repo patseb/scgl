@@ -19,17 +19,19 @@ scgl_vertex_create(char *id, scgl_edge_t **in, unsigned int in_n, scgl_edge_t **
 
 	v->id = id;
 
-	for (i=0; i<in_n; ++i)
-		if (in[i] != NULL) {
-			list_add_tail(&in[i]->to_list, &v->in);
-			in[i]->to = v;
-		}
+	if (in != NULL)
+		for (i=0; i<in_n; ++i)
+			if (in[i] != NULL) {
+				list_add_tail(&in[i]->to_list, &v->in);
+				in[i]->to = v;
+			}
 
-	for (i=0; i<out_n; ++i)
-		if (out[i] != NULL) {
-			list_add_tail(&out[i]->from_list, &v->out);
-			out[i]->from = v;
-		}
+	if (out != NULL)
+		for (i=0; i<out_n; ++i)
+			if (out[i] != NULL) {
+				list_add_tail(&out[i]->from_list, &v->out);
+				out[i]->from = v;
+			}
 
 	return v;
 }
