@@ -177,9 +177,9 @@ static void
 scgl_vertex_dump_edge(scgl_edge_t *edge, void **data) {
 	if (edge != NULL) {
 		if (edge->sibling != NULL)
-			fprintf((FILE*)data, " %p(s: %p)", (void*)edge, (void*)edge->sibling);
+			fprintf((FILE*)*data, " %p(s: %p)", (void*)edge, (void*)edge->sibling);
 		else
-			fprintf((FILE*)data, " %p", (void*)edge);
+			fprintf((FILE*)*data, " %p", (void*)edge);
 	}
 }
 
