@@ -20,11 +20,15 @@ scgl_graph_create(char *id, scgl_vertex_t **vertexes, unsigned int vertexes_n, s
 	INIT_LIST_HEAD(&g->vertexes);
 	INIT_LIST_HEAD(&g->edges);
 
-	for (i=0; i<vertexes_n; ++i)
-		list_add_tail(&vertexes[i]->owner_list, &g->vertexes);
+	if (vertexes != NULL)
+		for (i=0; i<vertexes_n; ++i)
+			if (vertexes[i] != NULL)
+				list_add_tail(&vertexes[i]->owner_list, &g->vertexes);
 
-	for (i=0; i<edges_n; ++i)
-		list_add_tail(&edges[i]->owner_list, &g->edges);
+	if (edges != NULL)
+		for (i=0; i<edges_n; ++i)
+			if (edges[i] != NULL)
+				list_add_tail(&edges[i]->owner_list, &g->edges);
 
 	return g;
 }
