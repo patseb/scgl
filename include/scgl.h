@@ -9,6 +9,7 @@ extern "C" {
 #include "scgl_vertex.h"
 #include "scgl_graph.h"
 #include "scgl_attr.h"
+#include "scgl_algorithms.h"
 
 #ifdef __cplusplus
 }
