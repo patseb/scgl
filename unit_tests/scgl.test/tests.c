@@ -34,23 +34,20 @@ void dijkstra_test(unsigned int undirected) {
 	scgl_graph_t *g1;
 	scgl_vertex_t **v;
 	scgl_edge_t **e;
-	unsigned int *p = NULL;
-	cost_type *d = NULL;
+	unsigned int *p;
+	cost_type_t *d;
 	unsigned int i, n = 13, m = 22;
 
-	g1 = scgl_graph_create(NULL, NULL, 0, NULL, 0);
 
 	v = (scgl_vertex_t**) malloc(sizeof(scgl_vertex_t*) * n);
-	for(i=0; i<n; ++i) {
+	for(i=0; i<n; ++i)
 		v[i] = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
-		scgl_graph_add_vertex(g1, v[i]);
-	}
 
 	e = (scgl_edge_t**) malloc(sizeof(scgl_edge_t*) * m);
-	for(i=0; i<m; ++i) {
+	for(i=0; i<m; ++i)
 		e[i] = scgl_edge_create(NULL, NULL, undirected, 0, NULL, 0);
-		scgl_graph_add_edge(g1, e[i]);
-	}
+
+	g1 = scgl_graph_create(NULL, v, n, e, m);
 
 	scgl_edge_add_vertex( e[0], v[0],  0);
 	scgl_edge_add_vertex( e[0], v[1],  1);
@@ -119,7 +116,10 @@ void dijkstra_test(unsigned int undirected) {
 	scgl_edge_set_cost(e[20],  7);
 	scgl_edge_set_cost(e[21], 17);
 
-	scgl_dijkstra(g1, v[0], &p, &d);
+	p = (unsigned int*) malloc(sizeof(unsigned int) * n);
+	d = (cost_type_t*) malloc(sizeof(cost_type_t) * n);
+
+	scgl_dijkstra(g1, v[0], p, d);
 	for(i=0; i<n; ++i)
 		printf("%d, ", p[i]);
 	for(i=0; i<n; ++i)
