@@ -140,9 +140,9 @@ int main() {
 
 	scgl_graph_dump(g1, stdout, edge_attr_dump);
 
-	unsigned int *p = NULL;
-	cost_type *d = NULL;
-	scgl_dijkstra(g1, v[0], &p, &d);
+	unsigned int *p = (unsigned int) malloc(sizeof(unsigned int) * n);
+	cost_type_t *d = (cost_type_t*) malloc(sizeof(cost_type_t*) * n);
+	scgl_dijkstra(g1, v[0], p, d);
 	printf("pred = ");
 	for(i=0; i<n; ++i)
 		printf("%d, ", p[i]);
