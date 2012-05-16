@@ -10,7 +10,7 @@ adjacency_list_traits<vecS, vecS, undirectedS>::vertex_descriptor
 Vertex;
 
 typedef
-adjacency_list <vecS, vecS, undirectedS, no_property, property<edge_weight_t, int> >
+adjacency_list <vecS, vecS, undirectedS, no_property, property<edge_weight_t, unsigned int> >
 Graph;
 
 typedef
