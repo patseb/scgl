@@ -1,0 +1,65 @@
+Test Run By patseb on Wed May 16 21:04:38 2012
+Native configuration is i686-pc-linux-gnu
+
+		=== scgl tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Using /usr/share/dejagnu/baseboards/unix.exp as board description file for target.
+Using /usr/share/dejagnu/config/unix.exp as generic interface file for target.
+WARNING: Couldn't find tool config file for unix, using default.
+Running ./unit_tests/scgl.test/test.exp ...
+spawn ./unit_tests/scgl.test/tests.out v 1
+test 0PASS: vertex create/destroy
+spawn ./unit_tests/scgl.test/tests.out v 2
+test_get test_setPASS: vertex set/get ID
+spawn ./unit_tests/scgl.test/tests.out e 1
+0 1 123 123 0PASS: edge create/destroy
+spawn ./unit_tests/scgl.test/tests.out e 2
+123 321PASS: edge get/set cost
+spawn ./unit_tests/scgl.test/tests.out e 3
+150290496 0 0 150290496 0 150290496 150290496 0PASS: edge add/get/del vertex
+spawn ./unit_tests/scgl.test/tests.out v 3
+144101416 0 0 0 144101416 0PASS: vertex get edge
+spawn ./unit_tests/scgl.test/tests.out v 4
+0 0 1 0 1 1PASS: vertex edges count
+spawn ./unit_tests/scgl.test/tests.out v 5
+1 2 PASS: vertex foreach edge
+spawn ./unit_tests/scgl.test/tests.out a 1
+key value 0PASS: attribute create/destroy
+spawn ./unit_tests/scgl.test/tests.out a 2
+key key2 PASS: attribute get/set key
+spawn ./unit_tests/scgl.test/tests.out a 3
+val1 val2 PASS: attribute get/set value
+spawn ./unit_tests/scgl.test/tests.out e 4
+key1 val1 val1 0PASS: edge add/get/del attributes
+spawn ./unit_tests/scgl.test/tests.out e 5
+1 0PASS: edge attributes count
+spawn ./unit_tests/scgl.test/tests.out e 6
+key val PASS: edge foreach attribute
+spawn ./unit_tests/scgl.test/tests.out e 7
+0 123 1 1 137642112 123 1PASS: edge set/get (un)directed
+spawn ./unit_tests/scgl.test/tests.out g 1
+G1 0PASS: graph create/destroy
+spawn ./unit_tests/scgl.test/tests.out g 2
+G1 G2 PASS: graph get/set ID
+spawn ./unit_tests/scgl.test/tests.out g 3
+2 V2 V1 1 0 V2 PASS: graph add/get/del vertex
+spawn ./unit_tests/scgl.test/tests.out g 4
+2 123 321 1 321 0PASS: graph add/get/del edge
+spawn ./unit_tests/scgl.test/tests.out g 5
+0 0 2 2PASS: graph vertexes/edges count
+spawn ./unit_tests/scgl.test/tests.out g 6
+0 1 1 0 1 V2 V2 0 1PASS: graph copy
+spawn ./unit_tests/scgl.test/tests.out d 1
+0, 0, 0, 4, 5, 1, 1, 6, 7, 8, 9, 9, 3, 0, 1, 1, 32, 30, 15, 5, 13, 22, 31, 37, 47, 49, PASS: dijkstra directed graph
+spawn ./unit_tests/scgl.test/tests.out d 2
+0, 0, 0, 11, 3, 1, 1, 6, 7, 11, 9, 2, 9, 0, 1, 1, 19, 21, 15, 5, 13, 22, 24, 30, 8, 29, PASS: dijkstra undirected graph
+testcase ./unit_tests/scgl.test/test.exp completed in 1 seconds
+
+		=== scgl Summary ===
+
+# of expected passes		23
+runtest completed at Wed May 16 21:04:39 2012
