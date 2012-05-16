@@ -19,12 +19,12 @@ extern "C" {
  *
  * @param graph reference to graph object
  * @param src   reference to source vertex
- * @param p    reference to predecessors table, function will allocate enought memory (vertexes count)
- * @param d     reference to distance table, function will allocate enought memory (vertexex count)
+ * @param p    reference to predecessors table, memory have to be allocated by user (vertexes count length)
+ * @param d     reference to distance table, memory have to be allocated by user (vertexex count lenght)
  *
  * @see scgl_graph_get_vertex_at()
  */
-void scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int **p, cost_type_t **d);
+void scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int *p, cost_type_t *d);
 
 #ifdef __cplusplus
 }

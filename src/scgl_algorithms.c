@@ -52,7 +52,7 @@ static unsigned int graph_get_vertex_num(const scgl_graph_t *graph, const scgl_v
 }
 
 void
-scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int **p, cost_type_t **d) {
+scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int *p, cost_type_t *d) {
 	list_head_t *i;
 	scgl_vertex_t *u;
 	scgl_edge_t *e;
@@ -65,20 +65,16 @@ scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int **p, c
 		n = list_count(&graph->vertexes);
 		q = pqueue_new(cmp, n);
 		u_i = graph_get_vertex_num(graph, src);
-		*d = (cost_type*) malloc(sizeof(cost_type)*n);
-		assert(*d != NULL);
-		*p = (unsigned int*) malloc(sizeof(unsigned int)*n);
-		assert(*p != NULL);
 		c = (char*) malloc(n);
 		assert(c != NULL);
 		for (j=0; j<n; ++j) {
-			(*d)[j] = cost_max;
-			(*p)[j] = j;
+			d[j] = cost_max;
+			p[j] = j;
 			c[j] = 'w';
 		}
 		c[u_i] = 'g';
-		(*d)[u_i] = 0;
-		pair = pair_new(u_i, *d[u_i]);
+		d[u_i] = 0;
+		pair = pair_new(u_i, d[u_i]);
 		pqueue_enqueue(q, pair);
 		while ((pair = pqueue_dequeue(q)) != NULL) {
 			u_i = pair->id;
@@ -87,12 +83,12 @@ scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int **p, c
 			list_for_each(i, &u->out) {
 				e = list_entry(i, scgl_edge_t, from_list);
 				v_i = graph_get_vertex_num(graph, e->to);
-				if (e->cost + (*d)[u_i] < (*d)[v_i]) {
-					(*d)[v_i] = e->cost + (*d)[u_i];
-					(*p)[v_i] = u_i;
+				if (e->cost + d[u_i] < d[v_i]) {
+					d[v_i] = e->cost + d[u_i];
+					p[v_i] = u_i;
 					if (c[v_i] == 'w') {
 						c[v_i] = 'g';
-						pair = pair_new(v_i, (*d)[v_i]);
+						pair = pair_new(v_i, d[v_i]);
 						pqueue_enqueue(q, pair);
 					}
 					else if (c[v_i] == 'g') {
