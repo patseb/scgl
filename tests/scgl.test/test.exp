@@ -1,0 +1,37 @@
+global TEST_APP
+
+set test_data {
+	{"vertex create/destroy"        "v 1" "^test 0$"}
+	{"vertex set/get ID"            "v 2" "^test_get test_set$"}
+	{"edge create/destroy"          "e 1" "^0 1 123 123 0$"}
+	{"edge get/set cost"            "e 2" "^123 321$"}
+	{"edge add/get/del vertex"      "e 3" "^\\d+ 0 0 \\d+ 0 \\d+ \\d+ 0$"}
+	{"vertex get edge"              "v 3" "^\\d+ 0 0 0 \\d+ 0$"}
+	{"vertex edges count"           "v 4" "^0 0 1 0 1 1$"}
+	{"vertex foreach edge"          "v 5" "^1 2 $"}
+	{"attribute create/destroy"     "a 1" "^key value 0$"}
+	{"attribute get/set key"        "a 2" "^key key2.$"}
+	{"attribute get/set value"      "a 3" "^val1 val2.$"}
+	{"edge add/get/del attributes"  "e 4" "^key1 val1 val1 0$"}
+	{"edge attributes count"        "e 5" "^1 0$"}
+	{"edge foreach attribute"       "e 6" "^key val.$"}
+	{"edge set/get (un)directed"    "e 7" "^0 123 1 1 \\d+ 123 1$"}
+	{"graph create/destroy"         "g 1" "^G1 0$"}
+	{"graph get/set ID"             "g 2" "^G1 G2.$"}
+	{"graph add/get/del vertex"     "g 3" "^2 V2 V1 1 0 V2.$"}
+	{"graph add/get/del edge"       "g 4" "^2 123 321 1 321 0$"}
+	{"graph vertexes/edges count"   "g 5" "^0 0 2 2$"}
+	{"graph copy"                   "g 6" "^0 1 1 0 1 V2 V2 0 1$"}
+	{"dijkstra directed graph"      "d 1"
+	 "^0, 0, 0, 4, 5, 1, 1, 6, 7, 8, 9, 9, 3, 0, 1, 1, 32, 30, 15, 5, 13, 22, 31, 37, 47, 49,.$"}
+	{"dijkstra undirected graph"    "d 2"
+	 "^0, 0, 0, 11, 3, 1, 1, 6, 7, 11, 9, 2, 9, 0, 1, 1, 19, 21, 15, 5, 13, 22, 24, 30, 8, 29,.$"}
+}
+
+foreach pattern $test_data {
+	eval "spawn $TEST_APP [lindex $pattern 1]"
+	expect {
+		-re [lindex $pattern 2] { pass [lindex $pattern 0] }
+		default { fail [lindex $pattern 0] }
+	}
+}
