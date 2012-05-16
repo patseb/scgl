@@ -1,0 +1,38 @@
+\section{include/scgl\-\_\-algorithms.h File Reference}
+\label{scgl__algorithms_8h}\index{include/scgl\-\_\-algorithms.\-h@{include/scgl\-\_\-algorithms.\-h}}
+{\ttfamily \#include \char`\"{}scgl\-\_\-edge.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}scgl\-\_\-def.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf scgl\-\_\-dijkstra} (const {\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, {\bf scgl\-\_\-vertex\-\_\-t} $\ast$src, unsigned int $\ast$$\ast$p, {\bf cost\-\_\-type\-\_\-t} $\ast$$\ast$d)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{scgl\-\_\-algorithms.\-h@{scgl\-\_\-algorithms.\-h}!scgl\-\_\-dijkstra@{scgl\-\_\-dijkstra}}
+\index{scgl\-\_\-dijkstra@{scgl\-\_\-dijkstra}!scgl_algorithms.h@{scgl\-\_\-algorithms.\-h}}
+\subsubsection[{scgl\-\_\-dijkstra}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-dijkstra} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{src, }
+\item[{unsigned int $\ast$$\ast$}]{p, }
+\item[{{\bf cost\-\_\-type\-\_\-t} $\ast$$\ast$}]{d}
+\end{DoxyParamCaption}
+)}\label{scgl__algorithms_8h_a8a372b81117461914591f562d8e87567}
+function calculates shortest patch from source to every vertex in graph function implements dijkstra algorithm with heap based priority queue results will be stored in p and d tables. p will contain predecessor of every vertex in graph d will contain distance from source to every vertex in graph p and d will be indexed\-: 0 ... count(vertexes), 0 means vertex added first to graph, 1 means second added vertex, etc. You can get reference to vertex by \doxyref{scgl\-\_\-graph\-\_\-get\-\_\-vertex\-\_\-at()}{p.}{scgl__graph_8h_a1316d0d3bce20e530fbdd0f8075b8102}
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & reference to graph object \\
+\hline
+{\em src} & reference to source vertex \\
+\hline
+{\em p} & reference to predecessors table, function will allocate enought memory (vertexes count) \\
+\hline
+{\em d} & reference to distance table, function will allocate enought memory (vertexex count)\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{scgl\-\_\-graph\-\_\-get\-\_\-vertex\-\_\-at()}{p.}{scgl__graph_8h_a1316d0d3bce20e530fbdd0f8075b8102} 
+\end{DoxySeeAlso}

@@ -1,0 +1,136 @@
+\section{include/scgl\-\_\-attr.h File Reference}
+\label{scgl__attr_8h}\index{include/scgl\-\_\-attr.\-h@{include/scgl\-\_\-attr.\-h}}
+{\ttfamily \#include \char`\"{}list.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}scgl\-\_\-def.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}scgl\-\_\-edge.\-h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf scgl\-\_\-attr}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf scgl\-\_\-attr\-\_\-t} $\ast$ {\bf scgl\-\_\-attr\-\_\-create} (char $\ast$key, void $\ast$value)
+\item 
+void {\bf scgl\-\_\-attr\-\_\-destroy} ({\bf scgl\-\_\-attr\-\_\-t} $\ast$$\ast$attr, {\bf attr\-\_\-function} fun)
+\item 
+char $\ast$ {\bf scgl\-\_\-attr\-\_\-get\-\_\-key} (const {\bf scgl\-\_\-attr\-\_\-t} $\ast$attr)
+\item 
+void {\bf scgl\-\_\-attr\-\_\-set\-\_\-key} ({\bf scgl\-\_\-attr\-\_\-t} $\ast$attr, char $\ast$key)
+\item 
+void $\ast$ {\bf scgl\-\_\-attr\-\_\-get\-\_\-value} (const {\bf scgl\-\_\-attr\-\_\-t} $\ast$attr)
+\item 
+void {\bf scgl\-\_\-attr\-\_\-set\-\_\-value} ({\bf scgl\-\_\-attr\-\_\-t} $\ast$attr, void $\ast$value, {\bf attr\-\_\-function} fun)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{scgl\-\_\-attr.\-h@{scgl\-\_\-attr.\-h}!scgl\-\_\-attr\-\_\-create@{scgl\-\_\-attr\-\_\-create}}
+\index{scgl\-\_\-attr\-\_\-create@{scgl\-\_\-attr\-\_\-create}!scgl_attr.h@{scgl\-\_\-attr.\-h}}
+\subsubsection[{scgl\-\_\-attr\-\_\-create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-attr\-\_\-t}$\ast$ {\bf scgl\-\_\-attr\-\_\-create} (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{key, }
+\item[{void $\ast$}]{value}
+\end{DoxyParamCaption}
+)}\label{scgl__attr_8h_a684ff98e86eaa5fe778df0231e2a7418}
+create attribute object, allocate and initialize memory
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & unique identifier for value \\
+\hline
+{\em value} & value indexed by key \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+attribute object for success, N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-attr.\-h@{scgl\-\_\-attr.\-h}!scgl\-\_\-attr\-\_\-destroy@{scgl\-\_\-attr\-\_\-destroy}}
+\index{scgl\-\_\-attr\-\_\-destroy@{scgl\-\_\-attr\-\_\-destroy}!scgl_attr.h@{scgl\-\_\-attr.\-h}}
+\subsubsection[{scgl\-\_\-attr\-\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-attr\-\_\-destroy} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-attr\-\_\-t} $\ast$$\ast$}]{attr, }
+\item[{{\bf attr\-\_\-function}}]{fun}
+\end{DoxyParamCaption}
+)}\label{scgl__attr_8h_aa7c09a6d0209f9075c175884997f9213}
+free memory occupied by attribute object (also attribute's key), calling user attr\-\_\-free\-\_\-function function set pointers to key/value to N\-U\-L\-L
+
+
+\begin{DoxyParams}{Parameters}
+{\em attr} & attribute object \\
+\hline
+{\em fun} & user function which will free value memory \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-attr.\-h@{scgl\-\_\-attr.\-h}!scgl\-\_\-attr\-\_\-get\-\_\-key@{scgl\-\_\-attr\-\_\-get\-\_\-key}}
+\index{scgl\-\_\-attr\-\_\-get\-\_\-key@{scgl\-\_\-attr\-\_\-get\-\_\-key}!scgl_attr.h@{scgl\-\_\-attr.\-h}}
+\subsubsection[{scgl\-\_\-attr\-\_\-get\-\_\-key}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ {\bf scgl\-\_\-attr\-\_\-get\-\_\-key} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-attr\-\_\-t} $\ast$}]{attr}
+\end{DoxyParamCaption}
+)}\label{scgl__attr_8h_a3bdb2d49935c2cc68ea2353ccc496e41}
+return key argument from attribute object
+
+
+\begin{DoxyParams}{Parameters}
+{\em attr} & reference to attribute object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to key, N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-attr.\-h@{scgl\-\_\-attr.\-h}!scgl\-\_\-attr\-\_\-get\-\_\-value@{scgl\-\_\-attr\-\_\-get\-\_\-value}}
+\index{scgl\-\_\-attr\-\_\-get\-\_\-value@{scgl\-\_\-attr\-\_\-get\-\_\-value}!scgl_attr.h@{scgl\-\_\-attr.\-h}}
+\subsubsection[{scgl\-\_\-attr\-\_\-get\-\_\-value}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ {\bf scgl\-\_\-attr\-\_\-get\-\_\-value} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-attr\-\_\-t} $\ast$}]{attr}
+\end{DoxyParamCaption}
+)}\label{scgl__attr_8h_a0296d6f9d913a7ba5ad451564d1c13d0}
+return value argument from attribute object
+
+
+\begin{DoxyParams}{Parameters}
+{\em attr} & reference to attribute object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to value, N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-attr.\-h@{scgl\-\_\-attr.\-h}!scgl\-\_\-attr\-\_\-set\-\_\-key@{scgl\-\_\-attr\-\_\-set\-\_\-key}}
+\index{scgl\-\_\-attr\-\_\-set\-\_\-key@{scgl\-\_\-attr\-\_\-set\-\_\-key}!scgl_attr.h@{scgl\-\_\-attr.\-h}}
+\subsubsection[{scgl\-\_\-attr\-\_\-set\-\_\-key}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-attr\-\_\-set\-\_\-key} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-attr\-\_\-t} $\ast$}]{attr, }
+\item[{char $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\label{scgl__attr_8h_a802ebefda47cad68c1413d8a9a83ae79}
+set key argument for attribute object
+
+
+\begin{DoxyParams}{Parameters}
+{\em attr} & reference to attribute object \\
+\hline
+{\em key} & new attribute key \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-attr.\-h@{scgl\-\_\-attr.\-h}!scgl\-\_\-attr\-\_\-set\-\_\-value@{scgl\-\_\-attr\-\_\-set\-\_\-value}}
+\index{scgl\-\_\-attr\-\_\-set\-\_\-value@{scgl\-\_\-attr\-\_\-set\-\_\-value}!scgl_attr.h@{scgl\-\_\-attr.\-h}}
+\subsubsection[{scgl\-\_\-attr\-\_\-set\-\_\-value}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-attr\-\_\-set\-\_\-value} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-attr\-\_\-t} $\ast$}]{attr, }
+\item[{void $\ast$}]{value, }
+\item[{{\bf attr\-\_\-function}}]{fun}
+\end{DoxyParamCaption}
+)}\label{scgl__attr_8h_a2aef1731b6076349ac4ecea782add47f}
+set value argument for attribute object
+
+
+\begin{DoxyParams}{Parameters}
+{\em attr} & reference to attribute object \\
+\hline
+{\em value} & new value \\
+\hline
+{\em fun} & function which will free memory occupied by old value \\
+\hline
+\end{DoxyParams}

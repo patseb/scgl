@@ -1,0 +1,60 @@
+\section{scgl\-\_\-edge Struct Reference}
+\label{structscgl__edge}\index{scgl\-\_\-edge@{scgl\-\_\-edge}}
+
+
+{\ttfamily \#include $<$scgl\-\_\-edge.\-h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+{\bf scgl\-\_\-edge\-\_\-t} $\ast$ {\bf sibling}
+\item 
+{\bf cost\-\_\-type\-\_\-t} {\bf cost}
+\item 
+{\bf scgl\-\_\-vertex\-\_\-t} $\ast$ {\bf from}
+\item 
+list\-\_\-head\-\_\-t {\bf from\-\_\-list}
+\item 
+{\bf scgl\-\_\-vertex\-\_\-t} $\ast$ {\bf to}
+\item 
+list\-\_\-head\-\_\-t {\bf to\-\_\-list}
+\item 
+list\-\_\-head\-\_\-t {\bf owner\-\_\-list}
+\item 
+list\-\_\-head\-\_\-t {\bf attributes}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+edge object 
+
+\subsection{Field Documentation}
+\index{scgl\-\_\-edge@{scgl\-\_\-edge}!attributes@{attributes}}
+\index{attributes@{attributes}!scgl_edge@{scgl\-\_\-edge}}
+\subsubsection[{attributes}]{\setlength{\rightskip}{0pt plus 5cm}list\-\_\-head\-\_\-t {\bf attributes}}\label{structscgl__edge_a35b0b90071708fc088a15f65ccdf63b4}
+user-\/purpose list of edge attributes (attr\-\_\-t objects) \index{scgl\-\_\-edge@{scgl\-\_\-edge}!cost@{cost}}
+\index{cost@{cost}!scgl_edge@{scgl\-\_\-edge}}
+\subsubsection[{cost}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cost\-\_\-type\-\_\-t} {\bf cost}}\label{structscgl__edge_a810ad7c2808df6bed0a30517197768e6}
+edge cost, by default it's int type \index{scgl\-\_\-edge@{scgl\-\_\-edge}!from@{from}}
+\index{from@{from}!scgl_edge@{scgl\-\_\-edge}}
+\subsubsection[{from}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-vertex\-\_\-t}$\ast$ {\bf from}}\label{structscgl__edge_aa9a780613dc4c37db5ac67e555622c93}
+edge source vertex \index{scgl\-\_\-edge@{scgl\-\_\-edge}!from\-\_\-list@{from\-\_\-list}}
+\index{from\-\_\-list@{from\-\_\-list}!scgl_edge@{scgl\-\_\-edge}}
+\subsubsection[{from\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}list\-\_\-head\-\_\-t {\bf from\-\_\-list}}\label{structscgl__edge_acf8f950a5ca94beebbc94b2ff49da94e}
+list head which will be connected with vertex out list \index{scgl\-\_\-edge@{scgl\-\_\-edge}!owner\-\_\-list@{owner\-\_\-list}}
+\index{owner\-\_\-list@{owner\-\_\-list}!scgl_edge@{scgl\-\_\-edge}}
+\subsubsection[{owner\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}list\-\_\-head\-\_\-t {\bf owner\-\_\-list}}\label{structscgl__edge_a6e2f0c2302d0b754a3ee6bb58072829a}
+list head which will be connected with graph edges list \index{scgl\-\_\-edge@{scgl\-\_\-edge}!sibling@{sibling}}
+\index{sibling@{sibling}!scgl_edge@{scgl\-\_\-edge}}
+\subsubsection[{sibling}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-edge\-\_\-t}$\ast$ {\bf sibling}}\label{structscgl__edge_a651134bb7f6b9eb747db1e093a2b8f2f}
+edge's sibling, created when edge is undirected \index{scgl\-\_\-edge@{scgl\-\_\-edge}!to@{to}}
+\index{to@{to}!scgl_edge@{scgl\-\_\-edge}}
+\subsubsection[{to}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-vertex\-\_\-t}$\ast$ {\bf to}}\label{structscgl__edge_a714fec4148cea2ff75b9c1cc37fc27b7}
+edge destination vertex \index{scgl\-\_\-edge@{scgl\-\_\-edge}!to\-\_\-list@{to\-\_\-list}}
+\index{to\-\_\-list@{to\-\_\-list}!scgl_edge@{scgl\-\_\-edge}}
+\subsubsection[{to\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}list\-\_\-head\-\_\-t {\bf to\-\_\-list}}\label{structscgl__edge_a928bea3c7794b6e321688c5e15285382}
+list head which will be connected with vertex in list 
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/{\bf scgl\-\_\-edge.\-h}\end{DoxyCompactItemize}

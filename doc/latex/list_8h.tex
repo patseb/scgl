@@ -1,0 +1,616 @@
+\section{/home/patseb/src/mgr/include/list.h File Reference}
+\label{list_8h}\index{/home/patseb/src/mgr/include/list.\-h@{/home/patseb/src/mgr/include/list.\-h}}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf list\-\_\-head}
+\item 
+struct {\bf hlist\-\_\-head}
+\item 
+struct {\bf hlist\-\_\-node}
+\end{DoxyCompactItemize}
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf container\-\_\-of}(ptr, type, member)~((type $\ast$)((char $\ast$)(ptr)-\/(unsigned long)(\&((type $\ast$)0)-\/$>$member)))
+\item 
+\#define {\bf L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}(name)~\{ \&(name), \&(name) \}
+\item 
+\#define {\bf L\-I\-S\-T\-\_\-\-H\-E\-A\-D}(name)~struct {\bf list\-\_\-head} name = {\bf L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}(name)
+\item 
+\#define {\bf list\-\_\-entry}(ptr, type, member)~{\bf container\-\_\-of}(ptr, type, member)
+\item 
+\#define {\bf list\-\_\-first\-\_\-entry}(ptr, type, member)~{\bf list\-\_\-entry}((ptr)-\/$>$next, type, member)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each}(pos, head)~for (pos = (head)-\/$>$next; pos != (head); pos = pos-\/$>$next)
+\item 
+\#define {\bf \-\_\-\-\_\-list\-\_\-for\-\_\-each}(pos, head)~for (pos = (head)-\/$>$next; pos != (head); pos = pos-\/$>$next)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-prev}(pos, head)~for (pos = (head)-\/$>$prev; pos != (head); pos = pos-\/$>$prev)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-safe}(pos, n, head)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-prev\-\_\-safe}(pos, n, head)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry}(pos, head, member)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-reverse}(pos, head, member)
+\item 
+\#define {\bf list\-\_\-prepare\-\_\-entry}(pos, head, member)~((pos) ? \-: {\bf list\-\_\-entry}(head, typeof($\ast$pos), member))
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue}(pos, head, member)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue\-\_\-reverse}(pos, head, member)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-from}(pos, head, member)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe}(pos, n, head, member)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-continue}(pos, n, head, member)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-from}(pos, n, head, member)
+\item 
+\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-reverse}(pos, n, head, member)
+\item 
+\#define {\bf list\-\_\-safe\-\_\-reset\-\_\-next}(pos, n, member)~n = {\bf list\-\_\-entry}(pos-\/$>$member.\-next, typeof($\ast$pos), member)
+\item 
+\#define {\bf H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}~\{ .first = N\-U\-L\-L \}
+\item 
+\#define {\bf H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D}(name)~struct {\bf hlist\-\_\-head} name = \{  .first = N\-U\-L\-L \}
+\item 
+\#define {\bf I\-N\-I\-T\-\_\-\-H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D}(ptr)~((ptr)-\/$>$first = N\-U\-L\-L)
+\item 
+\#define {\bf hlist\-\_\-entry}(ptr, type, member)~{\bf container\-\_\-of}(ptr,type,member)
+\item 
+\#define {\bf hlist\-\_\-for\-\_\-each}(pos, head)~for (pos = (head)-\/$>$first; pos ; pos = pos-\/$>$next)
+\item 
+\#define {\bf hlist\-\_\-for\-\_\-each\-\_\-safe}(pos, n, head)
+\item 
+\#define {\bf hlist\-\_\-for\-\_\-each\-\_\-entry}(tpos, pos, head, member)
+\item 
+\#define {\bf hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue}(tpos, pos, member)
+\item 
+\#define {\bf hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-from}(tpos, pos, member)
+\item 
+\#define {\bf hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe}(tpos, pos, n, head, member)
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct {\bf list\-\_\-head} {\bf list\-\_\-head\-\_\-t}
+\end{DoxyCompactItemize}
+
+
+\subsection{Define Documentation}
+\index{list.\-h@{list.\-h}!\-\_\-\-\_\-list\-\_\-for\-\_\-each@{\-\_\-\-\_\-list\-\_\-for\-\_\-each}}
+\index{\-\_\-\-\_\-list\-\_\-for\-\_\-each@{\-\_\-\-\_\-list\-\_\-for\-\_\-each}!list.h@{list.\-h}}
+\subsubsection[{\-\_\-\-\_\-list\-\_\-for\-\_\-each}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-list\-\_\-for\-\_\-each}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{head}
+\end{DoxyParamCaption}
+)~for (pos = (head)-\/$>$next; pos != (head); pos = pos-\/$>$next)}\label{list_8h_abfd5aa736021dace98d07ff2518a698d}
+\-\_\-\-\_\-list\-\_\-for\-\_\-each -\/ iterate over a list \-: the \&struct \doxyref{list\-\_\-head}{p.}{structlist__head} to use as a loop cursor. \-: the head for your list.
+
+This variant doesn't differ from \doxyref{list\-\_\-for\-\_\-each()}{p.}{list_8h_ab8b24e6660ab3760c923e4b4db3fa502} any more. We don't do prefetching in either case. 
+
+Definition at line 373 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!container\-\_\-of@{container\-\_\-of}}
+\index{container\-\_\-of@{container\-\_\-of}!list.h@{list.\-h}}
+\subsubsection[{container\-\_\-of}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf container\-\_\-of}(
+\begin{DoxyParamCaption}
+\item[{}]{ptr, }
+\item[{}]{type, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)~((type $\ast$)((char $\ast$)(ptr)-\/(unsigned long)(\&((type $\ast$)0)-\/$>$member)))}\label{list_8h_af8c317a42292b61c93aae91e59118a46}
+
+
+Definition at line 4 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!hlist\-\_\-entry@{hlist\-\_\-entry}}
+\index{hlist\-\_\-entry@{hlist\-\_\-entry}!list.h@{list.\-h}}
+\subsubsection[{hlist\-\_\-entry}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf hlist\-\_\-entry}(
+\begin{DoxyParamCaption}
+\item[{}]{ptr, }
+\item[{}]{type, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)~{\bf container\-\_\-of}(ptr,type,member)}\label{list_8h_ae6c5fc3a7207aad6b8ea756eaa8bb043}
+
+
+Definition at line 670 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!hlist\-\_\-for\-\_\-each@{hlist\-\_\-for\-\_\-each}}
+\index{hlist\-\_\-for\-\_\-each@{hlist\-\_\-for\-\_\-each}!list.h@{list.\-h}}
+\subsubsection[{hlist\-\_\-for\-\_\-each}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf hlist\-\_\-for\-\_\-each}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{head}
+\end{DoxyParamCaption}
+)~for (pos = (head)-\/$>$first; pos ; pos = pos-\/$>$next)}\label{list_8h_ac971440486bd1084a2b110f53a9ad3b7}
+
+
+Definition at line 672 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!hlist\-\_\-for\-\_\-each\-\_\-entry@{hlist\-\_\-for\-\_\-each\-\_\-entry}}
+\index{hlist\-\_\-for\-\_\-each\-\_\-entry@{hlist\-\_\-for\-\_\-each\-\_\-entry}!list.h@{list.\-h}}
+\subsubsection[{hlist\-\_\-for\-\_\-each\-\_\-entry}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf hlist\-\_\-for\-\_\-each\-\_\-entry}(
+\begin{DoxyParamCaption}
+\item[{}]{tpos, }
+\item[{}]{pos, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_a3758c38c0697ac740d62f4d4db56abb4}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = (head)->first;                                        \
+             pos &&                                                      \
+                ({ tpos = hlist_entry(pos, typeof(*tpos), member); 1;}); \
+             pos = pos->next)
+\end{DoxyCode}
+hlist\-\_\-for\-\_\-each\-\_\-entry -\/ iterate over list of given type \-: the type $\ast$ to use as a loop cursor. \-: the \&struct \doxyref{hlist\-\_\-node}{p.}{structhlist__node} to use as a loop cursor. \-: the head for your list. \-: the name of the \doxyref{hlist\-\_\-node}{p.}{structhlist__node} within the struct. 
+
+Definition at line 686 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue@{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue}}
+\index{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue@{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue}!list.h@{list.\-h}}
+\subsubsection[{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue}(
+\begin{DoxyParamCaption}
+\item[{}]{tpos, }
+\item[{}]{pos, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_a28c9946e110bc7830cfaeef96e1306b4}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = (pos)->next;                                          \
+             pos &&                                                      \
+                ({ tpos = hlist_entry(pos, typeof(*tpos), member); 1;}); \
+             pos = pos->next)
+\end{DoxyCode}
+hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue -\/ iterate over a hlist continuing after current point \-: the type $\ast$ to use as a loop cursor. \-: the \&struct \doxyref{hlist\-\_\-node}{p.}{structhlist__node} to use as a loop cursor. \-: the name of the \doxyref{hlist\-\_\-node}{p.}{structhlist__node} within the struct. 
+
+Definition at line 698 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-from@{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-from}}
+\index{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-from@{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-from}!list.h@{list.\-h}}
+\subsubsection[{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-from}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-from}(
+\begin{DoxyParamCaption}
+\item[{}]{tpos, }
+\item[{}]{pos, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_a587cf22c9b7f20e8a9e47f82dd1bc7bb}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (; pos &&                                                    \
+                ({ tpos = hlist_entry(pos, typeof(*tpos), member); 1;}); \
+             pos = pos->next)
+\end{DoxyCode}
+hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-from -\/ iterate over a hlist continuing from current point \-: the type $\ast$ to use as a loop cursor. \-: the \&struct \doxyref{hlist\-\_\-node}{p.}{structhlist__node} to use as a loop cursor. \-: the name of the \doxyref{hlist\-\_\-node}{p.}{structhlist__node} within the struct. 
+
+Definition at line 710 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe@{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe}}
+\index{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe@{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe}!list.h@{list.\-h}}
+\subsubsection[{hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe}(
+\begin{DoxyParamCaption}
+\item[{}]{tpos, }
+\item[{}]{pos, }
+\item[{}]{n, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_a5c24f2d2ef4edd718fc7553bbdd22cb6}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = (head)->first;                                        \
+             pos && ({ n = pos->next; 1; }) &&                           \
+                ({ tpos = hlist_entry(pos, typeof(*tpos), member); 1;}); \
+             pos = n)
+\end{DoxyCode}
+hlist\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe -\/ iterate over list of given type safe against removal of list entry \-: the type $\ast$ to use as a loop cursor. \-: the \&struct \doxyref{hlist\-\_\-node}{p.}{structhlist__node} to use as a loop cursor. \par
+\-: another \&struct \doxyref{hlist\-\_\-node}{p.}{structhlist__node} to use as temporary storage \-: the head for your list. \-: the name of the \doxyref{hlist\-\_\-node}{p.}{structhlist__node} within the struct. 
+
+Definition at line 723 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!hlist\-\_\-for\-\_\-each\-\_\-safe@{hlist\-\_\-for\-\_\-each\-\_\-safe}}
+\index{hlist\-\_\-for\-\_\-each\-\_\-safe@{hlist\-\_\-for\-\_\-each\-\_\-safe}!list.h@{list.\-h}}
+\subsubsection[{hlist\-\_\-for\-\_\-each\-\_\-safe}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf hlist\-\_\-for\-\_\-each\-\_\-safe}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{n, }
+\item[{}]{head}
+\end{DoxyParamCaption}
+)}\label{list_8h_a0ac51eeb1d38e770546acbe88d566211}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = (head)->first; pos && ({ n = pos->next; 1; }); \
+             pos = n)
+\end{DoxyCode}
+
+
+Definition at line 675 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D@{H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D}}
+\index{H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D@{H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D}!list.h@{list.\-h}}
+\subsubsection[{H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D}(
+\begin{DoxyParamCaption}
+\item[{}]{name}
+\end{DoxyParamCaption}
+)~struct {\bf hlist\-\_\-head} name = \{  .first = N\-U\-L\-L \}}\label{list_8h_a5110612fedc3e1b54fce4c2143c4c788}
+
+
+Definition at line 578 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T@{H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}}
+\index{H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T@{H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}!list.h@{list.\-h}}
+\subsubsection[{H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}~\{ .first = N\-U\-L\-L \}}\label{list_8h_a68283f4abad271853d5b25ad697b1b06}
+
+
+Definition at line 577 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!I\-N\-I\-T\-\_\-\-H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D@{I\-N\-I\-T\-\_\-\-H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D}}
+\index{I\-N\-I\-T\-\_\-\-H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D@{I\-N\-I\-T\-\_\-\-H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D}!list.h@{list.\-h}}
+\subsubsection[{I\-N\-I\-T\-\_\-\-H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf I\-N\-I\-T\-\_\-\-H\-L\-I\-S\-T\-\_\-\-H\-E\-A\-D}(
+\begin{DoxyParamCaption}
+\item[{}]{ptr}
+\end{DoxyParamCaption}
+)~((ptr)-\/$>$first = N\-U\-L\-L)}\label{list_8h_a502bdfb9a4a5a0d922363ea1708bf081}
+
+
+Definition at line 579 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-entry@{list\-\_\-entry}}
+\index{list\-\_\-entry@{list\-\_\-entry}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-entry}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-entry}(
+\begin{DoxyParamCaption}
+\item[{}]{ptr, }
+\item[{}]{type, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)~{\bf container\-\_\-of}(ptr, type, member)}\label{list_8h_a26c976b7f654e70df318c1843e5094de}
+list\-\_\-entry -\/ get the struct for this entry \-: the \&struct \doxyref{list\-\_\-head}{p.}{structlist__head} pointer. \-: the type of the struct this is embedded in. \-: the name of the list\-\_\-struct within the struct. 
+
+Definition at line 343 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-first\-\_\-entry@{list\-\_\-first\-\_\-entry}}
+\index{list\-\_\-first\-\_\-entry@{list\-\_\-first\-\_\-entry}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-first\-\_\-entry}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-first\-\_\-entry}(
+\begin{DoxyParamCaption}
+\item[{}]{ptr, }
+\item[{}]{type, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)~{\bf list\-\_\-entry}((ptr)-\/$>$next, type, member)}\label{list_8h_a29b80cf9d55392a4949d2071b7db4d5c}
+list\-\_\-first\-\_\-entry -\/ get the first element from a list \-: the list head to take the element from. \-: the type of the struct this is embedded in. \-: the name of the list\-\_\-struct within the struct.
+
+Note, that list is expected to be not empty. 
+
+Definition at line 354 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each@{list\-\_\-for\-\_\-each}}
+\index{list\-\_\-for\-\_\-each@{list\-\_\-for\-\_\-each}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{head}
+\end{DoxyParamCaption}
+)~for (pos = (head)-\/$>$next; pos != (head); pos = pos-\/$>$next)}\label{list_8h_ab8b24e6660ab3760c923e4b4db3fa502}
+list\-\_\-for\-\_\-each -\/ iterate over a list \-: the \&struct \doxyref{list\-\_\-head}{p.}{structlist__head} to use as a loop cursor. \-: the head for your list. 
+
+Definition at line 362 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-entry@{list\-\_\-for\-\_\-each\-\_\-entry}}
+\index{list\-\_\-for\-\_\-each\-\_\-entry@{list\-\_\-for\-\_\-each\-\_\-entry}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-entry}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_a9b782fefb5ab71ce9762182e45a615e1}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = list_entry((head)->next, typeof(*pos), member);      \
+             &pos->member != (head);    \
+             pos = list_entry(pos->member.next, typeof(*pos), member))
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-entry -\/ iterate over list of given type \-: the type $\ast$ to use as a loop cursor. \-: the head for your list. \-: the name of the list\-\_\-struct within the struct. 
+
+Definition at line 411 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue}}
+\index{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_a91b31084b4ece72dbd75d2bb1f01d9ff}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = list_entry(pos->member.next, typeof(*pos), member);  \
+             &pos->member != (head);    \
+             pos = list_entry(pos->member.next, typeof(*pos), member))
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue -\/ continue iteration over list of given type \-: the type $\ast$ to use as a loop cursor. \-: the head for your list. \-: the name of the list\-\_\-struct within the struct.
+
+Continue to iterate over list of given type, continuing after the current position. 
+
+Definition at line 447 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue\-\_\-reverse@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue\-\_\-reverse}}
+\index{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue\-\_\-reverse@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue\-\_\-reverse}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue\-\_\-reverse}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue\-\_\-reverse}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_a1633f5ae3e74918112a8e89ab696bff8}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = list_entry(pos->member.prev, typeof(*pos), member);  \
+             &pos->member != (head);    \
+             pos = list_entry(pos->member.prev, typeof(*pos), member))
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue\-\_\-reverse -\/ iterate backwards from the given point \-: the type $\ast$ to use as a loop cursor. \-: the head for your list. \-: the name of the list\-\_\-struct within the struct.
+
+Start to iterate over list of given type backwards, continuing after the current position. 
+
+Definition at line 461 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-entry\-\_\-from@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-from}}
+\index{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-from@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-from}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-from}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-from}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_a35f39924661f4dc908e710e8aee1eff0}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (; &pos->member != (head);  \
+             pos = list_entry(pos->member.next, typeof(*pos), member))
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-entry\-\_\-from -\/ iterate over list of given type from the current point \-: the type $\ast$ to use as a loop cursor. \-: the head for your list. \-: the name of the list\-\_\-struct within the struct.
+
+Iterate over list of given type, continuing from current position. 
+
+Definition at line 474 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-entry\-\_\-reverse@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-reverse}}
+\index{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-reverse@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-reverse}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-reverse}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-reverse}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_accc8d8e6c8ffe8ce964c5a1b59732cf3}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = list_entry((head)->prev, typeof(*pos), member);      \
+             &pos->member != (head);    \
+             pos = list_entry(pos->member.prev, typeof(*pos), member))
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-entry\-\_\-reverse -\/ iterate backwards over list of given type. \-: the type $\ast$ to use as a loop cursor. \-: the head for your list. \-: the name of the list\-\_\-struct within the struct. 
+
+Definition at line 422 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe}}
+\index{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{n, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_ac3f72d6bd5144c7970824813810d2da1}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = list_entry((head)->next, typeof(*pos), member),      \
+                n = list_entry(pos->member.next, typeof(*pos), member); \
+             &pos->member != (head);                                    \
+             pos = n, n = list_entry(n->member.next, typeof(*n), member))
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe -\/ iterate over list of given type safe against removal of list entry \-: the type $\ast$ to use as a loop cursor. \par
+\-: another type $\ast$ to use as temporary storage \-: the head for your list. \-: the name of the list\-\_\-struct within the struct. 
+
+Definition at line 485 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-continue@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-continue}}
+\index{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-continue@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-continue}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-continue}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-continue}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{n, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_a70fb81027ddca24ebb21aa8e70e4b4ff}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = list_entry(pos->member.next, typeof(*pos), member),          \
+                n = list_entry(pos->member.next, typeof(*pos), member);         
+      \
+             &pos->member != (head);                                            
+      \
+             pos = n, n = list_entry(n->member.next, typeof(*n), member))
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-continue -\/ continue list iteration safe against removal \-: the type $\ast$ to use as a loop cursor. \par
+\-: another type $\ast$ to use as temporary storage \-: the head for your list. \-: the name of the list\-\_\-struct within the struct.
+
+Iterate over list of given type, continuing after current point, safe against removal of list entry. 
+
+Definition at line 501 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-from@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-from}}
+\index{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-from@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-from}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-from}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-from}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{n, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_ab9eb9a805ba4f3bd2a9d332ad34cb3e1}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (n = list_entry(pos->member.next, typeof(*pos), member);            \
+             &pos->member != (head);                                            
+      \
+             pos = n, n = list_entry(n->member.next, typeof(*n), member))
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-from -\/ iterate over list from current point safe against removal \-: the type $\ast$ to use as a loop cursor. \par
+\-: another type $\ast$ to use as temporary storage \-: the head for your list. \-: the name of the list\-\_\-struct within the struct.
+
+Iterate over list of given type from current point, safe against removal of list entry. 
+
+Definition at line 517 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-reverse@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-reverse}}
+\index{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-reverse@{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-reverse}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-reverse}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-reverse}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{n, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)}\label{list_8h_a3a3ce0f89762fe2bc0a1d840ee610532}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = list_entry((head)->prev, typeof(*pos), member),      \
+                n = list_entry(pos->member.prev, typeof(*pos), member); \
+             &pos->member != (head);                                    \
+             pos = n, n = list_entry(n->member.prev, typeof(*n), member))
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe\-\_\-reverse -\/ iterate backwards over list safe against removal \-: the type $\ast$ to use as a loop cursor. \par
+\-: another type $\ast$ to use as temporary storage \-: the head for your list. \-: the name of the list\-\_\-struct within the struct.
+
+Iterate backwards over list of given type, safe against removal of list entry. 
+
+Definition at line 532 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-prev@{list\-\_\-for\-\_\-each\-\_\-prev}}
+\index{list\-\_\-for\-\_\-each\-\_\-prev@{list\-\_\-for\-\_\-each\-\_\-prev}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-prev}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-prev}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{head}
+\end{DoxyParamCaption}
+)~for (pos = (head)-\/$>$prev; pos != (head); pos = pos-\/$>$prev)}\label{list_8h_a19fc06b83f3502a83ce566b8887e6aec}
+list\-\_\-for\-\_\-each\-\_\-prev -\/ iterate over a list backwards \-: the \&struct \doxyref{list\-\_\-head}{p.}{structlist__head} to use as a loop cursor. \-: the head for your list. 
+
+Definition at line 381 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-prev\-\_\-safe@{list\-\_\-for\-\_\-each\-\_\-prev\-\_\-safe}}
+\index{list\-\_\-for\-\_\-each\-\_\-prev\-\_\-safe@{list\-\_\-for\-\_\-each\-\_\-prev\-\_\-safe}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-prev\-\_\-safe}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-prev\-\_\-safe}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{n, }
+\item[{}]{head}
+\end{DoxyParamCaption}
+)}\label{list_8h_a4166108f765690426e9d89f02bff7df4}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = (head)->prev, n = pos->prev; \
+             pos != (head); \
+             pos = n, n = pos->prev)
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-prev\-\_\-safe -\/ iterate over a list backwards safe against removal of list entry \-: the \&struct \doxyref{list\-\_\-head}{p.}{structlist__head} to use as a loop cursor. \par
+\-: another \&struct \doxyref{list\-\_\-head}{p.}{structlist__head} to use as temporary storage \-: the head for your list. 
+
+Definition at line 400 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-for\-\_\-each\-\_\-safe@{list\-\_\-for\-\_\-each\-\_\-safe}}
+\index{list\-\_\-for\-\_\-each\-\_\-safe@{list\-\_\-for\-\_\-each\-\_\-safe}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-for\-\_\-each\-\_\-safe}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-for\-\_\-each\-\_\-safe}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{n, }
+\item[{}]{head}
+\end{DoxyParamCaption}
+)}\label{list_8h_a9e4b9328744994b9d3878f5dad75c09f}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+for (pos = (head)->next, n = pos->next; pos != (head); \
+                pos = n, n = pos->next)
+\end{DoxyCode}
+list\-\_\-for\-\_\-each\-\_\-safe -\/ iterate over a list safe against removal of list entry \-: the \&struct \doxyref{list\-\_\-head}{p.}{structlist__head} to use as a loop cursor. \par
+\-: another \&struct \doxyref{list\-\_\-head}{p.}{structlist__head} to use as temporary storage \-: the head for your list. 
+
+Definition at line 390 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!L\-I\-S\-T\-\_\-\-H\-E\-A\-D@{L\-I\-S\-T\-\_\-\-H\-E\-A\-D}}
+\index{L\-I\-S\-T\-\_\-\-H\-E\-A\-D@{L\-I\-S\-T\-\_\-\-H\-E\-A\-D}!list.h@{list.\-h}}
+\subsubsection[{L\-I\-S\-T\-\_\-\-H\-E\-A\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf L\-I\-S\-T\-\_\-\-H\-E\-A\-D}(
+\begin{DoxyParamCaption}
+\item[{}]{name}
+\end{DoxyParamCaption}
+)~struct {\bf list\-\_\-head} name = {\bf L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}(name)}\label{list_8h_a42f0e72af970a790b60a740af8c9ecd0}
+
+
+Definition at line 25 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T@{L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}}
+\index{L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T@{L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}!list.h@{list.\-h}}
+\subsubsection[{L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf L\-I\-S\-T\-\_\-\-H\-E\-A\-D\-\_\-\-I\-N\-I\-T}(
+\begin{DoxyParamCaption}
+\item[{}]{name}
+\end{DoxyParamCaption}
+)~\{ \&(name), \&(name) \}}\label{list_8h_a4642d4b7df28478bb762fe43c85b5c63}
+
+
+Definition at line 23 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-prepare\-\_\-entry@{list\-\_\-prepare\-\_\-entry}}
+\index{list\-\_\-prepare\-\_\-entry@{list\-\_\-prepare\-\_\-entry}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-prepare\-\_\-entry}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-prepare\-\_\-entry}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{head, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)~((pos) ? \-: {\bf list\-\_\-entry}(head, typeof($\ast$pos), member))}\label{list_8h_af6fc8bdd3ce7ee375e35baf9d2b2e62a}
+list\-\_\-prepare\-\_\-entry -\/ prepare a pos entry for use in \doxyref{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue()}{p.}{list_8h_a91b31084b4ece72dbd75d2bb1f01d9ff} \-: the type $\ast$ to use as a start point \-: the head of the list \-: the name of the list\-\_\-struct within the struct.
+
+Prepares a pos entry for use as a start point in \doxyref{list\-\_\-for\-\_\-each\-\_\-entry\-\_\-continue()}{p.}{list_8h_a91b31084b4ece72dbd75d2bb1f01d9ff}. 
+
+Definition at line 435 of file list.\-h.
+
+\index{list.\-h@{list.\-h}!list\-\_\-safe\-\_\-reset\-\_\-next@{list\-\_\-safe\-\_\-reset\-\_\-next}}
+\index{list\-\_\-safe\-\_\-reset\-\_\-next@{list\-\_\-safe\-\_\-reset\-\_\-next}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-safe\-\_\-reset\-\_\-next}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf list\-\_\-safe\-\_\-reset\-\_\-next}(
+\begin{DoxyParamCaption}
+\item[{}]{pos, }
+\item[{}]{n, }
+\item[{}]{member}
+\end{DoxyParamCaption}
+)~n = {\bf list\-\_\-entry}(pos-\/$>$member.\-next, typeof($\ast$pos), member)}\label{list_8h_af423641568c98cc34b0ac68871593a16}
+list\-\_\-safe\-\_\-reset\-\_\-next -\/ reset a stale list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe loop \-: the loop cursor used in the list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe loop \par
+\-: temporary storage used in list\-\_\-for\-\_\-each\-\_\-entry\-\_\-safe \-: the name of the list\-\_\-struct within the struct.
+
+list\-\_\-safe\-\_\-reset\-\_\-next is not safe to use in general if the list may be modified concurrently (eg. the lock is dropped in the loop body). An exception to this is if the cursor element (pos) is pinned in the list, and list\-\_\-safe\-\_\-reset\-\_\-next is called after re-\/taking the lock and before completing the current iteration of the loop body. 
+
+Definition at line 550 of file list.\-h.
+
+
+
+\subsection{Typedef Documentation}
+\index{list.\-h@{list.\-h}!list\-\_\-head\-\_\-t@{list\-\_\-head\-\_\-t}}
+\index{list\-\_\-head\-\_\-t@{list\-\_\-head\-\_\-t}!list.h@{list.\-h}}
+\subsubsection[{list\-\_\-head\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf list\-\_\-head} {\bf list\-\_\-head\-\_\-t}}\label{list_8h_a2dfa4d13dfe6af1e2b62535310a34db1}
+
+
+Definition at line 21 of file list.\-h.
+

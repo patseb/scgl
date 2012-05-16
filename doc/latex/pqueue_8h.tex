@@ -1,0 +1,120 @@
+\section{/home/patseb/src/mgr/include/pqueue.h File Reference}
+\label{pqueue_8h}\index{/home/patseb/src/mgr/include/pqueue.\-h@{/home/patseb/src/mgr/include/pqueue.\-h}}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf P\-Queue\-\_\-s}
+\end{DoxyCompactItemize}
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf N\-P\-\_\-\-C\-H\-E\-C\-K}(ptr)
+\item 
+\#define {\bf D\-E\-B\-U\-G}(msg)~fprintf(stderr, \char`\"{}\%s\-:\%d \%s\char`\"{}, \-\_\-\-\_\-\-F\-I\-L\-E\-\_\-\-\_\-, \-\_\-\-\_\-\-L\-I\-N\-E\-\_\-\-\_\-, (msg))
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct {\bf P\-Queue\-\_\-s} {\bf P\-Queue}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf P\-Queue} $\ast$ {\bf pqueue\-\_\-new} (int($\ast$cmp)(const void $\ast$d1, const void $\ast$d2), size\-\_\-t capacity)
+\item 
+void {\bf pqueue\-\_\-delete} ({\bf P\-Queue} $\ast$q)
+\item 
+void {\bf pqueue\-\_\-enqueue} ({\bf P\-Queue} $\ast$q, const void $\ast$data)
+\item 
+void $\ast$ {\bf pqueue\-\_\-dequeue} ({\bf P\-Queue} $\ast$q)
+\item 
+void {\bf pqueue\-\_\-change\-\_\-data} ({\bf P\-Queue} $\ast$q, int($\ast$cmp)(const void $\ast$d1, const void $\ast$d2), void $\ast$old\-\_\-data, void($\ast$swp)(void $\ast$$\ast$d1, void $\ast$$\ast$d2), void $\ast$new\-\_\-data)
+\end{DoxyCompactItemize}
+
+
+\subsection{Define Documentation}
+\index{pqueue.\-h@{pqueue.\-h}!D\-E\-B\-U\-G@{D\-E\-B\-U\-G}}
+\index{D\-E\-B\-U\-G@{D\-E\-B\-U\-G}!pqueue.h@{pqueue.\-h}}
+\subsubsection[{D\-E\-B\-U\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf D\-E\-B\-U\-G}(
+\begin{DoxyParamCaption}
+\item[{}]{msg}
+\end{DoxyParamCaption}
+)~fprintf(stderr, \char`\"{}\%s\-:\%d \%s\char`\"{}, \-\_\-\-\_\-\-F\-I\-L\-E\-\_\-\-\_\-, \-\_\-\-\_\-\-L\-I\-N\-E\-\_\-\-\_\-, (msg))}\label{pqueue_8h_aecc1f7a8a2493b9e021e5bff76a00a5b}
+
+
+Definition at line 20 of file pqueue.\-h.
+
+\index{pqueue.\-h@{pqueue.\-h}!N\-P\-\_\-\-C\-H\-E\-C\-K@{N\-P\-\_\-\-C\-H\-E\-C\-K}}
+\index{N\-P\-\_\-\-C\-H\-E\-C\-K@{N\-P\-\_\-\-C\-H\-E\-C\-K}!pqueue.h@{pqueue.\-h}}
+\subsubsection[{N\-P\-\_\-\-C\-H\-E\-C\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf N\-P\-\_\-\-C\-H\-E\-C\-K}(
+\begin{DoxyParamCaption}
+\item[{}]{ptr}
+\end{DoxyParamCaption}
+)}\label{pqueue_8h_af3f351e5b6cb5daf281a6c9169e54e6d}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+{ \
+                        if (NULL == (ptr)) { \
+                                fprintf(stderr, "%s:%d NULL POINTER: %s n", \
+                                                __FILE__, __LINE__, #ptr); \
+                                exit(-1); \
+                        } \
+                } \
+\end{DoxyCode}
+Debugging macro .
+
+Checks for a N\-U\-L\-L pointer, and prints the error message, source file and line via 'stderr' . If the check fails the program exits with error code (-\/1) . 
+
+Definition at line 11 of file pqueue.\-h.
+
+
+
+\subsection{Typedef Documentation}
+\index{pqueue.\-h@{pqueue.\-h}!P\-Queue@{P\-Queue}}
+\index{P\-Queue@{P\-Queue}!pqueue.h@{pqueue.\-h}}
+\subsubsection[{P\-Queue}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\-Queue\-\_\-s}  {\bf P\-Queue}}\label{pqueue_8h_aea47c0569d446c1eeace17d67c76699b}
+Priority Queue Structure 
+
+\subsection{Function Documentation}
+\index{pqueue.\-h@{pqueue.\-h}!pqueue\-\_\-change\-\_\-data@{pqueue\-\_\-change\-\_\-data}}
+\index{pqueue\-\_\-change\-\_\-data@{pqueue\-\_\-change\-\_\-data}!pqueue.h@{pqueue.\-h}}
+\subsubsection[{pqueue\-\_\-change\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf pqueue\-\_\-change\-\_\-data} (
+\begin{DoxyParamCaption}
+\item[{{\bf P\-Queue} $\ast$}]{q, }
+\item[{int($\ast$)(const void $\ast$d1, const void $\ast$d2)}]{cmp, }
+\item[{void $\ast$}]{old\-\_\-data, }
+\item[{void($\ast$)(void $\ast$$\ast$d1, void $\ast$$\ast$d2)}]{swp, }
+\item[{void $\ast$}]{new\-\_\-data}
+\end{DoxyParamCaption}
+)}\label{pqueue_8h_a2e648df65240a0ed9d73204a0b763fcf}
+\index{pqueue.\-h@{pqueue.\-h}!pqueue\-\_\-delete@{pqueue\-\_\-delete}}
+\index{pqueue\-\_\-delete@{pqueue\-\_\-delete}!pqueue.h@{pqueue.\-h}}
+\subsubsection[{pqueue\-\_\-delete}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf pqueue\-\_\-delete} (
+\begin{DoxyParamCaption}
+\item[{{\bf P\-Queue} $\ast$}]{q}
+\end{DoxyParamCaption}
+)}\label{pqueue_8h_a669757cd58e03553164df2a6e9837685}
+De-\/allocates memory for a given Priority Queue \index{pqueue.\-h@{pqueue.\-h}!pqueue\-\_\-dequeue@{pqueue\-\_\-dequeue}}
+\index{pqueue\-\_\-dequeue@{pqueue\-\_\-dequeue}!pqueue.h@{pqueue.\-h}}
+\subsubsection[{pqueue\-\_\-dequeue}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ {\bf pqueue\-\_\-dequeue} (
+\begin{DoxyParamCaption}
+\item[{{\bf P\-Queue} $\ast$}]{q}
+\end{DoxyParamCaption}
+)}\label{pqueue_8h_a4bf70b2ca42f1308ac56da2cfbb51900}
+Removes the element with the greatest priority from within the Queue \index{pqueue.\-h@{pqueue.\-h}!pqueue\-\_\-enqueue@{pqueue\-\_\-enqueue}}
+\index{pqueue\-\_\-enqueue@{pqueue\-\_\-enqueue}!pqueue.h@{pqueue.\-h}}
+\subsubsection[{pqueue\-\_\-enqueue}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf pqueue\-\_\-enqueue} (
+\begin{DoxyParamCaption}
+\item[{{\bf P\-Queue} $\ast$}]{q, }
+\item[{const void $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\label{pqueue_8h_af4cfc7da851cb4afb4f9ececff72fa19}
+Add an element inside the Priority Queue \index{pqueue.\-h@{pqueue.\-h}!pqueue\-\_\-new@{pqueue\-\_\-new}}
+\index{pqueue\-\_\-new@{pqueue\-\_\-new}!pqueue.h@{pqueue.\-h}}
+\subsubsection[{pqueue\-\_\-new}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\-Queue}$\ast$ {\bf pqueue\-\_\-new} (
+\begin{DoxyParamCaption}
+\item[{int($\ast$)(const void $\ast$d1, const void $\ast$d2)}]{cmp, }
+\item[{size\-\_\-t}]{capacity}
+\end{DoxyParamCaption}
+)}\label{pqueue_8h_a6186187eeae51a845c84f8a0af4e2345}
+Allocates memory for a new Priority Queue . Needs a pointer to a comparator function, thus establishing priorities . 

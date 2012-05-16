@@ -1,0 +1,306 @@
+\section{include/scgl\-\_\-vertex.h File Reference}
+\label{scgl__vertex_8h}\index{include/scgl\-\_\-vertex.\-h@{include/scgl\-\_\-vertex.\-h}}
+{\ttfamily \#include \char`\"{}scgl\-\_\-def.\-h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf scgl\-\_\-vertex}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ {\bf edge\-\_\-foreach\-\_\-function} )({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, void $\ast$$\ast$data)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf scgl\-\_\-vertex\-\_\-t} $\ast$ {\bf scgl\-\_\-vertex\-\_\-create} (char $\ast$id, {\bf scgl\-\_\-edge\-\_\-t} $\ast$$\ast$in, unsigned int in\-\_\-n, {\bf scgl\-\_\-edge\-\_\-t} $\ast$$\ast$out, unsigned int out\-\_\-n)
+\item 
+void {\bf scgl\-\_\-vertex\-\_\-destroy} ({\bf scgl\-\_\-vertex\-\_\-t} $\ast$$\ast$vertex)
+\item 
+char $\ast$ {\bf scgl\-\_\-vertex\-\_\-get\-\_\-id} (const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex)
+\item 
+void {\bf scgl\-\_\-vertex\-\_\-set\-\_\-id} ({\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex, char $\ast$id)
+\item 
+int {\bf scgl\-\_\-vertex\-\_\-add\-\_\-edge} ({\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex, {\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, unsigned int endpoint)
+\item 
+int {\bf scgl\-\_\-vertex\-\_\-del\-\_\-edge} ({\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex, {\bf scgl\-\_\-edge\-\_\-t} $\ast$edge)
+\item 
+int {\bf scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-in\-\_\-count} (const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex)
+\item 
+int {\bf scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-out\-\_\-count} (const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex)
+\item 
+{\bf scgl\-\_\-edge\-\_\-t} $\ast$ {\bf scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-in\-\_\-at} (const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex, unsigned int i)
+\item 
+{\bf scgl\-\_\-edge\-\_\-t} $\ast$ {\bf scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-out\-\_\-at} (const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex, unsigned int i)
+\item 
+void {\bf scgl\-\_\-vertex\-\_\-foreach\-\_\-edge} (const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex, unsigned int direction, {\bf edge\-\_\-foreach\-\_\-function} fun, void $\ast$data)
+\item 
+void {\bf scgl\-\_\-vertex\-\_\-dump} ({\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex, F\-I\-L\-E $\ast$fp)
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!edge\-\_\-foreach\-\_\-function@{edge\-\_\-foreach\-\_\-function}}
+\index{edge\-\_\-foreach\-\_\-function@{edge\-\_\-foreach\-\_\-function}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{edge\-\_\-foreach\-\_\-function}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ {\bf edge\-\_\-foreach\-\_\-function})({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, void $\ast$$\ast$data)}\label{scgl__vertex_8h_a140d4b8861fe028d5ee3ca565798b1b4}
+a function for operate at vertex's edges
+
+Edge function will be called by foreach edge loop at specified vertex.
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & reference for edge object \\
+\hline
+{\em data} & reference for additional data, or result storing\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{scgl\-\_\-vertex\-\_\-foreach\-\_\-edge()}{p.}{scgl__vertex_8h_a192ccf3729e89c1f0af68e1710dc3f45} 
+\end{DoxySeeAlso}
+
+
+\subsection{Function Documentation}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-add\-\_\-edge@{scgl\-\_\-vertex\-\_\-add\-\_\-edge}}
+\index{scgl\-\_\-vertex\-\_\-add\-\_\-edge@{scgl\-\_\-vertex\-\_\-add\-\_\-edge}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-add\-\_\-edge}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-vertex\-\_\-add\-\_\-edge} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex, }
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{unsigned int}]{endpoint}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_afa37036dea5f3545ab2e9c53aa557cea}
+add edge to existing vertex, function modify edge from/to attributes according to direction parameter
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & vertex object \\
+\hline
+{\em edge} & edge object \\
+\hline
+{\em endpoint} & 0 means edit 'from' edge's attribute, 1 means edit 'to' edge's attribute, doesn't matter when edge is undirected \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for success, -\/1 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-create@{scgl\-\_\-vertex\-\_\-create}}
+\index{scgl\-\_\-vertex\-\_\-create@{scgl\-\_\-vertex\-\_\-create}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-vertex\-\_\-t}$\ast$ {\bf scgl\-\_\-vertex\-\_\-create} (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{id, }
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$$\ast$}]{in, }
+\item[{unsigned int}]{in\-\_\-n, }
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$$\ast$}]{out, }
+\item[{unsigned int}]{out\-\_\-n}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_aa7f6a7ed41b836fc91baa3412e0df798}
+create vertex object, allocate and initialize memory
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & unique vertex identifier \\
+\hline
+{\em in} & table of edge objects which are directed to vertex, can be N\-U\-L\-L \\
+\hline
+{\em in\-\_\-n} & in table length, should be 0 if 'in' is N\-U\-L\-L \\
+\hline
+{\em out} & table of edge objects which are directed out of vertex, can be N\-U\-L\-L \\
+\hline
+{\em out\-\_\-n} & out table length, should be 0 if 'out' is N\-U\-L\-L \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vertex object for success, N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-del\-\_\-edge@{scgl\-\_\-vertex\-\_\-del\-\_\-edge}}
+\index{scgl\-\_\-vertex\-\_\-del\-\_\-edge@{scgl\-\_\-vertex\-\_\-del\-\_\-edge}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-del\-\_\-edge}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-vertex\-\_\-del\-\_\-edge} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex, }
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_aca53eb66badf8c4d03c2a8325672e9f6}
+remove edge from existing vertex, function also modifies edge (from/to attributes)
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & vertex object \\
+\hline
+{\em edge} & edge object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for success, -\/1 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-destroy@{scgl\-\_\-vertex\-\_\-destroy}}
+\index{scgl\-\_\-vertex\-\_\-destroy@{scgl\-\_\-vertex\-\_\-destroy}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-vertex\-\_\-destroy} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$$\ast$}]{vertex}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_a5ebe86625b28f338932cd8122a63fdf4}
+free memory occupied by vertex object remove relation between vertex and edge, but doesn't free edge object id memory will be freed
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & vertex object \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-dump@{scgl\-\_\-vertex\-\_\-dump}}
+\index{scgl\-\_\-vertex\-\_\-dump@{scgl\-\_\-vertex\-\_\-dump}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-vertex\-\_\-dump} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex, }
+\item[{F\-I\-L\-E $\ast$}]{fp}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_a67b68ec65c236458c9ef0deec24c95c1}
+print vertex object to stream
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & reference to vertex object \\
+\hline
+{\em fp} & object containing information to control a stream \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-foreach\-\_\-edge@{scgl\-\_\-vertex\-\_\-foreach\-\_\-edge}}
+\index{scgl\-\_\-vertex\-\_\-foreach\-\_\-edge@{scgl\-\_\-vertex\-\_\-foreach\-\_\-edge}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-foreach\-\_\-edge}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-vertex\-\_\-foreach\-\_\-edge} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex, }
+\item[{unsigned int}]{direction, }
+\item[{{\bf edge\-\_\-foreach\-\_\-function}}]{fun, }
+\item[{void $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_a192ccf3729e89c1f0af68e1710dc3f45}
+call fun function for every edge in vertex
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & reference to vertex object \\
+\hline
+{\em direction} & 0 for incoming edges, 1 for outgoing edges \\
+\hline
+{\em fun} & reference to the called function \\
+\hline
+{\em data} & reference to additional user data (eg. result store, or stream pointer) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to user data 
+\end{DoxyReturn}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-in\-\_\-at@{scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-in\-\_\-at}}
+\index{scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-in\-\_\-at@{scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-in\-\_\-at}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-in\-\_\-at}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-edge\-\_\-t}$\ast$ {\bf scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-in\-\_\-at} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex, }
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_a48837d6c81c458add212d916a5835786}
+retrun an incoming (to vertex) edge at a given position
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & vertex object \\
+\hline
+{\em i} & [0, edges\-\_\-in\-\_\-count-\/1] position index of the element \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to edge, or N\-U\-L\-L for failure
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-in\-\_\-count()}{p.}{scgl__vertex_8h_a233ffa71b83f3fff876680b16699e6ad} 
+\end{DoxySeeAlso}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-out\-\_\-at@{scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-out\-\_\-at}}
+\index{scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-out\-\_\-at@{scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-out\-\_\-at}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-out\-\_\-at}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-edge\-\_\-t}$\ast$ {\bf scgl\-\_\-vertex\-\_\-get\-\_\-edge\-\_\-out\-\_\-at} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex, }
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_a89db2b01a7655315124fe48f07a75868}
+retrun an outgoing (from vertex) edge at a given position
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & vertex object \\
+\hline
+{\em i} & [0, edges\-\_\-out\-\_\-count-\/1] position index of the element \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to edge, or N\-U\-L\-L for failure
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-out\-\_\-count()}{p.}{scgl__vertex_8h_a1de07e76a4a92dd5a0f559e613d862ab} 
+\end{DoxySeeAlso}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-in\-\_\-count@{scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-in\-\_\-count}}
+\index{scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-in\-\_\-count@{scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-in\-\_\-count}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-in\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-in\-\_\-count} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_a233ffa71b83f3fff876680b16699e6ad}
+count edges which are directed to vertex
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & vertex object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of edges for success, -\/1 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-out\-\_\-count@{scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-out\-\_\-count}}
+\index{scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-out\-\_\-count@{scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-out\-\_\-count}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-out\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-vertex\-\_\-get\-\_\-edges\-\_\-out\-\_\-count} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_a1de07e76a4a92dd5a0f559e613d862ab}
+count edges which are directed out of vertex
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & vertex object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of edges for success, -\/1 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-get\-\_\-id@{scgl\-\_\-vertex\-\_\-get\-\_\-id}}
+\index{scgl\-\_\-vertex\-\_\-get\-\_\-id@{scgl\-\_\-vertex\-\_\-get\-\_\-id}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-get\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ {\bf scgl\-\_\-vertex\-\_\-get\-\_\-id} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_a62f8f1a8e8029b2852f0662e2cb13193}
+return vertex's id
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & reference to vertex object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vertex's id or N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-vertex.\-h@{scgl\-\_\-vertex.\-h}!scgl\-\_\-vertex\-\_\-set\-\_\-id@{scgl\-\_\-vertex\-\_\-set\-\_\-id}}
+\index{scgl\-\_\-vertex\-\_\-set\-\_\-id@{scgl\-\_\-vertex\-\_\-set\-\_\-id}!scgl_vertex.h@{scgl\-\_\-vertex.\-h}}
+\subsubsection[{scgl\-\_\-vertex\-\_\-set\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-vertex\-\_\-set\-\_\-id} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex, }
+\item[{char $\ast$}]{id}
+\end{DoxyParamCaption}
+)}\label{scgl__vertex_8h_ad9b4335e12e400367a6ddc552825ff2d}
+set vertex's id functions copy string content
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & reference to vertex object \\
+\hline
+{\em id} & new id \\
+\hline
+\end{DoxyParams}

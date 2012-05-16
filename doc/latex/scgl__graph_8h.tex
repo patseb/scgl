@@ -1,0 +1,351 @@
+\section{include/scgl\-\_\-graph.h File Reference}
+\label{scgl__graph_8h}\index{include/scgl\-\_\-graph.\-h@{include/scgl\-\_\-graph.\-h}}
+{\ttfamily \#include \char`\"{}scgl\-\_\-edge.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}scgl\-\_\-def.\-h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf scgl\-\_\-graph}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf scgl\-\_\-graph\-\_\-t} $\ast$ {\bf scgl\-\_\-graph\-\_\-create} (char $\ast$id, {\bf scgl\-\_\-vertex\-\_\-t} $\ast$$\ast$vertexes, unsigned int vertexes\-\_\-n, {\bf scgl\-\_\-edge\-\_\-t} $\ast$$\ast$edges, unsigned int edges\-\_\-n)
+\item 
+void {\bf scgl\-\_\-graph\-\_\-destroy} ({\bf scgl\-\_\-graph\-\_\-t} $\ast$$\ast$graph, {\bf attr\-\_\-function} fun)
+\item 
+{\bf scgl\-\_\-graph\-\_\-t} $\ast$ {\bf scgl\-\_\-graph\-\_\-copy} (const {\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, {\bf attr\-\_\-function} fun)
+\item 
+char $\ast$ {\bf scgl\-\_\-graph\-\_\-get\-\_\-id} (const {\bf scgl\-\_\-graph\-\_\-t} $\ast$graph)
+\item 
+void {\bf scgl\-\_\-graph\-\_\-set\-\_\-id} ({\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, char $\ast$id)
+\item 
+int {\bf scgl\-\_\-graph\-\_\-add\-\_\-vertex} ({\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, {\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex)
+\item 
+void {\bf scgl\-\_\-graph\-\_\-del\-\_\-vertex} ({\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, {\bf scgl\-\_\-vertex\-\_\-t} $\ast$$\ast$vertex, {\bf attr\-\_\-function} fun)
+\item 
+{\bf scgl\-\_\-vertex\-\_\-t} $\ast$ {\bf scgl\-\_\-graph\-\_\-get\-\_\-vertex} (const {\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, const char $\ast$vertex\-\_\-id)
+\item 
+{\bf scgl\-\_\-vertex\-\_\-t} $\ast$ {\bf scgl\-\_\-graph\-\_\-get\-\_\-vertex\-\_\-at} (const {\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, unsigned int i)
+\item 
+unsigned int {\bf scgl\-\_\-graph\-\_\-get\-\_\-vertexes\-\_\-count} (const {\bf scgl\-\_\-graph\-\_\-t} $\ast$graph)
+\item 
+int {\bf scgl\-\_\-graph\-\_\-add\-\_\-edge} ({\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, {\bf scgl\-\_\-edge\-\_\-t} $\ast$edge)
+\item 
+void {\bf scgl\-\_\-graph\-\_\-del\-\_\-edge} ({\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, {\bf scgl\-\_\-edge\-\_\-t} $\ast$$\ast$edge, {\bf attr\-\_\-function} fun)
+\item 
+{\bf scgl\-\_\-edge\-\_\-t} $\ast$ {\bf scgl\-\_\-graph\-\_\-get\-\_\-edge\-\_\-at} (const {\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, unsigned int i)
+\item 
+unsigned int {\bf scgl\-\_\-graph\-\_\-get\-\_\-edges\-\_\-count} (const {\bf scgl\-\_\-graph\-\_\-t} $\ast$graph)
+\item 
+void {\bf scgl\-\_\-graph\-\_\-dump} ({\bf scgl\-\_\-graph\-\_\-t} $\ast$graph, F\-I\-L\-E $\ast$fp, {\bf attr\-\_\-function} fun)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-add\-\_\-edge@{scgl\-\_\-graph\-\_\-add\-\_\-edge}}
+\index{scgl\-\_\-graph\-\_\-add\-\_\-edge@{scgl\-\_\-graph\-\_\-add\-\_\-edge}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-add\-\_\-edge}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-graph\-\_\-add\-\_\-edge} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a850b386750a0e0c1ef2e4e9fc938a3ee}
+add edge to existing graph object
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & graph object \\
+\hline
+{\em edge} & edge object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for success, -\/1 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-add\-\_\-vertex@{scgl\-\_\-graph\-\_\-add\-\_\-vertex}}
+\index{scgl\-\_\-graph\-\_\-add\-\_\-vertex@{scgl\-\_\-graph\-\_\-add\-\_\-vertex}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-add\-\_\-vertex}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-graph\-\_\-add\-\_\-vertex} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a0a192bd962bdbc8b92143f332a0244f0}
+add vertex to existing graph object
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & graph object \\
+\hline
+{\em vertex} & vertex object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for success, -\/1 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-copy@{scgl\-\_\-graph\-\_\-copy}}
+\index{scgl\-\_\-graph\-\_\-copy@{scgl\-\_\-graph\-\_\-copy}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-copy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-graph\-\_\-t}$\ast$ {\bf scgl\-\_\-graph\-\_\-copy} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{{\bf attr\-\_\-function}}]{fun}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_ab37cb0fd4a1c7532d2e356194ccc71d8}
+copy graph object, all graph's vertexes and edges are copied too (their ids and attributes too)
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & reference to graph object \\
+\hline
+{\em fun} & function which will copy each edge attribute, store new scgl\-\_\-attr\-\_\-t in data parameter \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to copied graph or N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-create@{scgl\-\_\-graph\-\_\-create}}
+\index{scgl\-\_\-graph\-\_\-create@{scgl\-\_\-graph\-\_\-create}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-graph\-\_\-t}$\ast$ {\bf scgl\-\_\-graph\-\_\-create} (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{id, }
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$$\ast$}]{vertexes, }
+\item[{unsigned int}]{vertexes\-\_\-n, }
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$$\ast$}]{edges, }
+\item[{unsigned int}]{edges\-\_\-n}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a643581d92b3486d24efd62cd35f4c429}
+create graph object, allocate and initialize memory
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & unique graph identifier \\
+\hline
+{\em vertexes} & table of vertex objects, can be N\-U\-L\-L \\
+\hline
+{\em vertexes\-\_\-n} & vertexes table length, should be 0 if vertexes is N\-U\-L\-L \\
+\hline
+{\em edges} & table of edge objects, can be N\-U\-L\-L \\
+\hline
+{\em edges\-\_\-n} & edges table length, should be 0 if edges is N\-U\-L\-L \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+graph object for success, N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-del\-\_\-edge@{scgl\-\_\-graph\-\_\-del\-\_\-edge}}
+\index{scgl\-\_\-graph\-\_\-del\-\_\-edge@{scgl\-\_\-graph\-\_\-del\-\_\-edge}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-del\-\_\-edge}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-graph\-\_\-del\-\_\-edge} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$$\ast$}]{edge, }
+\item[{{\bf attr\-\_\-function}}]{fun}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a1a8515dfe11fd73358fa1b5074f264c9}
+remove edge from existing graph object, and call \doxyref{scgl\-\_\-edge\-\_\-destroy()}{p.}{scgl__edge_8h_a77b2e65d2dadd2bbe5df083ffce2706b}
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & graph object \\
+\hline
+{\em edge} & edge object \\
+\hline
+{\em fun} & user function which will free memory occupied by edge's attributes \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{scgl\-\_\-edge\-\_\-destroy}{p.}{scgl__edge_8h_a77b2e65d2dadd2bbe5df083ffce2706b} 
+\end{DoxySeeAlso}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-del\-\_\-vertex@{scgl\-\_\-graph\-\_\-del\-\_\-vertex}}
+\index{scgl\-\_\-graph\-\_\-del\-\_\-vertex@{scgl\-\_\-graph\-\_\-del\-\_\-vertex}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-del\-\_\-vertex}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-graph\-\_\-del\-\_\-vertex} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$$\ast$}]{vertex, }
+\item[{{\bf attr\-\_\-function}}]{fun}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a30a9f92e2a4819a8d93564855d74bdd9}
+remove vertex from existing graph object it delete all related edges (edges can't begin/end at nothing) and call scgl\-\_\-vertex\-\_\-free()
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & graph object \\
+\hline
+{\em vertex} & vertex object \\
+\hline
+{\em fun} & user function which will free memory occupied by edge's attriubtes (called when destroying edges) \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+scgl\-\_\-vertex\-\_\-free() 
+\end{DoxySeeAlso}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-destroy@{scgl\-\_\-graph\-\_\-destroy}}
+\index{scgl\-\_\-graph\-\_\-destroy@{scgl\-\_\-graph\-\_\-destroy}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-graph\-\_\-destroy} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-graph\-\_\-t} $\ast$$\ast$}]{graph, }
+\item[{{\bf attr\-\_\-function}}]{fun}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_add93042acaa9b67549343c6596d0330a}
+free memory occupied by graph and related vertex/edge objects. id memory will be freed
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & graph object \\
+\hline
+{\em fun} & user function which will free memory occupied by edge's attributes \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-dump@{scgl\-\_\-graph\-\_\-dump}}
+\index{scgl\-\_\-graph\-\_\-dump@{scgl\-\_\-graph\-\_\-dump}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-graph\-\_\-dump} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{F\-I\-L\-E $\ast$}]{fp, }
+\item[{{\bf attr\-\_\-function}}]{fun}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a641a180aa83f46d6f6435c3a26f988c4}
+print graph object to stream
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & reference to graph object \\
+\hline
+{\em fp} & object containing information to control a stream \\
+\hline
+{\em fun} & function to print edge's attributes \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-get\-\_\-edge\-\_\-at@{scgl\-\_\-graph\-\_\-get\-\_\-edge\-\_\-at}}
+\index{scgl\-\_\-graph\-\_\-get\-\_\-edge\-\_\-at@{scgl\-\_\-graph\-\_\-get\-\_\-edge\-\_\-at}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-get\-\_\-edge\-\_\-at}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-edge\-\_\-t}$\ast$ {\bf scgl\-\_\-graph\-\_\-get\-\_\-edge\-\_\-at} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a7aeba775dfe1229daf5d1508e273885f}
+return an edge at give position
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & reference to graph object \\
+\hline
+{\em i} & [0, edges\-\_\-count-\/1] position index of the element \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to edge or N\-U\-L\-L for failure
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+scgl\-\_\-graph\-\_\-get\-\_\-edge\-\_\-count() 
+\end{DoxySeeAlso}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-get\-\_\-edges\-\_\-count@{scgl\-\_\-graph\-\_\-get\-\_\-edges\-\_\-count}}
+\index{scgl\-\_\-graph\-\_\-get\-\_\-edges\-\_\-count@{scgl\-\_\-graph\-\_\-get\-\_\-edges\-\_\-count}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-get\-\_\-edges\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf scgl\-\_\-graph\-\_\-get\-\_\-edges\-\_\-count} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_aadbff615122a89508a1f6933fe191ef6}
+return amount of edges in graph
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & graph object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+amount of edges for success, 0 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-get\-\_\-id@{scgl\-\_\-graph\-\_\-get\-\_\-id}}
+\index{scgl\-\_\-graph\-\_\-get\-\_\-id@{scgl\-\_\-graph\-\_\-get\-\_\-id}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-get\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ {\bf scgl\-\_\-graph\-\_\-get\-\_\-id} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_afe1446b5cfcb2020db450b492621f8a9}
+return graph's id
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & reference to graph object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+graph's id or N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-get\-\_\-vertex@{scgl\-\_\-graph\-\_\-get\-\_\-vertex}}
+\index{scgl\-\_\-graph\-\_\-get\-\_\-vertex@{scgl\-\_\-graph\-\_\-get\-\_\-vertex}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-get\-\_\-vertex}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-vertex\-\_\-t}$\ast$ {\bf scgl\-\_\-graph\-\_\-get\-\_\-vertex} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{const char $\ast$}]{vertex\-\_\-id}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a1077083849a7fd122323237c08eb54f9}
+return vertex from graph using vertex identifier
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & graph object \\
+\hline
+{\em vertex\-\_\-id} & vertex identifier \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vertex for success, N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-get\-\_\-vertex\-\_\-at@{scgl\-\_\-graph\-\_\-get\-\_\-vertex\-\_\-at}}
+\index{scgl\-\_\-graph\-\_\-get\-\_\-vertex\-\_\-at@{scgl\-\_\-graph\-\_\-get\-\_\-vertex\-\_\-at}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-get\-\_\-vertex\-\_\-at}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-vertex\-\_\-t}$\ast$ {\bf scgl\-\_\-graph\-\_\-get\-\_\-vertex\-\_\-at} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a1316d0d3bce20e530fbdd0f8075b8102}
+return an vertex at give position
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & reference to graph object \\
+\hline
+{\em i} & [0, vertex\-\_\-count-\/1] position index of the element \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to vertex or N\-U\-L\-L for failure
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+scgl\-\_\-graph\-\_\-get\-\_\-edge\-\_\-count() 
+\end{DoxySeeAlso}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-get\-\_\-vertexes\-\_\-count@{scgl\-\_\-graph\-\_\-get\-\_\-vertexes\-\_\-count}}
+\index{scgl\-\_\-graph\-\_\-get\-\_\-vertexes\-\_\-count@{scgl\-\_\-graph\-\_\-get\-\_\-vertexes\-\_\-count}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-get\-\_\-vertexes\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf scgl\-\_\-graph\-\_\-get\-\_\-vertexes\-\_\-count} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a1bf46c4d0f4b695f61e187a78cb5253b}
+return amount of vertexes in graph
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & graph object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+amount of vertexes for success, 0 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-graph.\-h@{scgl\-\_\-graph.\-h}!scgl\-\_\-graph\-\_\-set\-\_\-id@{scgl\-\_\-graph\-\_\-set\-\_\-id}}
+\index{scgl\-\_\-graph\-\_\-set\-\_\-id@{scgl\-\_\-graph\-\_\-set\-\_\-id}!scgl_graph.h@{scgl\-\_\-graph.\-h}}
+\subsubsection[{scgl\-\_\-graph\-\_\-set\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-graph\-\_\-set\-\_\-id} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-graph\-\_\-t} $\ast$}]{graph, }
+\item[{char $\ast$}]{id}
+\end{DoxyParamCaption}
+)}\label{scgl__graph_8h_a34788d5deb4bc81134aaac6476e663c2}
+set graph's id functions copy string content
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph} & reference to graph object \\
+\hline
+{\em id} & new id \\
+\hline
+\end{DoxyParams}

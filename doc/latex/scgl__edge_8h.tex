@@ -1,0 +1,430 @@
+\section{include/scgl\-\_\-edge.h File Reference}
+\label{scgl__edge_8h}\index{include/scgl\-\_\-edge.\-h@{include/scgl\-\_\-edge.\-h}}
+{\ttfamily \#include \char`\"{}list.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}scgl\-\_\-def.\-h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf scgl\-\_\-edge}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef cost\-\_\-type {\bf cost\-\_\-type\-\_\-t}
+\item 
+typedef void($\ast$ {\bf attr\-\_\-function} )(char $\ast$key, void $\ast$value, void $\ast$$\ast$data)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf scgl\-\_\-edge\-\_\-t} $\ast$ {\bf scgl\-\_\-edge\-\_\-create} ({\bf scgl\-\_\-vertex\-\_\-t} $\ast$from, {\bf scgl\-\_\-vertex\-\_\-t} $\ast$to, int undirected, {\bf cost\-\_\-type\-\_\-t} cost, {\bf scgl\-\_\-attr\-\_\-t} $\ast$$\ast$attr, unsigned int attr\-\_\-n)
+\item 
+void {\bf scgl\-\_\-edge\-\_\-destroy} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$$\ast$edge, {\bf attr\-\_\-function} fun)
+\item 
+{\bf cost\-\_\-type\-\_\-t} {\bf scgl\-\_\-edge\-\_\-get\-\_\-cost} (const {\bf scgl\-\_\-edge\-\_\-t} $\ast$edge)
+\item 
+void {\bf scgl\-\_\-edge\-\_\-set\-\_\-cost} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, const {\bf cost\-\_\-type\-\_\-t} cost)
+\item 
+{\bf scgl\-\_\-vertex\-\_\-t} $\ast$ {\bf scgl\-\_\-edge\-\_\-get\-\_\-vertex} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, const unsigned int endpoint)
+\item 
+int {\bf scgl\-\_\-edge\-\_\-add\-\_\-vertex} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, {\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex, const unsigned int endpoint)
+\item 
+int {\bf scgl\-\_\-edge\-\_\-del\-\_\-vertex} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, {\bf scgl\-\_\-vertex\-\_\-t} $\ast$vertex)
+\item 
+void {\bf scgl\-\_\-edge\-\_\-add\-\_\-attribute} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, char $\ast$key, void $\ast$value)
+\item 
+void {\bf scgl\-\_\-edge\-\_\-add\-\_\-attribute\-\_\-object} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, {\bf scgl\-\_\-attr\-\_\-t} $\ast$attr)
+\item 
+void {\bf scgl\-\_\-edge\-\_\-del\-\_\-attribute} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, const char $\ast$key, {\bf attr\-\_\-function} fun)
+\item 
+void $\ast$ {\bf scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-value} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, const char $\ast$key)
+\item 
+{\bf scgl\-\_\-attr\-\_\-t} $\ast$ {\bf scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-at} (const {\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, unsigned int i)
+\item 
+int {\bf scgl\-\_\-edge\-\_\-get\-\_\-attributes\-\_\-count} (const {\bf scgl\-\_\-edge\-\_\-t} $\ast$edge)
+\item 
+void {\bf scgl\-\_\-edge\-\_\-foreach\-\_\-attribute} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, {\bf attr\-\_\-function} fun, void $\ast$result)
+\item 
+int {\bf scgl\-\_\-edge\-\_\-get\-\_\-undirected} (const {\bf scgl\-\_\-edge\-\_\-t} $\ast$edge)
+\item 
+void {\bf scgl\-\_\-edge\-\_\-set\-\_\-undirected} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, const unsigned int undirected)
+\item 
+void {\bf scgl\-\_\-edge\-\_\-dump} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, F\-I\-L\-E $\ast$fp, {\bf attr\-\_\-function} fun)
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!attr\-\_\-function@{attr\-\_\-function}}
+\index{attr\-\_\-function@{attr\-\_\-function}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{attr\-\_\-function}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ {\bf attr\-\_\-function})(char $\ast$key, void $\ast$value, void $\ast$$\ast$data)}\label{scgl__edge_8h_a51c8cb92b6724b6d737d8346f8c3ba05}
+a function for operate at attributes
+
+It can eg.\-:
+\begin{DoxyItemize}
+\item sum values of all attributes and set edge cost field
+\item free memory occupied by key and value
+\item dump data to specified stream (data pointer)
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & reference for key attribute \\
+\hline
+{\em value} & reference for value attribute \\
+\hline
+{\em data} & reference for additional data or result storing\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{scgl\-\_\-edge\-\_\-foreach\-\_\-attribute()}{p.}{scgl__edge_8h_a9ec757877bcb68c5cd2959c81d0c7959} 
+
+\doxyref{scgl\-\_\-edge\-\_\-destroy()}{p.}{scgl__edge_8h_a77b2e65d2dadd2bbe5df083ffce2706b} 
+
+\doxyref{scgl\-\_\-edge\-\_\-dump()}{p.}{scgl__edge_8h_ad77bbca81e3d7809983d1ddae2c29ae7} 
+\end{DoxySeeAlso}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!cost\-\_\-type\-\_\-t@{cost\-\_\-type\-\_\-t}}
+\index{cost\-\_\-type\-\_\-t@{cost\-\_\-type\-\_\-t}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{cost\-\_\-type\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}typedef cost\-\_\-type {\bf cost\-\_\-type\-\_\-t}}\label{scgl__edge_8h_acd29fa404cf2ea48c400c53a0c055ce1}
+definiton of edge cost attribute type it should be used whenever you want to manipulate edges cost 
+
+\subsection{Function Documentation}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-add\-\_\-attribute@{scgl\-\_\-edge\-\_\-add\-\_\-attribute}}
+\index{scgl\-\_\-edge\-\_\-add\-\_\-attribute@{scgl\-\_\-edge\-\_\-add\-\_\-attribute}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-add\-\_\-attribute}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-add\-\_\-attribute} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{char $\ast$}]{key, }
+\item[{void $\ast$}]{value}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a212f4bc2d644c8006e2d9919fa33ac65}
+add new attribute to existing edge
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
+\hline
+{\em key} & unique key for indexing attribute \\
+\hline
+{\em value} & value to be added \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-add\-\_\-attribute\-\_\-object@{scgl\-\_\-edge\-\_\-add\-\_\-attribute\-\_\-object}}
+\index{scgl\-\_\-edge\-\_\-add\-\_\-attribute\-\_\-object@{scgl\-\_\-edge\-\_\-add\-\_\-attribute\-\_\-object}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-add\-\_\-attribute\-\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-add\-\_\-attribute\-\_\-object} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{{\bf scgl\-\_\-attr\-\_\-t} $\ast$}]{attr}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a5fc7ab4214bb3688bf1be851632c63b1}
+add new attribute to existing edge
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
+\hline
+{\em attr} & refernece to new attribute \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-add\-\_\-vertex@{scgl\-\_\-edge\-\_\-add\-\_\-vertex}}
+\index{scgl\-\_\-edge\-\_\-add\-\_\-vertex@{scgl\-\_\-edge\-\_\-add\-\_\-vertex}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-add\-\_\-vertex}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-edge\-\_\-add\-\_\-vertex} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex, }
+\item[{const unsigned int}]{endpoint}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_adac8798d9dfdc77ab1b735517ad80ad8}
+modify edge 'from/to' attribute, function removes relation between edge and old vertex
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
+\hline
+{\em vertex} & vertex \\
+\hline
+{\em endpoint} & 0 means edge is outgoing from vertex, 1 means edge incoming to vertex, doesn't matter when edge is undirected \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for success, -\/1 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-create@{scgl\-\_\-edge\-\_\-create}}
+\index{scgl\-\_\-edge\-\_\-create@{scgl\-\_\-edge\-\_\-create}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-edge\-\_\-t}$\ast$ {\bf scgl\-\_\-edge\-\_\-create} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{from, }
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{to, }
+\item[{int}]{undirected, }
+\item[{{\bf cost\-\_\-type\-\_\-t}}]{cost, }
+\item[{{\bf scgl\-\_\-attr\-\_\-t} $\ast$$\ast$}]{attr, }
+\item[{unsigned int}]{attr\-\_\-n}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_ac24801dcffa9789f17ff6ccc99e3dad0}
+create edge object, allocate and initialize memory
+
+
+\begin{DoxyParams}{Parameters}
+{\em from} & edge source (vertex object) \\
+\hline
+{\em to} & edge destination (vertex object) \\
+\hline
+{\em undirected} & 1 means that edge is undirected, 0 opposite \\
+\hline
+{\em cost} & edge cost \\
+\hline
+{\em attr} & table of attr objects, user-\/purpose attributes \\
+\hline
+{\em attr\-\_\-n} & lenght of attributes table \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+edge object for success, N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-del\-\_\-attribute@{scgl\-\_\-edge\-\_\-del\-\_\-attribute}}
+\index{scgl\-\_\-edge\-\_\-del\-\_\-attribute@{scgl\-\_\-edge\-\_\-del\-\_\-attribute}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-del\-\_\-attribute}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-del\-\_\-attribute} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{const char $\ast$}]{key, }
+\item[{{\bf attr\-\_\-function}}]{fun}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a3dfa39de4ec76d2647c7c39339501d4e}
+remove attribute from edge
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
+\hline
+{\em key} & unique key for locate attribute \\
+\hline
+{\em fun} & user function which will free memory occupied by edge's attributes \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-del\-\_\-vertex@{scgl\-\_\-edge\-\_\-del\-\_\-vertex}}
+\index{scgl\-\_\-edge\-\_\-del\-\_\-vertex@{scgl\-\_\-edge\-\_\-del\-\_\-vertex}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-del\-\_\-vertex}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-edge\-\_\-del\-\_\-vertex} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{{\bf scgl\-\_\-vertex\-\_\-t} $\ast$}]{vertex}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_ad8fc8f4686436f1c36c96d288746e4e0}
+remove vertex from edge, function also modifies vertex (in/out attributes)
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object wich will be modified \\
+\hline
+{\em vertex} & vertex object which will be removed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for success, -\/1 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-destroy@{scgl\-\_\-edge\-\_\-destroy}}
+\index{scgl\-\_\-edge\-\_\-destroy@{scgl\-\_\-edge\-\_\-destroy}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-destroy} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$$\ast$}]{edge, }
+\item[{{\bf attr\-\_\-function}}]{fun}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a77b2e65d2dadd2bbe5df083ffce2706b}
+free memory occupied by edge object
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
+\hline
+{\em fun} & user function which will free memory occupied by attributes \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-dump@{scgl\-\_\-edge\-\_\-dump}}
+\index{scgl\-\_\-edge\-\_\-dump@{scgl\-\_\-edge\-\_\-dump}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-dump} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{F\-I\-L\-E $\ast$}]{fp, }
+\item[{{\bf attr\-\_\-function}}]{fun}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_ad77bbca81e3d7809983d1ddae2c29ae7}
+print edge object to stream
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
+\hline
+{\em fp} & object containing information to control a stream \\
+\hline
+{\em fun} & function which will print attributes, last parameter (result), should be casted as F\-I\-L\-E$\ast$ type for fprintf -\/ eg.\-: void edge\-\_\-attribute\-\_\-dump(char $<$em$>$key, void $\ast$value, void $\ast$fp) \{ if (fp != N\-U\-L\-L) fprintf((F\-I\-L\-E)fp, \char`\"{}\%s \-: \%s $\backslash$n\char`\"{}, key, (char$\ast$)value); \}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{scgl\-\_\-edge\-\_\-foreach\-\_\-attribute()}{p.}{scgl__edge_8h_a9ec757877bcb68c5cd2959c81d0c7959} 
+\end{DoxySeeAlso}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-foreach\-\_\-attribute@{scgl\-\_\-edge\-\_\-foreach\-\_\-attribute}}
+\index{scgl\-\_\-edge\-\_\-foreach\-\_\-attribute@{scgl\-\_\-edge\-\_\-foreach\-\_\-attribute}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-foreach\-\_\-attribute}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-foreach\-\_\-attribute} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{{\bf attr\-\_\-function}}]{fun, }
+\item[{void $\ast$}]{result}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a9ec757877bcb68c5cd2959c81d0c7959}
+call fun function for every attribute of edge
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
+\hline
+{\em fun} & pointer to the called function \\
+\hline
+{\em result} & reference to called function result \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-at@{scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-at}}
+\index{scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-at@{scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-at}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-at}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-attr\-\_\-t}$\ast$ {\bf scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-at} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a83cb0e1727387d3199ee1263c8f4d6e9}
+return an attribute at given position
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
+\hline
+{\em i} & [0, edges\-\_\-attribute\-\_\-count-\/1] position index of the element \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to attribute attr or N\-U\-L\-L for failure
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{scgl\-\_\-edge\-\_\-get\-\_\-attributes\-\_\-count()}{p.}{scgl__edge_8h_a32e102d8c9512cb5c4052ebad13f25a9} 
+\end{DoxySeeAlso}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-value@{scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-value}}
+\index{scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-value@{scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-value}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-value}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ {\bf scgl\-\_\-edge\-\_\-get\-\_\-attribute\-\_\-value} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{const char $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a40db0b2508c43e4b139bc15519735d4f}
+get attribute's value for specified key
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
+\hline
+{\em key} & key corresponding to the requested value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to attribute object for success, N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-get\-\_\-attributes\-\_\-count@{scgl\-\_\-edge\-\_\-get\-\_\-attributes\-\_\-count}}
+\index{scgl\-\_\-edge\-\_\-get\-\_\-attributes\-\_\-count@{scgl\-\_\-edge\-\_\-get\-\_\-attributes\-\_\-count}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-get\-\_\-attributes\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-edge\-\_\-get\-\_\-attributes\-\_\-count} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a32e102d8c9512cb5c4052ebad13f25a9}
+count edge's attributes
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & reference to edge object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of attributes, -\/1 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-get\-\_\-cost@{scgl\-\_\-edge\-\_\-get\-\_\-cost}}
+\index{scgl\-\_\-edge\-\_\-get\-\_\-cost@{scgl\-\_\-edge\-\_\-get\-\_\-cost}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-get\-\_\-cost}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cost\-\_\-type\-\_\-t} {\bf scgl\-\_\-edge\-\_\-get\-\_\-cost} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_aac2d09b2b763556fa081fba8a854982a}
+return edge's cost
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & reference to edge object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+edge's cost, C\-O\-S\-T\-\_\-\-M\-A\-X for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-get\-\_\-undirected@{scgl\-\_\-edge\-\_\-get\-\_\-undirected}}
+\index{scgl\-\_\-edge\-\_\-get\-\_\-undirected@{scgl\-\_\-edge\-\_\-get\-\_\-undirected}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-get\-\_\-undirected}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-edge\-\_\-get\-\_\-undirected} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_af3888b2b412055d5760f51596c8e0863}
+return if edge is undirected or not
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & reference to edge object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 means edge is udirected, 0 means directed, -\/1 for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-get\-\_\-vertex@{scgl\-\_\-edge\-\_\-get\-\_\-vertex}}
+\index{scgl\-\_\-edge\-\_\-get\-\_\-vertex@{scgl\-\_\-edge\-\_\-get\-\_\-vertex}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-get\-\_\-vertex}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-vertex\-\_\-t}$\ast$ {\bf scgl\-\_\-edge\-\_\-get\-\_\-vertex} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{const unsigned int}]{endpoint}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a28f864148111860df3a92f655aaed7c7}
+return reference to one of edge's endpoint
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & reference to edge object \\
+\hline
+{\em endpoint} & 0 -\/ function returns 'from' vertex, 1 -\/ function returns 'to' vertex \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to choosen vertex of N\-U\-L\-L for failure 
+\end{DoxyReturn}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-set\-\_\-cost@{scgl\-\_\-edge\-\_\-set\-\_\-cost}}
+\index{scgl\-\_\-edge\-\_\-set\-\_\-cost@{scgl\-\_\-edge\-\_\-set\-\_\-cost}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-set\-\_\-cost}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-set\-\_\-cost} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{const {\bf cost\-\_\-type\-\_\-t}}]{cost}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a2dfbd90ee43eecdee812f3b2a80324a3}
+set edge's cost
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & reference to edge object \\
+\hline
+{\em cost} & new cost \\
+\hline
+\end{DoxyParams}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-set\-\_\-undirected@{scgl\-\_\-edge\-\_\-set\-\_\-undirected}}
+\index{scgl\-\_\-edge\-\_\-set\-\_\-undirected@{scgl\-\_\-edge\-\_\-set\-\_\-undirected}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-set\-\_\-undirected}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-set\-\_\-undirected} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
+\item[{const unsigned int}]{undirected}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a223c99f9a7b2cdcdd94b97df6e704f88}
+make an edge undirected or directed
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
+\hline
+{\em undirected} & 1 means that edge is undirected, 0 opposite \\
+\hline
+\end{DoxyParams}
