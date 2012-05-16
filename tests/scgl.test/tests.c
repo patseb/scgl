@@ -140,7 +140,7 @@ int main(int argc, char **argv) {
 	char *buf1, *buf2;
 	scgl_vertex_t *v1, *v2;
 	scgl_edge_t *e1, *e2;
-	scgl_attr_t *a1, *a2;
+	scgl_attr_t *a1;
 	scgl_graph_t *g1, *g2;
 
 	if (argc < 3)
