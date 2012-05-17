@@ -19,10 +19,11 @@ Edge;
 
 int main()
 {
-	Graph g(0);
+	unsigned int i;
+	Graph g;
 
-	for(unsigned int i=0; i<1000; ++i) {
-		Edge e1 = add_edge(i, i+1, g).first;
-		get(edge_weight, g, e1) = i;
-  }
+	for(i=0; i<1000; ++i) {
+		add_vertex(g);
+		add_edge(i, i+1, g);
+	}
 }
