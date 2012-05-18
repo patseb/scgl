@@ -1,17 +1,20 @@
 TOPDIR=./
 CC:=gcc
-CFLAGS:=-I$(TOPDIR)include/ -s -Os -Wall -pedantic -std=c99
-LDFLAGS:=
+CFLAGS:=-I$(TOPDIR)include/ -I/usr/include/igraph -s -Os -Wall -pedantic -std=c99
+CXX=g++
+CXXFLAGS:=-s -Os -Wall -pedantic
+LDFLAGS:=-ligraph
 MFLAGS:=
 COST_TYPE:=ui
-SOURCES:=$(TOPDIR)src/pqueue.c \
-		$(TOPDIR)src/scgl_attr.c \
-		$(TOPDIR)src/scgl_edge.c \
-		$(TOPDIR)src/scgl_vertex.c \
-		$(TOPDIR)src/scgl_graph.c \
-		$(TOPDIR)src/scgl_algorithms.c
+SOURCES:=$(sort \
+           $(TOPDIR)src/pqueue.c \
+           $(TOPDIR)src/scgl_attr.c \
+           $(TOPDIR)src/scgl_edge.c \
+           $(TOPDIR)src/scgl_vertex.c \
+           $(TOPDIR)src/scgl_graph.c \
+           $(TOPDIR)src/scgl_algorithms.c \
+         )
 OBJECTS:=$(SOURCES:.c=.o)
-LIBRARY:=scgl
 
 ifneq (,$(findstring s,$(COST_TYPE)))
 	override MFLAGS:=-Dcost_type="short" -Dcost_fmt=\"%hd\" -Dcost_max=SHRT_MAX
@@ -47,12 +50,14 @@ ifneq (,$(findstring ld,$(COST_TYPE)))
 	override MFLAGS:=-Dcost_type="long double" -Dcost_fmt=\"%Lf\" -Dcost_max=LDBL_MAX
 endif
 
-all: $(LIBRARY) tests
+.PHONY: all clean tests scgl
 
-$(LIBRARY): $(OBJECTS)
-	@echo "Linking object files into $(TOPDIR)lib/lib$(LIBRARY).a library"
+all: scgl
+
+scgl: $(OBJECTS)
+	@echo "Linking object files into $(TOPDIR)lib/libscgl.a library"
 	@mkdir -p $(TOPDIR)lib
-	@ar sr $(TOPDIR)lib/lib$(LIBRARY).a $^
+	@ar sr $(TOPDIR)lib/libscgl.a $^
 
 $(OBJECTS): $(SOURCES)
 	@echo "Building $@ object"
@@ -64,16 +69,8 @@ tests:
 	@echo "Running DejaGNU tests"
 	runtest --tool scgl TEST_APP=$(TOPDIR)unit_tests/scgl.test/tests.out --srcdir=$(TOPDIR)unit_tests/ --outdir=$(TOPDIR)unit_tests/ --all test.exp
 
-test: $(LIBRARY)
-	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/mem_size_d.c -o $(TOPDIR)perf_tests/mem_size_d_c $(TOPDIR)lib/libscgl.a
-	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/mem_size_u.c -o $(TOPDIR)perf_tests/mem_size_u_c $(TOPDIR)lib/libscgl.a
-	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/mem_speed_d.c -o $(TOPDIR)perf_tests/mem_speed_d_c $(TOPDIR)lib/libscgl.a
-	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/mem_speed_u.c -o $(TOPDIR)perf_tests/mem_speed_u_c $(TOPDIR)lib/libscgl.a
-	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/d_u.c -o $(TOPDIR)perf_tests/d_u_c $(TOPDIR)lib/libscgl.a
-	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/d_d.c -o $(TOPDIR)perf_tests/d_d_c $(TOPDIR)lib/libscgl.a
-
-clean:
-	@echo "Removing object (src/), library (lib/), and tests files"
+clean::
+	@echo "Removing object (src/), library (lib/), and DejaGNU's test files"
 	@rm -rf $(TOPDIR)src/*.o
 	@rm -rf $(TOPDIR)lib/libscgl.a
 	@rm -rf $(TOPDIR)unit_tests/scgl.test/tests.out
