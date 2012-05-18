@@ -1,6 +1,6 @@
 TOPDIR=./
 CC:=gcc
-CFLAGS:=-I$(TOPDIR)include/ -g3 -Wall -pedantic -std=c99
+CFLAGS:=-I$(TOPDIR)include/ -s -Os -Wall -pedantic -std=c99
 LDFLAGS:=
 MFLAGS:=
 COST_TYPE:=ui
@@ -47,20 +47,34 @@ ifneq (,$(findstring ld,$(COST_TYPE)))
 	override MFLAGS:=-Dcost_type="long double" -Dcost_fmt=\"%Lf\" -Dcost_max=LDBL_MAX
 endif
 
-all: $(LIBRARY)
+all: $(LIBRARY) tests
 
 $(LIBRARY): $(OBJECTS)
-#$(CC) $(CFLAGS) $(LDFLAGS) $(MFLAGS) $^ -o $@
-	ar sr $(TOPDIR)lib/lib$(LIBRARY).a $^
+	@echo "Linking object files into $(TOPDIR)lib/lib$(LIBRARY).a library"
+	@mkdir -p $(TOPDIR)lib
+	@ar sr $(TOPDIR)lib/lib$(LIBRARY).a $^
 
 $(OBJECTS): $(SOURCES)
-	$(CC) $(CFLAGS) $(MFLAGS) -c $*.c -o $@
+	@echo "Building $@ object"
+	@$(CC) $(CFLAGS) $(MFLAGS) -c $*.c -o $@
 
-tests: $(LIBRARY)
-	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)tests/scgl.test/tests.c -o $(TOPDIR)tests/scgl.test/tests.out $(TOPDIR)lib/libscgl.a
-	runtest --tool scgl TEST_APP=$(TOPDIR)tests/scgl.test/tests.out --srcdir=./tests/ --outdir=./tests/ --all test01.exp test02.exp test03.exp test04.exp test05.exp
+tests:
+	@echo "Building DejaGNU's tests interface"
+	@$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)unit_tests/scgl.test/tests.c -o $(TOPDIR)unit_tests/scgl.test/tests.out $(TOPDIR)lib/libscgl.a
+	@echo "Running DejaGNU tests"
+	runtest --tool scgl TEST_APP=$(TOPDIR)unit_tests/scgl.test/tests.out --srcdir=$(TOPDIR)unit_tests/ --outdir=$(TOPDIR)unit_tests/ --all test.exp
+
+test: $(LIBRARY)
+	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/mem_size_d.c -o $(TOPDIR)perf_tests/mem_size_d_c $(TOPDIR)lib/libscgl.a
+	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/mem_size_u.c -o $(TOPDIR)perf_tests/mem_size_u_c $(TOPDIR)lib/libscgl.a
+	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/mem_speed_d.c -o $(TOPDIR)perf_tests/mem_speed_d_c $(TOPDIR)lib/libscgl.a
+	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/mem_speed_u.c -o $(TOPDIR)perf_tests/mem_speed_u_c $(TOPDIR)lib/libscgl.a
+	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/d_u.c -o $(TOPDIR)perf_tests/d_u_c $(TOPDIR)lib/libscgl.a
+	$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)perf_tests/d_d.c -o $(TOPDIR)perf_tests/d_d_c $(TOPDIR)lib/libscgl.a
 
 clean:
-	rm -rf $(TOPDIR)src/*.o
-	rm -rf $(TOPDIR)lib/libscgl.a
-	rm -rf $(TOPDIR)testsuite/tests/tests
+	@echo "Removing object (src/), library (lib/), and tests files"
+	@rm -rf $(TOPDIR)src/*.o
+	@rm -rf $(TOPDIR)lib/libscgl.a
+	@rm -rf $(TOPDIR)unit_tests/scgl.test/tests.out
+	@rm -rf $(TOPDIR)unit_tests/scgl.log $(TOPDIR)unit_tests/scgl.sum
