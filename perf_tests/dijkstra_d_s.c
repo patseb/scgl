@@ -3,7 +3,7 @@
 #include <string.h>
 #include "scgl.h"
 
-int main() {
+int main(int argc, char **argv) {
 	scgl_graph_t *g1;;
 	scgl_vertex_t **v;
 	scgl_edge_t **e;

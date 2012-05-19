@@ -17,8 +17,7 @@ typedef
 graph_traits<Graph>::edge_descriptor
 Edge;
 
-int main()
-{
+int main(int argc, char **argv) {
 	Graph g(13);
 
 	Edge  e1 = add_edge(0,  1, g).first;

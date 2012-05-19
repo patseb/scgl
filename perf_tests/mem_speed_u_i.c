@@ -1,7 +1,6 @@
 #include <igraph.h>
 
-int main(void)
-{
+int main(int argc, char **argv) {
 	unsigned int i;
 
 	for (i=0; i<1000; ++i) {
@@ -15,6 +14,7 @@ int main(void)
 		igraph_destroy(&graph);
 		igraph_vector_destroy(&edges);
 	}
+
 	return 0;
 }
 

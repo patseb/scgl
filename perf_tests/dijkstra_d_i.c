@@ -1,7 +1,6 @@
 #include <igraph.h>
 
-int main(void)
-{
+int main(int argc, char **argv) {
 	unsigned int i;
 	igraph_t graph;
 	igraph_vector_t edges, weights;

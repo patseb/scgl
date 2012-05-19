@@ -17,8 +17,7 @@ typedef
 graph_traits<Graph>::edge_descriptor
 Edge;
 
-int main()
-{
+int main(int argc, char **argv) {
 	unsigned int i;
 	Graph g;
 

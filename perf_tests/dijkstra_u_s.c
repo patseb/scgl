@@ -3,8 +3,8 @@
 #include <string.h>
 #include "scgl.h"
 
-int main() {
-	scgl_graph_t *g1;;
+int main(int argc, char **argv) {
+	scgl_graph_t *g1;
 	scgl_vertex_t **v;
 	scgl_edge_t **e;
 	unsigned int *p;
