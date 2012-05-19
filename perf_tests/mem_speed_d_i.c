@@ -15,6 +15,7 @@ int main(void)
 		igraph_destroy(&graph);
 		igraph_vector_destroy(&edges);
 	}
+
 	return 0;
 }
 
