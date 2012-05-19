@@ -14,6 +14,8 @@ IGRAPH_SRC:=$(sort \
               $(TOPDIR)perf_tests/mem_size_u_i.c \
               $(TOPDIR)perf_tests/mem_speed_d_i.c \
               $(TOPDIR)perf_tests/mem_speed_u_i.c \
+              $(TOPDIR)perf_tests/dijkstra_d_i.c \
+              $(TOPDIR)perf_tests/dijkstra_u_i.c \
             )
 IGRAPH_TESTS:=$(IGRAPH_SRC:.c=.out)
 
