@@ -22,8 +22,11 @@ int main()
 	unsigned int i;
 	Graph g;
 
-	for(i=0; i<1000; ++i) {
+	for(i=0; i<1001; ++i)
 		add_vertex(g);
+
+	for(i=0; i<1000; ++i)
 		add_edge(i, i+1, g);
-	}
+
+	return 0;
 }
