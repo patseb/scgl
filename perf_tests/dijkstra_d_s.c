@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "scgl.h"
 
 int main(int argc, char **argv) {
