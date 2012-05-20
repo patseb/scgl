@@ -3,131 +3,114 @@
 
 #include "pqueue.h"
 
-/* Util macros */
 #define LEFT(x) (2 * (x) + 1)
 #define RIGHT(x) (2 * (x) + 2)
 #define PARENT(x) ((x-1) / 2)
 
-void pqueue_heapify(PQueue *q, size_t idx);
+void pqueue_heapify(pqueue_t *queue, size_t idx);
 
-/**
- * Allocates memory for a new Priority Queue structure .
- * 'cmp' function:
- *   returns 0 if d1 and d2 have the same priorities
- *   returns [negative value] if d1 have a smaller priority than d2
- *   returns [positive value] if d1 have a greater priority than d2
- */
-PQueue *pqueue_new(int (*cmp)(const void *d1, const void *d2), size_t capacity) {
-	PQueue *res = NULL;
-	NP_CHECK(cmp);
-	res = malloc(sizeof(*res));
-	NP_CHECK(res);
-	res->cmp = cmp;
-	/* The inner representation of data inside the queue is an array of void* */
+pqueue_t*
+pqueue_create(queue_cmp fun, size_t capacity) {
+	pqueue_t *res = NULL;
+
+	if (fun == NULL)
+		return NULL;
+	res = (pqueue_t*) malloc(sizeof(*res));
+	if (res == NULL)
+		return NULL;
+	res->cmp = fun;
 	res->data = malloc(capacity * sizeof(*(res->data)));
-	NP_CHECK(res->data);
+	if (res->data == NULL)
+		return NULL;
 	res->size = 0;
 	res->capacity = capacity;
-	return (res);
+	return res;
 }
 
-/**
- * De-allocates memory for a given Priority Queue structure .
- */
-void pqueue_delete(PQueue *q) {
-	if (q == NULL) {
-		//DEBUG("Priority Queue is already NULL. Nothing to free.");
-		return;
+void
+pqueue_destroy(pqueue_t **queue) {
+	if (queue != NULL && *queue != NULL) {
+		free((*queue)->data);
+		free(*queue);
+		*queue = NULL;
 	}
-	free(q->data);
-	free(q);
 }
 
-/**
- * Adds a new element to the Priority Queue .
- */
-void pqueue_enqueue(PQueue *q, const void *data) {
+void
+pqueue_enqueue(pqueue_t *queue, const void *data) {
 	size_t i;
 	void *tmp = NULL;
-	NP_CHECK(q);
-	if (q->size >= q->capacity) {
-		//DEBUG("Priority Queue is full. Cannot add another element .");
+	if (queue == NULL || queue->size >= queue->capacity)
 		return;
-	}
-	/* Adds element last */
-	q->data[q->size] = (void*) data;
-	i = q->size;
-	q->size++;
-	/* The new element is swapped with its parent as long as its
-	   precedence is higher */
-	while(i > 0 && q->cmp(q->data[i], q->data[PARENT(i)]) > 0) {
-		tmp = q->data[i];
-		q->data[i] = q->data[PARENT(i)];
-		q->data[PARENT(i)] = tmp;
+	/* adds element last */
+	queue->data[queue->size] = (void*)data;
+	i = queue->size;
+	queue->size++;
+
+	/* the new element is swapped with its parent as long as its precedence is higher */
+	while(i > 0 && queue->cmp(queue->data[i], queue->data[PARENT(i)]) > 0) {
+		tmp = queue->data[i];
+		queue->data[i] = queue->data[PARENT(i)];
+		queue->data[PARENT(i)] = tmp;
 		i = PARENT(i);
 	}
 }
- 
-/**
- * Returns the element with the biggest priority from the queue .
- */
-void *pqueue_dequeue(PQueue *q) {
+
+void*
+pqueue_dequeue(pqueue_t *queue) {
 	void *data = NULL;
-	NP_CHECK(q);
-	if (q->size < 1) {
-		/* Priority Queue is empty */
-		//DEBUG("Priority Queue underflow . Cannot remove another element .");
+	if (queue == NULL || queue->size < 1)
 		return NULL;
-	}
-	data = q->data[0];
-	q->data[0] = q->data[q->size-1];
-	q->size--;
-	/* Restore heap property */
-	pqueue_heapify(q, 0);
+	data = queue->data[0];
+	queue->data[0] = queue->data[queue->size-1];
+	queue->size--;
+	/* restore heap property */
+	pqueue_heapify(queue, 0);
 	return (data);
 }
- 
-/**
- * Turn an "almost-heap" into a heap .
- */
-void pqueue_heapify(PQueue *q, size_t idx) {
+
+void
+pqueue_heapify(pqueue_t *queue, size_t idx) {
 	/* left index, right index, largest */
 	void *tmp = NULL;
 	size_t l_idx, r_idx, lrg_idx;
-	NP_CHECK(q);
+
+	if (queue == NULL)
+		return;
 
 	l_idx = LEFT(idx);
 	r_idx = RIGHT(idx);
 
-	/* Left child exists, compare left child with its parent */
-	if (l_idx < q->size && q->cmp(q->data[l_idx], q->data[idx]) > 0) {
+	/* left child exists, compare left child with its parent */
+	if (l_idx < queue->size && queue->cmp(queue->data[l_idx], queue->data[idx]) > 0) {
 		lrg_idx = l_idx;
 	} else {
 		lrg_idx = idx;
 	}
  
-	/* Right child exists, compare right child with the largest element */
-	if (r_idx < q->size && q->cmp(q->data[r_idx], q->data[lrg_idx]) > 0) {
+	/* right child exists, compare right child with the largest element */
+	if (r_idx < queue->size && queue->cmp(queue->data[r_idx], queue->data[lrg_idx]) > 0) {
 		lrg_idx = r_idx;
 	}
  
-	/* At this point largest element was determined */
+	/* at this point largest element was determined */
 	if (lrg_idx != idx) {
-		/* Swap between the index at the largest element */
-		tmp = q->data[lrg_idx];
-		q->data[lrg_idx] = q->data[idx];
-		q->data[idx] = tmp;
-		/* Heapify again */
-		pqueue_heapify(q, lrg_idx);
+		/* swap between the index at the largest element */
+		tmp = queue->data[lrg_idx];
+		queue->data[lrg_idx] = queue->data[idx];
+		queue->data[idx] = tmp;
+		/* heapify again */
+		pqueue_heapify(queue, lrg_idx);
 	}
 }
 
-void pqueue_change_data(PQueue *q, int (*cmp)(const void *d1, const void *d2), void *old_data, void (*swp)(void **d1, void **d2), void *new_data) {
+void
+pqueue_replace_data(pqueue_t *queue, void *old_data, void *new_data, queue_cmp cmp, queue_swp swp) {
 	size_t i;
-	for(i=0; i<q->size; ++i) {
-		if (cmp(q->data[i], old_data)) {
-			swp(&q->data[i], &new_data);
-			pqueue_heapify(q, 0);
+	for(i=0; i<queue->size; ++i) {
+		if ((*cmp)(queue->data[i], old_data)) {
+			(*swp)(&queue->data[i], &new_data);
+			pqueue_heapify(queue, 0);
 			break;
 		}
 	}

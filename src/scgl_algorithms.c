@@ -57,13 +57,13 @@ scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int *p, co
 	scgl_vertex_t *u;
 	scgl_edge_t *e;
 	pair_t *pair;
-	PQueue *q = NULL;
+	pqueue_t *q = NULL;
 	unsigned int n, j, u_i, v_i;
 	char *c;
 
 	if (graph != NULL) {
 		n = list_count(&graph->vertexes);
-		q = pqueue_new(cmp, n);
+		q = pqueue_create(cmp, n);
 		u_i = graph_get_vertex_num(graph, src);
 		c = (char*) malloc(n);
 		assert(c != NULL);
@@ -92,13 +92,13 @@ scgl_dijkstra(const scgl_graph_t *graph, scgl_vertex_t *src, unsigned int *p, co
 						pqueue_enqueue(q, pair);
 					}
 					else if (c[v_i] == 'g') {
-						pqueue_change_data(q, find_data, &v_i, swap_data, pair_new(v_i, cost_max));
+						pqueue_replace_data(q, &v_i, pair_new(v_i, cost_max), find_data, swap_data);
 					}
 				}
 			}
 			c[u_i] = 'b';
 		}
-		pqueue_delete(q);
+		pqueue_destroy(&q);
 		free(c);
 	}
 }
