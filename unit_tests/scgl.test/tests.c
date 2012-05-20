@@ -149,6 +149,7 @@ int main(int argc, char **argv) {
 	switch (argv[1][0]) {
 		case 'v':
 			switch (argv[2][0]) {
+				/* vertex create/destroy test */
 				case '1': {
 					buf1 = (char*) malloc(5);
 					sprintf(buf1, "test");
@@ -160,6 +161,7 @@ int main(int argc, char **argv) {
 					printf("%d\n", (int)v1);
 				} break;
 
+				/* vertex set/get ID test */
 				case '2': {
 					buf1 = (char*) malloc(9);
 					sprintf(buf1, "test_get");
@@ -175,6 +177,7 @@ int main(int argc, char **argv) {
 					scgl_vertex_destroy(&v1);
 				} break;
 
+				/* vertex add/get/del edge test */
 				case '3': {
 					v1 = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
 					e1 = scgl_edge_create(NULL, NULL, 0, 123, NULL, 0);
@@ -196,6 +199,7 @@ int main(int argc, char **argv) {
 					scgl_edge_destroy(&e1, NULL);
 				} break;
 
+				/* vertex edges count test */
 				case '4': {
 					v1 = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
 					e1 = scgl_edge_create(NULL, NULL, 0, 0, NULL, 0);
@@ -218,6 +222,7 @@ int main(int argc, char **argv) {
 					scgl_edge_destroy(&e2, NULL);
 				} break;
 
+				/* vertex foreach edge test */
 				case '5': {
 					v1 = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
 					e1 = scgl_edge_create(v1, NULL, 0, 1, NULL, 0);
@@ -238,6 +243,7 @@ int main(int argc, char **argv) {
 
 		case 'a':
 			switch (argv[2][0]) {
+				/* attribute create/destroy test */
 				case '1': {
 					buf1 = (char*) malloc(4);
 					buf2 = (char*) malloc(6);
@@ -251,6 +257,7 @@ int main(int argc, char **argv) {
 					printf("%d\n", (int)a1);
 				} break;
 
+				/* attribute get/set key test */
 				case '2': {
 					buf1 = (char*) malloc(4);
 					buf2 = (char*) malloc(5);
@@ -265,6 +272,7 @@ int main(int argc, char **argv) {
 					scgl_attr_destroy(&a1, edge_attr_free);
 				} break;
 
+				/* attribute get/set value test */
 				case '3': {
 					buf1 = (char*) malloc(5);
 					buf2 = (char*) malloc(5);
@@ -282,6 +290,7 @@ int main(int argc, char **argv) {
 
 		case 'e':
 			switch (argv[2][0]) {
+				/* edge create/destroy test */
 				case '1': {
 					buf1 = (char*) malloc(2);
 					sprintf(buf1, "0");
@@ -302,6 +311,7 @@ int main(int argc, char **argv) {
 					printf(" %d\n", (int)e1);
 				} break;
 
+				/* edge get/set cost test */
 				case '2': {
 					e1 = scgl_edge_create(NULL, NULL, 0, 123, NULL, 0);
 					if (e1 == NULL)
@@ -312,6 +322,7 @@ int main(int argc, char **argv) {
 					scgl_edge_destroy(&e1, NULL);
 				} break;
 
+				/* edge add/get/del vertex test */
 				case '3': {
 					e1 = scgl_edge_create(NULL, NULL, 0, 123, NULL, 0);
 					v1 = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
@@ -345,6 +356,7 @@ int main(int argc, char **argv) {
 					scgl_vertex_destroy(&v2);
 				} break;
 
+				/* edge add/get/del attributes test */
 				case '4': {
 					buf1 = (char*) malloc(5);
 					buf2 = (char*) malloc(5);
@@ -364,6 +376,7 @@ int main(int argc, char **argv) {
 					scgl_edge_destroy(&e1, edge_attr_free);
 				} break;
 
+				/* edge attributes count test */
 				case '5': {
 					buf1 = (char*) malloc(2);
 					sprintf(buf1, "1");
@@ -377,6 +390,7 @@ int main(int argc, char **argv) {
 					scgl_edge_destroy(&e1, edge_attr_free);
 				} break;
 
+				/* edge foreach attribute test */
 				case '6': {
 					buf1 = (char*) malloc(4);
 					buf2 = (char*) malloc(4);
@@ -390,6 +404,7 @@ int main(int argc, char **argv) {
 					scgl_edge_destroy(&e1, edge_attr_free);
 				} break;
 
+				/* edge set/get (un)directed test */
 				case '7': {
 					e1 = scgl_edge_create(NULL, NULL, 0, 123, NULL, 0);
 					v1 = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
@@ -416,6 +431,7 @@ int main(int argc, char **argv) {
 
 		case 'g':
 			switch (argv[2][0]) {
+				/* graph create/destroy test */
 				case '1': {
 					buf1 = (char*) malloc(3);
 					sprintf(buf1, "G1");
@@ -427,6 +443,7 @@ int main(int argc, char **argv) {
 					printf("%d\n", (int)g1);
 				} break;
 
+				/* graph get/set ID test */
 				case '2': {
 					buf1 = (char*) malloc(3);
 					sprintf(buf1, "G1");
@@ -441,6 +458,7 @@ int main(int argc, char **argv) {
 					scgl_graph_destroy(&g1, NULL);
 				} break;
 
+				/* graph add/get/del vertex test */
 				case '3': {
 					buf1 = (char*) malloc(3);
 					buf2 = (char*) malloc(3);
@@ -462,10 +480,10 @@ int main(int argc, char **argv) {
 					       list_count(&g1->vertexes),
 					       (int)scgl_vertex_get_id(scgl_graph_get_vertex(g1, "V1")),
 					       scgl_graph_get_vertex_at(g1, 0)->id);
-
 					scgl_graph_destroy(&g1, NULL);
 				} break;
 
+				/* graph add/get/del edge test */
 				case '4': {
 					g1 = scgl_graph_create(NULL, NULL, 0, NULL, 0);
 					e1 = scgl_edge_create(NULL, NULL, 0, 123, NULL, 0);
@@ -483,10 +501,10 @@ int main(int argc, char **argv) {
 					       list_count(&g1->edges),
 					       scgl_graph_get_edge_at(g1, 0)->cost,
 					       (int)scgl_graph_get_edge_at(g1, 1));
-
 					scgl_graph_destroy(&g1, NULL);
 				} break;
 
+				/* graph vertexes/edges count test */
 				case '5': {
 					g1 = scgl_graph_create(NULL, NULL, 0, NULL, 0);
 					v1 = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
@@ -503,14 +521,13 @@ int main(int argc, char **argv) {
 					scgl_graph_add_edge(g1, e2);
 					scgl_graph_add_vertex(g1, v1);
 					scgl_graph_add_vertex(g1, v2);
-
 					printf("%d %d\n",
 					       scgl_graph_get_vertexes_count(g1),
 					       scgl_graph_get_edges_count(g1));
-
 					scgl_graph_destroy(&g1, NULL);
 				} break;
 
+				/* graph copy test */
 				case '6': {
 					buf1 = (char*) malloc(3);
 					buf2 = (char*) malloc(3);
@@ -523,7 +540,6 @@ int main(int argc, char **argv) {
 					e2 = scgl_edge_create(NULL, NULL, 0, 321, NULL, 0);
 					if (g1 == NULL || v1 == NULL || v2 == NULL || e1 == NULL || e2 == NULL)
 						return -1;
-
 					buf1 = (char*) malloc(4);
 					buf2 = (char*) malloc(4);
 					sprintf(buf1, "key");
@@ -535,7 +551,6 @@ int main(int argc, char **argv) {
 					scgl_graph_add_edge(g1, e2);
 					scgl_graph_add_vertex(g1, v1);
 					scgl_graph_add_vertex(g1, v2);
-
 					g2 = scgl_graph_copy(g1, edge_attr_copy);
 					printf("%d %d %d %d %d %s %s %d %d\n",
 					      (g1 == g2),
@@ -547,7 +562,6 @@ int main(int argc, char **argv) {
 					      scgl_graph_get_vertex_at(g2, 1)->id,
 					      (scgl_graph_get_edge_at(g1, 0) == scgl_graph_get_edge_at(g2, 0)),
 					      (scgl_vertex_get_edge_out_at(scgl_graph_get_vertex_at(g1, 0), 0)->cost == scgl_vertex_get_edge_out_at(scgl_graph_get_vertex_at(g2, 0), 0)->cost));
-
 					scgl_graph_destroy(&g1, edge_attr_free);
 					scgl_graph_destroy(&g2, edge_attr_free);
 				} break;
@@ -558,10 +572,12 @@ int main(int argc, char **argv) {
 
 		case 'd':
 			switch (argv[2][0]) {
+				/* dijkstra on directed graph test */
 				case '1': {
 					dijkstra_test(0);
 				} break;
 
+				/* dijkstra on undirected graph test */
 				case '2': {
 					dijkstra_test(1);
 				} break;
