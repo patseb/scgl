@@ -393,7 +393,6 @@ int main(int argc, char **argv) {
 				case '7': {
 					e1 = scgl_edge_create(NULL, NULL, 0, 123, NULL, 0);
 					v1 = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
-					v2 = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
 					if (e1 == NULL || v1 == NULL || v2 == NULL)
 						return -1;
 					scgl_edge_add_vertex(e1, v1, 0);
@@ -401,15 +400,14 @@ int main(int argc, char **argv) {
 					       (int)e1->sibling,
 					       e1->cost,
 					       scgl_vertex_get_edges_out_count(v1));
-					scgl_edge_set_undirected(e1, 1);
-					printf("%d ", scgl_edge_get_undirected(e1));
+					scgl_edge_to_undirected(e1);
+					printf("%d ", scgl_edge_is_undirected(e1));
 					printf("%d " cost_fmt " %d\n",
 					       (int)e1->sibling,
 					       e1->sibling->cost,
 					       scgl_vertex_get_edges_in_count(v1));
 					scgl_edge_destroy(&e1, NULL);
 					scgl_vertex_destroy(&v1);
-					scgl_vertex_destroy(&v2);
 				} break;
 
 				default:
