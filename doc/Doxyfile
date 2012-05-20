@@ -457,7 +457,7 @@ HIDE_SCOPE_NAMES       = YES
 # will put a list of the files that are included by a file in the documentation 
 # of that file.
 
-SHOW_INCLUDE_FILES     = YES
+SHOW_INCLUDE_FILES     = NO
 
 # If the FORCE_LOCAL_INCLUDES tag is set to YES then Doxygen 
 # will list include files with double quotes in the documentation 
@@ -735,7 +735,8 @@ RECURSIVE              = NO
 # run.
 
 EXCLUDE                = /home/patseb/src/mgr/include/list.h \
-                         /home/patseb/src/mgr/include/pqueue.h
+                         /home/patseb/src/mgr/include/pqueue.h \
+                         ../include/scgl.h
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or 
 # directories that are symbolic links (a Unix file system feature) are excluded 

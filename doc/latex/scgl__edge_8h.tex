@@ -1,7 +1,5 @@
 \section{include/scgl\-\_\-edge.h File Reference}
 \label{scgl__edge_8h}\index{include/scgl\-\_\-edge.\-h@{include/scgl\-\_\-edge.\-h}}
-{\ttfamily \#include \char`\"{}list.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}scgl\-\_\-def.\-h\char`\"{}}\\*
 \subsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
@@ -45,9 +43,11 @@ int {\bf scgl\-\_\-edge\-\_\-get\-\_\-attributes\-\_\-count} (const {\bf scgl\-\
 \item 
 void {\bf scgl\-\_\-edge\-\_\-foreach\-\_\-attribute} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, {\bf attr\-\_\-function} fun, void $\ast$result)
 \item 
-int {\bf scgl\-\_\-edge\-\_\-get\-\_\-undirected} (const {\bf scgl\-\_\-edge\-\_\-t} $\ast$edge)
+int {\bf scgl\-\_\-edge\-\_\-is\-\_\-undirected} (const {\bf scgl\-\_\-edge\-\_\-t} $\ast$edge)
 \item 
-void {\bf scgl\-\_\-edge\-\_\-set\-\_\-undirected} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, const unsigned int undirected)
+void {\bf scgl\-\_\-edge\-\_\-to\-\_\-undirected} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge)
+\item 
+void {\bf scgl\-\_\-edge\-\_\-to\-\_\-directed} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge)
 \item 
 void {\bf scgl\-\_\-edge\-\_\-dump} ({\bf scgl\-\_\-edge\-\_\-t} $\ast$edge, F\-I\-L\-E $\ast$fp, {\bf attr\-\_\-function} fun)
 \end{DoxyCompactItemize}
@@ -357,23 +357,6 @@ return edge's cost
 \begin{DoxyReturn}{Returns}
 edge's cost, C\-O\-S\-T\-\_\-\-M\-A\-X for failure 
 \end{DoxyReturn}
-\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-get\-\_\-undirected@{scgl\-\_\-edge\-\_\-get\-\_\-undirected}}
-\index{scgl\-\_\-edge\-\_\-get\-\_\-undirected@{scgl\-\_\-edge\-\_\-get\-\_\-undirected}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
-\subsubsection[{scgl\-\_\-edge\-\_\-get\-\_\-undirected}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-edge\-\_\-get\-\_\-undirected} (
-\begin{DoxyParamCaption}
-\item[{const {\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge}
-\end{DoxyParamCaption}
-)}\label{scgl__edge_8h_af3888b2b412055d5760f51596c8e0863}
-return if edge is undirected or not
-
-
-\begin{DoxyParams}{Parameters}
-{\em edge} & reference to edge object \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-1 means edge is udirected, 0 means directed, -\/1 for failure 
-\end{DoxyReturn}
 \index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-get\-\_\-vertex@{scgl\-\_\-edge\-\_\-get\-\_\-vertex}}
 \index{scgl\-\_\-edge\-\_\-get\-\_\-vertex@{scgl\-\_\-edge\-\_\-get\-\_\-vertex}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
 \subsubsection[{scgl\-\_\-edge\-\_\-get\-\_\-vertex}]{\setlength{\rightskip}{0pt plus 5cm}{\bf scgl\-\_\-vertex\-\_\-t}$\ast$ {\bf scgl\-\_\-edge\-\_\-get\-\_\-vertex} (
@@ -394,6 +377,23 @@ return reference to one of edge's endpoint
 \begin{DoxyReturn}{Returns}
 reference to choosen vertex of N\-U\-L\-L for failure 
 \end{DoxyReturn}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-is\-\_\-undirected@{scgl\-\_\-edge\-\_\-is\-\_\-undirected}}
+\index{scgl\-\_\-edge\-\_\-is\-\_\-undirected@{scgl\-\_\-edge\-\_\-is\-\_\-undirected}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-is\-\_\-undirected}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf scgl\-\_\-edge\-\_\-is\-\_\-undirected} (
+\begin{DoxyParamCaption}
+\item[{const {\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_ad4678fdfcd10df60048a37d3562f47fa}
+return if edge is undirected or not
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & reference to edge object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 means edge is udirected, 0 means directed, -\/1 for failure 
+\end{DoxyReturn}
 \index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-set\-\_\-cost@{scgl\-\_\-edge\-\_\-set\-\_\-cost}}
 \index{scgl\-\_\-edge\-\_\-set\-\_\-cost@{scgl\-\_\-edge\-\_\-set\-\_\-cost}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
 \subsubsection[{scgl\-\_\-edge\-\_\-set\-\_\-cost}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-set\-\_\-cost} (
@@ -411,20 +411,31 @@ set edge's cost
 {\em cost} & new cost \\
 \hline
 \end{DoxyParams}
-\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-set\-\_\-undirected@{scgl\-\_\-edge\-\_\-set\-\_\-undirected}}
-\index{scgl\-\_\-edge\-\_\-set\-\_\-undirected@{scgl\-\_\-edge\-\_\-set\-\_\-undirected}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
-\subsubsection[{scgl\-\_\-edge\-\_\-set\-\_\-undirected}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-set\-\_\-undirected} (
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-to\-\_\-directed@{scgl\-\_\-edge\-\_\-to\-\_\-directed}}
+\index{scgl\-\_\-edge\-\_\-to\-\_\-directed@{scgl\-\_\-edge\-\_\-to\-\_\-directed}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-to\-\_\-directed}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-to\-\_\-directed} (
 \begin{DoxyParamCaption}
-\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge, }
-\item[{const unsigned int}]{undirected}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge}
 \end{DoxyParamCaption}
-)}\label{scgl__edge_8h_a223c99f9a7b2cdcdd94b97df6e704f88}
-make an edge undirected or directed
+)}\label{scgl__edge_8h_ac9c68082182e50d891218e92a6f8fc4b}
+change edge into directed one
 
 
 \begin{DoxyParams}{Parameters}
 {\em edge} & edge object \\
 \hline
-{\em undirected} & 1 means that edge is undirected, 0 opposite \\
+\end{DoxyParams}
+\index{scgl\-\_\-edge.\-h@{scgl\-\_\-edge.\-h}!scgl\-\_\-edge\-\_\-to\-\_\-undirected@{scgl\-\_\-edge\-\_\-to\-\_\-undirected}}
+\index{scgl\-\_\-edge\-\_\-to\-\_\-undirected@{scgl\-\_\-edge\-\_\-to\-\_\-undirected}!scgl_edge.h@{scgl\-\_\-edge.\-h}}
+\subsubsection[{scgl\-\_\-edge\-\_\-to\-\_\-undirected}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf scgl\-\_\-edge\-\_\-to\-\_\-undirected} (
+\begin{DoxyParamCaption}
+\item[{{\bf scgl\-\_\-edge\-\_\-t} $\ast$}]{edge}
+\end{DoxyParamCaption}
+)}\label{scgl__edge_8h_a233ca40b7549a9438726ee653556451f}
+change edge into undirected one
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge} & edge object \\
 \hline
 \end{DoxyParams}
