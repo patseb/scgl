@@ -1,0 +1,69 @@
+\documentclass[a4paper,12pt]{thesis}
+
+\autor{Patryk Kwiatkowski}
+\tytul{Podstawowa biblioteka grafów~w~C}
+\tytulAng{Basic graph library in~C}
+\promotor{dr inż. Ireneusz Szcześniak}
+\rok{2012}
+\kierunek{Informatyka}
+\specjalnosc{Sieciowe Technologie Informatyczne}
+\numerAlbumu{101510}
+\studia{stacjonarne}
+\stopien{II}
+
+\newcommand{\eng}[1]{(\emph{#1})}
+
+\begin{document}
+
+\stronaTytulowa
+
+\tableofcontents
+
+\chapter*{Cel pracy}
+\addcontentsline{toc}{chapter}{Cel pracy}
+Cel i \index{lol}zakres pracy\cite{bib:test}
+\chapter*{Wstęp}
+\addcontentsline{toc}{chapter}{Wstęp}
+\chapter{Wybrane zagadnienia teorii grafów}
+\section{Podstawowe pojęcia}
+\section{Algorytm Dijkstry}
+\chapter{Biblioteki w systemach Unix / Linux}
+\section{Statyczne}
+\section{Współdzielone}
+\chapter{Realizacja biblioteki}
+TODO:opisać krótko zastosowane technologie, C, LKL, static variable, makefile, DejaGNU
+\section{Budowa projektu}
+\subsection{Diagram klas}
+\subsection{Struktura plików}
+\section{Szczegóły implementacji}
+\subsection{Linux Kernel List}
+\subsection{Zmienna kosztu? - inaczej nazwać?}
+\subsection{Algortym Dijkstry}
+\subsection{Testy jednostkowe - DejaGNU}
+\section{Instrukcja użytkownika}
+\subsection{Makefile}
+\subsection{Kompilacja}
+\subsection{Interfejs programisty - API}
+\chapter{Porównianie z instniejącymi rozwiązaniami}
+\section{Biblioteka boost::graph}
+TODO:opisać co to, i jaką ma filozofie do grafów
+\section{Biblioteka igraph}
+\section{Testy porównawcze}
+
+\chapter*{Podsumowanie}
+\addcontentsline{toc}{chapter}{Podsumowanie}
+\chapter*{Summary}
+\addcontentsline{toc}{chapter}{Summary}
+\bibliography{thesis}
+\chapter*{Dodatek A. Dokumentacja}
+\addcontentsline{toc}{chapter}{Dodatek A. Dokumentacja}
+\chapter*{Dodatek B. Oświadczenie}
+\addcontentsline{toc}{chapter}{Dodatek B. Oświadczenie}
+\chapter*{Dodatek C. Opis zawartości płyty CD}
+\addcontentsline{toc}{chapter}{Dodatek C. Opis zawartości płyty CD}
+
+\listoffigures
+\listoftables
+%\printindex
+
+\end{document}
