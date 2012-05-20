@@ -252,18 +252,22 @@ scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function fun, void *data) {
 }
 
 int
-scgl_edge_get_undirected(const scgl_edge_t *edge) {
+scgl_edge_is_undirected(const scgl_edge_t *edge) {
 	return (edge == NULL ? -1 : edge->sibling == NULL ? 0 : 1);
 }
 
 void
-scgl_edge_set_undirected(scgl_edge_t *edge, unsigned int undirected) {
-	if (edge != NULL) {
-		if (edge->sibling == NULL && undirected == 1)
+scgl_edge_to_undirected(scgl_edge_t *edge) {
+	if (edge != NULL)
+		if (edge->sibling == NULL)
 			edge->sibling = scgl_edge_create_sibling(edge->to, edge->from, edge->cost, edge);
-		else if (edge->sibling != NULL && undirected == 0)
+}
+
+void
+scgl_edge_to_directed(scgl_edge_t *edge) {
+	if (edge != NULL)
+		if (edge->sibling != NULL)
 			scgl_edge_destroy_sibling(&edge->sibling);
-	}
 }
 
 void

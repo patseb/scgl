@@ -186,15 +186,21 @@ void scgl_edge_foreach_attribute(scgl_edge_t *edge, attr_function fun, void *res
  * @param edge  reference to edge object
  * @return  1 means edge is udirected, 0 means directed, -1 for failure
  */
-int scgl_edge_get_undirected(const scgl_edge_t* edge);
+int scgl_edge_is_undirected(const scgl_edge_t* edge);
 
 /**
- * make an edge undirected or directed
+ * change edge into undirected one
  *
  * @param edge  edge object
- * @param undirected  1 means that edge is undirected, 0 opposite
  */
-void scgl_edge_set_undirected(scgl_edge_t *edge, const unsigned int undirected);
+void scgl_edge_to_undirected(scgl_edge_t *edge);
+
+/**
+ * change edge into directed one
+ *
+ * @param edge  edge object
+ */
+void scgl_edge_to_directed(scgl_edge_t *edge);
 
 /**
  * print edge object to stream
