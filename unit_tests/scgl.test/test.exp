@@ -6,7 +6,7 @@ set test_data {
 	{"edge create/destroy"          "e 1" "^0 1 123 123 0$"}
 	{"edge get/set cost"            "e 2" "^123 321$"}
 	{"edge add/get/del vertex"      "e 3" "^\\d+ 0 0 \\d+ 0 \\d+ \\d+ 0$"}
-	{"vertex add/get edge"          "v 3" "^\\d+ 0 0 0 \\d+ 0$"}
+	{"vertex add/get/del edge"      "v 3" "^\\d+ 0 0 0 \\d+ 0$"}
 	{"vertex edges count"           "v 4" "^0 0 1 0 1 1$"}
 	{"vertex foreach edge"          "v 5" "^1 2 $"}
 	{"attribute create/destroy"     "a 1" "^key value 0$"}
