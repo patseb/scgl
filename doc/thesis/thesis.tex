@@ -11,8 +11,6 @@
 \studia{stacjonarne}
 \stopien{II}
 
-\newcommand{\eng}[1]{(\emph{#1})}
-
 \begin{document}
 
 \stronaTytulowa
@@ -25,7 +23,6 @@ Cel i \index{lol}zakres pracy\cite{bib:test}
 \chapter*{Wstęp}
 \addcontentsline{toc}{chapter}{Wstęp}
 \chapter{Wybrane zagadnienia teorii grafów}
-\section{Podstawowe pojęcia}
 graf, krawędź, węzeł, rodzaje grafów (nieskierwany skierowany), zastosowania grafów, modelowanie sieci 
 \section{Algorytm Dijkstry}
 pseudkod, po co, złożoność, porównanie do innych (złozoność)
@@ -36,18 +33,18 @@ zalety / wady jak tworzyc
 \section{Współdzielone}
 zalety /wady umiejscowienie
 \chapter{Realizacja biblioteki}
-Do zrealizowania postawionych w~pracy celów zaprojektowano oraz zaimplementowano bibliotekę nazwaną Simple~C Graph Library, dalej określaną skrótem SCGL. 
-Projekt ten stworzony został w~oparciu o~język~C~oraz jego bibliotekę standardową (w systemach Unix/Linux: \emph{GNU libc - glibc}).
+Do zrealizowania postawionych w~pracy celów zaprojektowano oraz zaimplementowano bibliotekę nazwaną Simple C~Graph Library, dalej określaną skrótem SCGL. 
+Projekt ten stworzony został w~oparciu o~język C~oraz jego bibliotekę standardową (w systemach Unix/Linux: \emph{GNU libc - glibc}).
 
-Wyboru tego dokonano przede wszystkim ze względu na możliwość redukcji wszelkich narzutów wynikających~z cech charakterystycznych dla języków obiektowych (dziedziczenie, polimorfizm, szablony). 
+Wyboru tego dokonano przede wszystkim ze względu na możliwość redukcji wszelkich narzutów wynikających z~cech charakterystycznych dla języków obiektowych (dziedziczenie, polimorfizm, szablony). 
 Dodatkowym atutem było bardzo dobre wsparcie kompilatorów oraz szeroki wybór dostępnych narzędzi dla języka C.
 
 Projekty takie jak ten przedstawiony w niniejszej pracy często charakteryzują siędynamicznym rozwojem, zwłaszcza w początkowych fazach tworzenia. 
-W~celu zapewnienia poprawności zaimplementowanych już funkcjonalności, zdecydowano się skorzystać~z mechanizmu testów jednostkowych oraz platformy \emph{DejaGNU}.
+W~celu zapewnienia poprawności zaimplementowanych już funkcjonalności, zdecydowano się skorzystać z~mechanizmu testów jednostkowych oraz platformy \emph{DejaGNU}.
 
 Dodatkowo biblioteka wykorzystuje program \emph{make} oraz pliki reguł \emph{Makefile} do automatyzacji procesu kompilacji.
 
-Podczas projektowania każdego~z modułów biblioteki wykorzystano wiedzę zawartą w publikacjach TODO, TODO oraz stosowano się do reguły KISS (ang. \emph{Keep It Simple, Stupid}), która traktuje o tym, że im coś jest prostsze (jako koncept, oraz jako wykonanie) tym lepiej TODO (kiss).
+Podczas projektowania każdego z~modułów biblioteki wykorzystano wiedzę zawartą w publikacjach TODO, TODO oraz stosowano się do reguły KISS (ang. \emph{Keep It Simple, Stupid}), która traktuje o tym, że im coś jest prostsze (jako koncept, oraz jako wykonanie) tym lepiej TODO (kiss).
 \section{Budowa projektu}
 \subsection{Diagram klas}
 powiązanie klas i opisać każdą z osobna
@@ -57,6 +54,38 @@ powiązanie klas i opisać każdą z osobna
 \subsection{Linux Kernel List}
 ze kernel, schemat jak działa, ze fajne, ze zmieniłem tak i tak, ze mały narzut, czemu tak - ze dynamiczny rozmiar i ze w C nie ma wektorów i ze trzeba by tablice ciągle realloc co jest wolne
 \subsection{Zmienna kosztu? - inaczej nazwać?}
+Sporym oraz ciekawym wyzwaniem projektowym okazał się niepozorny atrybut kosztu (wagi) krawędzi, a~właściwie typ tej zmiennej.
+Jak już zostało wcześniej wspomniane, element ten wykorzystywany jest przy wyborze ścieżki pomiędzy zadanymi węzłami, we wszystkich algorytmach tego typu.
+Wymaganiem postawionym przed SCGL była elastyczność typu zmiennej określającej koszt krawędzi.
+Biblioteka powinna pozwalać użytkownikowi na wybór typu owego parametru według własnych preferencji.
+Problem ten dotyka problemu paradygmatu programowania uogólnionego (generycznego, \emph{generic programming}).
+Pozwala on na pisanie kodu programu bez wcześniejszej znajomości typów danych, na których kod ten będzie pracował.
+W~językach Java, C#, Haskell służą do tego typy generyczne (typ ten pojawia się również w C++ dzięki zastosowaniu biblioteki boost::any).
+Zaś w~językach takich jak C++ czy D, funkcjonlność tą można zrealizować poprzez zastosowanie mechanizmu szablonów (\emph{template}).
+Podczas kompilacji następuje tak zwana konkretyzacja szablonu (ang. \emph{template instantiation}), podczas której kompilator na podstawie typów danych przekazanych wzorcowi generuje kod właściwy do obsługi danego typu.
+Dla każdego użycia szablonu z~innym typem, generowana jest kopia odpowiednich fragmentów kodu.
+
+Wybrany dla SCGL język C~nie posiada żadnego z~wyżej wymienionych mechanizmów.
+Aby spełnić postawione wymagania rozważano kilka możliwości projektowych, jedną z nich było zastosowanie unii z~kilkoma podstawowymi typami zmiennych skalarnych, oraz dodatkowego pola określającego wybrany typ.
+Wykorzystanie unii do tego celu, miałoby ograniczyć ilość zużytej pamięci, do największej zmiennej wewnątrz unii.
+
+%enum cost_type {INT, DOUBLE, FLOAT};
+%struct scgl_edge {
+%   union {
+%       int i;
+%       double d;
+%       float f;
+%   } cost;
+%   cost_type type;
+%};
+Rozwiązanie to niestety wymagałoby każdorazowego sprawdzania typu zmiennej \emph{cost} przed jej użyciem (ponieważ należy wskazać którą zmienną wybieramy z unii).
+Instrukcja warunkowa \emph{switch} (rozrastająca się w~miarę dodawania nowych typów do unii) negatywnie wpłynęłaby na wydajność funkcji wykorzystujących atrybut kosztu.
+
+
+
+
+
+
 ze w makefile, ze uzytkownik moze dostoswoac, wstawki kodu
 \subsection{Algortym Dijkstry}
 ze najszybciej na kopcu kolejka prior, ze kolory, jak to u mnie działa i co mozna poprawić ze hash lista
