@@ -60,13 +60,13 @@ Wymaganiem postawionym przed SCGL była elastyczność typu zmiennej określają
 Biblioteka powinna pozwalać użytkownikowi na wybór typu owego parametru według własnych preferencji.
 Problem ten dotyka problemu paradygmatu programowania uogólnionego (generycznego, \emph{generic programming}).
 Pozwala on na pisanie kodu programu bez wcześniejszej znajomości typów danych, na których kod ten będzie pracował.
-W~językach Java, C#, Haskell służą do tego typy generyczne (typ ten pojawia się również w C++ dzięki zastosowaniu biblioteki boost::any).
+W~językach Java, C\#, Haskell służą do tego typy generyczne (typ ten pojawia się również w C++ dzięki zastosowaniu biblioteki boost::any).
 Zaś w~językach takich jak C++ czy D, funkcjonlność tą można zrealizować poprzez zastosowanie mechanizmu szablonów (\emph{template}).
 Podczas kompilacji następuje tak zwana konkretyzacja szablonu (ang. \emph{template instantiation}), podczas której kompilator na podstawie typów danych przekazanych wzorcowi generuje kod właściwy do obsługi danego typu.
 Dla każdego użycia szablonu z~innym typem, generowana jest kopia odpowiednich fragmentów kodu.
 
 Wybrany dla SCGL język C~nie posiada żadnego z~wyżej wymienionych mechanizmów.
-Aby spełnić postawione wymagania rozważano kilka możliwości projektowych, jedną z nich było zastosowanie unii z~kilkoma podstawowymi typami zmiennych skalarnych, oraz dodatkowego pola określającego wybrany typ.
+Aby spełnić postawione wymagania rozważano kilka możliwości projektowych, jedną z~nich było zastosowanie unii z~kilkoma podstawowymi typami zmiennych skalarnych, oraz dodatkowego pola określającego wybrany typ.
 Wykorzystanie unii do tego celu, miałoby ograniczyć ilość zużytej pamięci, do największej zmiennej wewnątrz unii.
 
 %enum cost_type {INT, DOUBLE, FLOAT};
