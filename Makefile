@@ -63,7 +63,7 @@ $(OBJECTS): $(SOURCES)
 	@echo "Building $@ object"
 	@$(CC) $(CFLAGS) $(MFLAGS) -c $*.c -o $@
 
-tests:
+tests: scgl
 	@echo "Building DejaGNU's tests interface"
 	@$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)unit_tests/scgl.test/tests.c -o $(TOPDIR)unit_tests/scgl.test/tests.out $(TOPDIR)lib/libscgl.a
 	@echo "Running DejaGNU tests"
