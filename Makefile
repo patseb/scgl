@@ -17,37 +17,37 @@ SOURCES:=$(sort \
 OBJECTS:=$(SOURCES:.c=.o)
 
 ifneq (,$(findstring s,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="short" -Dcost_fmt=\"%hd\" -Dcost_max=SHRT_MAX
+	override MFLAGS:=-Dcost_type="short" -Dcost_fmt=\"%hd\" -Dcost_max=SHRT_MAX -Dcost_min=SHRT_MIN
 endif
 ifneq (,$(findstring us,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="unsigned short" -Dcost_fmt=\"%hd\" -Dcost_max=USHRT_MAX
+	override MFLAGS:=-Dcost_type="unsigned short" -Dcost_fmt=\"%hd\" -Dcost_max=USHRT_MAX -Dcost_min=USHRT_MIN
 endif
 ifneq (,$(findstring i,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="int" -Dcost_fmt=\"%d\" -Dcost_max=INT_MAX
+	override MFLAGS:=-Dcost_type="int" -Dcost_fmt=\"%d\" -Dcost_max=INT_MAX -Dcost_min=INT_MIN
 endif
 ifneq (,$(findstring ui,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="unsigned int" -Dcost_fmt=\"%d\" -Dcost_max=UINT_MAX
+	override MFLAGS:=-Dcost_type="unsigned int" -Dcost_fmt=\"%d\" -Dcost_max=UINT_MAX -Dcost_min=UINT_MIN
 endif
 ifneq (,$(findstring l,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="long" -Dcost_fmt=\"%ld\" -Dcost_max=LONG_MAX
+	override MFLAGS:=-Dcost_type="long" -Dcost_fmt=\"%ld\" -Dcost_max=LONG_MAX -Dcost_min=LONG_MIN
 endif
 ifneq (,$(findstring ul,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="unsigned long" -Dcost_fmt=\"%ld\" -Dcost_max=ULONG_MAX
+	override MFLAGS:=-Dcost_type="unsigned long" -Dcost_fmt=\"%ld\" -Dcost_max=ULONG_MAX -Dcost_min=ULONG_MIN
 endif
 ifneq (,$(findstring ll,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="long long" -Dcost_fmt=\"%lld\" -Dcost_max=LLONG_MAX
+	override MFLAGS:=-Dcost_type="long long" -Dcost_fmt=\"%lld\" -Dcost_max=LLONG_MAX -Dcost_min=LLONG_MIN
 endif
 ifneq (,$(findstring ull,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="unsigned long long" -Dcost_fmt=\"%lld\" -Dcost_max=ULLONG_MAX
+	override MFLAGS:=-Dcost_type="unsigned long long" -Dcost_fmt=\"%lld\" -Dcost_max=ULLONG_MAX -Dcost_min=ULLONG_MIN
 endif
 ifneq (,$(findstring f,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="float" -Dcost_fmt=\"%f\" -Dcost_max=FLT_MAX
+	override MFLAGS:=-Dcost_type="float" -Dcost_fmt=\"%f\" -Dcost_max=FLT_MAX -Dcost_min=FLT_MIN
 endif
 ifneq (,$(findstring d,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="double" -Dcost_fmt=\"%f\" -Dcost_max=DBL_MAX
+	override MFLAGS:=-Dcost_type="double" -Dcost_fmt=\"%f\" -Dcost_max=DBL_MAX -Dcost_min=DBL_MIN
 endif
 ifneq (,$(findstring ld,$(COST_TYPE)))
-	override MFLAGS:=-Dcost_type="long double" -Dcost_fmt=\"%Lf\" -Dcost_max=LDBL_MAX
+	override MFLAGS:=-Dcost_type="long double" -Dcost_fmt=\"%Lf\" -Dcost_max=LDBL_MAX -Dcost_min=LDBL_MIN
 endif
 
 .PHONY: all clean tests scgl
