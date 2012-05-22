@@ -1,4 +1,43 @@
 \documentclass[a4paper,12pt]{thesis}
+\usepackage{listings}
+
+\lstdefinestyle{line}{
+	language=C,
+	basicstyle=\ttfamily,
+}
+
+\lstdefinestyle{code}{
+	language=C,
+	basicstyle=\ttfamily\scriptsize,
+	numbers=left,
+	numberstyle=\tiny,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2,
+	captionpos=t,
+	breaklines=true,
+	frame=single,
+	breakatwhitespace=false,
+}
+
+
+\lstdefinestyle{coden}{
+	language=C,
+	basicstyle=\ttfamily\scriptsize,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2,
+	captionpos=t,
+	breaklines=true,
+	frame=single,
+	breakatwhitespace=false,
+}
+
+\newcommand\code[1]{\lstinline[style=line]{#1}}
+\renewcommand{\lstlistlistingname}{Spis listingów}
 
 \autor{Patryk Kwiatkowski}
 \tytul{Podstawowa biblioteka grafów~w~C}
@@ -33,13 +72,13 @@ zalety / wady jak tworzyc
 \section{Współdzielone}
 zalety /wady umiejscowienie
 \chapter{Realizacja biblioteki}
-Do zrealizowania postawionych w~pracy celów zaprojektowano oraz zaimplementowano bibliotekę nazwaną Simple C~Graph Library, dalej określaną skrótem SCGL. 
+Do zrealizowania postawionych w~pracy celów zaprojektowano oraz zaimplementowano bibliotekę nazwaną Simple C~Graph Library, dalej określaną skrótem SCGL.
 Projekt ten stworzony został w~oparciu o~język C~oraz jego bibliotekę standardową (w systemach Unix/Linux: \emph{GNU libc - glibc}).
 
-Wyboru tego dokonano przede wszystkim ze względu na możliwość redukcji wszelkich narzutów wynikających z~cech charakterystycznych dla języków obiektowych (dziedziczenie, polimorfizm, szablony). 
+Wyboru tego dokonano przede wszystkim ze względu na możliwość redukcji wszelkich narzutów wynikających z~cech charakterystycznych dla języków obiektowych (dziedziczenie, polimorfizm, szablony).
 Dodatkowym atutem było bardzo dobre wsparcie kompilatorów oraz szeroki wybór dostępnych narzędzi dla języka C.
 
-Projekty takie jak ten przedstawiony w niniejszej pracy często charakteryzują siędynamicznym rozwojem, zwłaszcza w początkowych fazach tworzenia. 
+Projekty takie jak ten przedstawiony w niniejszej pracy często charakteryzują siędynamicznym rozwojem, zwłaszcza w początkowych fazach tworzenia.
 W~celu zapewnienia poprawności zaimplementowanych już funkcjonalności, zdecydowano się skorzystać z~mechanizmu testów jednostkowych oraz platformy \emph{DejaGNU}.
 
 Dodatkowo biblioteka wykorzystuje program \emph{make} oraz pliki reguł \emph{Makefile} do automatyzacji procesu kompilacji.
@@ -52,41 +91,157 @@ powiązanie klas i opisać każdą z osobna
 /src /include ?
 \section{Szczegóły implementacji}
 \subsection{Linux Kernel List}
+
 ze kernel, schemat jak działa, ze fajne, ze zmieniłem tak i tak, ze mały narzut, czemu tak - ze dynamiczny rozmiar i ze w C nie ma wektorów i ze trzeba by tablice ciągle realloc co jest wolne
-\subsection{Zmienna kosztu? - inaczej nazwać?}
-Sporym oraz ciekawym wyzwaniem projektowym okazał się niepozorny atrybut kosztu (wagi) krawędzi, a~właściwie typ tej zmiennej.
-Jak już zostało wcześniej wspomniane, element ten wykorzystywany jest przy wyborze ścieżki pomiędzy zadanymi węzłami, we wszystkich algorytmach tego typu.
+\subsection{Statycznie kompilowany typ zmiennej}
+Sporym oraz ciekawym wyzwaniem projektowym okazał się niepozorny atrybut kosztu (wagi) krawędzi, a~właściwie typ zmiennej przechowującej tą wartość.
+Jak już zostało wcześniej wspomniane, element ten wykorzystywany jest przy wyborze ścieżki pomiędzy zadanymi węzłami.
 Wymaganiem postawionym przed SCGL była elastyczność typu zmiennej określającej koszt krawędzi.
-Biblioteka powinna pozwalać użytkownikowi na wybór typu owego parametru według własnych preferencji.
-Problem ten dotyka problemu paradygmatu programowania uogólnionego (generycznego, \emph{generic programming}).
+Biblioteka powinna pozwalać użytkownikowi na wybór typu owego parametru według własnych preferencji, bez ingerencji w~sam kod projektu.
+
+Problem ten dotyka tematyki paradygmatu programowania uogólnionego (generycznego, ang, \emph{generic programming}).
 Pozwala on na pisanie kodu programu bez wcześniejszej znajomości typów danych, na których kod ten będzie pracował.
-W~językach Java, C\#, Haskell służą do tego typy generyczne (typ ten pojawia się również w C++ dzięki zastosowaniu biblioteki boost::any).
-Zaś w~językach takich jak C++ czy D, funkcjonlność tą można zrealizować poprzez zastosowanie mechanizmu szablonów (\emph{template}).
+W~językach Java, C\#, Haskell służą do tego typy generyczne (typ ten pojawia się również w C++ dzięki zastosowaniu biblioteki \emph{boost::any}).
+Zaś w~językach takich jak C++ czy D, funkcjonlność tą można zrealizować poprzez zastosowanie mechanizmu szablonów (ang. \emph{template}).
 Podczas kompilacji następuje tak zwana konkretyzacja szablonu (ang. \emph{template instantiation}), podczas której kompilator na podstawie typów danych przekazanych wzorcowi generuje kod właściwy do obsługi danego typu.
 Dla każdego użycia szablonu z~innym typem, generowana jest kopia odpowiednich fragmentów kodu.
 
 Wybrany dla SCGL język C~nie posiada żadnego z~wyżej wymienionych mechanizmów.
 Aby spełnić postawione wymagania rozważano kilka możliwości projektowych, jedną z~nich było zastosowanie unii z~kilkoma podstawowymi typami zmiennych skalarnych, oraz dodatkowego pola określającego wybrany typ.
 Wykorzystanie unii do tego celu, miałoby ograniczyć ilość zużytej pamięci, do największej zmiennej wewnątrz unii.
+\begin{lstlisting}[style=code,caption=Koszt krawędzi jako unia]
+enum cost_type {INT, DOUBLE, FLOAT};
 
-%enum cost_type {INT, DOUBLE, FLOAT};
-%struct scgl_edge {
-%   union {
-%       int i;
-%       double d;
-%       float f;
-%   } cost;
-%   cost_type type;
-%};
-Rozwiązanie to niestety wymagałoby każdorazowego sprawdzania typu zmiennej \emph{cost} przed jej użyciem (ponieważ należy wskazać którą zmienną wybieramy z unii).
-Instrukcja warunkowa \emph{switch} (rozrastająca się w~miarę dodawania nowych typów do unii) negatywnie wpłynęłaby na wydajność funkcji wykorzystujących atrybut kosztu.
+struct scgl_edge {
+   union cost {
+       int i;
+       double d;
+       float f;
+   };
+   cost_type type;
+};
+\end{lstlisting}
+Rozwiązanie to niestety wymagałoby każdorazowego sprawdzania wartości zmiennej \code{type} przed użyciem zmiennej \code{cost} (ponieważ należy wskazać którą zmienną wybieramy z~unii).
+Instrukcja warunkowa \code{switch} (rozrastająca się w~miarę dodawania nowych typów do unii) negatywnie wpłynęłaby na wydajność funkcji wykorzystujących atrybut kosztu.
+Alternatywnym rozwiązaniem byłoby stworzenie, dla każdego typu, funkcji posługujących się odpowiednią zmienną z~unii np:
+\begin{lstlisting}[style=coden]
+void scgl_dijsktra(/*...*/)
+void scgl_dijkstra_int(/*...*/)
+void scgl_dijkstra_float(/*...*/)
+void scgl_dijkstra_double(/*...*/)
+\end{lstlisting}
+Zmniejszyłoby to narzut wynikący z~każdorazowego sprawdzania typu zmiennej kosztu (sprawdzanie odbywałoby się przez warper \code{scgl\_dijkstra()}, który wywoływałby odpowiednią funkcję).
+Niestety rozwiązanie to jednoczesnie zwiększyłoby znacznie ilość rozmiar biblioteki, dodatkowo narażając kod na błędy rodzaju copy-paste (wynikające z powielania ciała funkcji poprzez kopiowanie i~wklejanie).
+Dodatkową wadą tego rozwiązania, jest fakt, iż unia zajmuje tyle miejsca co jej największa składowa. Gdyby w~jej wnętrzu znalazła się zmienna typu \code{long double} to mimo iż programista wykorzystywał by \code{cost} jako zmieną short, to pole zajmowałoby tyle bajtów ile \code{long double} na danej architekturze.
 
+Z~powodu wyżej wymienionych cech, zdecydowano się zastosować zupełnie inne rozwiązanie.
+Postanowiono stworzyć wewnątrz pliku nagłówkowego \emph{scgl\_edge.h} alternatywną nazwę (\code{typedef}), a~następnie zdefiniować wewnątrz struktury krawędzi pole będące realizacją jej kosztu w~następujący sposób:
+\begin{lstlisting}[style=code,caption=Koszt krawędzi w~bibliotece SCGL]
+typedef cost_type cost_type_t;
 
+struct scgl_edge {
+	cost_type_t cost;
+};
+\end{lstlisting}
+Kod ten oczywiście nie ma prawa zadziałać, gdyż symbol \code{cost\_type} dalej pozostaje niezdefiniowany.
+Odpowiedzialność za tę czynność przeniesiono do etapu kompilacji biblioteki, a~właściwie etapu translacji.
+Kompilator \emph{gcc} poprzez opcję \code{-D} umożliwia definiowanie nazw, traktując je tak jakby w~kodzie pojawił się odpowiednio skonstruowany blok \code{\#define}.
+\begin{lstlisting}[style=coden]
+gcc -Dname=definition
+gcc -Dcost_type=double
+gcc -Dcost_type=int
+\end{lstlisting}
+Kompilując kod z~tym parameterem słowo \code{cost\_type} jest podmienane na wybrany przez użytkownika typ, co za tym idzie zmienna \code{cost} przybiera wybrany typ.
+Statyczny typ zmiennej, dobierany podczas procesu kompilacji nie powoduje dodatkowego narzutu przed jej użyciem (jak to miało miejsce w~przypadku unii), czy na rozmiar biblioteki (szablony języka C++).
+Wadą jest tu jednak potrzeba rekompilacji całej biblioteki (wszystkich modułów, które korzystają ze zmiennej), za każdym razem gdy użytkownik zeche zmienić jej typ.
+Jest to jednak niedogodność, którą można zaakceptować, zważywszy na możliwości, którą oferuje owe rozwiązanie.
 
+Dodatkowym elementem wynikającym z~wybranego rozwiązania, jest potrzeba dbania o~zależności.
+Wybór typu zmiennej powinien dostarczać dodatkowych informacji takich jak minimalna/maksymalna wartość zmiennej, oraz format zmiennej rozumiany przez funkcję \code{printf}.
+Aby ułatwić proces budowania biblioteki, oraz zmniejszyć ewentualną możliwość popełnienia błędu przez użytkownika, postanowiono, że doborem wcześniej wymienonych wartości zajmie się plik \emph{Makefile}.
+Wewnątrz tego pliku zdefiniowane są reguły budowania całej biblioteki (oraz dodatkowych elementów).
+Makefile definiuje zmienną \code{COST\_TYPE}, która może przyjać wartości odpowiadające określonemu typowi zmiennej \code{cost}.
+Na podstawie wyboru użytkownika (zmiennej \code{COST\_TYPE}), Makefile dobierze odpowiednie opcję tak by biblioteka została skompilowana z~obsługą kosztu krawędzi o~wybranym typie.
+W~tym celu wewnątrz pliku Makefile stworzono blok decydujący o~następującej strukturze:
 
+\begin{lstlisting}[style=code,caption=Makefile - blok decydujący o zmiennej cost]
+ifneq (,$(findstring s,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="short" -Dcost_fmt=\"%hd\" -Dcost_max=SHRT_MAX -Dcost_min=SHRT_MIN
+endif
+ifneq (,$(findstring us,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="unsigned short" -Dcost_fmt=\"%hd\" -Dcost_max=USHRT_MAX -Dcost_min=USHRT_MIN
+endif
+ifneq (,$(findstring i,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="int" -Dcost_fmt=\"%d\" -Dcost_max=INT_MAX -Dcost_min=INT_MIN
+endif
+ifneq (,$(findstring ui,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="unsigned int" -Dcost_fmt=\"%d\" -Dcost_max=UINT_MAX -Dcost_min=UINT_MIN
+endif
+ifneq (,$(findstring l,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="long" -Dcost_fmt=\"%ld\" -Dcost_max=LONG_MAX -Dcost_min=LONG_MIN
+endif
+ifneq (,$(findstring ul,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="unsigned long" -Dcost_fmt=\"%ld\" -Dcost_max=ULONG_MAX -Dcost_min=ULONG_MIN
+endif
+ifneq (,$(findstring ll,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="long long" -Dcost_fmt=\"%lld\" -Dcost_max=LLONG_MAX -Dcost_min=LLONG_MIN
+endif
+ifneq (,$(findstring ull,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="unsigned long long" -Dcost_fmt=\"%lld\" -Dcost_max=ULLONG_MAX -Dcost_min=ULLONG_MIN
+endif
+ifneq (,$(findstring f,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="float" -Dcost_fmt=\"%f\" -Dcost_max=FLT_MAX -Dcost_min=FLT_MIN
+endif
+ifneq (,$(findstring d,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="double" -Dcost_fmt=\"%f\" -Dcost_max=DBL_MAX -Dcost_min=DBL_MIN
+endif
+ifneq (,$(findstring ld,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type="long double" -Dcost_fmt=\"%Lf\" -Dcost_max=LDBL_MAX -Dcost_min=LDBL_MIN
+endif
+\end{lstlisting}
 
+Przedstawiony powyżej wycinek pliku Makefile porównuje zawartość zmiennej \code{COST\_TYPE} z~ustalonymi wcześniej wartościami. Na tej podstawie dobiera odpowienie zależności, przedstawione w~tabeli \ref{tab:dep}.
 
-ze w makefile, ze uzytkownik moze dostoswoac, wstawki kodu
+Funkcja \code{findstring} wyszukuje wystąpienia pierwszego argumentu wewnątrz drugiego argumentu.
+Jeśli wyszukiwanie zakończyło się sukcesem, funkcja zwraca znaleziony ciąg znaków, w~przeciwnym wypadku wynik funkcji jest równy pustemu ciągowi (dlatego sprawdzany jest warunek \code{not equal} z~pustym pierwszym argumentem).
+
+\begin{table}[htb]
+\caption{Tabela zależności poszczególnych zmiennych od wartości \code{COST\_TYPE}}
+\label{tab:dep}
+\begin{tabular}{ | c | c | c | c | c | }
+	\hline
+	COST\_TYPE  & cost\_type            & cost\_fmt  & cost\_max      & cost\_min      \\
+	\hline \hline
+	s           & short                 & \%hd       & SHRT\_MAX      & SHRT\_MIN      \\ \hline
+	us          & unsigned short        & \%hd       & USHRT\_MAX     & USHRT\_MIN     \\ \hline
+	i           & int                   & \%d        & INT\_MAX       & INT\_MIN       \\ \hline
+	us          & unsigned int          & \%d        & UINT\_MAX      & UINT\_MIN      \\ \hline
+	l           & long                  & \%ld       & LONG\_MAX      & LONG\_MIN      \\ \hline
+	ul          & unsigned long         & \%ld       & ULONG\_MAX     & ULONG\_MIN     \\ \hline
+	ll          & long long             & \%lld      & LLONG\_MAX     & LLONG\_MIN     \\ \hline
+	ull         & unsigned long long    & \%lld      & ULLONG\_MAX    & ULLONG\_MIN    \\ \hline
+	f           & float                 & \%f        & FLT\_MAX       & FLT\_MIN       \\ \hline
+	d           & double                & \%f        & DBL\_MAX       & DBL\_MIN       \\ \hline
+	ld          & long double           & \%Lf       & LDBL\_MAX      & LDBL\_MIN      \\ \hline
+\end{tabular}
+\end{table}
+
+Posługiwanie się zmienną \code{cost} odbywa się dokładnie tak jak innymi zmiennymi typu skalarnego w~języku C.
+Zalecane, aczkowiek nie wymagane, jest korzystanie z~definicji \code{cost\_max}, \code{cost\_min} oraz \code{cost\_fmt}.
+Wartości \code{cost\_max} oraz \code{cost\_min} zdefiniowane są w~plikach nagłówkowych \emph{limits.h} oraz \emph{float.h}. Ich załączenie wymagane jest w~każdym pliku \code{*.c} odwołującym się do zmiennej o~typie \code{cost\_type}.
+
+Użytkownik chcący dodać własny typ może dokonać edycji pliku Makefile.
+Powinien przypisać nazwę typu do deklaracji \code{cost\_type}, jej wartość minimalną do \code{cost\_min}, maksymalną do \code{cost\_max}, oraz format dla funkcji \code{printf} do \code{cost\_fmt}.
+\begin{lstlisting}[style=coden,caption=Przykład nowego typu kosztu krawędzi]
+ifneq (,$(findstring nowy,$(COST_TYPE)))
+	override MFLAGS:=-Dcost_type=nowy -Dcost_fmt=\"%format\" -Dcost_max=99 -Dcost_min=-99
+endif
+
+\end{lstlisting}
+Należy pamiętać o~uciekaniu znaków przy definiowaniu wartości \code{cost\_fmt}.
+
+Dzięki zaproponowanenu rozwiązaniu SCGL zdecydowanie zyskuje na wydajności zarówno czasowej jak i~pamięciowej, nie wprowadzając przy tym zbytniej komplikacji kodu.
+
 \subsection{Algortym Dijkstry}
 ze najszybciej na kopcu kolejka prior, ze kolory, jak to u mnie działa i co mozna poprawić ze hash lista
 \subsection{Testy jednostkowe - DejaGNU}
@@ -116,6 +271,7 @@ ze mozna zmniejszyc narzut, ze mozna usprawnić kopiec, ze mozna dodać haslist�
 
 \listoffigures
 \listoftables
+\lstlistoflistings
 %\printindex
 
 \end{document}
