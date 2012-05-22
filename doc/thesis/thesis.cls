@@ -303,9 +303,9 @@
         {\Large \bf POLITECHNIKA CZĘSTOCHOWSKA} \\
         {\Large \bf WYDZIAŁ INŻYNIERII MECHANICZNEJ\\ I INFORMATYKI} \\
 
-        \begin{figure}[!h]
+        \begin{figure}[htb]
             \begin{center}
-                \includegraphics{logo.png}
+                \includegraphics[width=0.25\textwidth]{logo.eps}
             \end{center}
         \end{figure}
 
@@ -338,7 +338,6 @@
 
     \noindent
     \mbox{Praca przyjęta dnia:} \\
-    \mbox{} \\
     \mbox{Podpis promotora:} \\
 
     \vfill
