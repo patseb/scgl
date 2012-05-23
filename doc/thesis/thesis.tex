@@ -22,7 +22,6 @@
 	breakatwhitespace=false,
 }
 
-
 \lstdefinestyle{coden}{
 	language=C,
 	basicstyle=\ttfamily\scriptsize,
@@ -59,18 +58,53 @@
 \chapter*{Cel pracy}
 \addcontentsline{toc}{chapter}{Cel pracy}
 Cel i \index{lol}zakres pracy\cite{bib:test}
+
 \chapter*{Wstęp}
 \addcontentsline{toc}{chapter}{Wstęp}
+
+Systemy nawigacji GPS, sieć Internet, gry komputerowe, translatory języków obcych, biologia, chemia, socjologia --- to wszystko, i~wiele innych dziedzin życia, łączy jeden wspólny element, teoria grafów.
+Kiedy rozwój informatyki pozwolił na reprezentowanie grafów za pomocą komputera, okazało się, że algorytmy na nich oparte znajdują wiele praktycznych zastosowań.
+Grafy są jednymi z~najbardziej wszechobecnych modeli zarówno świata naturalnego jak i~stworzonego przez człowieka.
+
+Oprogramowanie oparte na analizie grafów znalazło zastosowanie w~wyznaczaniu trasy pomiędzy punktami na mapie, czy najszybszej drogi ewakuacji z~kompleksu budynków.
+Przedstawienie sieci komputerowych w~postacji grafów pozwoliło na stworzenie programów usprawniających przepływ pakietów w~Internecie.
+W fizyce materii skondensowanej, trójwymiarowa struktura skomplikowanych symulacji struktur atomowych może zostać zbadana poprzez gromadzenie danych statystycznych dotyczących właściwości związanych z~topologią atomów przedstawioną właśnie przy użyciu grafów.
+Ta dziedzina matematyki jest równie przydatna w~biologii, gdzie wierzchołek może reprezentować regiony, w~których niektóre gatunki istnieją, a~krawędzie ścieżki migracji. Informacja ta jest ważna, gdyż patrząc na powstałe wzorce, można zbadać wpływ rozprzestrzeniających się chorób, pasożytów czy zmiany ruchów na inne zwierzęta.
+
+Dzięki możliwością jakie dają dzisiejsze komputery w~przetwarzaniu informacji, powstało wiele bibliotek obsługujących obliczenia oparte o~terorię grafów.
+Rozwiązania te pojawiają się w~niemal każdym języku programowania, od \emph{C++}, przez \emph{D}, aż do \emph{Pythona} czy \emph{Matlaba}.
+Tematyka teorii grafów, ze względu na szeroką gamę zastosowań oraz dużą przydatność --- zwłaszcza przy analizie, projektowaniu oraz udoskonalaniu sieci komputerowych --- została wybrana przez autora, jako temat przewodni ninejszej pracy naukowej.
+Mimo istnienia dużej ilości bibliotek komputerowych implementujących zagadnienia tej tematyki, niewiele z~nich cechuje się prostotą oraz przejrzystością kodu źródłowego.
+Zaś wiele z~nich zazwyczaj zużywa wiele zasobów pamięciowych, oraz działa względnie powolnie.
+Potrzeba ograniczenia zużywanych zasobów, oraz stworzenia projektu prostego i~czytelnego, była główną motywacją autora do podjęcia się stworzenia ,,\emph{Prostej biblioteki grafów w~C}''.
+
+Rodział pierwszy niniejszej pracy zawiera wiedzę teoretyczną posiadaną, lub zebraną, przez autora pracy na potrzeby realizacji wcześniej przedstawionych celów.
+W~rozdziale tym wymienia się i~opisuje pojęcia związane z~szeroko pojętą teorią grafów, kładąc szczególny nacisk na wykorzystywane później jej elementy.
+
+Drugi rodział pracy zawiera szczegółowy opis zaprojektowanej biblioteki.
+Wyjaśnia powody wyboru konkretnych technologii do realizacji obranych celów.
+W~rodziale tym przedstawiona została budowa poszczególnych modułów, sposób przechowywania informacji oraz metody usprawniające pracę przy dalszym rozwoju biblioteki.
+Zawiera on też kilka przykładów wykorzystania interfejsu użytkownika.
+
+Rodział trzeci pracy przedstawia porównanie stworzonego na cele pracy projektu, z~istniejącymi już rozwiązaniami.
+Porównania te zostały przeprowadzone pod kątem ilości zużywanej pamięci, oraz czasu jaki jest potrzebny na wykonanie podstawowych funkcji tego typu biblioteki.
+
+Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja ninejszej biblioteki.
+
 \chapter{Wybrane zagadnienia teorii grafów}
 graf, krawędź, węzeł, rodzaje grafów (nieskierwany skierowany), zastosowania grafów, modelowanie sieci 
 \section{Algorytm Dijkstry}
 pseudkod, po co, złożoność, porównanie do innych (złozoność)
-\chapter{Biblioteki w systemach Unix / Linux}
-co to, po co 
-\section{Statyczne}
-zalety / wady jak tworzyc
-\section{Współdzielone}
-zalety /wady umiejscowienie
+
+
+%\chapter{Biblioteki w systemach Unix / Linux}
+%co to, po co 
+%\section{Statyczne}
+%zalety / wady jak tworzyc
+%\section{Współdzielone}
+%zalety /wady umiejscowienie
+
+
 \chapter{Realizacja biblioteki}
 Do zrealizowania postawionych w~pracy celów zaprojektowano oraz zaimplementowano bibliotekę nazwaną Simple C~Graph Library, dalej określaną skrótem SCGL.
 Projekt ten stworzony został w~oparciu o~język C~oraz jego bibliotekę standardową (w systemach Unix/Linux: \emph{GNU libc - glibc}).
