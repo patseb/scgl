@@ -106,7 +106,7 @@ pseudkod, po co, złożoność, porównanie do innych (złozoność)
 
 
 \chapter{Realizacja biblioteki}
-Do zrealizowania postawionych w~pracy celów zaprojektowano oraz zaimplementowano bibliotekę nazwaną Simple C~Graph Library, dalej określaną skrótem SCGL.
+Do zrealizowania postawionych w~pracy celów zaprojektowano oraz zaimplementowano bibliotekę nazwaną Simple C~Graph Library, dalej określaną akronimowi SCGL.
 Projekt ten stworzony został w~oparciu o~język C~oraz jego bibliotekę standardową (w systemach Unix/Linux: \emph{GNU libc - glibc}).
 
 Wyboru tego dokonano przede wszystkim ze względu na możliwość redukcji wszelkich narzutów wynikających z~cech charakterystycznych dla języków obiektowych (dziedziczenie, polimorfizm, szablony).
@@ -124,13 +124,158 @@ powiązanie klas i opisać każdą z osobna
 \subsection{Struktura plików}
 /src /include ?
 \section{Szczegóły implementacji}
+
 \subsection{Linux Kernel List}
 
-ze kernel, schemat jak działa, ze fajne, ze zmieniłem tak i tak, ze mały narzut, czemu tak - ze dynamiczny rozmiar i ze w C nie ma wektorów i ze trzeba by tablice ciągle realloc co jest wolne
+Zjawiska modelowane przy wykorzystaniu teorii grafów, charakteryzują się zazwyczaj dużą dynamiką zmian w~czasie.
+Przykładowo, w~miarę rozwoju firmy na rynku, rozwija się jej infrastruktura wewnętrzna --- struktura sieci komputerowej jest rozbudowywana o~nowe lokacje, co za tym idzie urządzenia trasujące (przedstawiane jako węzły grafu).
+Fakt ciągłych zmian w~budowie grafów, narzuca niejako implementującej go bibliotece, wymaganie obsługi tego typu zdarzeń.
+Musi być ona w~stanie dynamicznie zmienić rozmiary struktur, tak aby w~każdej chwili dodać (lub usunąć) wybrane elementy.
+
+W~językach takich jak \emph{C++} najczęściej do tego celu wykorzystywane są tzw. wektory, czyli tablice o~dynamicznych rozmiarach.
+Korzystając z~nich nie musimy podawać, podczas tworzenia, ilości elementów jakie będą w~nich przechowywane.
+A~w~trakcie dodawania/usuwania elementów, rozmiar tablicy dostosowuje się automatycznie.
+
+Wybrany do realizacji celów pracy język C, nie posiada wbudowanej obsługi podobnych mechanizmów wbudowanych w~standardową bibliotekę.
+Istnieje co prawda możliwość rozszerzania rozmiaru tablicy (przy pomocy funkcji \code{realloc}), jednakże jest to mało wydajny mechanizm, zwłaszcza przy dużej ilości operacji dodawania/usuwania.
+Innym rozwiązaniem byłyby biblioteki zewnętrze, przeznaczone dla języka C, dodające brakującą funkcjonalność.
+Użycie ich może jednak wiązać się z~dodatkowymi dużymi narzutami na rozmiar biblioteki, zużywaną pamięć lub szybkość działania.
+Aby zniwelować wpływ (negatywny) kodu ,,trzeciego'' na SCGL, postanowiono wykorzystać mechanizm list dowiązanych do przechowywania informacji nt wszystkich krawędzi (ich atrybutów) oraz węzłów w~grafie.
+Zasada działania jak i~implementacja tego typu list jest niezwykle prosta, a~jednocześnie nie wpływa znacząco na ilośc zużywanej pamięci.
+
+Wg klasycznego podejścia do problemu, lista jest to obiekt (struktura/klasa) zawierająca dane właściwie, oraz wskaźnik na kolejny obiekt tego stamego typu.
+\begin{lstlisting}[style=code,caption=Idea listy powiązanej w~C]
+struct list {
+	struct list *prev
+	struct list *next;
+	void *data;
+};
+\end{lstlisting}
+Posiadając wskaźnik, wskazujący na pierwszy element listy (\code{head}), możemy otrzymać dostęp do kolejnych danych przechowywanych wewnątrz listy poprzez wyłuskiwanie kolejnych wskaźników (\code{next}/\code{prev}).
+
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.80\textwidth]{linkedlist.eps}
+		\caption{Kolejne elementy listy powiązanej}
+	\end{center}
+\end{figure}
+
+%TODO czym się charakteryzuje jakie czasy i O(n)
+
+W~niniejszej pracy postanowiono jednak skorzystać z~mechanizmu nazwanego \emph{Linux Kernel List}.
+Jest to implementacja listy dowiązanej, (dwukierunkowej; cyrkulacyjnej), wykorzystywana w~jądrze (ang. \emph{kernel}) systemów operacyjnych \emph{Linux}
+Jest to jeden plik nagłówkowy (\code{*.h}) języka C.
+Zawiera on definicję struktury \code{list\_head} oraz definicje i~deklaracje funkcji oraz makr preprocesora, obsługujących tą strukturę.
+Linux Kernel Lists są wyjątkowe, z~powodu trochę innego podejścia do tematu.
+Struktura \code{list\_head} zawiera jedynie informację (wskaźniki) na następny oraz poprzedni element listy.
+Brak jest tu standardowego pola \code{data}, które przechowywałoby informacje użytkownika (tak jak jest to realizowane w~standardowej implementacji listy).
+W~rozwiązaniu Linuksowym, realizacja listy daje złudzenie, że lista zawarta jest w~obiekcie który łączy (który powinien być wewnątrz niej).
+Na przykład, jeśli chce się stworzyć listę powiązaną struktur \code{my\_struct}, należy zrobić to w~następujący sposób:
+\begin{lstlisting}[style=code,caption=Przykład tworzenia listy powiązanej za pomocą Kernel Lined List]
+struct my_struct{
+	struct list_head list; /* struktura kernel list */
+	int my_data;
+	void *my_void;
+};
+\end{lstlisting}
+Gdzie struktura \code{list\_head} zbudowana jest następująco:
+\begin{lstlisting}[style=code]
+struct list_head{
+	struct list_head *prev;
+	struct list_head *next;
+};
+\end{lstlisting}
+Dołączamy strukturę listy do własnego obiektu, zamiast, obiekt do struktury listy.
+Dodając kolejne elementy listy, łączymy ze sobą tak naprawdę kolejne struktury \code{list\_head}.
+
+Najważniejsze przy obcowaniu z~listami jądra Linuksa to:
+\begin{itemize}
+	\item Lista jest wewnątrz obiektów, które chcemy razem połączyć.
+	\item Można umieścić strukturę \code{list\_head} w~każdym miejscu własnej struktury.
+	\item Zmienna typu \code{list\_head} może mieć dowolną nazwę.
+	\item Rozwiązanie to nie ogranicza nas do jednej listy, na cały kod źródłowy.
+\end{itemize}
+Ponieważ jest to mechanizm zapożyczony z jądra systemu Linux, istnieje pewność iż jest dobrze przetestowane, przenośne, szybkie oraz zajmuje niewiele pamięci.
+Warto również wspomnieć, iż ten sam plik nagłówkowy, dostarcza podstaw do implementacji tablic asocjacyjnych (ang. \emph{hash list}).
+
+Potrzebne były pewne modyfikacje, aby plik nagłówkowy \code{list.h} dostosować do zwykłego kodu, przestrzeni użytkownika (ang. \emph{userspace}):
+\begin{enumerate}
+	\item Została zmieniona definicja pliku nagłówkowego \code{list.h}
+	\item Zostały usunięte załączone pliki nagłówkowe
+	\item Zostały dodane struktury znajdujące się w~pliku \code{types.h}
+	\item Wywołanie makra \code{offsetof} z~pliku \code{stddef.h}, zostało zamienione na jego treść
+	\item Zmienne \code{LIST\_POISON1} oraz \code{LIST\_POISON2} zostały zastąpione przez wskaźnik na NULL --- sens pozostaje taki sam
+\end{enumerate}
+Dodatkowo na potrzeby biblioteki SCGL dopisana została funkcja \code{list\_count} obliczająca ilość elementów wewnątrz listy:
+\begin{lstlisting}[style=code,caption=Ciało funkcji {list\_count}]
+static inline unsigned int
+list_count(const struct list_head *head) {
+	unsigned int i = 0;
+	struct list_head *j;
+	list_for_each(j, head) {
+		++i;
+	}
+	return i;
+}
+\end{lstlisting}
+
+Jak już zostało wspomniane, łącząc kolejne elementy, łączymy ze sobą struktury \code{list\_head}.
+Wymusza to na programiście, zmianę toku myślenia.
+Chcąc przchowywać listę krawędzi wewnątrz strukry grafu, musimy w~obu tych obiektach dołączyć strukturę \code{list\_head}.
+Im więcej list krawędzi chce się stworzyć, tym więcej zmiennych typu \code{list\_head} należy wpisać w~budowę obiektu.
+I~tak biblioteka SCGL posiadając pięć list:
+\begin{enumerate}
+	\item krawędzi w grafie,
+	\item węzłów w grafie,
+	\item krawędzi wchodzących do węzła,
+	\item krawędzi wychodzących z węzła,
+	\item atrybutów krawędzi.
+\end{enumerate}
+Musi mieć wpisane w~struktury dziesięć, zmiennych typu \code{list\_head}.
+
+\begin{lstlisting}[style=code,caption=Zastosowanie Linux Kernel List na przykładzie struktur biblioteki SCGL]
+/** attribute object */
+struct scgl_attr {
+	list_head_t list;
+};
+
+/** edge object */
+struct scgl_edge {
+	list_head_t from_list;
+	list_head_t to_list;
+	list_head_t owner_list;
+	list_head_t attributes;
+};
+
+/** vertex object */
+struct scgl_vertex {
+	list_head_t in;
+	list_head_t out;
+	list_head_t owner_list;
+};
+
+/** graph object */
+struct scgl_graph {
+	list_head_t vertexes;
+	list_head_t edges;
+};
+\end{lstlisting}
+
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.80\textwidth]{listconnection.eps}
+		\caption{Diagram połączeń pomiędzy listami dowiązanymi biblioteki SCGL}
+	\end{center}
+\end{figure}
+
+Zastosowanie list powiązanych, zapożyczonych z~jądra Linuksa, pozwoliło na oszczędzenie pamięci oraz szybkości działania.
+Przyśpieszyło i ułatwiło to również sam proces tworzenia biblioteki SCGL.
+Nie warto tworzyć kolejnych rozwiązań od nowa, jeśli istniejące są dobrze zaimplementowane.
+
 \subsection{Statycznie kompilowany typ zmiennej}
 Sporym oraz ciekawym wyzwaniem projektowym okazał się niepozorny atrybut kosztu (wagi) krawędzi, a~właściwie typ zmiennej przechowującej tą wartość.
 Jak już zostało wcześniej wspomniane, element ten wykorzystywany jest przy wyborze ścieżki pomiędzy zadanymi węzłami.
-Wymaganiem postawionym przed SCGL była elastyczność typu zmiennej określającej koszt krawędzi.
+Wymaganiem postawionym przed biblioteką SCGL była elastyczność typu zmiennej określającej koszt krawędzi.
 Biblioteka powinna pozwalać użytkownikowi na wybór typu owego parametru według własnych preferencji, bez ingerencji w~sam kod projektu.
 
 Problem ten dotyka tematyki paradygmatu programowania uogólnionego (generycznego, ang, \emph{generic programming}).
@@ -140,7 +285,7 @@ Zaś w~językach takich jak C++ czy D, funkcjonlność tą można zrealizować p
 Podczas kompilacji następuje tak zwana konkretyzacja szablonu (ang. \emph{template instantiation}), podczas której kompilator na podstawie typów danych przekazanych wzorcowi generuje kod właściwy do obsługi danego typu.
 Dla każdego użycia szablonu z~innym typem, generowana jest kopia odpowiednich fragmentów kodu.
 
-Wybrany dla SCGL język C~nie posiada żadnego z~wyżej wymienionych mechanizmów.
+Wybrany dla biblioteki SCGL język C~nie posiada żadnego z~wyżej wymienionych mechanizmów.
 Aby spełnić postawione wymagania rozważano kilka możliwości projektowych, jedną z~nich było zastosowanie unii z~kilkoma podstawowymi typami zmiennych skalarnych, oraz dodatkowego pola określającego wybrany typ.
 Wykorzystanie unii do tego celu, miałoby ograniczyć ilość zużytej pamięci, do największej zmiennej wewnątrz unii.
 \begin{lstlisting}[style=code,caption=Koszt krawędzi jako unia]
@@ -274,7 +419,7 @@ endif
 \end{lstlisting}
 Należy pamiętać o~uciekaniu znaków przy definiowaniu wartości \code{cost\_fmt}.
 
-Dzięki zaproponowanenu rozwiązaniu SCGL zdecydowanie zyskuje na wydajności zarówno czasowej jak i~pamięciowej, nie wprowadzając przy tym zbytniej komplikacji kodu.
+Dzięki zaproponowanenu rozwiązaniu, biblioteka SCGL zdecydowanie zyskuje na wydajności zarówno czasowej jak i~pamięciowej, nie wprowadzając przy tym zbytniej komplikacji kodu.
 
 \subsection{Algortym Dijkstry}
 ze najszybciej na kopcu kolejka prior, ze kolory, jak to u mnie działa i co mozna poprawić ze hash lista
