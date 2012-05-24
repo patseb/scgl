@@ -4,7 +4,7 @@
 %
 %
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{mgr}[2009/11/02 PracaMagisterska v1.2]
+\ProvidesClass{thesis}[2009/11/02 PracaMagisterska v1.2]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 
