@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt,polish]{thesis}
+\documentclass[a4paper,12pt,polish,oneside]{thesis}
 \usepackage{listings}
 
 \lstdefinestyle{line}{
@@ -62,11 +62,11 @@ Celem pracy jest stworzenie oprogramowania komputerowego umożliwiającego tworz
 Oprogramowanie to, dalej zwane \emph{biblioteką} powinno dostarczyć interfejs programistyczny (API), pozwalający na tworzenie oraz działanie na podstawowych elementach grafów.
 Biblioteka ta powinna również implementować jeden z~wybranych algorytmów teorii grafów.
 
-Oprogramowanie to powinna poprawnie działać na systemach operacyjnych rodziny Linux, przy zachowaniu jak najmniejszych wymagań na ich zasoby pamięciowe oraz czasowe.
+Oprogramowanie to powinna poprawnie działać na systemach operacyjnych rodziny Linux, przy zachowaniu jak najmniejszych wymagań na ich zasoby pamięciowe oraz obliczeniowe.
 Powinna również dostarczać mechanizm testów jednostkowych --- bazujących na dowolnej platformie testowej --- pozwalających na dalszy rozwój oprogramowania.
 
-Spełniając powyższe wymagania, biblioteka ta powinna zostać stworzona przy użyciu języka C. Zachowując przy tym prostotę oraz przejżystość kodu źródłowego.
-Kod ten powinien być również dobrze udokumentowany, zarówno za pomocą poniższej pracy jak i~wygenrowanej automatycznie dokumentacji.
+Spełniając powyższe wymagania, biblioteka ta powinna zostać stworzona przy użyciu języka C. Zachowując przy tym prostotę oraz przejrzystość kodu źródłowego.
+Kod ten powinien być również dobrze udokumentowany, zarówno za pomocą poniższej pracy jak i~wygenerowanej automatycznie dokumentacji.
 
 \chapter*{Wstęp}
 \addcontentsline{toc}{chapter}{Wstęp}
@@ -439,9 +439,62 @@ co to DejaGNU, co to expect i tcl, jak to napisałem czyli wstawka .exp i schema
 Makefile jak zbudowany, co buduje, co kasuje, ze dokumentacje zbudujemy wchodząc do doc/latex/make 
 \subsection{Interfejs programisty - API}
 opisać jak są zbudowane funkcje ze scgl\_moduł\_funkcja, jakie są najważniejsze,ze create/destroy, ze destroy kasuje i ustawia na NULL, jak używać atrybutów przykłady foreach 
+
 \chapter{Porównanie z istniejącymi rozwiązaniami}
-TODO:opisać co to, i jaką ma filozofie do grafów - wybór padł na boost bo najpopularniejszy i igraph bo równiez jedna z większych bibliotek
+Jak wspomniano we wstępnie niniejszej pracy, teoria grafów jest jedną z najpotrzebniejszych dziedzin matematyki w~informatyce.
+Ze względu na szeroką gamę zastosowań, powstało wiele rozwiązań implementujących w~mniejszym, lub większym stopniu ową dziedzinę.
+Są to biblioteki napisane w~niemal każdym języku programowania: C, C++, D, Python, Haskell, Matlab.
+
+Jednym z~głównych celów pracy, było stworzenie oprogramowania zużywającego jak najmniej zasobów komputera, zarówno pamięciowych jak i~obliczeniowych.
+Aby potwierdzić spełnienie założeń należy porównać stworzoną bibliotekę, z~innymi rozwiązaniami.
+Do porównań wybrane zostały dwie najpopularniejsze biblioteki grafów:
+\begin{itemize}
+	\item Boost::BGL --- część ogromnej biblioteki Boost, napisanej w~języku C++
+	\item igraph --- oprogramowanie napisane w~języku C
+\end{itemize}
+
+
+\begin{description}
+\item[Boost::BGL]
+Biblioteka BGL (ang. \emph{Boost Graph Library}), została stworzona przez Jeremiego Sieka oraz grupę z~uniwersytetu Notre Dame w~USA.
+Wchodzi w~skład bibliotek Boost, zawiera szablony reprezentujące grafy oraz zbiór kilkudziesięciu algorytmów grafowych.
+Grafy są dostarczane w postaci generycznej, dzięki czemu z wierzchołkiem, krawędzią lub całym grafem można związać obiekt lub obiekty dowolnego typu.
+Szablony z biblioteki boost::graph wykorzystują kolekcje ze standardowej biblioteki szablonów (STL).
+
+Graf w~Boost::BGL możę być reprezentowany listą sąsiedztwa, a~także przez macierz sąsiedztwa albo w~specjalnej postaci skompresowanej.
+W~najprostszym przypadku, gdy krawędzie są przechowywane w wektorze, identyfikatorem wierzchołka jest liczba całkowita (indeks).
+
+\item[igraph]
+\emph{igraph} jest przestronną biblioteką grafów, wspierającą aplikacje pisane w~językach takich jak: C, R, Python, czy Ruby.
+Zawiera funkcje implementujące klasyczne problemy teorii grafów, takie jak minimalne drzewa rozpinające, czy algorytmy najkrótszych ścieżek.
+Potrafi również generować kilkanaście rodzajów grafów, a~także eksportować je do wielu formatów obsługiwanych przez oprogramowanie graficzne.
+
+Jest najpopularniejszą biblioteką grafów napisaną w~języku C.
+\end{description}
+
 \section{Testy porównawcze}
+Porównania wcześniej wymienionych bibliotek z~biblioteką SCGL dotyczyły wydajności obliczeniowej oraz pamięciowej, tych rozwiązań.
+Na potrzeby testów stworzono trzy scenariusze testowe:
+\begin{enumerate}
+	\item Stopnia zużycia pamięci operacyjnej --- dokładniej maksymalnego użycia sterty.
+	\item Szybkości tworzenia oraz usuwania obiektów.
+	\item Szybkości wykonywania algorytmu Dijkstry --- obliczania najkrótszych ścieżek.
+\end{enumerate}
+Każdy z~nich przeprowadzony został w~dwóch wariantach:
+\begin{itemize}
+	\item z wykorzystaniem krawędzi skierowanych
+	\item z wykorzystaniem krawędzi nieskierowanych
+\end{itemize}
+
+Wszystkie testy zostały przeprowadzone w~tych samych warunkach.
+Badania wykonano na jednordzeniowym procesorze Intel Celeron M420 taktowanym 1,6GHz oraz na pamięci RAM 400MHz (5 -- 5 -- 5 -- 18 @ CL -- RCD -- RP -- RAS).
+System pod którym przeprowadzono eksperymenty to GNU/Linux Arch z~jądrem w~wersji: 3.4.0-1.
+Programy zostały skompilowane przy użyciu:
+\begin{itemize}
+	\item gcc 4.7.0 z następującymi flagami: -s -Os
+	\item g++ 4.7.0 z następującymi flagami: -s -Os
+\end{itemize}
+
 jak testowałem, na jakich kodach wstawki, czasy wyniki pamięciowe wnioski ze da się szybciej albo czemu coś działa szybciej, szybkość kompilacji
 \chapter*{Podsumowanie}
 ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać haslistę  ze można dodać algorytmy, 
