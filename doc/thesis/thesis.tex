@@ -67,34 +67,34 @@ Kiedy rozwój informatyki pozwolił na reprezentowanie grafów za pomocą komput
 Grafy są jednymi z~najbardziej wszechobecnych modeli zarówno świata naturalnego jak i~stworzonego przez człowieka.
 
 Oprogramowanie oparte na analizie grafów znalazło zastosowanie w~wyznaczaniu trasy pomiędzy punktami na mapie, czy najszybszej drogi ewakuacji z~kompleksu budynków.
-Przedstawienie sieci komputerowych w~postacji grafów pozwoliło na stworzenie programów usprawniających przepływ pakietów w~Internecie.
+Przedstawienie sieci komputerowych w~postaci grafów pozwoliło na stworzenie programów usprawniających przepływ pakietów w~Internecie.
 W fizyce materii skondensowanej, trójwymiarowa struktura skomplikowanych symulacji struktur atomowych może zostać zbadana poprzez gromadzenie danych statystycznych dotyczących właściwości związanych z~topologią atomów przedstawioną właśnie przy użyciu grafów.
 Ta dziedzina matematyki jest równie przydatna w~biologii, gdzie wierzchołek może reprezentować regiony, w~których niektóre gatunki istnieją, a~krawędzie ścieżki migracji. Informacja ta jest ważna, gdyż patrząc na powstałe wzorce, można zbadać wpływ rozprzestrzeniających się chorób, pasożytów czy zmiany ruchów na inne zwierzęta.
 
-Dzięki możliwością jakie dają dzisiejsze komputery w~przetwarzaniu informacji, powstało wiele bibliotek obsługujących obliczenia oparte o~terorię grafów.
+Dzięki możliwością jakie dają dzisiejsze komputery w~przetwarzaniu informacji, powstało wiele bibliotek obsługujących obliczenia oparte o~teorię grafów.
 Rozwiązania te pojawiają się w~niemal każdym języku programowania, od \emph{C++}, przez \emph{D}, aż do \emph{Pythona} czy \emph{Matlaba}.
-Tematyka teorii grafów, ze względu na szeroką gamę zastosowań oraz dużą przydatność --- zwłaszcza przy analizie, projektowaniu oraz udoskonalaniu sieci komputerowych --- została wybrana przez autora, jako temat przewodni ninejszej pracy naukowej.
+Tematyka teorii grafów, ze względu na szeroką gamę zastosowań oraz dużą przydatność --- zwłaszcza przy analizie, projektowaniu oraz udoskonalaniu sieci komputerowych --- została wybrana przez autora, jako temat przewodni niniejszej pracy naukowej.
 Mimo istnienia dużej ilości bibliotek komputerowych implementujących zagadnienia tej tematyki, niewiele z~nich cechuje się prostotą oraz przejrzystością kodu źródłowego.
 Zaś wiele z~nich zazwyczaj zużywa wiele zasobów pamięciowych, oraz działa względnie powolnie.
 Potrzeba ograniczenia zużywanych zasobów, oraz stworzenia projektu prostego i~czytelnego, była główną motywacją autora do podjęcia się stworzenia ,,\emph{Prostej biblioteki grafów w~C}''.
 
-Rodział pierwszy niniejszej pracy zawiera wiedzę teoretyczną posiadaną, lub zebraną, przez autora pracy na potrzeby realizacji wcześniej przedstawionych celów.
+Rozdział pierwszy niniejszej pracy zawiera wiedzę teoretyczną posiadaną, lub zebraną, przez autora pracy na potrzeby realizacji wcześniej przedstawionych celów.
 W~rozdziale tym wymienia się i~opisuje pojęcia związane z~szeroko pojętą teorią grafów, kładąc szczególny nacisk na wykorzystywane później jej elementy.
 
-Drugi rodział pracy zawiera szczegółowy opis zaprojektowanej biblioteki.
+Drugi rozdział pracy zawiera szczegółowy opis zaprojektowanej biblioteki.
 Wyjaśnia powody wyboru konkretnych technologii do realizacji obranych celów.
-W~rodziale tym przedstawiona została budowa poszczególnych modułów, sposób przechowywania informacji oraz metody usprawniające pracę przy dalszym rozwoju biblioteki.
+W~rozdziale tym przedstawiona została budowa poszczególnych modułów, sposób przechowywania informacji oraz metody usprawniające pracę przy dalszym rozwoju biblioteki.
 Zawiera on też kilka przykładów wykorzystania interfejsu użytkownika.
 
-Rodział trzeci pracy przedstawia porównanie stworzonego na cele pracy projektu, z~istniejącymi już rozwiązaniami.
+Rozdział trzeci pracy przedstawia porównanie stworzonego na cele pracy projektu, z~istniejącymi już rozwiązaniami.
 Porównania te zostały przeprowadzone pod kątem ilości zużywanej pamięci, oraz czasu jaki jest potrzebny na wykonanie podstawowych funkcji tego typu biblioteki.
 
-Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja ninejszej biblioteki.
+Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja niniejszej biblioteki.
 
 \chapter{Wybrane zagadnienia teorii grafów}
-graf, krawędź, węzeł, rodzaje grafów (nieskierwany skierowany), zastosowania grafów, modelowanie sieci 
+graf, krawędź, węzeł, rodzaje grafów (nieskierowany skierowany), zastosowania grafów, modelowanie sieci 
 \section{Algorytm Dijkstry}
-pseudkod, po co, złożoność, porównanie do innych (złozoność)
+pseudokod, po co, złożoność, porównanie do innych (złożoność)
 
 
 %\chapter{Biblioteki w systemach Unix / Linux}
@@ -112,7 +112,7 @@ Projekt ten stworzony został w~oparciu o~język C~oraz jego bibliotekę standar
 Wyboru tego dokonano przede wszystkim ze względu na możliwość redukcji wszelkich narzutów wynikających z~cech charakterystycznych dla języków obiektowych (dziedziczenie, polimorfizm, szablony).
 Dodatkowym atutem było bardzo dobre wsparcie kompilatorów oraz szeroki wybór dostępnych narzędzi dla języka C.
 
-Projekty takie jak ten przedstawiony w niniejszej pracy często charakteryzują siędynamicznym rozwojem, zwłaszcza w początkowych fazach tworzenia.
+Projekty takie jak ten przedstawiony w niniejszej pracy często charakteryzują się dynamicznym rozwojem, zwłaszcza w początkowych fazach tworzenia.
 W~celu zapewnienia poprawności zaimplementowanych już funkcjonalności, zdecydowano się skorzystać z~mechanizmu testów jednostkowych oraz platformy \emph{DejaGNU}.
 
 Dodatkowo biblioteka wykorzystuje program \emph{make} oraz pliki reguł \emph{Makefile} do automatyzacji procesu kompilacji.
@@ -140,10 +140,10 @@ Wybrany do realizacji celów pracy język C, nie posiada wbudowanej obsługi pod
 Istnieje co prawda możliwość rozszerzania rozmiaru tablicy (przy pomocy funkcji \code{realloc}), jednakże jest to mało wydajny mechanizm, zwłaszcza przy dużej ilości operacji dodawania/usuwania.
 Innym rozwiązaniem byłyby biblioteki zewnętrze, przeznaczone dla języka C, dodające brakującą funkcjonalność.
 Użycie ich może jednak wiązać się z~dodatkowymi dużymi narzutami na rozmiar biblioteki, zużywaną pamięć lub szybkość działania.
-Aby zniwelować wpływ (negatywny) kodu ,,trzeciego'' na SCGL, postanowiono wykorzystać mechanizm list dowiązanych do przechowywania informacji nt wszystkich krawędzi (ich atrybutów) oraz węzłów w~grafie.
-Zasada działania jak i~implementacja tego typu list jest niezwykle prosta, a~jednocześnie nie wpływa znacząco na ilośc zużywanej pamięci.
+Aby zniwelować wpływ (negatywny) kodu ,,trzeciego'' na SCGL, postanowiono wykorzystać mechanizm list dowiązanych do przechowywania informacji na temat wszystkich krawędzi (ich atrybutów) oraz węzłów w~grafie.
+Zasada działania jak i~implementacja tego typu list jest niezwykle prosta, a~jednocześnie nie wpływa znacząco na ilość zużywanej pamięci.
 
-Wg klasycznego podejścia do problemu, lista jest to obiekt (struktura/klasa) zawierająca dane właściwie, oraz wskaźnik na kolejny obiekt tego stamego typu.
+Wg klasycznego podejścia do problemu, lista jest to obiekt (struktura/klasa) zawierająca dane właściwie, oraz wskaźnik na kolejny obiekt tego samego typu.
 \begin{lstlisting}[style=code,caption=Idea listy powiązanej w~C]
 struct list {
 	struct list *prev
@@ -221,7 +221,7 @@ list_count(const struct list_head *head) {
 
 Jak już zostało wspomniane, łącząc kolejne elementy, łączymy ze sobą struktury \code{list\_head}.
 Wymusza to na programiście, zmianę toku myślenia.
-Chcąc przchowywać listę krawędzi wewnątrz strukry grafu, musimy w~obu tych obiektach dołączyć strukturę \code{list\_head}.
+Chcąc przechowywać listę krawędzi wewnątrz struktury grafu, musimy w~obu tych obiektach dołączyć strukturę \code{list\_head}.
 Im więcej list krawędzi chce się stworzyć, tym więcej zmiennych typu \code{list\_head} należy wpisać w~budowę obiektu.
 I~tak biblioteka SCGL posiadając pięć list:
 \begin{enumerate}
@@ -281,7 +281,7 @@ Biblioteka powinna pozwalać użytkownikowi na wybór typu owego parametru wedł
 Problem ten dotyka tematyki paradygmatu programowania uogólnionego (generycznego, ang, \emph{generic programming}).
 Pozwala on na pisanie kodu programu bez wcześniejszej znajomości typów danych, na których kod ten będzie pracował.
 W~językach Java, C\#, Haskell służą do tego typy generyczne (typ ten pojawia się również w C++ dzięki zastosowaniu biblioteki \emph{boost::any}).
-Zaś w~językach takich jak C++ czy D, funkcjonlność tą można zrealizować poprzez zastosowanie mechanizmu szablonów (ang. \emph{template}).
+Zaś w~językach takich jak C++ czy D, funkcjonalność tą można zrealizować poprzez zastosowanie mechanizmu szablonów (ang. \emph{template}).
 Podczas kompilacji następuje tak zwana konkretyzacja szablonu (ang. \emph{template instantiation}), podczas której kompilator na podstawie typów danych przekazanych wzorcowi generuje kod właściwy do obsługi danego typu.
 Dla każdego użycia szablonu z~innym typem, generowana jest kopia odpowiednich fragmentów kodu.
 
@@ -309,9 +309,9 @@ void scgl_dijkstra_int(/*...*/)
 void scgl_dijkstra_float(/*...*/)
 void scgl_dijkstra_double(/*...*/)
 \end{lstlisting}
-Zmniejszyłoby to narzut wynikący z~każdorazowego sprawdzania typu zmiennej kosztu (sprawdzanie odbywałoby się przez warper \code{scgl\_dijkstra()}, który wywoływałby odpowiednią funkcję).
-Niestety rozwiązanie to jednoczesnie zwiększyłoby znacznie ilość rozmiar biblioteki, dodatkowo narażając kod na błędy rodzaju copy-paste (wynikające z powielania ciała funkcji poprzez kopiowanie i~wklejanie).
-Dodatkową wadą tego rozwiązania, jest fakt, iż unia zajmuje tyle miejsca co jej największa składowa. Gdyby w~jej wnętrzu znalazła się zmienna typu \code{long double} to mimo iż programista wykorzystywał by \code{cost} jako zmieną short, to pole zajmowałoby tyle bajtów ile \code{long double} na danej architekturze.
+Zmniejszyłoby to narzut wynikający z~każdorazowego sprawdzania typu zmiennej kosztu (sprawdzanie odbywałoby się przez warper \code{scgl\_dijkstra()}, który wywoływałby odpowiednią funkcję).
+Niestety rozwiązanie to jednocześnie zwiększyłoby znacznie ilość rozmiar biblioteki, dodatkowo narażając kod na błędy rodzaju copy-paste (wynikające z powielania ciała funkcji poprzez kopiowanie i~wklejanie).
+Dodatkową wadą tego rozwiązania, jest fakt, iż unia zajmuje tyle miejsca co jej największa składowa. Gdyby w~jej wnętrzu znalazła się zmienna typu \code{long double} to mimo iż programista wykorzystywał by \code{cost} jako zmienną short, to pole zajmowałoby tyle bajtów ile \code{long double} na danej architekturze.
 
 Z~powodu wyżej wymienionych cech, zdecydowano się zastosować zupełnie inne rozwiązanie.
 Postanowiono stworzyć wewnątrz pliku nagłówkowego \emph{scgl\_edge.h} alternatywną nazwę (\code{typedef}), a~następnie zdefiniować wewnątrz struktury krawędzi pole będące realizacją jej kosztu w~następujący sposób:
@@ -330,16 +330,16 @@ gcc -Dname=definition
 gcc -Dcost_type=double
 gcc -Dcost_type=int
 \end{lstlisting}
-Kompilując kod z~tym parameterem słowo \code{cost\_type} jest podmienane na wybrany przez użytkownika typ, co za tym idzie zmienna \code{cost} przybiera wybrany typ.
+Kompilując kod z~tym parametrem słowo \code{cost\_type} jest podmieniane na wybrany przez użytkownika typ, co za tym idzie zmienna \code{cost} przybiera wybrany typ.
 Statyczny typ zmiennej, dobierany podczas procesu kompilacji nie powoduje dodatkowego narzutu przed jej użyciem (jak to miało miejsce w~przypadku unii), czy na rozmiar biblioteki (szablony języka C++).
-Wadą jest tu jednak potrzeba rekompilacji całej biblioteki (wszystkich modułów, które korzystają ze zmiennej), za każdym razem gdy użytkownik zeche zmienić jej typ.
+Wadą jest tu jednak potrzeba rekompilacji całej biblioteki (wszystkich modułów, które korzystają ze zmiennej), za każdym razem gdy użytkownik zechce zmienić jej typ.
 Jest to jednak niedogodność, którą można zaakceptować, zważywszy na możliwości, którą oferuje owe rozwiązanie.
 
 Dodatkowym elementem wynikającym z~wybranego rozwiązania, jest potrzeba dbania o~zależności.
 Wybór typu zmiennej powinien dostarczać dodatkowych informacji takich jak minimalna/maksymalna wartość zmiennej, oraz format zmiennej rozumiany przez funkcję \code{printf}.
-Aby ułatwić proces budowania biblioteki, oraz zmniejszyć ewentualną możliwość popełnienia błędu przez użytkownika, postanowiono, że doborem wcześniej wymienonych wartości zajmie się plik \emph{Makefile}.
+Aby ułatwić proces budowania biblioteki, oraz zmniejszyć ewentualną możliwość popełnienia błędu przez użytkownika, postanowiono, że doborem wcześniej wymienionych wartości zajmie się plik \emph{Makefile}.
 Wewnątrz tego pliku zdefiniowane są reguły budowania całej biblioteki (oraz dodatkowych elementów).
-Makefile definiuje zmienną \code{COST\_TYPE}, która może przyjać wartości odpowiadające określonemu typowi zmiennej \code{cost}.
+Makefile definiuje zmienną \code{COST\_TYPE}, która może przyjąć wartości odpowiadające określonemu typowi zmiennej \code{cost}.
 Na podstawie wyboru użytkownika (zmiennej \code{COST\_TYPE}), Makefile dobierze odpowiednie opcję tak by biblioteka została skompilowana z~obsługą kosztu krawędzi o~wybranym typie.
 W~tym celu wewnątrz pliku Makefile stworzono blok decydujący o~następującej strukturze:
 
@@ -379,7 +379,7 @@ ifneq (,$(findstring ld,$(COST_TYPE)))
 endif
 \end{lstlisting}
 
-Przedstawiony powyżej wycinek pliku Makefile porównuje zawartość zmiennej \code{COST\_TYPE} z~ustalonymi wcześniej wartościami. Na tej podstawie dobiera odpowienie zależności, przedstawione w~tabeli \ref{tab:dep}.
+Przedstawiony powyżej wycinek pliku Makefile porównuje zawartość zmiennej \code{COST\_TYPE} z~ustalonymi wcześniej wartościami. Na tej podstawie dobiera odpowiednie zależności, przedstawione w~tabeli \ref{tab:dep}.
 
 Funkcja \code{findstring} wyszukuje wystąpienia pierwszego argumentu wewnątrz drugiego argumentu.
 Jeśli wyszukiwanie zakończyło się sukcesem, funkcja zwraca znaleziony ciąg znaków, w~przeciwnym wypadku wynik funkcji jest równy pustemu ciągowi (dlatego sprawdzany jest warunek \code{not equal} z~pustym pierwszym argumentem).
@@ -406,7 +406,7 @@ Jeśli wyszukiwanie zakończyło się sukcesem, funkcja zwraca znaleziony ciąg 
 \end{table}
 
 Posługiwanie się zmienną \code{cost} odbywa się dokładnie tak jak innymi zmiennymi typu skalarnego w~języku C.
-Zalecane, aczkowiek nie wymagane, jest korzystanie z~definicji \code{cost\_max}, \code{cost\_min} oraz \code{cost\_fmt}.
+Zalecane, aczkolwiek nie wymagane, jest korzystanie z~definicji \code{cost\_max}, \code{cost\_min} oraz \code{cost\_fmt}.
 Wartości \code{cost\_max} oraz \code{cost\_min} zdefiniowane są w~plikach nagłówkowych \emph{limits.h} oraz \emph{float.h}. Ich załączenie wymagane jest w~każdym pliku \code{*.c} odwołującym się do zmiennej o~typie \code{cost\_type}.
 
 Użytkownik chcący dodać własny typ może dokonać edycji pliku Makefile.
@@ -419,24 +419,24 @@ endif
 \end{lstlisting}
 Należy pamiętać o~uciekaniu znaków przy definiowaniu wartości \code{cost\_fmt}.
 
-Dzięki zaproponowanenu rozwiązaniu, biblioteka SCGL zdecydowanie zyskuje na wydajności zarówno czasowej jak i~pamięciowej, nie wprowadzając przy tym zbytniej komplikacji kodu.
+Dzięki zaproponowanemu rozwiązaniu, biblioteka SCGL zdecydowanie zyskuje na wydajności zarówno czasowej jak i~pamięciowej, nie wprowadzając przy tym zbytniej komplikacji kodu.
 
-\subsection{Algortym Dijkstry}
-ze najszybciej na kopcu kolejka prior, ze kolory, jak to u mnie działa i co mozna poprawić ze hash lista
+\subsection{Algorytm Dijkstry}
+ze najszybciej na kopcu kolejka prior, ze kolory, jak to u mnie działa i co można poprawić ze hash lista
 \subsection{Testy jednostkowe - DejaGNU}
-co to dejagnu, co to expect i tcl, jak to napisałem czyli wstawka .exp i schemat tests.c (ze switch), co testujemy i po co są testy
+co to DejaGNU, co to expect i tcl, jak to napisałem czyli wstawka .exp i schemat tests.c (ze switch), co testujemy i po co są testy
 \section{Instrukcja użytkownika}
 \subsection{Kompilacja}
-makefile jak zbudowany, co buduje, co kasuje, ze dokumentacje zbudujemy wchodząc do doc/latex/make 
+Makefile jak zbudowany, co buduje, co kasuje, ze dokumentacje zbudujemy wchodząc do doc/latex/make 
 \subsection{Interfejs programisty - API}
-opisać jak są zbudowane funcje ze scgl\_moduł\_funckja, jakie są najważniejsze,ze create/destroy, ze destroy kasuje i ustawia na NULL, jak uzywac atrybutów przykłady foreach 
-\chapter{Porównianie z instniejącymi rozwiązaniami}
+opisać jak są zbudowane funkcje ze scgl\_moduł\_funkcja, jakie są najważniejsze,ze create/destroy, ze destroy kasuje i ustawia na NULL, jak używać atrybutów przykłady foreach 
+\chapter{Porównanie z istniejącymi rozwiązaniami}
 TODO:opisać co to, i jaką ma filozofie do grafów - wybór padł na boost bo najpopularniejszy i igraph bo równiez jedna z większych bibliotek
 \section{Testy porównawcze}
-jak testowałem, na jakich kodach wstawki, czasy wyniki pamieciowe wnioski ze da sie szybciej albo czemu cos działa szybciej, szybkosc kompilacji
+jak testowałem, na jakich kodach wstawki, czasy wyniki pamięciowe wnioski ze da się szybciej albo czemu coś działa szybciej, szybkość kompilacji
 \chapter*{Podsumowanie}
-ze mozna zmniejszyc narzut, ze mozna usprawnić kopiec, ze mozna dodać haslistę  ze mozna dodac algorytmy, 
-   ze działą ze dynamiczne ze atrubyty (w igraph to dopiero experymentalna opcja), ze szybkie i w miare małe, 
+ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać haslistę  ze można dodać algorytmy, 
+   ze działa ze dynamiczne ze atrybuty (w igraph to dopiero eksperymentalna opcja), ze szybkie i w miarę małe, 
 \addcontentsline{toc}{chapter}{Podsumowanie}
 \chapter*{Summary}
 \addcontentsline{toc}{chapter}{Summary}
