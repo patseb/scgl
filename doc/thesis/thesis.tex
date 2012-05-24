@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{thesis}
+\documentclass[a4paper,12pt,polish]{thesis}
 \usepackage{listings}
 
 \lstdefinestyle{line}{
@@ -57,7 +57,16 @@
 
 \chapter*{Cel pracy}
 \addcontentsline{toc}{chapter}{Cel pracy}
-Cel i \index{lol}zakres pracy\cite{bib:test}
+
+Celem pracy jest stworzenie oprogramowania komputerowego umożliwiającego tworzenie aplikacji, wykorzystujących w~swym działaniu elementy matematycznej teorii grafów.
+Oprogramowanie to, dalej zwane \emph{biblioteką} powinno dostarczyć interfejs programistyczny (API), pozwalający na tworzenie oraz działanie na podstawowych elementach grafów.
+Biblioteka ta powinna również implementować jeden z~wybranych algorytmów teorii grafów.
+
+Oprogramowanie to powinna poprawnie działać na systemach operacyjnych rodziny Linux, przy zachowaniu jak najmniejszych wymagań na ich zasoby pamięciowe oraz czasowe.
+Powinna również dostarczać mechanizm testów jednostkowych --- bazujących na dowolnej platformie testowej --- pozwalających na dalszy rozwój oprogramowania.
+
+Spełniając powyższe wymagania, biblioteka ta powinna zostać stworzona przy użyciu języka C. Zachowując przy tym prostotę oraz przejżystość kodu źródłowego.
+Kod ten powinien być również dobrze udokumentowany, zarówno za pomocą poniższej pracy jak i~wygenrowanej automatycznie dokumentacji.
 
 \chapter*{Wstęp}
 \addcontentsline{toc}{chapter}{Wstęp}
@@ -447,6 +456,7 @@ ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać hasl
 \addcontentsline{toc}{chapter}{Dodatek B. Oświadczenie}
 \chapter*{Dodatek C. Opis zawartości płyty CD}
 \addcontentsline{toc}{chapter}{Dodatek C. Opis zawartości płyty CD}
+Cel i \index{lol}zakres pracy\cite{bib:test}
 
 \listoffigures
 \listoftables
