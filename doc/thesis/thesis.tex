@@ -1,5 +1,6 @@
 \documentclass[a4paper,12pt,polish,oneside]{thesis}
 \usepackage{listings}
+\usepackage{multicol}
 
 \lstdefinestyle{line}{
 	language=C,
@@ -127,6 +128,7 @@ W~celu zapewnienia poprawności zaimplementowanych już funkcjonalności, zdecyd
 Dodatkowo biblioteka wykorzystuje program \emph{make} oraz pliki reguł \emph{Makefile} do automatyzacji procesu kompilacji.
 
 Podczas projektowania każdego z~modułów biblioteki wykorzystano wiedzę zawartą w publikacjach TODO, TODO oraz stosowano się do reguły KISS (ang. \emph{Keep It Simple, Stupid}), która traktuje o tym, że im coś jest prostsze (jako koncept, oraz jako wykonanie) tym lepiej TODO (kiss).
+\label{kiss}
 \section{Budowa projektu}
 \subsection{Diagram klas}
 powiązanie klas i opisać każdą z osobna
@@ -143,9 +145,13 @@ Są to pliki tworzące dokumentację interfejsu użytkownika, przy wykorzystaniu
 
 Katalog \code{unit\_tests/scgl.test} zawiera definicje testów \emph{DejaGNU} oraz sam moduł wykorzystywany do testowania biblioteki.
 
-W~folderze \code{perf\_tests} znajdują się kody źródłowe (oraz plik Makefile) testów wydajności wykorzystanych do porównania, opisanego w~rozdziale \ref{chap:tests}.
+W~folderze \code{perf\_tests} znajdują się kody źródłowe (oraz plik Makefile) testów wydajności wykorzystanych do porównania, opisanego w~rodziale \ref{chap:tests}.
 
 \section{Szczegóły implementacji}
+ze postanowiono nie ukrywać struktur, można, ale nie trzeba
+że odbiega od UML bo C nie ma prv public
+że wykorzystuje listy (czyt. )
+że implementuje dijkstre
 
 \subsection{Linux Kernel List}
 
@@ -183,6 +189,7 @@ Posiadając wskaźnik, wskazujący na pierwszy element listy (\code{head}), moż
 \end{figure}
 
 %TODO czym się charakteryzuje jakie czasy i O(n)
+%TODO moze napisać o atrybutach krawędzi że dynamiczne, moze w Linux Kernel List? :D
 
 W~niniejszej pracy postanowiono jednak skorzystać z~mechanizmu nazwanego \emph{Linux Kernel List}.
 Jest to implementacja listy dowiązanej, (dwukierunkowej; cyrkulacyjnej), wykorzystywana w~jądrze (ang. \emph{kernel}) systemów operacyjnych \emph{Linux}
@@ -446,7 +453,107 @@ Dzięki zaproponowanemu rozwiązaniu, biblioteka SCGL zdecydowanie zyskuje na wy
 \subsection{Algorytm Dijkstry}
 ze najszybciej na kopcu kolejka prior, ze kolory, jak to u mnie działa i co można poprawić ze hash lista
 \subsection{Testy jednostkowe - DejaGNU}
-co to DejaGNU, co to expect i tcl, jak to napisałem czyli wstawka .exp i schemat tests.c (ze switch), co testujemy i po co są testy
+Testy jednostkowe są nieodłączną częścią każdego większego projektu programistycznego.
+Jest to metoda testowania tworzonego oprogramowania poprzez weryfikowanie poprawności działania, każdego z~pojedyńczych elementów (jednostek --- ang. \emph{units}) programu.
+Testowany fragment poddawany jest testowi, który porównuje otrzymany wynik z~oczekiwanym (tak pozytywnym, jak i~niepozytywnym).
+Testy jednostkowe pomagają weryfikować poprawność funkcji, mimo wprowadzanych zmian.
+Programista wprowadzając kolejne zmiany, usprawniania, funkcjonalności --- po wykonaniu testów, może mieć pewność, iż jego zmiany w~kodzie nie wprowadziły kolejnych błędów.
+Projektując bibliotekę SCGL, postanowiono wykorzystać właśnie tą metodę testowania, aby usprawnić przyszły rozwój platformy.
+
+Jako platformę owych testów, zdecydowano wykorzystać się framework DejaGNU.
+Przeznaczeniem DejaGNU, jest stworzenie warstwy abstrakcyjnej dla wszelakich testów programistycznych.
+Napisany został z~wykorzystaniem pakietu \emph{expect}, który jest częścią języka \emph{Tcl} (ang. \emph{Tool Command Language}).
+Expect, tworzy własny terminal, który symuluje działanie użytkownika obsługującego testujący program (najczęściej konsolowy).
+Pozwala on na dość elastyczną interakcję, wygodne porównywanie oraz reagowanie na wyjście docelowego programu.
+
+Konsekwentnie stosując zasadę \emph{KISS} (str. \pageref{kiss}), również testy jednostkowe dla biblioteki SCGL zostały napisane w~sposób jasny i przejrzysty.
+Platforma testowa znajduje się w~katalogu \code{scgl/unit\_test/scgl.test}, są to dwa pliki:
+\begin{itemize}
+	\item tests.c --- plik zawierający kody aplikacji wykorzystujących bibliotekę SCGL
+	\item test.exp --- plik definiujący testy, oraz wartości oczekiwane tych testów
+\end{itemize}
+Program budowany przy pomocy pliku \code{tests.c} zawiera 23 podprogramy, każdy z~nich korzysta/testuje konkretną ,,jednostkę'' biblioteki SCGL.
+Program ten oczekuje na wpisanie przez użytkownika: rodzaju podprogramu (wybór modułu), oraz jego numeru (wybór jednostki), a~następnie uruchamia przykładowy kod.
+DejaGNU, uruchamiając kolejne testy, porównuje wartości oczekiwane, z~tymi zwróconymi przez program \code{tests.out}.
+Przy pomocy wyżej opisanych plików, testowane są:
+\begin{enumerate}
+	\item Tworzenie/usuwanie węzłów
+	\item Ustawianie/pobieranie ID węzła
+	\item Tworzenie/usuwanie krawędzi
+	\item Ustawianie/pobieranie kosztu krawędzi
+	\item Dodawanie/pobieranie/usuwanie węzła do/z krawędzi
+	\item Dodawanie/pobieranie/usuwanie krawędzi do/z węzła
+	\item Zliczanie krawędzi w węźle
+	\item Wykonywanie funkcji na każdej krawędzi w węźle
+	\item Tworzenie/usuwanie atrybutu krawędzi
+	\item Ustawnianie/pobieranie klucza atrybutu
+	\item Ustawnianie/pobieranie wartości atrybutu
+	\item Dodawanie/pobieranie/usuwanie atrybutu do/z krawędzi
+	\item Zliczanie atrybutów krawędzi
+	\item Wykonywanie funkcji na każdym atrybucie
+	\item Zmiana krawędzi na (nie)skierowaną
+	\item Tworzenie/usuwanie grafu
+	\item Ustawnianie/pobieranie ID grafu
+	\item Dodawanie/pobieranie/usuwanie węzła do/z grafu
+	\item Dodawanie/pobieranie/usuwanie krawędzi do/z grafu
+	\item Zliczanie węzłów/krawędzi w grafie
+	\item Kopiowanie grafów
+	\item Wykonywanie algorytmu dijkstry na grafie skierowanym
+	\item Wykonywanie algorytmu dijkstry na grafie nieskierowanym
+\end{enumerate}
+
+\begin{lstlisting}[style=code,caption=Plik definicji testów jednostkowych platformy DejaGNU]
+global TEST_APP
+set test_data {
+	{"vertex create/destroy"        "v 1"   "^test 0$"}
+	{"vertex set/get ID"            "v 2"   "^test_get test_set$"}
+	{"edge create/destroy"          "e 1"   "^0 1 123 123 0$"}
+	{"edge get/set cost"            "e 2"   "^123 321$"}
+	{"edge add/get/del vertex"      "e 3"   "^\\d+ 0 0 \\d+ 0 \\d+ \\d+ 0$"}
+	{"vertex add/get/del edge"      "v 3"   "^\\d+ 0 0 0 \\d+ 0$"}
+	{"vertex edges count"           "v 4"   "^0 0 1 0 1 1$"}
+	{"vertex foreach edge"          "v 5"   "^1 2 $"}
+	{"attribute create/destroy"     "a 1"   "^key value 0$"}
+	{"attribute get/set key"        "a 2"   "^key key2.$"}
+	{"attribute get/set value"      "a 3"   "^val1 val2.$"}
+	{"edge add/get/del attributes"  "e 4"   "^key1 val1 val1 0$"}
+	{"edge attributes count         "e 5"   "^1 0$"}
+	{"edge foreach attribute"       "e 6"   "^key val.$"}
+	{"edge set/get (un)directed"    "e 7"   "^0 123 1 1 \\d+ 123 1$"}
+	{"graph create/destroy"         "g 1"   "^G1 0$"}
+	{"graph get/set ID"             "g 2"   "^G1 G2.$"}
+	{"graph add/get/del vertex"     "g 3"   "^2 V2 V1 1 0 V2.$"}
+	{"graph add/get/del edge"       "g 4"   "^2 123 321 1 321 0$"}
+	{"graph vertexes/edges count"   "g 5"   "^0 0 2 2$"}
+	{"graph copy"                   "g 6"   "^0 1 1 0 1 V2 V2 0 1$"}
+	{"dijkstra directed graph       "d 1"
+		"^0, 0, 0, 4, 5, 1, 1, 6, 7, 8, 9, 9, 3, 0, 1, 1, 32, 30, 15, 5, 13, 22, 31, 37, 47, 49,.$"}
+	{"dijkstra undirected graph"    "d 2"
+		"^0, 0, 0, 11, 3, 1, 1, 6, 7, 11, 9, 2, 9, 0, 1, 1, 19, 21, 15, 5, 13, 22, 24, 30, 8, 29,.$"}
+}
+
+foreach pattern $test_data {
+	eval "spawn $TEST_APP [lindex $pattern 1]"
+	expect {
+		-re [lindex $pattern 2] { pass [lindex $pattern 0] }
+		default { fail [lindex $pattern 0] }
+	}
+}
+\end{lstlisting}
+Plik opisujący procedurę testowania \code{test.exp}, przechowuje tabelę \code{test_data} (linie 2--28) zawierającą kolejno: nazwę testu, argumenty przekazywane programowi oraz wartości oczekiwane (zapisane przy pomocy języka \emph{regexp}).
+Część wykonawcza testu, to pętla \code{foreach} wywołująca kolejno testy z~tabeli \code{test_data} oraz porówująca wyniki programu z~wartościami oczekiwanymi.
+Testy wywoływane są w~kolejności, która zapewnia spójność logiczną całości, np.: test dodawania atrubytu do krawędzi, jest zależy od testu tworzenia krawędzi oraz od testu tworzenia atrybutu.
+Testy algorytmu dijkstry są przeprowdzane na grafach zaprezentowanych na rysunkach %TODO ref, %TODO ref.
+
+Wymogiem niezbędnym do uruchomienia testów jest kompilujący się kod biblioteki SCGL, oraz posiadanie zainstalowanego w~systemie pakietu DejaGNU.
+Testy uruchamiane są przez Makefile znajdujący się w~katalogu \code{scgl/}, można dokonać tego w~następujący sposób:
+\begin{lstlisting}[style=coden]
+make tests
+\end{lstlisting}
+Polecenie to wywoła kompilację pliku \code{scg/unit_tests/scgl.test/tests.c} oraz uruchomienie programu \code{runtest} (część pakietu DejaGNU) z~plikiem definicji testów: \code{test.exp}.
+Jak zostało wcześniej wspomniane, testy jednostkowe są bardzo ważnym elementem oprogramowania, które będzie rozwijane.
+Należy jednak pamiętać, że w~samych testach również może wkraść się błąd, należy je zatem tworzyć ze szczególną starannością.
+
 \section{Instrukcja użytkownika}
 \subsection{Kompilacja}
 \label{chap:make}
