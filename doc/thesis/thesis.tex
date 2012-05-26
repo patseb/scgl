@@ -131,7 +131,20 @@ Podczas projektowania każdego z~modułów biblioteki wykorzystano wiedzę zawar
 \subsection{Diagram klas}
 powiązanie klas i opisać każdą z osobna
 \subsection{Struktura plików}
-/src /include ?
+Całość projektu, kod źródłowy biblioteki, platformę testów jednostkowych, oraz dodatkowe elementy wykorzystane podczas pisania niniejszej pracy, przechowywane są przy wykorzystaniu repozytorium \emph{git}\footnote{Git --- rozproszony system kontroli wersji, stworzony przez Linusa Torvaldsa jako narzędzie wspomagające rozwój jądra Linux.}.
+Owe repozytorium umieszczone jest na serwerach darmowego serwisu \emph{https://github.com/}, a~jego lokalna kopia na płycie CD dołączonej do pracy (więcej na str. \pageref{chap:cd}).
+
+Zgodnie z~dobrą praktyką programistyczną, oraz w~celu uporządkowania plików źródłowych, zastosowana została standardowa hierarchia plików.
+W~katalogu głównym \emph{scgl/} (w~pliku \code{LICENSE}) znaleźć można treść licencji (dwu-klauzulowa licencja BSD) biblioteki, krótki opis projektu (\code{README}) oraz plik ułatwiający m. in. kompilację kodu \code{Makefile} (więcej na str. \pageref{chap:make}).
+Kod źródłowy poszczególnych modułów SCGL znajduje się w~podkatalogu \code{src}, a~pliki definicji struktur oraz funkcje użytkownika (\emph{API}), w~podkatalogu \code{include}.
+
+Dodatkowo wewnątrz katalogu \emph{scgl/} znajdziemy pliki stworzone przez generator dokumentacji ---  \emph{doxygen} (\code{doc/latex}).
+Są to pliki tworzące dokumentację interfejsu użytkownika, przy wykorzystaniu komentarzy zawartych w~kodzie źródłowym SCGL.
+
+Katalog \code{unit\_tests/scgl.test} zawiera definicje testów \emph{DejaGNU} oraz sam moduł wykorzystywany do testowania biblioteki.
+
+W~folderze \code{perf\_tests} znajdują się kody źródłowe (oraz plik Makefile) testów wydajności wykorzystanych do porównania, opisanego w~rozdziale \ref{chap:tests}.
+
 \section{Szczegóły implementacji}
 
 \subsection{Linux Kernel List}
@@ -436,11 +449,13 @@ ze najszybciej na kopcu kolejka prior, ze kolory, jak to u mnie działa i co mo�
 co to DejaGNU, co to expect i tcl, jak to napisałem czyli wstawka .exp i schemat tests.c (ze switch), co testujemy i po co są testy
 \section{Instrukcja użytkownika}
 \subsection{Kompilacja}
+\label{chap:make}
 Makefile jak zbudowany, co buduje, co kasuje, ze dokumentacje zbudujemy wchodząc do doc/latex/make 
 \subsection{Interfejs programisty - API}
 opisać jak są zbudowane funkcje ze scgl\_moduł\_funkcja, jakie są najważniejsze,ze create/destroy, ze destroy kasuje i ustawia na NULL, jak używać atrybutów przykłady foreach 
 
 \chapter{Porównanie z istniejącymi rozwiązaniami}
+\label{chap:tests}
 Jak wspomniano we wstępnie niniejszej pracy, teoria grafów jest jedną z najpotrzebniejszych dziedzin matematyki w~informatyce.
 Ze względu na szeroką gamę zastosowań, powstało wiele rozwiązań implementujących w~mniejszym, lub większym stopniu ową dziedzinę.
 Są to biblioteki napisane w~niemal każdym języku programowania: C, C++, D, Python, Haskell, Matlab.
@@ -509,6 +524,8 @@ ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać hasl
 \addcontentsline{toc}{chapter}{Dodatek B. Oświadczenie}
 \chapter*{Dodatek C. Opis zawartości płyty CD}
 \addcontentsline{toc}{chapter}{Dodatek C. Opis zawartości płyty CD}
+\label{chap:cd}
+
 Cel i \index{lol}zakres pracy\cite{bib:test}
 
 \listoffigures
