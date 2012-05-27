@@ -1,6 +1,7 @@
 \documentclass[a4paper,12pt,polish,oneside]{thesis}
 \usepackage{listings}
 \usepackage{multicol}
+\usepackage{multirow}
 
 \lstdefinestyle{line}{
 	language=C,
@@ -116,8 +117,9 @@ pseudokod, po co, złożoność, porównanie do innych (złożoność)
 
 
 \chapter{Realizacja biblioteki}
-Do zrealizowania postawionych w~pracy celów zaprojektowano oraz zaimplementowano bibliotekę nazwaną Simple C~Graph Library, dalej określaną akronimowi SCGL.
+Do zrealizowania postawionych w~pracy celów zaprojektowano oraz zaimplementowano bibliotekę nazwaną \emph{Simple C~Graph Library}, dalej określaną akronimowi \emph{SCGL}.
 Projekt ten stworzony został w~oparciu o~język C~oraz jego bibliotekę standardową (w systemach Unix/Linux: \emph{GNU libc - glibc}).
+Postanowiono również, że biblioteka będzie implementować algorytm Dijkstry --- najkrótszych ścieżek --- ze względu na jego popularność oraz istotność dla modelowania sieci komputerowych.
 
 Wyboru tego dokonano przede wszystkim ze względu na możliwość redukcji wszelkich narzutów wynikających z~cech charakterystycznych dla języków obiektowych (dziedziczenie, polimorfizm, szablony).
 Dodatkowym atutem było bardzo dobre wsparcie kompilatorów oraz szeroki wybór dostępnych narzędzi dla języka C.
@@ -154,7 +156,7 @@ ze postanowiono nie ukrywać struktur, można, ale nie trzeba
 że implementuje dijkstre
 
 \subsection{Linux Kernel List}
-
+%TODO napisać o atrybutach edge?
 Zjawiska modelowane przy wykorzystaniu teorii grafów, charakteryzują się zazwyczaj dużą dynamiką zmian w~czasie.
 Przykładowo, w~miarę rozwoju firmy na rynku, rozwija się jej infrastruktura wewnętrzna --- struktura sieci komputerowej jest rozbudowywana o~nowe lokacje, co za tym idzie urządzenia trasujące (przedstawiane jako węzły grafu).
 Fakt ciągłych zmian w~budowie grafów, narzuca niejako implementującej go bibliotece, wymaganie obsługi tego typu zdarzeń.
@@ -414,7 +416,7 @@ Funkcja \code{findstring} wyszukuje wystąpienia pierwszego argumentu wewnątrz 
 Jeśli wyszukiwanie zakończyło się sukcesem, funkcja zwraca znaleziony ciąg znaków, w~przeciwnym wypadku wynik funkcji jest równy pustemu ciągowi (dlatego sprawdzany jest warunek \code{not equal} z~pustym pierwszym argumentem).
 
 \begin{table}[htb]
-\caption{Tabela zależności poszczególnych zmiennych od wartości \code{COST\_TYPE}}
+\caption{Zależność poszczególnych zmiennych od wartości \code{COST\_TYPE}}
 \label{tab:dep}
 \begin{tabular}{ | c | c | c | c | c | }
 	\hline
@@ -454,7 +456,7 @@ Dzięki zaproponowanemu rozwiązaniu, biblioteka SCGL zdecydowanie zyskuje na wy
 ze najszybciej na kopcu kolejka prior, ze kolory, jak to u mnie działa i co można poprawić ze hash lista
 \subsection{Testy jednostkowe - DejaGNU}
 Testy jednostkowe są nieodłączną częścią każdego większego projektu programistycznego.
-Jest to metoda testowania tworzonego oprogramowania poprzez weryfikowanie poprawności działania, każdego z~pojedyńczych elementów (jednostek --- ang. \emph{units}) programu.
+Jest to metoda testowania tworzonego oprogramowania poprzez weryfikowanie poprawności działania, każdego z~pojedynczych elementów (jednostek --- ang. \emph{units}) programu.
 Testowany fragment poddawany jest testowi, który porównuje otrzymany wynik z~oczekiwanym (tak pozytywnym, jak i~niepozytywnym).
 Testy jednostkowe pomagają weryfikować poprawność funkcji, mimo wprowadzanych zmian.
 Programista wprowadzając kolejne zmiany, usprawniania, funkcjonalności --- po wykonaniu testów, może mieć pewność, iż jego zmiany w~kodzie nie wprowadziły kolejnych błędów.
@@ -486,20 +488,20 @@ Przy pomocy wyżej opisanych plików, testowane są:
 	\item Zliczanie krawędzi w węźle
 	\item Wykonywanie funkcji na każdej krawędzi w węźle
 	\item Tworzenie/usuwanie atrybutu krawędzi
-	\item Ustawnianie/pobieranie klucza atrybutu
-	\item Ustawnianie/pobieranie wartości atrybutu
+	\item Ustawianie/pobieranie klucza atrybutu
+	\item Ustawianie/pobieranie wartości atrybutu
 	\item Dodawanie/pobieranie/usuwanie atrybutu do/z krawędzi
 	\item Zliczanie atrybutów krawędzi
 	\item Wykonywanie funkcji na każdym atrybucie
 	\item Zmiana krawędzi na (nie)skierowaną
 	\item Tworzenie/usuwanie grafu
-	\item Ustawnianie/pobieranie ID grafu
+	\item Ustawianie/pobieranie ID grafu
 	\item Dodawanie/pobieranie/usuwanie węzła do/z grafu
 	\item Dodawanie/pobieranie/usuwanie krawędzi do/z grafu
 	\item Zliczanie węzłów/krawędzi w grafie
 	\item Kopiowanie grafów
-	\item Wykonywanie algorytmu dijkstry na grafie skierowanym
-	\item Wykonywanie algorytmu dijkstry na grafie nieskierowanym
+	\item Wykonywanie algorytmu Dijkstry na grafie skierowanym
+	\item Wykonywanie algorytmu Dijkstry na grafie nieskierowanym
 \end{enumerate}
 
 \begin{lstlisting}[style=code,caption=Plik definicji testów jednostkowych platformy DejaGNU]
@@ -538,12 +540,13 @@ foreach pattern $test_data {
 		-re [lindex $pattern 2] { pass [lindex $pattern 0] }
 		default { fail [lindex $pattern 0] }
 	}
-}
 \end{lstlisting}
 Plik opisujący procedurę testowania \code{test.exp}, przechowuje tabelę \code{test_data} (linie 2--28) zawierającą kolejno: nazwę testu, argumenty przekazywane programowi oraz wartości oczekiwane (zapisane przy pomocy języka \emph{regexp}).
-Część wykonawcza testu, to pętla \code{foreach} wywołująca kolejno testy z~tabeli \code{test_data} oraz porówująca wyniki programu z~wartościami oczekiwanymi.
-Testy wywoływane są w~kolejności, która zapewnia spójność logiczną całości, np.: test dodawania atrubytu do krawędzi, jest zależy od testu tworzenia krawędzi oraz od testu tworzenia atrybutu.
-Testy algorytmu dijkstry są przeprowdzane na grafach zaprezentowanych na rysunkach %TODO ref, %TODO ref.
+Część wykonawcza testu, to pętla \code{foreach} wywołująca kolejno testy z~tabeli \code{test_data} oraz porównująca wyniki programu z~wartościami oczekiwanymi.
+Testy wywoływane są w~kolejności, która zapewnia spójność logiczną całości, np.: test dodawania atrybutu do krawędzi, jest zależy od testu tworzenia krawędzi oraz od testu tworzenia atrybutu.
+Testy algorytmu Dijkstry są przeprowadzane na grafach zaprezentowanych na rysunkach %TODO ref, %TODO ref.
+%RYS 1
+%RYS 2
 
 Wymogiem niezbędnym do uruchomienia testów jest kompilujący się kod biblioteki SCGL, oraz posiadanie zainstalowanego w~systemie pakietu DejaGNU.
 Testy uruchamiane są przez Makefile znajdujący się w~katalogu \code{scgl/}, można dokonać tego w~następujący sposób:
@@ -575,7 +578,6 @@ Do porównań wybrane zostały dwie najpopularniejsze biblioteki grafów:
 	\item igraph --- oprogramowanie napisane w~języku C
 \end{itemize}
 
-
 \begin{description}
 \item[Boost::BGL]
 Biblioteka BGL (ang. \emph{Boost Graph Library}), została stworzona przez Jeremiego Sieka oraz grupę z~uniwersytetu Notre Dame w~USA.
@@ -583,7 +585,7 @@ Wchodzi w~skład bibliotek Boost, zawiera szablony reprezentujące grafy oraz zb
 Grafy są dostarczane w postaci generycznej, dzięki czemu z wierzchołkiem, krawędzią lub całym grafem można związać obiekt lub obiekty dowolnego typu.
 Szablony z biblioteki boost::graph wykorzystują kolekcje ze standardowej biblioteki szablonów (STL).
 
-Graf w~Boost::BGL możę być reprezentowany listą sąsiedztwa, a~także przez macierz sąsiedztwa albo w~specjalnej postaci skompresowanej.
+Graf w~Boost::BGL może być reprezentowany listą sąsiedztwa, a~także przez macierz sąsiedztwa albo w~specjalnej postaci skompresowanej.
 W~najprostszym przypadku, gdy krawędzie są przechowywane w wektorze, identyfikatorem wierzchołka jest liczba całkowita (indeks).
 
 \item[igraph]
@@ -598,7 +600,7 @@ Jest najpopularniejszą biblioteką grafów napisaną w~języku C.
 Porównania wcześniej wymienionych bibliotek z~biblioteką SCGL dotyczyły wydajności obliczeniowej oraz pamięciowej, tych rozwiązań.
 Na potrzeby testów stworzono trzy scenariusze testowe:
 \begin{enumerate}
-	\item Stopnia zużycia pamięci operacyjnej --- dokładniej maksymalnego użycia sterty.
+	\item Stopnia zużycia pamięci operacyjnej --- dokładniej maksymalnego użycia sterty (ang. \emph{heap}).
 	\item Szybkości tworzenia oraz usuwania obiektów.
 	\item Szybkości wykonywania algorytmu Dijkstry --- obliczania najkrótszych ścieżek.
 \end{enumerate}
@@ -607,6 +609,8 @@ Każdy z~nich przeprowadzony został w~dwóch wariantach:
 	\item z wykorzystaniem krawędzi skierowanych
 	\item z wykorzystaniem krawędzi nieskierowanych
 \end{itemize}
+Pliki źródłowe testów, znajdują się w~katalogu \code{perf\_tests}.
+Przedrostek, w~nazwie pliku, wskazuje na rodzaj testu, następna litera \code{d} na wariant ,,skierowany'' (\code{u} na ,,nieskierowany'') a~ostatni znak na wykorzystaną bibliotekę: \code{s} --- SCGL; \code{b} --- BGL; \code{i} --- igraph.
 
 Wszystkie testy zostały przeprowadzone w~tych samych warunkach.
 Badania wykonano na jednordzeniowym procesorze Intel Celeron M420 taktowanym 1,6GHz oraz na pamięci RAM 400MHz (5 -- 5 -- 5 -- 18 @ CL -- RCD -- RP -- RAS).
@@ -617,7 +621,109 @@ Programy zostały skompilowane przy użyciu:
 	\item g++ 4.7.0 z następującymi flagami: -s -Os
 \end{itemize}
 
-jak testowałem, na jakich kodach wstawki, czasy wyniki pamięciowe wnioski ze da się szybciej albo czemu coś działa szybciej, szybkość kompilacji
+Testy mające na celu porównanie użycia czasu procesora, powtarzane były w~pętli tysiąckrotnie, a~następnie uśredniane.
+Skrypt odpowiadający za powtarzanie testu przedstawiony jest na poniższym listingu:
+%SKRYPT
+Jak już zostało wspomniane powtarza on wykonanie polecenia (przyjmowanego jako argument skryptu) 1000 razy, sumując czas użycia procesora, zmierzony programem \emph{time} (wartości \emph{user time}).
+Testy porównujące maksymalne użycie sterty, wykonane zostały przy pomocy programu \emph{valgrind} 
+%TODO footnote do czego służy.
+
+Test mający na celu porównać poziom wykorzystania sterty przez wybrane biblioteki, polegał na stworzeniu jednego grafu, 1000 krawędzi oraz 1001 węzłów.
+Żaden ze stworzonych elementów nie przechowywał dodatkowych atrybutów.
+
+%\usepackage{multicol}
+%\begin{document}
+%\begin{multicols}{2}[LISTING]
+%http://tex.stackexchange.com/questions/34098/two-column-code-listings-in-appendix-in-a-one-column-report
+%\end{multicols}
+
+\begin{table}[htb]
+\caption{Wyniki pomiaru wykorzystania sterty}
+\label{tab:mem_size}
+\centering
+\begin{tabular}{ | c | r | r | }
+	\hline
+	\multirow{2}{*}{Nazwa biblioteki } & \multicolumn{2}{|c|}{Zużycie sterty w~bajtach (ilość alokacji)} \\
+	\cline{2-3}
+		& Graf skierowany & Graf nieskierowany \\
+	\hline \hline
+	SCGL    & 76~048  (2002) & 124~048 (3003) \\ \hline
+	BLG     & 44~753  (2012) &  76~745 (3012) \\ \hline
+	igraph  & 112~160 (0021) & 112~160 (0021) \\ \hline
+\end{tabular}
+\end{table}
+
+Jak można zauważyć w~powyższej tabeli, biblioteki BGL oraz SCGL wykorzystują więcej pamięci dla grafów nieskierowanych (wszystkie krawędzie są nieskierowane), niż dla grafów w pełni skierowanych.
+W~przypadku SCGL wynika to z~faktu, iż dostosowana ona jest do przetrzymywania krawędzi skierowanych.
+Obiekty nieskierowane tworzone są poprzez dołączenie do krawędzi skierowanej jej odpowiednika z~zamienionymi końcami (od/do).
+Aby ograniczyć zużycie pamięci, odpowiednik ten nie przechowuje informacji na temat atrybutów.
+Nie jest to wymagane, gdyż krawędź ta (odpowiednik), jest niejako zawieszony w~powietrzu i~nie jest dostępny z~poziomu samego grafu.
+
+Wyniki pomiarów, zamieszczone w~tabeli \ref{tab:mem_size}, ukazują także, że zużycie pamięci dla dostarczonego przez autora pracy rozwiązania, są dużo mniejsze niż biblioteki igraph --- w~przypadku grafów skierowanych.
+Niestety nie udało się zmniejszyć zapotrzebowania, poniżej poziomu biblioteki BGL, mimo że osiągnięto porównywalną liczbę alokacji.
+Program \code{valgrind} pokazał w~przypadku kodu stosującego oprogramowanie igraph, bardzo niską liczbę alokacji (21).
+Może to wynikać z~faktu zastosowania w~tym rozwiązaniu niestandardowego mechanizmu przydzielania pamięci (.
+
+Celem kolejnego z~przeprowadzonych testów, było porównanie czasu procesora, jaki zostanie zużyty do tysiąckrotnej alokacji i~uwolnienia obiektów z~poprzedniego testu (1~graf, 1000 krawędzi, 1001 węzłów).
+%\usepackage{multicol}
+%\begin{document}
+%\begin{multicols}{2}[LISTING] to jest bezsensu :/, może tylko przykład w SCGL, albo w pseudokodzie a link do CD :D 
+%http://tex.stackexchange.com/questions/34098/two-column-code-listings-in-appendix-in-a-one-column-report
+%\end{multicols}
+
+\begin{table}[htb]
+\caption{Wyniki pomiaru wykorzystania czasu procesora podczas tworzenia/niszczenia obiektów}
+\label{tab:mem_speed}
+\centering
+\begin{tabular}{ | c | c | c | }
+	\hline
+	\multirow{2}{*}{Nazwa biblioteki } & \multicolumn{2}{|c|}{Wykorzystanie czasu procesora w sek.} \\
+	\cline{2-3}
+		& Graf skierowany & Graf nieskierowany \\
+	\hline \hline
+	SCGL    & 0.384 & 0.560 \\ \hline
+	BLG     & 0.563 & 0.740 \\ \hline
+	igraph  & 0.295 & 0.295 \\ \hline
+\end{tabular}
+\end{table}
+Jak wynika z~powyższych rezultatów, niska ilość alokacji biblioteki igraph przekłada się na szybkość wykonywania tych operacji.
+Czasy osiągane przez to oprogramowanie są niemal dwukrotnie niższe, niż w~przypadku biblioteki BGL.
+Ponownie w~przypadku SCGL oraz BLG, wyniki dla grafów nieskierowanych są gorsze niż dla skierowanych.
+Biblioteka SCGL osiągnęła niższe czasy tworzenia i czyszczenia pamięci niż jej odpowiednik napisany w~C++.
+
+Ostatni test polegał na wytyczeniu najkrótszych ścieżek z~pierwszego węzła w~grafie (indeks zerowy), do wszystkich pozostałych, przy zastosowaniu algorytmu Dijkstry (opisanego w~rodziale %REF).
+Podobnie jak poprzednie testy, ten bazował na dwóch grafach: skierowanym oraz nieskierowanym, oba o~nieujemnych kosztach poszczególnych krawędzi. %TODO ref do fig
+
+%\usepackage{multicol}
+%\begin{document}
+%\begin{multicols}{2}[LISTING]
+%http://tex.stackexchange.com/questions/34098/two-column-code-listings-in-appendix-in-a-one-column-report
+%wstawić kod z komentarzem w miejscu tworzenia grafu
+%\end{multicols}
+Z~powodu niewielkich rozmiarów badanych grafów, operacja wyznaczania ścieżek została powtórzona 10000 razy.
+
+\begin{table}[htb]
+\caption{Wyniki pomiaru wykorzystania czasu procesora podczas wykonywania algorytmu Dijkstry}
+\label{tab:dijkstra}
+\centering
+\begin{tabular}{ | c | c | c | }
+	\hline
+	\multirow{2}{*}{Nazwa biblioteki } & \multicolumn{2}{|c|}{Wykorzystanie czasu procesora w~sek.} \\
+	\cline{2-3}
+		& Graf skierowany & Graf nieskierowany \\
+	\hline \hline
+	SCGL    & 0.037 & 0.057 \\ \hline
+	BLG     & 0.035 & 0.050 \\ \hline
+	igraph  & 0.477 & 0.800 \\ \hline
+\end{tabular}
+\end{table}
+Jak można zauważyć w~powyższej tabeli, wyniki biblioteki igraph znacząco odstają od rozwiązań SCGL oraz BGL.
+Powód tego faktu pozostaje nieznany, jednakże może to wynikać ze sposobu przechowywania informacji (na temat grafu) w~pamięci.
+Stworzona na potrzeby celów pracy, biblioteka SCGL, osiąga porównywalne czasy do biblioteki BGL.
+Warto zauważyć, iż SCGL korzysta z~mniej wydajnych list powiązanych, a~biblioteka BGL była rozwijana i~udoskonalana przez wiele lat.
+
+Jako ciekawostkę można dodać, że kody źródłowe oparte na bibliotece BGL, jak i~wszystkie rozwiązania oparte na języku C++, mają przeciętnie 3---4 razy dłuższe czasy kompilacji, niż ich odpowiedniki w~języku C~(zarówno dla biblioteki igraph, jak i~SCGL).
+
 \chapter*{Podsumowanie}
 ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać haslistę  ze można dodać algorytmy, 
    ze działa ze dynamiczne ze atrybuty (w igraph to dopiero eksperymentalna opcja), ze szybkie i w miarę małe, 
