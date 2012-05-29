@@ -41,8 +41,8 @@
 \renewcommand{\lstlistlistingname}{Spis listingów}
 
 \autor{Patryk Kwiatkowski}
-\tytul{Podstawowa biblioteka grafów~w~C}
-\tytulAng{Simple C~graph library}
+\tytul{Implementacja podstawowej biblioteki grafów w~języku C}
+\tytulAng{Implementation of the basic graph library in C}
 \promotor{dr inż. Ireneusz Szcześniak}
 \rok{2012}
 \kierunek{Informatyka}
@@ -59,7 +59,6 @@
 
 \chapter*{Cel pracy}
 \addcontentsline{toc}{chapter}{Cel pracy}
-
 Celem pracy jest stworzenie oprogramowania komputerowego umożliwiającego tworzenie aplikacji, wykorzystujących w~swym działaniu elementy matematycznej teorii grafów.
 Oprogramowanie to, dalej zwane \emph{biblioteką} powinno dostarczyć interfejs programistyczny (API), pozwalający na tworzenie oraz działanie na podstawowych elementach grafów.
 Biblioteka ta powinna również implementować jeden z~wybranych algorytmów teorii grafów.
@@ -72,22 +71,20 @@ Kod ten powinien być również dobrze udokumentowany, zarówno za pomocą poni�
 
 \chapter*{Wstęp}
 \addcontentsline{toc}{chapter}{Wstęp}
-
-Systemy nawigacji GPS, sieć Internet, gry komputerowe, translatory języków obcych, biologia, chemia, socjologia --- to wszystko, i~wiele innych dziedzin życia, łączy jeden wspólny element, teoria grafów.
+Systemy nawigacji GPS, sieć Internet, gry komputerowe, translatory języków obcych, biologia, chemia, socjologia --- to wszystko, i~wiele innych dziedzin życia, łączy jeden wspólny element --- teoria grafów.
 Kiedy rozwój informatyki pozwolił na reprezentowanie grafów za pomocą komputera, okazało się, że algorytmy na nich oparte znajdują wiele praktycznych zastosowań.
 Grafy są jednymi z~najbardziej wszechobecnych modeli zarówno świata naturalnego jak i~stworzonego przez człowieka.
 
 Oprogramowanie oparte na analizie grafów znalazło zastosowanie w~wyznaczaniu trasy pomiędzy punktami na mapie, czy najszybszej drogi ewakuacji z~kompleksu budynków.
 Przedstawienie sieci komputerowych w~postaci grafów pozwoliło na stworzenie programów usprawniających przepływ pakietów w~Internecie.
-W fizyce materii skondensowanej, trójwymiarowa struktura skomplikowanych symulacji struktur atomowych może zostać zbadana poprzez gromadzenie danych statystycznych dotyczących właściwości związanych z~topologią atomów przedstawioną właśnie przy użyciu grafów.
 Ta dziedzina matematyki jest równie przydatna w~biologii, gdzie wierzchołek może reprezentować regiony, w~których niektóre gatunki istnieją, a~krawędzie ścieżki migracji. Informacja ta jest ważna, gdyż patrząc na powstałe wzorce, można zbadać wpływ rozprzestrzeniających się chorób, pasożytów czy zmiany ruchów na inne zwierzęta.
 
-Dzięki możliwością jakie dają dzisiejsze komputery w~przetwarzaniu informacji, powstało wiele bibliotek obsługujących obliczenia oparte o~teorię grafów.
+Dzięki możliwościom jakie dają dzisiejsze komputery w~przetwarzaniu informacji, powstało wiele bibliotek obsługujących obliczenia oparte o~teorię grafów.
 Rozwiązania te pojawiają się w~niemal każdym języku programowania, od \emph{C++}, przez \emph{D}, aż do \emph{Pythona} czy \emph{Matlaba}.
 Tematyka teorii grafów, ze względu na szeroką gamę zastosowań oraz dużą przydatność --- zwłaszcza przy analizie, projektowaniu oraz udoskonalaniu sieci komputerowych --- została wybrana przez autora, jako temat przewodni niniejszej pracy naukowej.
 Mimo istnienia dużej ilości bibliotek komputerowych implementujących zagadnienia tej tematyki, niewiele z~nich cechuje się prostotą oraz przejrzystością kodu źródłowego.
 Zaś wiele z~nich zazwyczaj zużywa wiele zasobów pamięciowych, oraz działa względnie powolnie.
-Potrzeba ograniczenia zużywanych zasobów, oraz stworzenia projektu prostego i~czytelnego, była główną motywacją autora do podjęcia się stworzenia ,,\emph{Prostej biblioteki grafów w~C}''.
+Potrzeba ograniczenia zużywanych zasobów, oraz stworzenia projektu prostego i~czytelnego, była główną motywacją autora do podjęcia się stworzenia ,,\emph{Implementacji podstawowej biblioteki grafów w~języku C}''.
 
 Rozdział pierwszy niniejszej pracy zawiera wiedzę teoretyczną posiadaną, lub zebraną, przez autora pracy na potrzeby realizacji wcześniej przedstawionych celów.
 W~rozdziale tym wymienia się i~opisuje pojęcia związane z~szeroko pojętą teorią grafów, kładąc szczególny nacisk na wykorzystywane później jej elementy.
@@ -102,10 +99,11 @@ Porównania te zostały przeprowadzone pod kątem ilości zużywanej pamięci, o
 
 Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja niniejszej biblioteki.
 
+
 \chapter{Wybrane zagadnienia teorii grafów}
-graf, krawędź, węzeł, rodzaje grafów (nieskierowany skierowany), zastosowania grafów, modelowanie sieci 
+%graf, krawędź, węzeł, rodzaje grafów (nieskierowany skierowany), zastosowania grafów, modelowanie sieci 
 \section{Algorytm Dijkstry}
-pseudokod, po co, złożoność, porównanie do innych (złożoność)
+%pseudokod, po co, złożoność, porównanie do innych (złożoność)
 
 
 %\chapter{Biblioteki w systemach Unix / Linux}
@@ -129,11 +127,14 @@ W~celu zapewnienia poprawności zaimplementowanych już funkcjonalności, zdecyd
 
 Dodatkowo biblioteka wykorzystuje program \emph{make} oraz pliki reguł \emph{Makefile} do automatyzacji procesu kompilacji.
 
-Podczas projektowania każdego z~modułów biblioteki wykorzystano wiedzę zawartą w publikacjach TODO, TODO oraz stosowano się do reguły KISS (ang. \emph{Keep It Simple, Stupid}), która traktuje o tym, że im coś jest prostsze (jako koncept, oraz jako wykonanie) tym lepiej TODO (kiss).
+Podczas projektowania każdego z~modułów biblioteki wykorzystano wiedzę zawartą w publikacjach (TODO ref, TODO) oraz stosowano się do reguły KISS (ang. \emph{Keep It Simple, Stupid}), która traktuje o tym, że im coś jest prostsze (jako koncept, oraz jako wykonanie) tym lepiej (TODO ref).
 \label{kiss}
+
 \section{Budowa projektu}
+%ze składa się z modułów?
 \subsection{Diagram klas}
-powiązanie klas i opisać każdą z osobna
+%powiązanie klas i opisać każdą z osobna
+
 \subsection{Struktura plików}
 Całość projektu, kod źródłowy biblioteki, platformę testów jednostkowych, oraz dodatkowe elementy wykorzystane podczas pisania niniejszej pracy, przechowywane są przy wykorzystaniu repozytorium \emph{git}\footnote{Git --- rozproszony system kontroli wersji, stworzony przez Linusa Torvaldsa jako narzędzie wspomagające rozwój jądra Linux.}.
 Owe repozytorium umieszczone jest na serwerach darmowego serwisu \emph{https://github.com/}, a~jego lokalna kopia na płycie CD dołączonej do pracy (więcej na str. \pageref{chap:cd}).
@@ -149,14 +150,20 @@ Katalog \code{unit\_tests/scgl.test} zawiera definicje testów \emph{DejaGNU} or
 
 W~folderze \code{perf\_tests} znajdują się kody źródłowe (oraz plik Makefile) testów wydajności wykorzystanych do porównania, opisanego w~rodziale \ref{chap:tests}.
 
+
 \section{Szczegóły implementacji}
-ze postanowiono nie ukrywać struktur, można, ale nie trzeba
-że odbiega od UML bo C nie ma prv public
-że wykorzystuje listy (czyt. )
-że implementuje dijkstre
+Do implementacji przedstawionych wcześniej diagramów, zależności oraz własności projektowych wykorzystano język C.
+Jest to język strukturalny, nie posiadający cech obiektowości, brak jest tu m. in. dziedziczenia, polimorfizmu, szablonów.
+Wymusiło to odseparowanie projektu biblioteki od jej ściślej implementacji.
+
+SCGL nie posiada wewnątrz struktur pól prywatnych, wszystko jest dostępne dla użytkownika, jednak nie zalecane jest odwoływanie się do nich bezpośrednio.
+W~przyszłości planowane jest jednak ukrycie owych definicji struktur przed użytkownikiem, dlatego zaleca się korzystać z~nazw alternatywnych \code{typedef}.
+
+Język C nie posiada ,,klas'' przez co nie można za jego pomocą wywoływać metod na rzecz obiektów (jak to ma miejsce w~języku C++ np. \code{my_edge::getID()}).
+Stworzono zatem specjalny system nazw (przestrzeń nazw) opisany dokładniej w~rozdziale \ref{chap:api}.
 
 \subsection{Linux Kernel List}
-%TODO napisać o atrybutach edge?
+\label{chap:lists}
 Zjawiska modelowane przy wykorzystaniu teorii grafów, charakteryzują się zazwyczaj dużą dynamiką zmian w~czasie.
 Przykładowo, w~miarę rozwoju firmy na rynku, rozwija się jej infrastruktura wewnętrzna --- struktura sieci komputerowej jest rozbudowywana o~nowe lokacje, co za tym idzie urządzenia trasujące (przedstawiane jako węzły grafu).
 Fakt ciągłych zmian w~budowie grafów, narzuca niejako implementującej go bibliotece, wymaganie obsługi tego typu zdarzeń.
@@ -304,6 +311,7 @@ Przyśpieszyło i ułatwiło to również sam proces tworzenia biblioteki SCGL.
 Nie warto tworzyć kolejnych rozwiązań od nowa, jeśli istniejące są dobrze zaimplementowane.
 
 \subsection{Statycznie kompilowany typ zmiennej}
+\label{chap:costtype}
 Sporym oraz ciekawym wyzwaniem projektowym okazał się niepozorny atrybut kosztu (wagi) krawędzi, a~właściwie typ zmiennej przechowującej tą wartość.
 Jak już zostało wcześniej wspomniane, element ten wykorzystywany jest przy wyborze ścieżki pomiędzy zadanymi węzłami.
 Wymaganiem postawionym przed biblioteką SCGL była elastyczność typu zmiennej określającej koszt krawędzi.
@@ -412,9 +420,6 @@ endif
 
 Przedstawiony powyżej wycinek pliku Makefile porównuje zawartość zmiennej \code{COST\_TYPE} z~ustalonymi wcześniej wartościami. Na tej podstawie dobiera odpowiednie zależności, przedstawione w~tabeli \ref{tab:dep}.
 
-Funkcja \code{findstring} wyszukuje wystąpienia pierwszego argumentu wewnątrz drugiego argumentu.
-Jeśli wyszukiwanie zakończyło się sukcesem, funkcja zwraca znaleziony ciąg znaków, w~przeciwnym wypadku wynik funkcji jest równy pustemu ciągowi (dlatego sprawdzany jest warunek \code{not equal} z~pustym pierwszym argumentem).
-
 \begin{table}[htb]
 \caption{Zależność poszczególnych zmiennych od wartości \code{COST\_TYPE}}
 \label{tab:dep}
@@ -436,6 +441,9 @@ Jeśli wyszukiwanie zakończyło się sukcesem, funkcja zwraca znaleziony ciąg 
 \end{tabular}
 \end{table}
 
+Funkcja \code{findstring} wyszukuje wystąpienia pierwszego argumentu wewnątrz drugiego argumentu.
+Jeśli wyszukiwanie zakończyło się sukcesem, funkcja zwraca znaleziony ciąg znaków, w~przeciwnym wypadku wynik funkcji jest równy pustemu ciągowi (dlatego sprawdzany jest warunek \code{not equal} z~pustym pierwszym argumentem).
+
 Posługiwanie się zmienną \code{cost} odbywa się dokładnie tak jak innymi zmiennymi typu skalarnego w~języku C.
 Zalecane, aczkolwiek nie wymagane, jest korzystanie z~definicji \code{cost\_max}, \code{cost\_min} oraz \code{cost\_fmt}.
 Wartości \code{cost\_max} oraz \code{cost\_min} zdefiniowane są w~plikach nagłówkowych \emph{limits.h} oraz \emph{float.h}. Ich załączenie wymagane jest w~każdym pliku \code{*.c} odwołującym się do zmiennej o~typie \code{cost\_type}.
@@ -446,7 +454,6 @@ Powinien przypisać nazwę typu do deklaracji \code{cost\_type}, jej wartość m
 ifneq (,$(findstring nowy,$(COST_TYPE)))
 	override MFLAGS:=-Dcost_type=nowy -Dcost_fmt=\"%format\" -Dcost_max=99 -Dcost_min=-99
 endif
-
 \end{lstlisting}
 Należy pamiętać o~uciekaniu znaków przy definiowaniu wartości \code{cost\_fmt}.
 
@@ -455,6 +462,7 @@ Dzięki zaproponowanemu rozwiązaniu, biblioteka SCGL zdecydowanie zyskuje na wy
 \subsection{Algorytm Dijkstry}
 \label{chap:dijkstra}
 ze najszybciej na kopcu kolejka prior, ze kolory, jak to u mnie działa i co można poprawić ze hash lista
+
 \subsection{Testy jednostkowe - DejaGNU}
 Testy jednostkowe są nieodłączną częścią każdego większego projektu programistycznego.
 Jest to metoda testowania tworzonego oprogramowania poprzez weryfikowanie poprawności działania, każdego z~pojedynczych elementów (jednostek --- ang. \emph{units}) programu.
@@ -545,7 +553,7 @@ foreach pattern $test_data {
 Plik opisujący procedurę testowania \code{test.exp}, przechowuje tabelę \code{test_data} (linie 2--28) zawierającą kolejno: nazwę testu, argumenty przekazywane programowi oraz wartości oczekiwane (zapisane przy pomocy języka wyrażeń regularnych --- \emph{regexp}).
 Część wykonawcza testu, to pętla \code{foreach} (wiersze 30-35) wywołująca kolejno testy z~tabeli \code{test_data} oraz porównująca wyniki programu z~wartościami oczekiwanymi.
 Testy wywoływane są w~kolejności, która zapewnia spójność logiczną całości, np.: test dodawania atrybutu do krawędzi, jest zależy od testu tworzenia krawędzi oraz od testu tworzenia atrybutu.
-Testy algorytmu Dijkstry są przeprowadzane na grafach zaprezentowanych na rysunkach %TODO ref, %TODO ref.
+Testy algorytmu Dijkstry są przeprowadzane na grafach zaprezentowanych na rysunkach (TODO ref), (TODO ref).
 %RYS 1
 %RYS 2
 
@@ -558,12 +566,178 @@ Polecenie to wywoła kompilację pliku \code{scg/unit_tests/scgl.test/tests.c} o
 Jak zostało wcześniej wspomniane, testy jednostkowe są bardzo ważnym elementem oprogramowania, które będzie rozwijane.
 Należy jednak pamiętać, że w~samych testach również może wkraść się błąd, należy je zatem tworzyć ze szczególną starannością.
 
+
 \section{Instrukcja użytkownika}
+Niniejszy rozdział pracy ma na celu przybliżenie użytkownikowi ideologi zastosowanej dla interfejsu API oraz wyjaśnić budowę oraz sposób działania skryptów kompilujących --- Makefile.
+Bardziej szczegółowe informacje na temat, każdej z~funkcji zaimplementowanej w~bibliotece SCGL dostarcza dodatek C niniejszej pracy.
+
+\subsection{Interfejs programisty - API}
+\label{chap:api}
+\begin{description}
+	\item[API] (ang. \emph{Application Programming Interface}), interfejs programowania aplikacji. Jego zadaniem jest dostarczenie struktur danych oraz funkcji ułatwiających manipulowanie nimi.
+\end{description}
+Biblioteka SCGL, jak wiele innych projektów korzystających z~języka C, wykorzystuje system prefiksów do nazewnictwa funkcji.
+Wszystkie funkcje rozpoczynają się od przestrzeni nazw \code{scgl\_}, następnie występuje nazwa modułu np. \code{edge\_} i~właściwa nazwa funkcji np.:
+\begin{lstlisting}[style=coden,caption=Przykłady przestrzeni nazw biblioteki SCGL,label=lst:funsuffix]
+scgl_edge_add_vertex(...);
+scgl_vertex_create(...);
+scgl_graph_destroy(...);
+\end{lstlisting}
+
+Definicje obiektów, czyli struktury, również posiadają przedrostek \code{scgl\_}.
+Użytkownik powinien jednak, korzystać z~alternatywnej definicji nazwy typu (\code{typedef}), czyli typów zakończonych literą ,,\code{t}'' np. \code{scgl\_edge\_t}:
+\begin{lstlisting}[style=coden]
+scgl_edge_t moja_krawedz;
+scgl_graph_t *wskaznik_na_moj_graf;
+\end{lstlisting}
+Docelowo nazwy te powinny być wykorzystywane do ukrycia zawartości poszczególnych struktur (odpowiednik pól prywatnych klas).
+
+Większość, jak nie wszystkie, funkcje w~SCGL jako pierwszy argument przyjmują obiekt, który będzie podlegał modyfikacjom, lub który posiada w~swojej strukturze wymagane elementy.
+Argument ten jest odpowiednikiem obiektowego wskaźnika \code{this}.
+Wywołanie funkcji:
+\begin{lstlisting}[style=coden]
+scgl_vertex_get_edges_out_count(v);
+\end{lstlisting}
+W~języku C++ można by zapisać w~następujący sposób:
+\begin{lstlisting}[style=coden]
+using namespace scgl;
+/* ... */
+v::get_edges_out_count();
+\end{lstlisting}
+
+\subsubsection*{Funkcje tworzące i niszczące obiekty}
+Najważniejszymi funkcjami biblioteki SCGL, są oczywiście te pozwalające na stworzenie oraz zniszczenie obiektów grafowych (grafu, węzła, krawędzi).
+Funkcje te, we wszystkich modułach, przyjmują te same sufiksy (końcówki nazwy), odpowiednio dla tworzenia \code{\_create} i~niszczenia \code{\_destroy}.
+Przykłady tych funkcji znajdują się na listingu \ref{lst:funsuffix} w~liniach 2-3.
+
+Podczas korzystania z~tych funkcji należy pamiętać o~pewnych elementach:
+\begin{itemize}
+	\item Funkcje tworzące alokują potrzebną ilość pamięci zwracając wskaźnik na początek struktury.
+	\item Funkcje niszczące wymagają podania referencji do wskaźnika, dzięki temu po uwolnieniu pamięci jest on zerowany.
+	\item Funkcja niszcząca krawędzie (oraz graf) wymaga podania wskaźnika do funkcji, która będzie potrafiła uwolnić pamięć dla opcjonalnych atrybutów krawędzi.
+\end{itemize}
+
+\subsubsection*{Atrybuty krawędzi}
+Podstawowym atrybutem krawędzi w~bibliotece SCGL jest jej koszt (\code{cost}).
+Istnieje on zawsze, dla każdej krawędzi, inicjowany jest przez użytkownika w~trakcie tworzenia obiektu.
+
+Dodatkowo biblioteka przewiduje możliwość wykorzystywania atrybutów definiowanych przez użytkownika.
+Atrybuty te reprezentowane są przez strukturę \code{scgl\_attr}.
+Z~punktu widzenia użytkownika SCGL, ważne jest, że struktura ta symuluje działanie elementów tablicy asocjacyjnej.
+Wartość \code{value} jest powiązana z~kluczem \code{key} (dbanie o~niepowtarzalność klucza nie jest wymagana).
+Każda z~krawędzi posiada listę (więcej na str. \pageref{chap:lists}) obiektów \code{scgl\_attr}.
+Dzięki temu istnieje możliwość przechowywania dowolnej ilości atrybutów w~pojedynczej krawędzi (ograniczeniem jest jedynie pamięć RAM oraz SWAP systemu).
+
+Manipulowanie atrybutami z~poziomu krawędzi umożliwiają metody:
+\begin{enumerate}
+	\item \code{scgl_edge_add_attribute}
+	\item \code{scgl_edge_add_attribute_object}
+	\item \code{scgl_edge_del_attribute}
+	\item \code{scgl_edge_get_attribute_value}
+	\item \code{scgl_edge_get_attribute_at}
+	\item \code{scgl_edge_get_attributes_count}
+	\item \code{scgl_edge_foreach_attribute}
+\end{enumerate}
+Dokładny opis działania oraz zwracane wartości opisuje dokumentacja znajdująca się w~dodatku A.
+
+Wyjaśnienie zasad programowania przy pomocy funkcji \code{scgl\_edge\_foreach\_attribute}, zostało przedstawione na stronie \pageref{sec:foreach}.
+
+Ponieważ wartości atrybutów przetrzymywane są jako wskaźnik ogólny (\code{void*}), brak jest tu informacji na temat jej typu.
+Może być to problematyczne podczas pisania funkcji niszczącej atrybuty (uwalniającej dynamicznie przydzieloną im pamięć).
+Programista korzystając cały czas, z~takich samych typów wartości atrybutów nie ma powodów do zmartwień.
+Chcąc jednak posiadać szereg atrybutów o~różnych typach, można skorzystać z~dwóch proponowanych, przez autora pracy, rozwiązań:
+\begin{description}
+	\item[enum] --- wykorzystać typ wyliczeniowy \code{enum} do przechowywania informacji o~typie wartości.
+	Programista musiałby wówczas stworzyć własną strukturę, w~której przechowywałby docelową wartość atrybutu krawędzi oraz jej typ.
+	\item[sufiks] --- do klucza atrybutu można dołączyć ciąg znaków, który będzie definiował typ wartości atrybutu.
+	Ciąg ten może być poprzedzany znakiem ,,:'' dzięki czemu łatwiej będzie parsować wartość klucza przed użyciem wartości atrybutu.
+	Można wykorzystać do tego funkcję \code{strtok} znajdującą się w~pliku nagłówkowym \code{string.h}.
+\end{description}
+
+Istnieje możliwość rozszerzenia biblioteki SCGL o~atrybuty grafów oraz węzłów.
+Zrezygnowano jednak z~implementacji tych funkcjonalności ze względu na chęć zużycia jak najmniejszej ilości pamięci.
+Przy projektowaniu biblioteki postanowiono, że atrybuty krawędzi są najistotniejsze i~dlatego tylko dla tego modułu zostanie dopisana możliwość manipulacji nimi.
+
+\subsubsection*{Funkcje \code{foreach}}
+\label{sec:foreach}
+Każdy z~trzech modułów (graph, edge, vertex) posiada specjalną funkcję z~sufiksem \code{foreach}, jest to metoda służąca do wykonania funkcji użytkownika na kolejno wszystkich elementach (w~przypadku krawędzi będą to atrybuty, w~przypadku grafu krawędzie lub węzły).
+Może ona zostać wykorzystana do dowolnego celu, np. wypisania wszystkich atrybutów na ekran, lub przetworzenia ich wartości do kosztu/wagi krawędzi.
+
+Funkcje użytkownika zdefiniowane są w~odpowiednich plikach nagłówkowych, jednakże najczęściej przyjmują one następującą formę:
+\begin{lstlisting}[style=coden,caption=Przykładowa definicja funkcji użytkownika na potrzeby funkcji \code{foreach}]
+typedef void (*edgeforeach_function)(scgl_edge_t *edge, void **data);
+\end{lstlisting}
+Funkcje te nie zwracają żadnych zmiennych.
+Jako pierwszy argument przyjmują obiekt na którym wykonane zostaną działania, jako drugi dodatkowe dane, lub wskaźnik który przechowa referencję do rezultatów.
+
+Przykładem użycia może być funkcja zrzucająca atrybut krawędzi do strumienia:
+\begin{lstlisting}[style=code,caption=Przykładowa funkcja wykorzystywana przez metodę scgl\_edge\_dump]
+void edge_attr_dump(char *key, void *value, void **fp) {
+	if (fp != NULL && *fp != NULL)
+		fprintf((FILE*)*fp, "\t\t%s : %s \n", key, (char*)value);
+}
+\end{lstlisting}
+Funkcja ta wywoływana będzie przez metodę \code{scgl\_edge\_dump} (zrzucanie krawędzi do strumienia)
+W~tym przypadku mamy dwa argumenty określające obiekt na którym funkcja będzie operować, oraz podwójny wskaźnik na dodatkowe dane.
+Dane te będą wskaźnikiem na strumień (\code{FILE}), wiedząc to, możemy wykonać rzutowanie przedstawione w~wierszu 3.
+Przed wykorzystaniem tego wskaźnika należy oczywiście wcześniej sprawdzić czy nie jest on zerowy (wiersz 2).
+
+Funkcje typu \code{foreach}, mogą mieć wiele zastosowań, jednocześnie przyśpieszając pisanie oraz upraszczając kod użytkownika.
+Warto również wspomnieć, że funkcje te mogą zostać zastąpione przez wykorzystanie metod iteracyjnych \code{\_get\_at()}, które zwracają i-ty element listy oraz funkcji \code{\_get\_count}.
+
 \subsection{Kompilacja}
 \label{chap:make}
-Makefile jak zbudowany, co buduje, co kasuje, ze dokumentacje zbudujemy wchodząc do doc/latex/make 
-\subsection{Interfejs programisty - API}
-opisać jak są zbudowane funkcje ze scgl\_moduł\_funkcja, jakie są najważniejsze,ze create/destroy, ze destroy kasuje i ustawia na NULL, jak używać atrybutów przykłady foreach 
+Kompilacja zarówno biblioteki jak i~testów jednostkowych oraz kodów użytkownika powinna odbywać się przy wykorzystaniu dostarczonego pliku \emph{Makefile}.
+Jest to plik opisujący reguły postępowania dla programu automatyzującego proces kompilacji --- \emph{make}.
+
+Plik Makefile, dla biblioteki SCGL znajduje się w~jej głównym katalogu \code{scgl/}.
+Można wydzielić w~nim trzy sekcje logiczne:
+\begin{itemize}
+	\item część definiującą potrzebne zmienne, oraz pliki poddawane kompilacji
+	\item część decydującą o~typie kosztu krawędzi (więcej na str. \pageref{chap:costtype})
+	\item część definiującą zależności oraz przebieg procesu kompilacji
+\end{itemize}
+Dopisując nowy moduł do biblioteki SCGL powinniśmy dopisać jego pliki źródłowe (\code{*.c}) do zmiennej \code{SOURCES}.
+Makefile automatycznie wygeneruje reguły budowy plików obiektowych (\code{*.o}) bazując na nazwie pliku źródłowego.
+Pliki obiektowe linkowane (dołączane) są później do pliku biblioteki SCGL \code{libscgl.a}, który może zostać załączony do kodów źródłowych użytkownika.
+
+Chcąc skompilować bibliotekę z~użyciem domyślnego typu kosztu krawędzi (\code{unsigned int}) wystarczy wywołać:
+\begin{lstlisting}[style=coden]
+make
+\end{lstlisting}
+Chcąc wybrać inny typ, powinno się zdefiniować wartość zmiennej \code{COST\_TYPE} wg tabeli \ref{tab:dep}:
+\begin{lstlisting}[style=coden]
+make COST_TYPE=d
+\end{lstlisting}
+Powyższe wywołanie skompiluje bibliotekę z~użyciem kosztu krawędzi jako \code{double}.
+
+\begin{lstlisting}[style=coden]
+make clean
+\end{lstlisting}
+Skasuje pliki cząstkowe (pliki obiektowe), wynikowe (libscgl.a) oraz te wyprodukowane przez DejaGNU.
+Warto wykonywać to polecenie, jeśli wprowadzamy jakieś zmiany w~samej bibliotece SCGL.
+
+Aby uruchomić procedurę testów jednostkowych, użytkownik powinien wywołać program \code{make} z~celem \code{tests}:
+\begin{lstlisting}[style=coden]
+make tests
+\end{lstlisting}
+Krok ten zbuduje bibliotekę SCGL (o~ile nie została wcześniej zbudowana), zbuduje program odpowiedzialny za interfejs testowy a~następnie uruchomi platformę DejaGNU.
+
+Dodając własny cel (kod użytkownika) do pliku Makefile, użytkownik może chcieć skompilować go z~biblioteką SCGL.
+Aby zrobić to poprawnie powinien skorzystać z~poniższego przykładu:
+\begin{lstlisting}[style=coden]
+my_app:
+	@echo "Building my application"
+	@$(CC) $(CFLAGS) $(MFLAGS) $(TOPDIR)my_dir/my_app.c -o $(TOPDIR)my_dir/my_app $(TOPDIR)lib/libscgl.a
+\end{lstlisting}
+
+W~projekcie znajdują się również trzy dodatkowe pliki Makefile:
+\begin{enumerate}
+	\item \code{scgl/doc/latex/} --- plik generujący dokumentację doxygen do pliku \code{*.pdf}
+	\item \code{scgl/doc/thesis/} --- plik generujący niniejszą pracę do pliku \code{*.pdf}
+	\item \code{scgl/perf_tests/} --- plik kompilujący testy wydajności, wymaga zainstalowania w~systemie bibliotek Boost::BGL oraz igraph.
+\end{enumerate}
+
 
 \chapter{Porównanie z istniejącymi rozwiązaniami}
 \label{chap:tests}
@@ -690,7 +864,7 @@ Ponownie w~przypadku SCGL oraz BLG, wyniki dla grafów nieskierowanych są gorsz
 Biblioteka SCGL osiągnęła niższe czasy tworzenia i czyszczenia pamięci niż jej odpowiednik napisany w~C++.
 
 Ostatni test polegał na wytyczeniu najkrótszych ścieżek z~pierwszego węzła w~grafie (indeks zerowy), do wszystkich pozostałych, przy zastosowaniu algorytmu Dijkstry (więcej na str. \pageref{chap:dijkstra}).
-Podobnie jak poprzednie testy, ten bazował na dwóch grafach: skierowanym oraz nieskierowanym, oba o~nieujemnych kosztach poszczególnych krawędzi. %TODO ref do fig
+Podobnie jak poprzednie testy, ten bazował na dwóch grafach: skierowanym oraz nieskierowanym, oba o~nieujemnych kosztach poszczególnych krawędzi. (TODO ref do fig)
 Z~powodu niewielkich rozmiarów badanych grafów, operacja wyznaczania ścieżek została powtórzona 10000 razy.
 
 \begin{table}[htb]
@@ -717,9 +891,10 @@ Różnica pomiędzy czasami dla grafu skierowanego i~nieskierowanego, dla biblio
 
 Jako ciekawostkę można dodać, że kody źródłowe oparte na bibliotece BGL, jak i~wszystkie rozwiązania oparte na języku C++, mają przeciętnie 3---4 razy dłuższe czasy kompilacji, niż ich odpowiedniki w~języku C~(zarówno dla biblioteki igraph, jak i~SCGL).
 
+
 \chapter*{Podsumowanie}
-ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać haslistę  ze można dodać algorytmy, 
-   ze działa ze dynamiczne ze atrybuty (w igraph to dopiero eksperymentalna opcja), ze szybkie i w miarę małe, 
+%ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać haslistę  ze można dodać algorytmy, 
+%   ze działa ze dynamiczne ze atrybuty (w igraph to dopiero eksperymentalna opcja), ze szybkie i w miarę małe, 
 \addcontentsline{toc}{chapter}{Podsumowanie}
 \chapter*{Summary}
 \addcontentsline{toc}{chapter}{Summary}
@@ -731,12 +906,10 @@ ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać hasl
 \chapter*{Dodatek C. Opis zawartości płyty CD}
 \addcontentsline{toc}{chapter}{Dodatek C. Opis zawartości płyty CD}
 \label{chap:cd}
-
-Cel i \index{lol}zakres pracy\cite{bib:test}
+tmp tmp\cite{bib:test}
 
 \listoffigures
 \listoftables
 \lstlistoflistings
-%\printindex
 
 \end{document}
