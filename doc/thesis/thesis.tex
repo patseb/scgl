@@ -94,16 +94,115 @@ Wyjaśnia powody wyboru konkretnych technologii do realizacji obranych celów.
 W~rozdziale tym przedstawiona została budowa poszczególnych modułów, sposób przechowywania informacji oraz metody usprawniające pracę przy dalszym rozwoju biblioteki.
 Zawiera on też kilka przykładów wykorzystania interfejsu użytkownika.
 
-Rozdział trzeci pracy przedstawia porównanie stworzonego na cele pracy projektu, z~istniejącymi już rozwiązaniami.
+Ostatnia część pracy przedstawia porównanie stworzonego na cele pracy projektu, z~istniejącymi już rozwiązaniami.
 Porównania te zostały przeprowadzone pod kątem ilości zużywanej pamięci, oraz czasu jaki jest potrzebny na wykonanie podstawowych funkcji tego typu biblioteki.
 
 Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja niniejszej biblioteki.
 
 
 \chapter{Wybrane zagadnienia teorii grafów}
-%graf, krawędź, węzeł, rodzaje grafów (nieskierowany skierowany), zastosowania grafów, modelowanie sieci 
+Rodział ten, powstał w~celu zdefiniowania oraz wyjaśnienia elementarnych pojęć związanych z~teorią grafów.
+Pojęcia te będą często używane w~dalszych częściach pracy, zatem usystematyzowanie tej wiedzy jest niezwykle istotne, aby dobrze zrozumieć sens przekazwanych słów.
+
+\begin{description}
+	\item[Teoria~grafów] dział matematyki i~informatyki zajmujący się badaniem właśności grafów, matematycznych struktur wykorzystywanych do modelowania relacji pomiędzy obiektami.
+
+	\item[Graf] (ang. \emph{graph}) \emph{G}, struktura matematyczna składająca się z~niepustego zbioru skończonego \emph{V(G)}, którego elementy nazywamy wierzchołkam i~skończonego zbioru \emph{E(G)} różnych par różnych elementów zbioru \emph{V(G)}, które nazywamy krawędziami.
+
+	\item[Wierzchołek] (ang. \emph{vertex}), inaczej węzeł, element składowy grafu, reprezentuje obiekt rzeczywisty, punkt odniesienia, dzięki czemu krawędzie między węzłami mogą reprezentować relacje. Często numerowany, może jednak posiadać etykietę (nazwę).
+
+	\item[Krawędź] (ang. \emph{edge}) łączy ze sobą dwa wierzchołki grafu (w~szczególnym wypadku wierzchołek sam ze sobą). Może posiadać kierunek (krawędź skierowana), lub nie (krawędź nieskierowana). Często posiada wagę/koszt, czyli przypisaną liczbę, która oznaczać może odległość między węzłami.
+
+	\item[Droga] inaczej ścieżka to trasa wyznaczana przez krawędzie, polegająca na podróżowaniu od wierzchołka do wierzchołka po łączących je krawędziach.
+
+	\item[Sąsiad] dwa wierzchołki grafu, pomiędzy którymi istnieje krawędź.
+\end{description}
+
+Ze względu na kierunkowość krawędzi, możemy wyróżniamy trzy podstawowe rodzaje grafów:
+\begin{itemize}
+	\item Nieskierowane (grafy proste) --- wszystkie krawędzie grafu są nieskierowane.
+	\item Skierowane (digrafy) --- wszystkie krawędzie grafu są skierowane.
+	\item Mieszane --- może zawierać jednocześnie krawędzie skierowane i~nieskierowane.
+\end{itemize}
+
+Przedstawiając obrazowo powyższe definicje można posłużyć się prostym rysunkiem:
+%TODO rysunek
+\label{fig:graphtherory}
+Punkty A, B, C oraz D znajdujące się na rysunku \ref{fig:graphtheroy} nazywamy \emph{wierzchołkami}, łączące je linie \emph{krawędziami} (nieskierowanymi), zaś całość tworzy strukturę \emph{grafu} (nieskierowanego).
+Krawędzie o~wagach 1, 2 oraz 3 tworzą \emph{drogę}, z~węzła A do węzła D.
+\emph{Sąsiadem} wierzchołka B jest wierzchołek C.
+
+Wszystkie grafy mogą być reprezentowane na wiele sposobów.
+Najbardziej naturalnym i~najprostszym dla człowieka jest \emph{rysunek} grafu, jednakże jest to forma reprezentacji, której komputery nie potrafią (jeszcze) zrozumieć.
+Innymi metodami zapisu mogą być:
+\begin{itemize}
+	\item Macierz sąsiedztwa --- macierz kwadratowa o~rozmiarze \emph{n} równym ilości wierzchołków w~grafie.
+	Każdy jej element oznacza liczbę krawędzi łączącą \emph{i}-ty i~\emph{j}-ty węzeł.
+	Tak zaimplementowana komputerowa struktura danych gwarantuje, że operacje sprawdzenia, czy dodania oraz usunięcia krawędzi odbywają się w stałym czasie.
+	Do jej wad należy duża ilość potrzebnej pamięci – O($n^2$).
+
+	\item Lista sąsiedztwa --- dla każdego wierzchołka zapamiętywana jest lista sąsiadujących z~nim węzłów.
+	Metoda ta wymaga ilości pamięci proporcjonalnej do liczby krawędzi, także przejrzenie całego zbioru krawędzi jest proporcjonalne do jego rozmiaru.
+	Wadą jest tu zwiększona złożoność operacji elementarnych (np. usunięcie krawędzi).
+
+	\item Macierz incydencji --- macierz o~wymiarach odpowiadających ilości węzłów na ilość krawędzi.
+	Zawiera jedynie informacje takie, że wartość w~punkcje \{i, j\} = 1 tylko, gdy \emph{j}-ta krawędź kończy się na \emph{i}-tym wierzchołku.
+\end{itemize}
+
+Dla lepszego zrozumienia owych struktur warto przeanalizować poniższy rysunek grafu:
+%TODO rysunek prosty
+oraz odpowiadające mu metody zapisu:
+\begin{itemize}
+	\item macierz sąsiedztwa:
+	\item lista sąsiedztwa:
+	\item macierz incydencji:
+\end{itemize}
+
+Informacje przytoczone w~powyższym rodziale, są podstawowymi pojęciami teorii grafów, stanowią one jedynie ułamek tej rozległej dziedziny nauki, lecz pomogą zrozumieć tematykę poruszaną przez niniejszą pracę.
+
+%TODO napisać ze praktycznie listy sąsiedztwa implementujemy
+
 \section{Algorytm Dijkstry}
-%pseudokod, po co, złożoność, porównanie do innych (złożoność)
+Problem najkrótszej ścieżki polega na znalezieniu w~spójnym\footnote{Graf możemy nazwać spójnym wówaczas, gdy dla każdej pary wierzchołków istnieje droga pomiędzy nimi.} i~ważonym\footnote{Graf możemy nazwać ważonym wówczas, gdy każda z~jego krawędzi posiada atrybut wagi/kosztu.} grafie najkrótszego połączenia pomiędzy danymi wierzchołkami.
+Przez najkrótszą ścieżkę rozumiemy takie połączenie między wierzchołkami, które ma najmniejszy koszt przejścia przy czym koszt przejścia określony jest jako suma wag na krawędziach ścieżki.
+Problem ten możemy zobrazować jako problem znalezienia najszybciej drogi dla pakietów pomiędzy dwoma routerami w~sieci.
+Każde z~urządzeń trasujących reprezentowane jest wówczas przez węzeł grafu a waga krawędzi może oznaczać przepustowość łącza pomiędzy nimi (informacja przydatna dla protokołów trasowania stanu łącza, np. \emph{OSPF}).
+
+Algorytm opracowany przez holenderskiego informatyka Edsgera Dijkstrę, służy do rozwiązywania problemu najkrótszej ścieżki.
+Jest jednym z~najważniejszych algorytmów teorii grafów, wykorzystywanym m. in. właśnie w~protokole trasowania \emph{OSPF}.
+Warunkiem ograniczającym jego działanie jest wymóg istnienia wyłacznie nieujemnych wag krawędzi\footnote{Algorytm Forda---Bellmana pozbawiony jest tej wady, jednakże okupione jest to dużo większą złożonością czasową}.
+Mając dany graf z~wyróżnionym wierzchołkiem (źródłem) algorytm znajduje odległości od źródła do wszystkich pozostałych węzłów.
+
+\begin{lstlisting}[style=code,caption=Pseudokod algorytmu Dijkstry]
+for each vertex v in V[G]
+	d[v] := infinity
+	previous[v] := undefined
+
+d[s] := 0
+S := empty set
+Q := set of all vertices
+
+while Q is not an empty set
+do 
+	u := Extract-Min(Q)
+	S := S union {u}
+	for each edge (u,v) outgoing from u
+		if d[v] > d[u] + w(u,v) %TODO relaksacja
+		then d[v] := d[u] + w(u,v)
+		previous[v] := u
+\end{lstlisting}
+
+%może krótki przykłąd? ale lepiej złożoność 
+
+%Note: Relaxation is a general procedure to solve “contracture problems” in physics and mathematics. For instance in
+%physics we may have potential surfaces supposedly in equilibrium, satisfying a set of differential equations. We may
+%guess its equilibrium assigning discrete values of potential to a grid of points over the surface. Initially the surface will look
+%like with “contractures” not evenly smoothed. We may imagine then a convergent procedure to “relax” the surface, make
+%contractures disappear progressively. Relaxation proceeds form point to point navigating three dimensionally as follows:
+
+
+
+%TODO pseudokod, po co, złożoność, porównanie do innych (złożoność) ref do boost library :D 
 
 
 %\chapter{Biblioteki w systemach Unix / Linux}
@@ -516,31 +615,31 @@ Przy pomocy wyżej opisanych plików, testowane jest:
 \begin{lstlisting}[style=code,caption=Plik definicji testów jednostkowych platformy DejaGNU]
 global TEST_APP
 set test_data {
-	{"vertex create/destroy"        "v 1"   "^test 0$"}
-	{"vertex set/get ID"            "v 2"   "^test_get test_set$"}
-	{"edge create/destroy"          "e 1"   "^0 1 123 123 0$"}
-	{"edge get/set cost"            "e 2"   "^123 321$"}
-	{"edge add/get/del vertex"      "e 3"   "^\\d+ 0 0 \\d+ 0 \\d+ \\d+ 0$"}
-	{"vertex add/get/del edge"      "v 3"   "^\\d+ 0 0 0 \\d+ 0$"}
-	{"vertex edges count"           "v 4"   "^0 0 1 0 1 1$"}
-	{"vertex foreach edge"          "v 5"   "^1 2 $"}
-	{"attribute create/destroy"     "a 1"   "^key value 0$"}
-	{"attribute get/set key"        "a 2"   "^key key2.$"}
-	{"attribute get/set value"      "a 3"   "^val1 val2.$"}
-	{"edge add/get/del attributes"  "e 4"   "^key1 val1 val1 0$"}
-	{"edge attributes count         "e 5"   "^1 0$"}
-	{"edge foreach attribute"       "e 6"   "^key val.$"}
-	{"edge set/get (un)directed"    "e 7"   "^0 123 1 1 \\d+ 123 1$"}
-	{"graph create/destroy"         "g 1"   "^G1 0$"}
-	{"graph get/set ID"             "g 2"   "^G1 G2.$"}
-	{"graph add/get/del vertex"     "g 3"   "^2 V2 V1 1 0 V2.$"}
-	{"graph add/get/del edge"       "g 4"   "^2 123 321 1 321 0$"}
-	{"graph vertexes/edges count"   "g 5"   "^0 0 2 2$"}
-	{"graph copy"                   "g 6"   "^0 1 1 0 1 V2 V2 0 1$"}
+	{"vertex create/destroy"        "v 1"   "^test 0\$"}
+	{"vertex set/get ID"            "v 2"   "^test_get test_set\$"}
+	{"edge create/destroy"          "e 1"   "^0 1 123 123 0\$"}
+	{"edge get/set cost"            "e 2"   "^123 321\$"}
+	{"edge add/get/del vertex"      "e 3"   "^\\d+ 0 0 \\d+ 0 \\d+ \\d+ 0\$"}
+	{"vertex add/get/del edge"      "v 3"   "^\\d+ 0 0 0 \\d+ 0\$"}
+	{"vertex edges count"           "v 4"   "^0 0 1 0 1 1\$"}
+	{"vertex foreach edge"          "v 5"   "^1 2 \$"}
+	{"attribute create/destroy"     "a 1"   "^key value 0\$"}
+	{"attribute get/set key"        "a 2"   "^key key2.\$"}
+	{"attribute get/set value"      "a 3"   "^val1 val2.\$"}
+	{"edge add/get/del attributes"  "e 4"   "^key1 val1 val1 0\$"}
+	{"edge attributes count         "e 5"   "^1 0\$"}
+	{"edge foreach attribute"       "e 6"   "^key val.\$"}
+	{"edge set/get (un)directed"    "e 7"   "^0 123 1 1 \\d+ 123 1\$"}
+	{"graph create/destroy"         "g 1"   "^G1 0\$"}
+	{"graph get/set ID"             "g 2"   "^G1 G2.\$"}
+	{"graph add/get/del vertex"     "g 3"   "^2 V2 V1 1 0 V2.\$"}
+	{"graph add/get/del edge"       "g 4"   "^2 123 321 1 321 0\$"}
+	{"graph vertexes/edges count"   "g 5"   "^0 0 2 2\$"}
+	{"graph copy"                   "g 6"   "^0 1 1 0 1 V2 V2 0 1\$"}
 	{"dijkstra directed graph       "d 1"
-		"^0, 0, 0, 4, 5, 1, 1, 6, 7, 8, 9, 9, 3, 0, 1, 1, 32, 30, 15, 5, 13, 22, 31, 37, 47, 49,.$"}
+		"^0, 0, 0, 4, 5, 1, 1, 6, 7, 8, 9, 9, 3, 0, 1, 1, 32, 30, 15, 5, 13, 22, 31, 37, 47, 49,.\$"}
 	{"dijkstra undirected graph"    "d 2"
-		"^0, 0, 0, 11, 3, 1, 1, 6, 7, 11, 9, 2, 9, 0, 1, 1, 19, 21, 15, 5, 13, 22, 24, 30, 8, 29,.$"}
+		"^0, 0, 0, 11, 3, 1, 1, 6, 7, 11, 9, 2, 9, 0, 1, 1, 19, 21, 15, 5, 13, 22, 24, 30, 8, 29,.\$"}
 }
 
 foreach pattern $test_data {
@@ -550,6 +649,7 @@ foreach pattern $test_data {
 		default { fail [lindex $pattern 0] }
 	}
 \end{lstlisting}
+%TODO remove \$
 Plik opisujący procedurę testowania \code{test.exp}, przechowuje tabelę \code{test_data} (linie 2--28) zawierającą kolejno: nazwę testu, argumenty przekazywane programowi oraz wartości oczekiwane (zapisane przy pomocy języka wyrażeń regularnych --- \emph{regexp}).
 Część wykonawcza testu, to pętla \code{foreach} (wiersze 30-35) wywołująca kolejno testy z~tabeli \code{test_data} oraz porównująca wyniki programu z~wartościami oczekiwanymi.
 Testy wywoływane są w~kolejności, która zapewnia spójność logiczną całości, np.: test dodawania atrybutu do krawędzi, jest zależy od testu tworzenia krawędzi oraz od testu tworzenia atrybutu.
@@ -907,6 +1007,9 @@ Jako ciekawostkę można dodać, że kody źródłowe oparte na bibliotece BGL, 
 \addcontentsline{toc}{chapter}{Dodatek C. Opis zawartości płyty CD}
 \label{chap:cd}
 tmp tmp\cite{bib:test}
+%http://diestel-graph-theory.com/basic.html < basic theory?
+%Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein, Clifford Wprowadzenie do algorytmów, wyd. 7, WNT 2007, ISBN 83-204-3149-2. < dijkstra
+
 
 \listoffigures
 \listoftables
