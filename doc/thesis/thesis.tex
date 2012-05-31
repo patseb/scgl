@@ -99,15 +99,14 @@ Porównania te zostały przeprowadzone pod kątem ilości zużywanej pamięci, o
 
 Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja niniejszej biblioteki.
 
-
 \chapter{Wybrane zagadnienia teorii grafów}
-Rodział ten, powstał w~celu zdefiniowania oraz wyjaśnienia elementarnych pojęć związanych z~teorią grafów.
-Pojęcia te będą często używane w~dalszych częściach pracy, zatem usystematyzowanie tej wiedzy jest niezwykle istotne, aby dobrze zrozumieć sens przekazwanych słów.
+Rozdział ten, powstał w~celu zdefiniowania oraz wyjaśnienia elementarnych pojęć związanych z~teorią grafów.
+Pojęcia te będą często używane w~dalszych częściach pracy, zatem usystematyzowanie tej wiedzy jest niezwykle istotne, aby dobrze zrozumieć sens przekazywanych słów.
 
 \begin{description}
-	\item[Teoria~grafów] dział matematyki i~informatyki zajmujący się badaniem właśności grafów, matematycznych struktur wykorzystywanych do modelowania relacji pomiędzy obiektami.
+	\item[Teoria~grafów] dział matematyki i~informatyki zajmujący się badaniem własności grafów, matematycznych struktur wykorzystywanych do modelowania relacji pomiędzy obiektami.
 
-	\item[Graf] (ang. \emph{graph}) \emph{G}, struktura matematyczna składająca się z~niepustego zbioru skończonego \emph{V(G)}, którego elementy nazywamy wierzchołkam i~skończonego zbioru \emph{E(G)} różnych par różnych elementów zbioru \emph{V(G)}, które nazywamy krawędziami.
+	\item[Graf] (ang. \emph{graph}) \emph{G}, struktura matematyczna składająca się z~niepustego zbioru skończonego \emph{V(G)}, którego elementy nazywamy wierzchołkami i~skończonego zbioru \emph{E(G)} różnych par różnych elementów zbioru \emph{V(G)}, które nazywamy krawędziami.
 
 	\item[Wierzchołek] (ang. \emph{vertex}), inaczej węzeł, element składowy grafu, reprezentuje obiekt rzeczywisty, punkt odniesienia, dzięki czemu krawędzie między węzłami mogą reprezentować relacje. Często numerowany, może jednak posiadać etykietę (nazwę).
 
@@ -163,53 +162,54 @@ Informacje przytoczone w~powyższym rodziale, są podstawowymi pojęciami teorii
 %TODO napisać ze praktycznie listy sąsiedztwa implementujemy
 
 \section{Algorytm Dijkstry}
-Problem najkrótszej ścieżki polega na znalezieniu w~spójnym\footnote{Graf możemy nazwać spójnym wówaczas, gdy dla każdej pary wierzchołków istnieje droga pomiędzy nimi.} i~ważonym\footnote{Graf możemy nazwać ważonym wówczas, gdy każda z~jego krawędzi posiada atrybut wagi/kosztu.} grafie najkrótszego połączenia pomiędzy danymi wierzchołkami.
+\label{chap:dijkstra_theory}
+Problem najkrótszej ścieżki polega na znalezieniu w~spójnym\footnote{Graf możemy nazwać spójnym wówczas, gdy dla każdej pary wierzchołków istnieje droga pomiędzy nimi.} i~ważonym\footnote{Graf możemy nazwać ważonym wówczas, gdy każda z~jego krawędzi posiada atrybut wagi/kosztu.} grafie najkrótszego połączenia pomiędzy danymi wierzchołkami.
 Przez najkrótszą ścieżkę rozumiemy takie połączenie między wierzchołkami, które ma najmniejszy koszt przejścia przy czym koszt przejścia określony jest jako suma wag na krawędziach ścieżki.
 Problem ten możemy zobrazować jako problem znalezienia najszybciej drogi dla pakietów pomiędzy dwoma routerami w~sieci.
 Każde z~urządzeń trasujących reprezentowane jest wówczas przez węzeł grafu a waga krawędzi może oznaczać przepustowość łącza pomiędzy nimi (informacja przydatna dla protokołów trasowania stanu łącza, np. \emph{OSPF}).
 
 Algorytm opracowany przez holenderskiego informatyka Edsgera Dijkstrę, służy do rozwiązywania problemu najkrótszej ścieżki.
 Jest jednym z~najważniejszych algorytmów teorii grafów, wykorzystywanym m. in. właśnie w~protokole trasowania \emph{OSPF}.
-Warunkiem ograniczającym jego działanie jest wymóg istnienia wyłacznie nieujemnych wag krawędzi\footnote{Algorytm Forda---Bellmana pozbawiony jest tej wady, jednakże okupione jest to dużo większą złożonością czasową}.
-Mając dany graf z~wyróżnionym wierzchołkiem (źródłem) algorytm znajduje odległości od źródła do wszystkich pozostałych węzłów.
+Warunkiem ograniczającym jego działanie jest wymóg istnienia wyłącznie nieujemnych wag krawędzi\footnote{Algorytm Forda-Bellmana pozbawiony jest tej wady, jednakże okupione jest to dużo większą złożonością czasową}.
+Mając dany graf z~wyróżnionym wierzchołkiem (źródłem) algorytm znajduje odległości od niego do wszystkich pozostałych węzłów.
 
-\begin{lstlisting}[style=code,caption=Pseudokod algorytmu Dijkstry]
+\begin{lstlisting}[style=code,caption=Pseudokod algorytmu Dijkstry,label=pseudo]
 for each vertex v in V[G]
 	d[v] := infinity
-	previous[v] := undefined
-
+	p[v] := undefined
+end for
 d[s] := 0
-S := empty set
-Q := set of all vertices
+Q := all vertices array
 
-while Q is not an empty set
-do 
+while (Q is not an empty)
 	u := Extract-Min(Q)
-	S := S union {u}
 	for each edge (u,v) outgoing from u
-		if d[v] > d[u] + w(u,v) %TODO relaksacja
-		then d[v] := d[u] + w(u,v)
-		previous[v] := u
+		if (d[v] > d[u] + w(u,v))
+			d[v] := d[u] + w(u,v)
+			previous[v] := u
+		end if
+end while
 \end{lstlisting}
+W~algorytmie tym pamiętany jest zbiór \code{Q} wierzchołków, dla których nie obliczono jeszcze najkrótszych ścieżek, wektor \code{d} odległości od wierzchołka \code{s} (źródłowego) do \emph{i}-tego, oraz wektor poprzedników \code{p}, dzięki któremu można odtworzyć odnalezioną ścieżkę.
+Początkowo (wiersze: 1 --- 6) zbiór \code{Q} zawiera wszystkie wierzchołki, wektor \code{d} jest wypełniany wartościami nieskończonymi a \code{p} niezdefiniowanymi (np. \code{NULL})
+Odległość dla wierzchołka źródłowego wynosi zawsze zero.
+Algorytm analizuje zawsze węzły o~najmniejszej wartości \code{d[v]}, czyli te najbliższe wierzchołkowi źródłowemu.
+Zapewnia to operacja \code{Extract-Min(Q)} w~wierszu 9 listingu \ref{pseudo}, która dodatkowo usuwa pobrany element ze zbioru.
 
-%może krótki przykłąd? ale lepiej złożoność 
+Głównym elementem algorytmu jest tzw. proces ,,relaksacji'' dla każdego wierzchołka sąsiadującego z~badanym.
+Jest to sprawdzenie, czy odległość pomiędzy sąsiadem (\code{v}) badanego węzła \code{u}~a~źródłowym jest większa od sumy odległości między źródłowym a~badanym i~odległości pomiędzy badanym a~jego sąsiadem.
+Jeśli tak jest, to znaczy, że algorytm znalazł ,,krótszą'' ścieżkę i~należy zaktualizować tablice dystansu \code{d} oraz poprzedników \code{p}.
 
-%Note: Relaxation is a general procedure to solve “contracture problems” in physics and mathematics. For instance in
-%physics we may have potential surfaces supposedly in equilibrium, satisfying a set of differential equations. We may
-%guess its equilibrium assigning discrete values of potential to a grid of points over the surface. Initially the surface will look
-%like with “contractures” not evenly smoothed. We may imagine then a convergent procedure to “relax” the surface, make
-%contractures disappear progressively. Relaxation proceeds form point to point navigating three dimensionally as follows:
+Istnieje kilka odmian implementacji algorytmu Dijkstry.
+Najprostsza używa tablicy do przechowywania wierzchołków ze zbioru Q.
+Inne wersje algorytmu używają kolejki priorytetowej lub kopca Fibonacciego.
+Przy implementacji bez użycia kopca, złożoność obliczeniowa wynosi: O($n^2$), dzięki jego zastosowaniu może spaść do O($n log_10(n)$) (więcej na str. \pageref{chap:dijkstra}).
 
-
-
-%TODO pseudokod, po co, złożoność, porównanie do innych (złożoność) ref do boost library :D 
-
-
-%\chapter{Biblioteki w systemach Unix / Linux}
+%chapterBiblioteki w systemach Unix  Linux
 %co to, po co 
-%\section{Statyczne}
+%section{Statyczne}
 %zalety / wady jak tworzyc
-%\section{Współdzielone}
+%section{Współdzielone}
 %zalety /wady umiejscowienie
 
 
@@ -230,8 +230,10 @@ Podczas projektowania każdego z~modułów biblioteki wykorzystano wiedzę zawar
 \label{kiss}
 
 \section{Budowa projektu}
-%ze składa się z modułów?
-\subsection{Diagram klas}
+Rozdział ten ma za zadanie przybliżenie czytelnikowi pomysłów projektowych biblioteki SCGL.
+Zawiera on opis zastosowanej architektury oraz struktury plików.
+%TODO więcej?
+\subsection{Diagramy klas}
 %powiązanie klas i opisać każdą z osobna
 
 \subsection{Struktura plików}
@@ -260,6 +262,9 @@ W~przyszłości planowane jest jednak ukrycie owych definicji struktur przed uż
 
 Język C nie posiada ,,klas'' przez co nie można za jego pomocą wywoływać metod na rzecz obiektów (jak to ma miejsce w~języku C++ np. \code{my_edge::getID()}).
 Stworzono zatem specjalny system nazw (przestrzeń nazw) opisany dokładniej w~rozdziale \ref{chap:api}.
+
+Pozostałe detale implementacyjne zostały opisane w~dalszych podrozdziałach pracy.
+Wybrano elementy najistotniejsze oraz najciekawsze z~punktu działania biblioteki.
 
 \subsection{Linux Kernel List}
 \label{chap:lists}
@@ -324,6 +329,14 @@ struct list_head{
 \end{lstlisting}
 Dołączamy strukturę listy do własnego obiektu, zamiast, obiekt do struktury listy.
 Dodając kolejne elementy listy, łączymy ze sobą tak naprawdę kolejne struktury \code{list\_head}.
+
+Bardzo ciekawym mechanizmem jest makro \code{container\_of} pozwalające wyznaczyć początek struktury przy pomocy jednego z~jej elementów składowych.
+\begin{lstlisting}[style=coden,caption=Definicja jednego z makr jądra linuksa: containter of]
+#define container_of(ptr, type, member) \
+	 ((type *)((char *)(ptr)-(unsigned long)(&((type *)0)->member)))
+\end{lstlisting}
+Otrzymując kolejno: wskaźnik na jedno z~pól struktury, typ struktury, oraz nazwę tego pola; odejmuje offset członka struktury (od jej początku) od adresu wskaźnika, dzięki czemu otrzymuje i~zwraca adres początku struktury.
+Makro to wykorzystywane jest podczas poruszania się po elementach list, do zwracania adresów struktur, podczas gdy mamy dany tylko wskaźnik na \code{list\_head\_t}.
 
 Najważniejsze przy obcowaniu z~listami jądra Linuksa to:
 \begin{itemize}
@@ -560,7 +573,49 @@ Dzięki zaproponowanemu rozwiązaniu, biblioteka SCGL zdecydowanie zyskuje na wy
 
 \subsection{Algorytm Dijkstry}
 \label{chap:dijkstra}
-ze najszybciej na kopcu kolejka prior, ze kolory, jak to u mnie działa i co można poprawić ze hash lista
+Do realizacji celu implementacji jednego z~algorytmów teorii grafów wybrano algorytm Dijkstry.
+Wyboru tego dokonano ze względu na jego wydajność oraz istotny udział w~rozwoju sieci komputerowych, które są tematem przewodnim studiów autora pracy.
+
+W~opisie teoretycznym algorytmu (rozdział \ref{chap:dijkstra_theory}) wspomniano, że złożoność czasowa algorytmu zależy od wykorzystanej metody przechowywania węzłów.
+Aby rozwiązanie dostarczone przez bibliotekę SCGL, było możliwie jak najszybsze, zdecydowano się na użycie kolejki priorytetowej opartej na kopcu.
+Złożoność algorytmu powinna wówczas wynosić O($n log_{10}{n}$).
+Kolejka ta powinna priorytetować węzły na podstawie ich odległości od węzła źródłowego, oraz dostarczać operacje wyciągania elementu o~najwyższym priorytecie (najniższej odległości) oraz modyfikowania priorytetu (tzw. \emph{decrease-key}).
+Postanowiono wykorzystać gotową implementację, stworzoną przez \emph{Andrei Ciobanu}\footnote{Rozwiązanie to udostępnione jest publicznie, bez licencji, a~autor kodu wyraził zgodę na użycie go w~bibliotece SCGL: http://andreinc.net/2011/06/01/implementing-a-generic-priority-queue-in-c/}.
+Kod ten zmieniono pod względem stylistycznym, tak aby pasował do reszty biblioteki SCGL, dopisano funkcję \code{pqueue_replace_data}, która realizuje operację zmiany priorytetu, oraz poprawiono kilka błędów logicznych.
+
+Implementacja algorytmu Dijkstry napisana dla biblioteki SCGL wzoruje się na rozwiązaniu zastosowanym w~Boost::BGL %TODO\cite{boost}.
+Stosuje ona kolejkę priorytetową oraz kolorowanie węzłów, czyli operację oznaczania odwiedzonych już elementów.
+\begin{lstlisting}[style=code,caption=Pseudokod implementowanego w SCGL algorytmu Dijkstry]
+for each vertex u in V
+	d[u] := infinity
+	p[u] := u
+	color[u] := WHITE
+end for
+
+color[s] := GRAY
+d[s] := 0
+INSERT(Q, s)
+while (Q is not empty)
+	u := EXTRACT-MIN(Q)
+	for each vertex v in Adj[u]
+		if (w(u,v) + d[u] < d[v])
+			d[v] := w(u,v) + d[u]
+		p[v] := u
+		if (color[v] = WHITE)
+			color[v] := GRAY
+			INSERT(Q, v)
+		else if (color[v] = GRAY)
+			DECREASE-KEY(Q, v)
+		end if
+	end for
+	color[u] := BLACK
+end while
+\end{lstlisting}
+Jest to rozwiązanie bardzo optymalne, wykorzystanie mechanizmu kolorowania eliminuje dodatkowe (niepotrzebne) analizy mogące pojawić się w~trakcie działania algorytmu.
+W~przypadku napotkania wierzchołka ,,o kolorze szarym'' wywoływana jest operacja zmiany priorytetu tego węzła w~kolejce, tak aby był on jak najniższy, wówczas będzie brany on pod uwagę w~ostatniej kolejności (w~dalszych przejściach pętli).
+Niestety z~powodu zastosowania list dowiązanych w~bibliotece SCGL, realna implementacja powyższego algorytmu wymaga ciągłego obliczania jaki numer kolejny posiada określony węzeł.
+Jest to operacja przechodząca po wszystkich elementach listy, do momentu odnalezienia określonego wierzchołka, co w~przypadku dużych grafów skutkować będzie znacznym spowolnieniem funkcji.
+Sytuację tą poprawiłoby zastosowanie tablic asocjacyjnych (ang. \emph{hash table}), które jednoznacznie odwzorowywałby adres w~pamięci RAM z~identyfikatorem węzła.
 
 \subsection{Testy jednostkowe - DejaGNU}
 Testy jednostkowe są nieodłączną częścią każdego większego projektu programistycznego.
@@ -765,7 +820,7 @@ Może ona zostać wykorzystana do dowolnego celu, np. wypisania wszystkich atryb
 
 Funkcje użytkownika zdefiniowane są w~odpowiednich plikach nagłówkowych, jednakże najczęściej przyjmują one następującą formę:
 \begin{lstlisting}[style=coden,caption=Przykładowa definicja funkcji użytkownika na potrzeby funkcji \code{foreach}]
-typedef void (*edgeforeach_function)(scgl_edge_t *edge, void **data);
+typedef void (*edge_foreach_function)(scgl_edge_t *edge, void **data);
 \end{lstlisting}
 Funkcje te nie zwracają żadnych zmiennych.
 Jako pierwszy argument przyjmują obiekt na którym wykonane zostaną działania, jako drugi dodatkowe dane, lub wskaźnik który przechowa referencję do rezultatów.
@@ -986,16 +1041,16 @@ Jak można zauważyć w~powyższej tabeli, wyniki biblioteki igraph znacząco od
 Powód tego faktu pozostaje nieznany, jednakże może to wynikać ze sposobu przechowywania informacji (na temat grafu) w~pamięci.
 Stworzona na potrzeby celów pracy, biblioteka SCGL, osiąga porównywalne czasy do biblioteki BGL.
 Warto zauważyć, iż SCGL korzysta z~mniej wydajnych list powiązanych, co za tym idzie, musi wykonywać dodatkowe czynności w~czasie wybierania kolejnych węzłów.
-Zaś~biblioteka BGL była rozwijana i~udoskonalana przez wiele lat.
+Z~tego powodu, w~przypadku dużych grafów, implementacja ta będzie mniej wydajna niż BGL.
 Różnica pomiędzy czasami dla grafu skierowanego i~nieskierowanego, dla biblioteki SCGL, wynika z~dodatkowej ilości obiektów (dodatkowe krawędzie symulują ,,bezkierunkowości''), które musi przeszukać algorytm.
 
 Jako ciekawostkę można dodać, że kody źródłowe oparte na bibliotece BGL, jak i~wszystkie rozwiązania oparte na języku C++, mają przeciętnie 3---4 razy dłuższe czasy kompilacji, niż ich odpowiedniki w~języku C~(zarówno dla biblioteki igraph, jak i~SCGL).
 
 
 \chapter*{Podsumowanie}
-%ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać haslistę  ze można dodać algorytmy, 
-%   ze działa ze dynamiczne ze atrybuty (w igraph to dopiero eksperymentalna opcja), ze szybkie i w miarę małe, 
 \addcontentsline{toc}{chapter}{Podsumowanie}
+%ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać haslistę  ze można dodać algorytmy, 
+%ze działa ze dynamiczne ze atrybuty (w igraph to dopiero eksperymentalna opcja), ze szybkie i w miarę małe, 
 \chapter*{Summary}
 \addcontentsline{toc}{chapter}{Summary}
 \bibliography{thesis}
