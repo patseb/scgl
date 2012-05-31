@@ -1,7 +1,11 @@
-\documentclass[a4paper,12pt,polish,oneside]{thesis}
+\documentclass[a4paper,12pt,polish,twoside,openright]{thesis}
 \usepackage{listings}
 \usepackage{multicol}
 \usepackage{multirow}
+\usepackage{chngcntr}
+
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
 
 \lstdefinestyle{line}{
 	language=C,
@@ -51,9 +55,21 @@
 \studia{stacjonarne}
 \stopien{II}
 
+\makeatletter
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+\hbox{}
+\vspace*{\fill}
+\vspace{\fill}
+\thispagestyle{plain}
+\newpage
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother
+
 \begin{document}
 
 \stronaTytulowa
+
+%TODO podziękowania
 
 \tableofcontents
 
@@ -140,6 +156,7 @@ Innymi metodami zapisu mogą być:
 	Tak zaimplementowana komputerowa struktura danych gwarantuje, że operacje sprawdzenia, czy dodania oraz usunięcia krawędzi odbywają się w stałym czasie.
 	Do jej wad należy duża ilość potrzebnej pamięci – O($n^2$).
 
+	\label{neigh_list}
 	\item Lista sąsiedztwa --- dla każdego wierzchołka zapamiętywana jest lista sąsiadujących z~nim węzłów.
 	Metoda ta wymaga ilości pamięci proporcjonalnej do liczby krawędzi, także przejrzenie całego zbioru krawędzi jest proporcjonalne do jego rozmiaru.
 	Wadą jest tu zwiększona złożoność operacji elementarnych (np. usunięcie krawędzi).
@@ -234,7 +251,110 @@ Rozdział ten ma za zadanie przybliżenie czytelnikowi pomysłów projektowych b
 Zawiera on opis zastosowanej architektury oraz struktury plików.
 %TODO więcej?
 \subsection{Diagramy klas}
-%powiązanie klas i opisać każdą z osobna
+Diagramy przedstawione poniżej mają na celu jedynie przekazanie informacji na temat zamysłów projektowych.
+Przedstawiają one strukturę systemu (biblioteki SCGL) w~modelu obiektowym, poprzez ilustracje struktur klas i~zależności między nimi.
+Ponieważ do implementacji projektu wybrano język w~pełni strukturalny (\emph{C}) nie było możliwe dokładne odwzorowanie modelu UML\footnote{UML --- (ang. \emph{Unified Modeling Language} język formalny wykorzystywany do modelowania różnego rodzaju systemów.}.
+
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=1.00\textwidth]{class_01.eps}
+		\caption{Diagram relacji pomiędzy klasami biblioteki SCGL}
+	\end{center}
+\end{figure}
+Klasy otoczone pakietem SCGL (ramka) należą do przestrzeni nazw SCGL.
+Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzonym przez autora pracy).
+
+\begin{description}
+	\item[SCGL::Graph]
+	Klasa rdzeń, najważniejsza w~bibliotece SCLG.
+	Modeluje pojęcie grafu przechowując listy wierzchołków oraz krawędzi z~nimi związanych.
+	Wykorzystuje do tego celu klasę \code{List\_Head}.
+	Dodatkowo posiada identyfikator \code{ID}, który jest ciągiem znaków.
+
+	Dostarcza metody pozwalające na manipulowanie zawartością swoich list węzłów i~krawędzi.
+	Dodatkowo umożliwia wypisanie zawartości grafu na standardowe wyjście (lub plik), a~także wykonanie kopii grafu.
+	Funkcja kopiująca, powiela wszystkie elementy grafu, również odwzorowuje powiązania pomiędzy węzłami.
+	\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.60\textwidth]{class_graph.eps}
+		\caption{Diagram klasy SCGL::Graph}
+	\end{center}
+	\end{figure}
+
+	\item[SCGL::Edge]
+	Jedna z~ważniejszych klas SCGL, reprezentuje krawędź wewnątrz grafu.
+	Określana jest poprzez referencje do dwóch wierzchołków (od, do) oraz grafu, którego jest elementem składowym (tzw. ,,rodzica'').
+	Dodatkowo posiada dynamiczną listę atrybutów (obiekty klasy SCGL::Attr) oraz generycze pole koszt (zmienna typu określanego podczas kompilacji).
+
+	SCGL::Edge przenosi również informację o~jej ,,rodzeństwie''.
+	W~przypadku gdy krawędź jest nieskierowana, tworzony jest jej ,,brat'' (obiekt klasy dziedziczącej SCGL::EdgeSibling).
+	Obiekt ten poprzez fakt dziedziczenia, jest klasą zawierającą dokładnie te same składowe co klasa bazowa. Jedyną różnicą jest konstruktor, który nie przyjmuje informacji o~atrybutach ponieważ nie ma potrzeby powielania tych danych.
+	Wierzchołki rodzeństwa są zamienione tj. wierzchołek ,,od'' krwędzi oryginalnej, jest wierzchołkiem ,,do'' brata.
+
+	Klasa ta dostarcza metody dostępowe do swych pól prywatnych a~także metodę która pozwala na wywołanie funkcji użytkownika na każdym z~atrybutów krawędzi.
+	Dodatkowo jak wcześniej opisane klasy, umożliwia również wyprowadzenie jej zawartości na strumień.
+	\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=1.00\textwidth]{class_edge.eps}
+		\caption{Diagram klasy SCGL::Edge}
+	\end{center}
+	\end{figure}
+
+	\item[SCGL::Vertex]
+	Klasa ta reprezentuje wierzchołek grafu.
+	Podobnie jak SCGL::Graph posiada indentyfikator \code{ID}, który jest ciągiem znaków, oraz metody pozwalające na manipulacje nim.
+	Przechowuje ona dwie listy krawędzi z~nią związanych:
+	\begin{itemize}
+		\item \code{in} --- wchodzących do węzła,
+		\item \code{out} --- wychodzących z węzła.
+	\end{itemize}
+	Jednym z~pól klasy jest również referencja do grafu (jej rodzica).
+
+	Obiekt tego typu, poza metodami dostępowymi, umożliwia wywołanie funkcji użytkownika na każdej powiązanej z~nią krawędzi, jak również wypisanie zawartości na strumień (plik lub standardowe wyjście).
+	\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.55\textwidth]{class_vertex.eps}
+		\caption{Diagram klasy SCGL::Vertex}
+	\end{center}
+	\end{figure}
+
+	\item[SCGL::Attr]
+	Klasa wykorzystywana przez obiekty SCGL::Edge, do przechowywania informacji o~jej atrybutach.
+	Opisują ją dwa pola: klucz oraz wartość.
+	Klucz jest ciągiem znaków, za którego unikalność odpowiedzialny jest użytkownik (nie jest to wymagane).
+	Wartość zaś jest referencją do zmiennej dowolnego typu, może to być również struktura danych użytkownika.
+	
+	Klasa ta udostępnia jedynie konstruktor, destruktor oraz metody dostępowe.
+	\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{class_attr.eps}
+		\caption{Diagram klasy SCGL::Attr}
+	\end{center}
+	\end{figure}
+
+	\item[SCGL::Algorithms]
+	Jest to klasa, która dostaracza jedynie implementacje algorytmów teorii grafów.
+	Aktualnie zawiera jedynie funkcję obsługującą algorytm Dijkstry, podczas działania którego wykorzystuje klasy Pair oraz PQueue.
+	\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{class_algo.eps}
+		\caption{Diagram klasy SCGL::Algorithms}
+	\end{center}
+	\end{figure}
+
+	\item[ListHead]
+	Klasa implementująca listę powiązaną dwukierunkową, cykliczną.
+	Całkowicie ukryta przed użytkownikiem biblioteki SCGL, wykorzystywana do wewnętrznych operacji.
+
+	\item[PQueue]
+	Klasa implementująca kolejkę priorytetową opartą na kopcu.
+	Również niedostępna dla użytkownika, wykorzystywana przez funkcję \code{Dijkstra} z~klasy SCGL::Algorithms.
+
+	\item[Pair]
+	Klasa implementująca kolejkę parę wartości (identyfikator, dystans)
+	Wykorzystywana przez funkcję \code{Dijkstra} z~klasy SCGL::Algorithms, jako element kolejki priorytetowej.
+\end{description}
+
 
 \subsection{Struktura plików}
 Całość projektu, kod źródłowy biblioteki, platformę testów jednostkowych, oraz dodatkowe elementy wykorzystane podczas pisania niniejszej pracy, przechowywane są przy wykorzystaniu repozytorium \emph{git}\footnote{Git --- rozproszony system kontroli wersji, stworzony przez Linusa Torvaldsa jako narzędzie wspomagające rozwój jądra Linux.}.
@@ -330,8 +450,15 @@ struct list_head{
 Dołączamy strukturę listy do własnego obiektu, zamiast, obiekt do struktury listy.
 Dodając kolejne elementy listy, łączymy ze sobą tak naprawdę kolejne struktury \code{list\_head}.
 
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=1.05\textwidth]{list_head.eps}
+		\caption{Kolejne elementy listy powiązanej w~stylu Linux Kernel List}
+	\end{center}
+\end{figure}
+
 Bardzo ciekawym mechanizmem jest makro \code{container\_of} pozwalające wyznaczyć początek struktury przy pomocy jednego z~jej elementów składowych.
-\begin{lstlisting}[style=coden,caption=Definicja jednego z makr jądra linuksa: containter of]
+\begin{lstlisting}[style=coden,caption=Definicja jednego z makr jądra linuksa: {container\_of}]
 #define container_of(ptr, type, member) \
 	 ((type *)((char *)(ptr)-(unsigned long)(&((type *)0)->member)))
 \end{lstlisting}
@@ -410,13 +537,7 @@ struct scgl_graph {
 	list_head_t edges;
 };
 \end{lstlisting}
-
-\begin{figure}[htb]
-	\begin{center}
-		\includegraphics[width=0.80\textwidth]{listconnection.eps}
-		\caption{Diagram połączeń pomiędzy listami dowiązanymi biblioteki SCGL}
-	\end{center}
-\end{figure}
+Taka metoda przechowywania informacji przypmina nieco listy sąsiedztwa (czyt. na str. \pageref{neigh_list}), nie jest jednak dokładną ich implementacją.
 
 Zastosowanie list powiązanych, zapożyczonych z~jądra Linuksa, pozwoliło na oszczędzenie pamięci oraz szybkości działania.
 Przyśpieszyło i ułatwiło to również sam proces tworzenia biblioteki SCGL.
