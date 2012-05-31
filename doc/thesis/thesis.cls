@@ -133,9 +133,9 @@
 \renewcommand\thesubparagraph {\theparagraph.\@arabic\c@subparagraph}
 
 % numeracja wzorów, rysunków i tabel
-\renewcommand\theequation{\@arabic\c@equation}
-\renewcommand\thefigure{\@arabic\c@figure}
-\renewcommand\thetable{\@arabic\c@table}
+%\renewcommand\theequation{\@arabic\c@equation}
+%\renewcommand\thefigure{\@arabic\c@figure}
+%\renewcommand\thetable{\@arabic\c@table}
 
 %\def\fnum@figure{{\bf \figurename~\thefigure}}
 %\def\fnum@table{{\bf\tablename~\thetable}}
