@@ -305,7 +305,7 @@
 
         \begin{figure}[htb]
             \begin{center}
-                \includegraphics[width=0.25\textwidth]{logo.eps}
+                \includegraphics[width=0.25\textwidth]{gfx/logo.eps}
             \end{center}
         \end{figure}
 
