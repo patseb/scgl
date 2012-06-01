@@ -146,7 +146,7 @@ Ze względu na kierunkowość krawędzi, możemy wyróżniamy trzy podstawowe ro
 Przedstawiając obrazowo powyższe definicje można posłużyć się prostym rysunkiem:
 \begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{small_graph.eps}
+		\includegraphics[width=0.5\textwidth]{gfx/small_graph.eps}
 		\caption{Przykład prostego grafu skierowanego}
 		\label{fig:smallgraph}
 	\end{center}
@@ -261,7 +261,7 @@ Ponieważ do implementacji projektu wybrano język w~pełni strukturalny (\emph{
 
 \begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=1.00\textwidth]{class_01.eps}
+		\includegraphics[width=1.00\textwidth]{gfx/class_01.eps}
 		\caption{Diagram relacji pomiędzy klasami biblioteki SCGL}
 	\end{center}
 \end{figure}
@@ -280,7 +280,7 @@ Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzon
 	Funkcja kopiująca, powiela wszystkie elementy grafu, również odwzorowuje powiązania pomiędzy węzłami.
 	\begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=0.60\textwidth]{class_graph.eps}
+		\includegraphics[width=0.60\textwidth]{gfx/class_graph.eps}
 		\caption{Diagram klasy SCGL::Graph}
 	\end{center}
 	\end{figure}
@@ -299,7 +299,7 @@ Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzon
 	Dodatkowo jak wcześniej opisane klasy, umożliwia również wyprowadzenie jej zawartości na strumień.
 	\begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=1.00\textwidth]{class_edge.eps}
+		\includegraphics[width=1.00\textwidth]{gfx/class_edge.eps}
 		\caption{Diagram klasy SCGL::Edge}
 	\end{center}
 	\end{figure}
@@ -317,7 +317,7 @@ Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzon
 	Obiekt tego typu, poza metodami dostępowymi, umożliwia wywołanie funkcji użytkownika na każdej powiązanej z~nią krawędzi, jak również wypisanie zawartości na strumień (plik lub standardowe wyjście).
 	\begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=0.55\textwidth]{class_vertex.eps}
+		\includegraphics[width=0.55\textwidth]{gfx/class_vertex.eps}
 		\caption{Diagram klasy SCGL::Vertex}
 	\end{center}
 	\end{figure}
@@ -331,7 +331,7 @@ Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzon
 	Klasa ta udostępnia jedynie konstruktor, destruktor oraz metody dostępowe.
 	\begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=0.4\textwidth]{class_attr.eps}
+		\includegraphics[width=0.4\textwidth]{gfx/class_attr.eps}
 		\caption{Diagram klasy SCGL::Attr}
 	\end{center}
 	\end{figure}
@@ -341,7 +341,7 @@ Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzon
 	Aktualnie zawiera jedynie funkcję obsługującą algorytm Dijkstry, podczas działania którego wykorzystuje klasy Pair oraz PQueue.
 	\begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{class_algo.eps}
+		\includegraphics[width=1.0\textwidth]{gfx/class_algo.eps}
 		\caption{Diagram klasy SCGL::Algorithms}
 	\end{center}
 	\end{figure}
@@ -420,7 +420,7 @@ Posiadając wskaźnik, wskazujący na pierwszy element listy (\code{head}), moż
 
 \begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=0.80\textwidth]{linkedlist.eps}
+		\includegraphics[width=0.80\textwidth]{gfx/linkedlist.eps}
 		\caption{Kolejne elementy listy powiązanej}
 	\end{center}
 \end{figure}
@@ -453,7 +453,7 @@ Dodając kolejne elementy listy, łączymy ze sobą tak naprawdę kolejne strukt
 
 \begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=1.05\textwidth]{list_head.eps}
+		\includegraphics[width=1.05\textwidth]{gfx/list_head.eps}
 		\caption{Kolejne elementy listy powiązanej w~stylu Linux Kernel List}
 	\end{center}
 \end{figure}
@@ -843,14 +843,14 @@ Należy jednak pamiętać, że w~samych testach również może wkraść się b�
 
 \begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=0.65\textwidth]{test_graph_undirected.eps}
+		\includegraphics[width=0.65\textwidth]{gfx/test_graph_undirected.eps}
 		\caption{Wykorzystywany do testów graf nieskierowany}
 		\label{fig:test_undirected}
 	\end{center}
 \end{figure}
 \begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=0.65\textwidth]{test_graph_directed.eps}
+		\includegraphics[width=0.65\textwidth]{gfx/test_graph_directed.eps}
 		\caption{Wykorzystywany do testów graf skierowany}
 		\label{fig:test_directed}
 	\end{center}
@@ -1237,8 +1237,9 @@ The igraph library for complex network research, \url{http://igraph.sourceforge.
 
 \chapter*{Dodatek A. Dokumentacja}
 \addcontentsline{toc}{chapter}{Dodatek A. Dokumentacja}
-\chapter*{Dodatek B. Oświadczenie}
 
+\chapter*{Dodatek B. Oświadczenie}
+\addcontentsline{toc}{chapter}{Dodatek B. Oświadczenie}
 \newlength{\oldparskip}
 \setlength{\oldparskip}{\parskip}
 \setlength{\parindent}{0pt}.
@@ -1284,11 +1285,47 @@ Niezależnie od art.239 Prawo o~szkolnictwie wyższym wyrażam zgodę na nieodp�
 
 \setlength{\parskip}{\oldparskip}
 
-
-\addcontentsline{toc}{chapter}{Dodatek B. Oświadczenie}
 \chapter*{Dodatek C. Opis zawartości płyty CD}
 \addcontentsline{toc}{chapter}{Dodatek C. Opis zawartości płyty CD}
 \label{chap:cd}
+\begin{lstlisting}[basicstyle={\small},caption={Struktura plików zamieszczonych na płycie CD}]
+.
+|-- praca/
+|   |-- gfx
+|   |-- url
+|   |-- praca.lyx
+|   |-- praca.pdf
+|   |-- praca.tex
+|   `-- praca.txt
+`-- program/
+    |-- dotNetFx40_Full_x86_x64.exe
+        |-- bin/
+            `-- src/
+\end{lstlisting}
+
+%Obja¶nienie:
+%\begin{description}
+%	\item [{praca/gfx/}] katalog zawieraj±cy grafiki wykorzystane w~powy¿szej
+%pracy (wymagane do kompilacji pliku {*}.lyx oraz {*}.tex).
+
+%	\item [{praca/url/}] kopia niektórych stron internetowych za³±czonych w~bibliografii.
+
+%	\item [{praca/praca.lyx}] pierwotne ¼ród³o pracy; pozosta³e formaty s±
+%wynikiem generowania.
+
+%	\item [{program/dotNetFx40\_Full\_x86\_x64.exe}] instalator pakietu .NET 
+%Framework 4.0, wymaganego do uruchomienia aplikacji.
+
+%	\item [{program/bin/}] zawiera skompilowane, binarne, wersje programów
+%opisanych w~powy¿szej pracy. Umieszczone one s± odpowiedno w~katalogach
+%myTorrentClient oraz myTorrentServer. Za³±czone s± tu równie¿ wymagane
+%pliki konfiguracyjne.
+
+%	\item [{program/src/}] zawiera kod ¼ród³owy programów opisanych w~powy¿szej
+%pracy, s± to projekty programu ,,Microsoft Visual C\# 2008 Express
+%Edition''. Umieszczone one s± odpowiedno w~katalogach myTorrentClient
+%oraz myTorrentServer.
+%\end{description}
 
 \listoffigures
 \listoftables
