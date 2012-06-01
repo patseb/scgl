@@ -2,9 +2,6 @@ all: thesis
 
 thesis:
 	pdflatex thesis.tex
-	bibtex thesis
-	pdflatex thesis.tex
-	bibtex thesis
 	pdflatex thesis.tex
 
 clean:
