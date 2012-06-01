@@ -1,8 +1,11 @@
-\documentclass[a4paper,12pt,polish,twoside,openright]{thesis}
+\documentclass[a4paper,12pt,polish,oneside,openright]{thesis}
 \usepackage{listings}
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage{chngcntr}
+\usepackage{pdfpages}
+\usepackage{url}
+\usepackage[polish]{babel}
 
 \counterwithout{figure}{chapter}
 \counterwithout{table}{chapter}
@@ -116,7 +119,7 @@ Porównania te zostały przeprowadzone pod kątem ilości zużywanej pamięci, o
 Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja niniejszej biblioteki.
 
 \chapter{Wybrane zagadnienia teorii grafów}
-Rozdział ten, powstał w~celu zdefiniowania oraz wyjaśnienia elementarnych pojęć związanych z~teorią grafów.
+Rozdział ten, powstał w~celu zdefiniowania oraz wyjaśnienia elementarnych pojęć związanych z~teorią grafów. Wiadomości w~nim zawarte opierają się na publikacjach \cite{graphtheory} oraz \cite{graphtheory2}, w~których można odnaleźć więcej szczegółowych inforamcji.
 Pojęcia te będą często używane w~dalszych częściach pracy, zatem usystematyzowanie tej wiedzy jest niezwykle istotne, aby dobrze zrozumieć sens przekazywanych słów.
 
 \begin{description}
@@ -141,10 +144,16 @@ Ze względu na kierunkowość krawędzi, możemy wyróżniamy trzy podstawowe ro
 \end{itemize}
 
 Przedstawiając obrazowo powyższe definicje można posłużyć się prostym rysunkiem:
-%TODO rysunek
-\label{fig:graphtherory}
-Punkty A, B, C oraz D znajdujące się na rysunku \ref{fig:graphtheroy} nazywamy \emph{wierzchołkami}, łączące je linie \emph{krawędziami} (nieskierowanymi), zaś całość tworzy strukturę \emph{grafu} (nieskierowanego).
-Krawędzie o~wagach 1, 2 oraz 3 tworzą \emph{drogę}, z~węzła A do węzła D.
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{small_graph.eps}
+		\caption{Przykład prostego grafu skierowanego}
+		\label{fig:smallgraph}
+	\end{center}
+\end{figure}
+
+Punkty A, B, C oraz D znajdujące się na rysunku \ref{fig:smallgraph} nazywamy \emph{wierzchołkami}, łączące je linie \emph{krawędziami} (nieskierowanymi), zaś całość tworzy strukturę \emph{grafu} (skierowanego).
+Krawędzie o~wagach 1, 2 oraz 3 tworzą \emph{drogę}, z~węzła A do węzła D. Rozpoczynając trasę z~wierzchołka D nie mamy możliwości przedostania się do węzła A.
 \emph{Sąsiadem} wierzchołka B jest wierzchołek C.
 
 Wszystkie grafy mogą być reprezentowane na wiele sposobów.
@@ -165,8 +174,7 @@ Innymi metodami zapisu mogą być:
 	Zawiera jedynie informacje takie, że wartość w~punkcje \{i, j\} = 1 tylko, gdy \emph{j}-ta krawędź kończy się na \emph{i}-tym wierzchołku.
 \end{itemize}
 
-Dla lepszego zrozumienia owych struktur warto przeanalizować poniższy rysunek grafu:
-%TODO rysunek prosty
+Dla lepszego zrozumienia owych struktur warto ponownie przeanalizować rysunek \ref{fig:smallgraph}
 oraz odpowiadające mu metody zapisu:
 \begin{itemize}
 	\item macierz sąsiedztwa:
@@ -176,21 +184,19 @@ oraz odpowiadające mu metody zapisu:
 
 Informacje przytoczone w~powyższym rodziale, są podstawowymi pojęciami teorii grafów, stanowią one jedynie ułamek tej rozległej dziedziny nauki, lecz pomogą zrozumieć tematykę poruszaną przez niniejszą pracę.
 
-%TODO napisać ze praktycznie listy sąsiedztwa implementujemy
-
 \section{Algorytm Dijkstry}
 \label{chap:dijkstra_theory}
 Problem najkrótszej ścieżki polega na znalezieniu w~spójnym\footnote{Graf możemy nazwać spójnym wówczas, gdy dla każdej pary wierzchołków istnieje droga pomiędzy nimi.} i~ważonym\footnote{Graf możemy nazwać ważonym wówczas, gdy każda z~jego krawędzi posiada atrybut wagi/kosztu.} grafie najkrótszego połączenia pomiędzy danymi wierzchołkami.
-Przez najkrótszą ścieżkę rozumiemy takie połączenie między wierzchołkami, które ma najmniejszy koszt przejścia przy czym koszt przejścia określony jest jako suma wag na krawędziach ścieżki.
+Przez najkrótszą ścieżkę rozumiemy takie połączenie między wierzchołkami, które ma najmniejszy koszt przejścia przy czym koszt przejścia określony jest jako suma wag na krawędziach ścieżki\cite{dijkstra}.
 Problem ten możemy zobrazować jako problem znalezienia najszybciej drogi dla pakietów pomiędzy dwoma routerami w~sieci.
-Każde z~urządzeń trasujących reprezentowane jest wówczas przez węzeł grafu a waga krawędzi może oznaczać przepustowość łącza pomiędzy nimi (informacja przydatna dla protokołów trasowania stanu łącza, np. \emph{OSPF}).
+Każde z~urządzeń trasujących reprezentowane jest wówczas przez węzeł grafu a waga krawędzi może oznaczać przepustowość łącza pomiędzy nimi (informacja przydatna dla protokołów trasowania stanu łącza, np. \emph{OSPF}\cite{ospf}).
 
 Algorytm opracowany przez holenderskiego informatyka Edsgera Dijkstrę, służy do rozwiązywania problemu najkrótszej ścieżki.
 Jest jednym z~najważniejszych algorytmów teorii grafów, wykorzystywanym m. in. właśnie w~protokole trasowania \emph{OSPF}.
-Warunkiem ograniczającym jego działanie jest wymóg istnienia wyłącznie nieujemnych wag krawędzi\footnote{Algorytm Forda-Bellmana pozbawiony jest tej wady, jednakże okupione jest to dużo większą złożonością czasową}.
+Warunkiem ograniczającym jego działanie jest wymóg istnienia wyłącznie nieujemnych wag krawędzi\footnote{Algorytm Forda-Bellmana pozbawiony jest tej wady, jednakże przez to charakteryzuje się dużo większą złożonością czasową\cite{graphtheory}}.
 Mając dany graf z~wyróżnionym wierzchołkiem (źródłem) algorytm znajduje odległości od niego do wszystkich pozostałych węzłów.
 
-\begin{lstlisting}[style=code,caption=Pseudokod algorytmu Dijkstry,label=pseudo]
+\begin{lstlisting}[style=code,caption=Pseudokod algorytmu Dijkstry\cite{dijkstra},label=pseudo]
 for each vertex v in V[G]
 	d[v] := infinity
 	p[v] := undefined
@@ -220,8 +226,7 @@ Jeśli tak jest, to znaczy, że algorytm znalazł ,,krótszą'' ścieżkę i~nal
 Istnieje kilka odmian implementacji algorytmu Dijkstry.
 Najprostsza używa tablicy do przechowywania wierzchołków ze zbioru Q.
 Inne wersje algorytmu używają kolejki priorytetowej lub kopca Fibonacciego.
-Przy implementacji bez użycia kopca, złożoność obliczeniowa wynosi: O($n^2$), dzięki jego zastosowaniu może spaść do O($n log_10(n)$) (więcej na str. \pageref{chap:dijkstra}).
-
+Przy implementacji bez użycia kopca, złożoność obliczeniowa wynosi: O($n^2$), dzięki jego zastosowaniu może spaść do O($n \cdot log_{10}(n)$)\cite{graphtheory2}.
 %chapterBiblioteki w systemach Unix  Linux
 %co to, po co 
 %section{Statyczne}
@@ -243,13 +248,12 @@ W~celu zapewnienia poprawności zaimplementowanych już funkcjonalności, zdecyd
 
 Dodatkowo biblioteka wykorzystuje program \emph{make} oraz pliki reguł \emph{Makefile} do automatyzacji procesu kompilacji.
 
-Podczas projektowania każdego z~modułów biblioteki wykorzystano wiedzę zawartą w publikacjach (TODO ref, TODO) oraz stosowano się do reguły KISS (ang. \emph{Keep It Simple, Stupid}), która traktuje o tym, że im coś jest prostsze (jako koncept, oraz jako wykonanie) tym lepiej (TODO ref).
+Podczas projektowania każdego z~modułów biblioteki wykorzystano wiedzę zawartą w publikacjach (\cite{unix}, \cite{ansi}) oraz stosowano się do reguły KISS (ang. \emph{Keep It Simple, Stupid}), która traktuje o tym, że im coś jest prostsze (jako koncept, oraz jako wykonanie) tym lepiej (\cite{unix}).
 \label{kiss}
 
 \section{Budowa projektu}
 Rozdział ten ma za zadanie przybliżenie czytelnikowi pomysłów projektowych biblioteki SCGL.
 Zawiera on opis zastosowanej architektury oraz struktury plików.
-%TODO więcej?
 \subsection{Diagramy klas}
 Diagramy przedstawione poniżej mają na celu jedynie przekazanie informacji na temat zamysłów projektowych.
 Przedstawiają one strukturę systemu (biblioteki SCGL) w~modelu obiektowym, poprzez ilustracje struktur klas i~zależności między nimi.
@@ -358,7 +362,7 @@ Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzon
 
 \subsection{Struktura plików}
 Całość projektu, kod źródłowy biblioteki, platformę testów jednostkowych, oraz dodatkowe elementy wykorzystane podczas pisania niniejszej pracy, przechowywane są przy wykorzystaniu repozytorium \emph{git}\footnote{Git --- rozproszony system kontroli wersji, stworzony przez Linusa Torvaldsa jako narzędzie wspomagające rozwój jądra Linux.}.
-Owe repozytorium umieszczone jest na serwerach darmowego serwisu \emph{https://github.com/}, a~jego lokalna kopia na płycie CD dołączonej do pracy (więcej na str. \pageref{chap:cd}).
+Owe repozytorium umieszczone jest na serwerach darmowego serwisu \url{https://github.com/}, a~jego lokalna kopia na płycie CD dołączonej do pracy (więcej na str. \pageref{chap:cd}).
 
 Zgodnie z~dobrą praktyką programistyczną, oraz w~celu uporządkowania plików źródłowych, zastosowana została standardowa hierarchia plików.
 W~katalogu głównym \emph{scgl/} (w~pliku \code{LICENSE}) znaleźć można treść licencji (dwu-klauzulowa licencja BSD) biblioteki, krótki opis projektu (\code{README}) oraz plik ułatwiający m. in. kompilację kodu \code{Makefile} (więcej na str. \pageref{chap:make}).
@@ -404,7 +408,7 @@ Użycie ich może jednak wiązać się z~dodatkowymi dużymi narzutami na rozmia
 Aby zniwelować wpływ (negatywny) kodu ,,trzeciego'' na SCGL, postanowiono wykorzystać mechanizm list dowiązanych do przechowywania informacji na temat wszystkich krawędzi (ich atrybutów) oraz węzłów w~grafie.
 Zasada działania jak i~implementacja tego typu list jest niezwykle prosta, a~jednocześnie nie wpływa znacząco na ilość zużywanej pamięci.
 
-Wg klasycznego podejścia do problemu, lista jest to obiekt (struktura/klasa) zawierająca dane właściwie, oraz wskaźnik na kolejny obiekt tego samego typu.
+Wg klasycznego podejścia do problemu, lista jest to obiekt (struktura/klasa) zawierająca dane właściwie, oraz wskaźnik na kolejny obiekt tego samego typu.\cite{algo}
 \begin{lstlisting}[style=code,caption=Idea listy powiązanej w~C]
 struct list {
 	struct list *prev
@@ -421,11 +425,8 @@ Posiadając wskaźnik, wskazujący na pierwszy element listy (\code{head}), moż
 	\end{center}
 \end{figure}
 
-%TODO czym się charakteryzuje jakie czasy i O(n)
-%TODO moze napisać o atrybutach krawędzi że dynamiczne, moze w Linux Kernel List? :D
-
 W~niniejszej pracy postanowiono jednak skorzystać z~mechanizmu nazwanego \emph{Linux Kernel List}.
-Jest to implementacja listy dowiązanej, (dwukierunkowej; cyrkulacyjnej), wykorzystywana w~jądrze (ang. \emph{kernel}) systemów operacyjnych \emph{Linux}
+Jest to implementacja listy dowiązanej, (dwukierunkowej; cyrkulacyjnej), wykorzystywana w~jądrze (ang. \emph{kernel}) systemów operacyjnych \emph{Linux}\cite{lkl}.
 Jest to jeden plik nagłówkowy (\code{*.h}) języka C.
 Zawiera on definicję struktury \code{list\_head} oraz definicje i~deklaracje funkcji oraz makr preprocesora, obsługujących tą strukturę.
 Linux Kernel Lists są wyjątkowe, z~powodu trochę innego podejścia do tematu.
@@ -462,7 +463,7 @@ Bardzo ciekawym mechanizmem jest makro \code{container\_of} pozwalające wyznacz
 #define container_of(ptr, type, member) \
 	 ((type *)((char *)(ptr)-(unsigned long)(&((type *)0)->member)))
 \end{lstlisting}
-Otrzymując kolejno: wskaźnik na jedno z~pól struktury, typ struktury, oraz nazwę tego pola; odejmuje offset członka struktury (od jej początku) od adresu wskaźnika, dzięki czemu otrzymuje i~zwraca adres początku struktury.
+Otrzymując kolejno: wskaźnik na jedno z~pól struktury, typ struktury, oraz nazwę tego pola; odejmuje offset członka struktury (od jej początku) od adresu wskaźnika, dzięki czemu otrzymuje i~zwraca adres początku struktury\cite{lkl2}.
 Makro to wykorzystywane jest podczas poruszania się po elementach list, do zwracania adresów struktur, podczas gdy mamy dany tylko wskaźnik na \code{list\_head\_t}.
 
 Najważniejsze przy obcowaniu z~listami jądra Linuksa to:
@@ -699,12 +700,12 @@ Wyboru tego dokonano ze względu na jego wydajność oraz istotny udział w~rozw
 
 W~opisie teoretycznym algorytmu (rozdział \ref{chap:dijkstra_theory}) wspomniano, że złożoność czasowa algorytmu zależy od wykorzystanej metody przechowywania węzłów.
 Aby rozwiązanie dostarczone przez bibliotekę SCGL, było możliwie jak najszybsze, zdecydowano się na użycie kolejki priorytetowej opartej na kopcu.
-Złożoność algorytmu powinna wówczas wynosić O($n log_{10}{n}$).
+Złożoność algorytmu powinna wówczas wynosić O($n \cdot log_{10}{n}$).
 Kolejka ta powinna priorytetować węzły na podstawie ich odległości od węzła źródłowego, oraz dostarczać operacje wyciągania elementu o~najwyższym priorytecie (najniższej odległości) oraz modyfikowania priorytetu (tzw. \emph{decrease-key}).
-Postanowiono wykorzystać gotową implementację, stworzoną przez \emph{Andrei Ciobanu}\footnote{Rozwiązanie to udostępnione jest publicznie, bez licencji, a~autor kodu wyraził zgodę na użycie go w~bibliotece SCGL: http://andreinc.net/2011/06/01/implementing-a-generic-priority-queue-in-c/}.
+Postanowiono wykorzystać gotową implementację, stworzoną przez \emph{Andrei Ciobanu}\footnote{Rozwiązanie to udostępnione jest publicznie, bez licencji, a~autor kodu wyraził zgodę na użycie go w~bibliotece SCGL: \url{http://andreinc.net/2011/06/01/}}.
 Kod ten zmieniono pod względem stylistycznym, tak aby pasował do reszty biblioteki SCGL, dopisano funkcję \code{pqueue_replace_data}, która realizuje operację zmiany priorytetu, oraz poprawiono kilka błędów logicznych.
 
-Implementacja algorytmu Dijkstry napisana dla biblioteki SCGL wzoruje się na rozwiązaniu zastosowanym w~Boost::BGL %TODO\cite{boost}.
+Implementacja algorytmu Dijkstry napisana dla biblioteki SCGL wzoruje się na rozwiązaniu zastosowanym w~Boost::BGL\cite{bgl}.
 Stosuje ona kolejkę priorytetową oraz kolorowanie węzłów, czyli operację oznaczania odwiedzonych już elementów.
 \begin{lstlisting}[style=code,caption=Pseudokod implementowanego w SCGL algorytmu Dijkstry]
 for each vertex u in V
@@ -747,9 +748,9 @@ Programista wprowadzając kolejne zmiany, usprawniania, funkcjonalności, po wyk
 Projektując bibliotekę SCGL, postanowiono wykorzystać właśnie tą metodę testowania, aby usprawnić przyszły jej rozwój.
 
 Zdecydowano wykorzystać się framework DejaGNU, jako platformę do testowania.
-Przeznaczeniem DejaGNU, jest stworzenie warstwy abstrakcyjnej dla wszelakich testów programistycznych.
+Przeznaczeniem DejaGNU, jest stworzenie warstwy abstrakcyjnej dla wszelakich testów programistycznych\cite{dejagnu}.
 Napisany został z~wykorzystaniem pakietu \emph{expect}, który jest częścią języka \emph{Tcl} (ang. \emph{Tool Command Language}).
-Expect, tworzy własny terminal, który symuluje działanie użytkownika obsługującego testujący program (najczęściej konsolowy).
+Expect, tworzy własny terminal, który symuluje działanie użytkownika obsługującego testujący program (najczęściej konsolowy)\cite{expect}.
 Pozwala on na dość elastyczną interakcję, wygodne porównywanie oraz reagowanie na wyjście docelowego programu.
 
 Konsekwentnie stosując zasadę \emph{KISS} (czyt. str. \pageref{kiss}), również testy jednostkowe dla biblioteki SCGL zostały napisane w~sposób jasny i przejrzysty.
@@ -829,9 +830,7 @@ foreach pattern $test_data {
 Plik opisujący procedurę testowania \code{test.exp}, przechowuje tabelę \code{test_data} (linie 2--28) zawierającą kolejno: nazwę testu, argumenty przekazywane programowi oraz wartości oczekiwane (zapisane przy pomocy języka wyrażeń regularnych --- \emph{regexp}).
 Część wykonawcza testu, to pętla \code{foreach} (wiersze 30-35) wywołująca kolejno testy z~tabeli \code{test_data} oraz porównująca wyniki programu z~wartościami oczekiwanymi.
 Testy wywoływane są w~kolejności, która zapewnia spójność logiczną całości, np.: test dodawania atrybutu do krawędzi, jest zależy od testu tworzenia krawędzi oraz od testu tworzenia atrybutu.
-Testy algorytmu Dijkstry są przeprowadzane na grafach zaprezentowanych na rysunkach (TODO ref), (TODO ref).
-%RYS 1
-%RYS 2
+Testy algorytmu Dijkstry są przeprowadzane na grafach zaprezentowanych na rysunkach \ref{fig:test_directed}, \ref{fig:test_undirected}.
 
 Wymogiem niezbędnym do uruchomienia testów jest kompilujący się kod biblioteki SCGL, oraz posiadanie zainstalowanego w~systemie pakietu DejaGNU.
 Testy uruchamiane są przez Makefile znajdujący się w~katalogu \code{scgl/}, można dokonać tego w~następujący sposób:
@@ -841,6 +840,21 @@ make tests
 Polecenie to wywoła kompilację pliku \code{scg/unit_tests/scgl.test/tests.c} oraz uruchomienie programu \code{runtest} (część pakietu DejaGNU) z~plikiem definicji testów: \code{test.exp}.
 Jak zostało wcześniej wspomniane, testy jednostkowe są bardzo ważnym elementem oprogramowania, które będzie rozwijane.
 Należy jednak pamiętać, że w~samych testach również może wkraść się błąd, należy je zatem tworzyć ze szczególną starannością.
+
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.65\textwidth]{test_graph_undirected.eps}
+		\caption{Wykorzystywany do testów graf nieskierowany}
+		\label{fig:test_undirected}
+	\end{center}
+\end{figure}
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.65\textwidth]{test_graph_directed.eps}
+		\caption{Wykorzystywany do testów graf skierowany}
+		\label{fig:test_directed}
+	\end{center}
+\end{figure}
 
 
 \section{Instrukcja użytkownika}
@@ -1032,7 +1046,7 @@ Do porównań wybrane zostały dwie najpopularniejsze biblioteki grafów:
 \begin{description}
 \item[Boost::BGL]
 Biblioteka BGL (ang. \emph{Boost Graph Library}), została stworzona przez Jeremiego Sieka oraz grupę z~uniwersytetu Notre Dame w~USA.
-Wchodzi w~skład bibliotek Boost, zawiera szablony reprezentujące grafy oraz zbiór kilkudziesięciu algorytmów grafowych.
+Wchodzi w~skład bibliotek Boost, zawiera szablony reprezentujące grafy oraz zbiór kilkudziesięciu algorytmów grafowych\cite{bgl}.
 Grafy są dostarczane w postaci generycznej, dzięki czemu z wierzchołkiem, krawędzią lub całym grafem można związać obiekt lub obiekty dowolnego typu.
 Szablony z biblioteki boost::graph wykorzystują kolekcje ze standardowej biblioteki szablonów (STL).
 
@@ -1042,7 +1056,7 @@ W~najprostszym przypadku, gdy krawędzie są przechowywane w wektorze, identyfik
 \item[igraph]
 \emph{igraph} jest przestronną biblioteką grafów, wspierającą aplikacje pisane w~językach takich jak: C, R, Python, czy Ruby.
 Zawiera funkcje implementujące klasyczne problemy teorii grafów, takie jak minimalne drzewa rozpinające, czy algorytmy najkrótszych ścieżek.
-Potrafi również generować kilkanaście rodzajów grafów, a~także eksportować je do wielu formatów obsługiwanych przez oprogramowanie graficzne.
+Potrafi również generować kilkanaście rodzajów grafów, a~także eksportować je do wielu formatów obsługiwanych przez oprogramowanie graficzne\cite{igraph}.
 
 Jest najpopularniejszą biblioteką grafów napisaną w~języku C.
 \end{description}
@@ -1140,7 +1154,8 @@ Ponownie w~przypadku SCGL oraz BLG, wyniki dla grafów nieskierowanych są gorsz
 Biblioteka SCGL osiągnęła niższe czasy tworzenia i czyszczenia pamięci niż jej odpowiednik napisany w~C++.
 
 Ostatni test polegał na wytyczeniu najkrótszych ścieżek z~pierwszego węzła w~grafie (indeks zerowy), do wszystkich pozostałych, przy zastosowaniu algorytmu Dijkstry (więcej na str. \pageref{chap:dijkstra}).
-Podobnie jak poprzednie testy, ten bazował na dwóch grafach: skierowanym oraz nieskierowanym, oba o~nieujemnych kosztach poszczególnych krawędzi. (TODO ref do fig)
+Podobnie jak poprzednie testy, ten bazował na dwóch grafach: skierowanym oraz nieskierowanym, oba o~nieujemnych kosztach poszczególnych krawędzi, reprezentowane są przez rysunki \ref{fig:test_directed}, \ref{fig:test_undirected}.
+
 Z~powodu niewielkich rozmiarów badanych grafów, operacja wyznaczania ścieżek została powtórzona 10000 razy.
 
 \begin{table}[htb]
@@ -1174,18 +1189,106 @@ Jako ciekawostkę można dodać, że kody źródłowe oparte na bibliotece BGL, 
 %ze działa ze dynamiczne ze atrybuty (w igraph to dopiero eksperymentalna opcja), ze szybkie i w miarę małe, 
 \chapter*{Summary}
 \addcontentsline{toc}{chapter}{Summary}
-\bibliography{thesis}
+
+
+\begin{thebibliography}{19}
+\bibitem{graphtheory}
+Ross K.A., Wright C., \emph{Matematyka dyskretna}, PWN, 2006
+
+\bibitem{graphtheory2}
+West D.B, \emph{Introduction to Graph Theory}, Prentice Hall, 1999
+
+\bibitem{dijkstra}
+Cormen, T.H., Leiserson, C.E., \emph{Introduction to Algorithms}, MIT Press, 2009
+
+\bibitem{ospf}
+Moy J.T, \emph{OSPF: Anatomy of an Internet Routing Protocol}, Addison-Wesley, 1998
+
+\bibitem{unix}
+Raymond S.E., \emph{The Art of UNIX Programming}, Addison-Wesley Professional, 2003
+
+\bibitem{ansi}
+Kernighan B.W., Ritchie D.M., \emph{Język ANSI C. Programowanie.} Helion, 2010
+
+\bibitem{algo}
+Banachowski L., \emph{Algorytmy i struktury danych}, WNT 2011
+
+\bibitem{bgl}
+Boost Graph Library: Dijkstra's Shortest Paths, \url{http://www.boost.org/doc/libs/1_49_0/libs/graph/doc/dijkstra_shortest_paths.html}, stan na dzień 15.03.2012
+
+\bibitem{lkl}
+Linux Kernel Linked List Explained, \url{http://isis.poly.edu/kulesh/stuff/src/klist/}, stan na dzień 25.02.2012
+
+\bibitem{lkl2}
+FAQ/LinkedLists, \url{http://kernelnewbies.org/FAQ/LinkedLists}, stan na dzień 26.02.2012
+
+\bibitem{dejagnu}
+Doar M.B., \emph{Practical Development Environments}, O'Reilly Media, 2005
+
+\bibitem{expect}
+Libes D., \emph{Exploring Expect}, O'Reilly Media, 2010
+
+\bibitem{igraph}
+The igraph library for complex network research, \url{http://igraph.sourceforge.net/documentation.html}, stan na dzień 01.12.2011
+
+\end{thebibliography}
+
+
+
 \chapter*{Dodatek A. Dokumentacja}
 \addcontentsline{toc}{chapter}{Dodatek A. Dokumentacja}
 \chapter*{Dodatek B. Oświadczenie}
+
+\newlength{\oldparskip}
+\setlength{\oldparskip}{\parskip}
+\setlength{\parindent}{0pt}.
+\setlength{\parskip}{0.3cm}
+
+Imię i nazwisko: \emph{Patryk Kwiatkowski} \hfill Częstochowa, dn. \emph{\today} \\
+Nr albumu: \emph{101510} \\
+Kierunek: \emph{Informatyka} \\
+Wydział: \emph{Wydział Inżynierii Mechanicznej i~Informatyki} \\
+
+\vfill
+Politechnika Częstochowska
+\vfill
+\begin{flushright}
+\textbf{Szanowny Pan (i) Dziekan} \hspace*{1cm}
+\end{flushright}
+\vfill
+\begin{center}
+\textbf{\textsc{\large Oświadczenie}}
+\end{center}
+\vfill
+
+Pod rygorem odpowiedzialności karnej oświadczam, że złożona przez mnie praca dyplomowa pt. \emph{,,Implementacja podstawowej biblioteki grafów w~języku C''} jest moim samodzielnym opracowaniem.
+
+Jednocześnie oświadczam, że praca w~całości lub we fragmentach nie została dotychczas przedłożona w~żadnej szkole.
+
+Niezależnie od art.239 Prawo o~szkolnictwie wyższym wyrażam zgodę na nieodpłatne wykorzystanie przez Politechnikę Częstochowską całości lub fragmentów w/w pracy w~publikacjach Politechniki Częstochowskiej.
+
+\vfill
+
+\begin{center}
+	\begin{minipage}{0.7\textwidth}
+		\begin{flushright}
+		\begin{minipage}{0.4\textwidth}
+			\begin{center}
+			\dotfill\\
+			podpis
+			\end{center}
+		\end{minipage}
+		\end{flushright}
+	\end{minipage}
+\end{center}
+
+\setlength{\parskip}{\oldparskip}
+
+
 \addcontentsline{toc}{chapter}{Dodatek B. Oświadczenie}
 \chapter*{Dodatek C. Opis zawartości płyty CD}
 \addcontentsline{toc}{chapter}{Dodatek C. Opis zawartości płyty CD}
 \label{chap:cd}
-tmp tmp\cite{bib:test}
-%http://diestel-graph-theory.com/basic.html < basic theory?
-%Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein, Clifford Wprowadzenie do algorytmów, wyd. 7, WNT 2007, ISBN 83-204-3149-2. < dijkstra
-
 
 \listoffigures
 \listoftables
