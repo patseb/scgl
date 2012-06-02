@@ -1180,6 +1180,43 @@ Warto zauważyć, iż SCGL korzysta z~mniej wydajnych list powiązanych, co za t
 Z~tego powodu, w~przypadku dużych grafów, implementacja ta będzie mniej wydajna niż BGL.
 Różnica pomiędzy czasami dla grafu skierowanego i~nieskierowanego, dla biblioteki SCGL, wynika z~dodatkowej ilości obiektów (dodatkowe krawędzie symulują ,,bezkierunkowości''), które musi przeszukać algorytm.
 
+Dodatkowym atutem biblioteki SCGL jest jej prostota.
+Z~tego powodu postanowiono przeprowadzić również porównanie rozmiarów plików wynikowych z~linkowaniem statycznym (ang. \emph{static linking}).
+
+Konsolidacja statyczna, polega na umieszczeniu plików biblioteki (pliki z~rozszerzeniem \code{*.a}) wewnątrz aplikacji użytkownika.
+Dzięki temu zabiegowi, aplikacja ta uniezależniona jest od współdzielonych plików (znajdujących się najczęściej w~\code{/usr/lib/}), które mogą ulec zmianie lub zniszczeniu --- co czyni ją w~pełni przenośną (pomijając kwestie architektury komputera).
+Taki tym kompilacji wykorzystuje się również często w~rozwiązaniach opartych o~systemy wbudowane (ang. \emph{embedded}), gdzie środowisko systemowe jest ograniczone, a~aplikacja użytkownika powinna być przenośna.
+
+Testom zostały poddane aplikacje wykorzystane przy, wcześniej opisanych, testach wydajnościowych.
+\begin{itemize}
+	\item \code{mem\_size} --- test wykorzystania pamięci
+	\item \code{mem\_speed} --- test szybkości tworzenia/usuwania obiektów
+	\item \code{dijkstra} --- test szybkości działania algorytmu Dijkstry
+\end{itemize}
+\begin{table}[htb]
+\caption{Wyniki pomiaru rozmiarów plików wynikowych z~zastosowaniem różnych typów konsolidacji}
+\label{tab:static}
+\centering
+\begin{tabular}{ | c | l | r | r |}
+	\hline
+	\multirow{2}{*}{Nazwa biblioteki} & \multirow{2}{*}{Nazwa aplikacji} & \multicolumn{1}{|c|}{Wynik konsolidacji} & \multicolumn{1}{|c|}{Wynik konsolidacji} \\
+		& & \multicolumn{1}{|c|}{statycznej w~KiB} & \multicolumn{1}{|c|}{dynamicznej w~KiB} \\
+	\hline \hline
+	\multirow{3}{*}{SCGL}   & \code{mem\_size}  & 736   & 3.8   \\ \cline{2-4}
+							& \code{mem\_speed} & 736   & 3.8   \\ \cline{2-4}
+							& \code{dijkstra}   & 742   & 4.8   \\ \hline
+	\multirow{3}{*}{BGL}    & \code{mem\_size}  & 1638  & 9.2   \\ \cline{2-4}
+							& \code{mem\_speed} & 1638  & 9.2   \\ \cline{2-4}
+							& \code{dijkstra}   & 1740  & 21.0  \\ \hline
+	\multirow{3}{*}{igraph} & \code{mem\_size}  & 884   & 3.9   \\ \cline{2-4}
+							& \code{mem\_speed} & 884   & 3.9   \\ \cline{2-4}
+							& \code{dijkstra}   & 1126  & 5.1   \\ \hline
+\end{tabular}
+\end{table}
+Dla porównania zamieszczono również rozmiary aplikacji po linkowaniu dynamicznym.
+Jak można zauważyć na powyższej tabeli, rozwiązanie proponowane przez autora pracy, charakteryzuje się najmniejszymi rozmiarami plików. Cecha ta może być ogromną zaletą podczas tworzenia aplikacji na wspomnane systemy wbudowane.
+Widać również, że fakt wykorzystania języka C++ do stworzenia biblioteki BLG znacząco wpływa na jej rozmiary (podobną zależność autor pracy zaobserwował we wszystkich, nawet najprostszych programach napisanych w~C++).
+
 Jako ciekawostkę można dodać, że kody źródłowe oparte na bibliotece BGL, jak i~wszystkie rozwiązania oparte na języku C++, mają przeciętnie 3---4 razy dłuższe czasy kompilacji, niż ich odpowiedniki w~języku C~(zarówno dla biblioteki igraph, jak i~SCGL).
 
 
