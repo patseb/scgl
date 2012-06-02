@@ -1,10 +1,11 @@
-\documentclass[a4paper,12pt,polish,oneside,openright]{thesis}
+\documentclass[a4paper,12pt,polish,twoside,openright]{thesis}
 \usepackage{listings}
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage{chngcntr}
 \usepackage{pdfpages}
 \usepackage{url}
+\usepackage{array}
 \usepackage[polish]{babel}
 
 \counterwithout{figure}{chapter}
@@ -116,7 +117,7 @@ Zawiera on też kilka przykładów wykorzystania interfejsu użytkownika.
 Ostatnia część pracy przedstawia porównanie stworzonego na cele pracy projektu, z~istniejącymi już rozwiązaniami.
 Porównania te zostały przeprowadzone pod kątem ilości zużywanej pamięci, oraz czasu jaki jest potrzebny na wykonanie podstawowych funkcji tego typu biblioteki.
 
-Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja niniejszej biblioteki.
+%Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja niniejszej biblioteki.
 
 \chapter{Wybrane zagadnienia teorii grafów}
 Rozdział ten, powstał w~celu zdefiniowania oraz wyjaśnienia elementarnych pojęć związanych z~teorią grafów. Wiadomości w~nim zawarte opierają się na publikacjach \cite{graphtheory} oraz \cite{graphtheory2}, w~których można odnaleźć więcej szczegółowych informacji.
@@ -171,15 +172,33 @@ Innymi metodami zapisu mogą być:
 	Wadą jest tu zwiększona złożoność operacji elementarnych (np. usunięcie krawędzi).
 
 	\item Macierz incydencji --- macierz o~wymiarach odpowiadających ilości węzłów na ilość krawędzi.
-	Zawiera jedynie informacje takie, że wartość w~punkcje \{i, j\} = 1 tylko, gdy \emph{j}-ta krawędź kończy się na \emph{i}-tym wierzchołku.
+	Zawiera jedynie informacje takie, że wartość w~punkcje \{i, j\} = 1 tylko, gdy \emph{j}-ta krawędź zaczyna się na \emph{i}-tym wierzchołku, = -1 gdy się kończy, a~0 gdy nie są incydentne.
 \end{itemize}
 
 Dla lepszego zrozumienia owych struktur warto ponownie przeanalizować rysunek \ref{fig:smallgraph}
 oraz odpowiadające mu metody zapisu:
 \begin{itemize}
 	\item macierz sąsiedztwa:
+		$\begin{array}{|c c c c|}
+			0 & 0 & 0 & 0 \\
+			1 & 0 & 0 & 1 \\
+			1 & 1 & 0 & 0 \\
+			0 & 0 & 1 & 0 \\
+		\end{array}$
 	\item lista sąsiedztwa:
+		$\begin{array}{l}
+			A \rightarrow B,~C \\
+			B \rightarrow C \\
+			C \rightarrow D \\
+			D \rightarrow B \\
+		\end{array}$
 	\item macierz incydencji:
+		$\begin{array}{|c c c c c|}
+			1  & 0  & 0  & 0  & 1  \\
+			-1 & 1  & 0  & -1 & 0  \\
+			0  & -1 & 1  & 0  & -1 \\
+			0  & 0  & -1 & 1  & 0  \\
+		\end{array}$
 \end{itemize}
 
 Informacje przytoczone w~powyższym rodziale, są podstawowymi pojęciami teorii grafów, stanowią one jedynie ułamek tej rozległej dziedziny nauki, lecz pomogą zrozumieć tematykę poruszaną przez niniejszą pracę.
@@ -850,7 +869,7 @@ Należy jednak pamiętać, że w~samych testach również może wkraść się b�
 \end{figure}
 \begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=0.65\textwidth]{gfx/test_graph_directed.eps}
+		\includegraphics[width=0.7\textwidth]{gfx/test_graph_directed.eps}
 		\caption{Wykorzystywany do testów graf skierowany}
 		\label{fig:test_directed}
 	\end{center}
@@ -1268,7 +1287,17 @@ Może być również niezwykle użyteczna w~procesie analizy zasad działania al
 
 \chapter*{Summary}
 \addcontentsline{toc}{chapter}{Summary}
+The work describes the desing and the development of a~basic graph library in C~language.
+Mechanic of the designed library and the user API are described in detail and UML diagrams are being shown.
 
+Within the work author created an basic graph library and implemented Dijkstra shortest path algorithm.
+Author also designed and implemented unit tests for core functionality.
+
+The created software fully benefits from the advantages of C~language.
+It is generall smaller and faster than other popular graph libraries (Boost::Graph, igprah).
+The API is well described by the generated documentation, which is in English.
+
+The created library, it's source code and documentation are attached on the compact disc.
 
 \begin{thebibliography}{19}
 \bibitem{graphtheory}
@@ -1314,11 +1343,12 @@ The igraph library for complex network research, \url{http://igraph.sourceforge.
 
 
 
-\chapter*{Dodatek A. Dokumentacja}
-\addcontentsline{toc}{chapter}{Dodatek A. Dokumentacja}
+%chapter*{Dodatek A. Dokumentacja}
+%addcontentsline{toc}{chapter}{Dodatek A. Dokumentacja}
+%includepdf[scale=0.8,pages=1-25]{refman}
 
-\chapter*{Dodatek B. Oświadczenie}
-\addcontentsline{toc}{chapter}{Dodatek B. Oświadczenie}
+\chapter*{Dodatek A. Oświadczenie}
+\addcontentsline{toc}{chapter}{Dodatek A. Oświadczenie}
 \newlength{\oldparskip}
 \setlength{\oldparskip}{\parskip}
 \setlength{\parindent}{0pt}.
@@ -1364,47 +1394,40 @@ Niezależnie od art.239 Prawo o~szkolnictwie wyższym wyrażam zgodę na nieodp�
 
 \setlength{\parskip}{\oldparskip}
 
-\chapter*{Dodatek C. Opis zawartości płyty CD}
-\addcontentsline{toc}{chapter}{Dodatek C. Opis zawartości płyty CD}
+\chapter*{Dodatek B. Opis zawartości płyty CD}
+\addcontentsline{toc}{chapter}{Dodatek B. Opis zawartości płyty CD}
 \label{chap:cd}
-\begin{lstlisting}[basicstyle={\small},caption={Struktura plików zamieszczonych na płycie CD}]
+\begin{lstlisting}[style=coden,caption={Struktura plików zamieszczonych na płycie CD}]
 .
-|-- praca/
-|   |-- gfx
-|   |-- url
-|   |-- praca.lyx
-|   |-- praca.pdf
-|   |-- praca.tex
-|   `-- praca.txt
-`-- program/
-    |-- dotNetFx40_Full_x86_x64.exe
-        |-- bin/
-            `-- src/
+|-- .git/
+|-- doc/
+|   |-- latex/
+|   \-- thesis/
+|       |-- gfx/
+|       |-- thesis.pdf
+|       |-- thesis.tex
+|       \-- thesis.txt
+|-- include/
+|-- perf_tests/
+|-- src/
+|-- unit_tests/
+|   \-- scgl.test/
+\-- LICENSE
 \end{lstlisting}
 
-%Obja¶nienie:
-%\begin{description}
-%	\item [{praca/gfx/}] katalog zawieraj±cy grafiki wykorzystane w~powy¿szej
-%pracy (wymagane do kompilacji pliku {*}.lyx oraz {*}.tex).
-
-%	\item [{praca/url/}] kopia niektórych stron internetowych za³±czonych w~bibliografii.
-
-%	\item [{praca/praca.lyx}] pierwotne ¼ród³o pracy; pozosta³e formaty s±
-%wynikiem generowania.
-
-%	\item [{program/dotNetFx40\_Full\_x86\_x64.exe}] instalator pakietu .NET 
-%Framework 4.0, wymaganego do uruchomienia aplikacji.
-
-%	\item [{program/bin/}] zawiera skompilowane, binarne, wersje programów
-%opisanych w~powy¿szej pracy. Umieszczone one s± odpowiedno w~katalogach
-%myTorrentClient oraz myTorrentServer. Za³±czone s± tu równie¿ wymagane
-%pliki konfiguracyjne.
-
-%	\item [{program/src/}] zawiera kod ¼ród³owy programów opisanych w~powy¿szej
-%pracy, s± to projekty programu ,,Microsoft Visual C\# 2008 Express
-%Edition''. Umieszczone one s± odpowiedno w~katalogach myTorrentClient
-%oraz myTorrentServer.
-%\end{description}
+\begin{description}
+	\item [{.git/}] katalog zawierający repozytorium programu \emph{git}
+	\item [{doc/latex}] dokumentacja wygenerowana przez program \emph{Doxygen}
+	\item [{doc/thesis/gfx/}] katalog zawierający grafiki wykorzystane w~niniejszej pracy magisterskiej
+	\item [{doc/thesis/thesis.pdf}] treść pracy zapisana w~formacie Adobe Portable Document
+	\item [{doc/thesis/thesis.tex}] treść pracy zapisana w~języku \LaTeX
+	\item [{doc/thesis/thesis.txt}] treść pracy zapisana w~formacie tekstowym
+	\item [{include/}] zawiera pliki nagłówkowe opisanej w~pracy biblioteki SCGL
+	\item [{perf\_tests/}] zawiera pliki źródłowe testów wydajnościowych
+	\item [{src/}] zawiera pliki kodu źródłowego opisanej w~pracy biblioteki SCGL
+	\item [{unit\_tests/scgl.test/}] zawiera skrypt testów jednostkowych platformy DejaGNU oraz plik kod źródłowy interfejsu tych testów
+	\item [{LICENSE}] treść licencji na jakiej został udostępniony kod biblioteki SCGL
+\end{description}
 
 \listoffigures
 \listoftables
