@@ -119,7 +119,7 @@ Porównania te zostały przeprowadzone pod kątem ilości zużywanej pamięci, o
 Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja niniejszej biblioteki.
 
 \chapter{Wybrane zagadnienia teorii grafów}
-Rozdział ten, powstał w~celu zdefiniowania oraz wyjaśnienia elementarnych pojęć związanych z~teorią grafów. Wiadomości w~nim zawarte opierają się na publikacjach \cite{graphtheory} oraz \cite{graphtheory2}, w~których można odnaleźć więcej szczegółowych inforamcji.
+Rozdział ten, powstał w~celu zdefiniowania oraz wyjaśnienia elementarnych pojęć związanych z~teorią grafów. Wiadomości w~nim zawarte opierają się na publikacjach \cite{graphtheory} oraz \cite{graphtheory2}, w~których można odnaleźć więcej szczegółowych informacji.
 Pojęcia te będą często używane w~dalszych częściach pracy, zatem usystematyzowanie tej wiedzy jest niezwykle istotne, aby dobrze zrozumieć sens przekazywanych słów.
 
 \begin{description}
@@ -288,12 +288,12 @@ Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzon
 	\item[SCGL::Edge]
 	Jedna z~ważniejszych klas SCGL, reprezentuje krawędź wewnątrz grafu.
 	Określana jest poprzez referencje do dwóch wierzchołków (od, do) oraz grafu, którego jest elementem składowym (tzw. ,,rodzica'').
-	Dodatkowo posiada dynamiczną listę atrybutów (obiekty klasy SCGL::Attr) oraz generycze pole koszt (zmienna typu określanego podczas kompilacji).
+	Dodatkowo posiada dynamiczną listę atrybutów (obiekty klasy SCGL::Attr) oraz generyczne pole koszt (zmienna typu określanego podczas kompilacji).
 
 	SCGL::Edge przenosi również informację o~jej ,,rodzeństwie''.
 	W~przypadku gdy krawędź jest nieskierowana, tworzony jest jej ,,brat'' (obiekt klasy dziedziczącej SCGL::EdgeSibling).
 	Obiekt ten poprzez fakt dziedziczenia, jest klasą zawierającą dokładnie te same składowe co klasa bazowa. Jedyną różnicą jest konstruktor, który nie przyjmuje informacji o~atrybutach ponieważ nie ma potrzeby powielania tych danych.
-	Wierzchołki rodzeństwa są zamienione tj. wierzchołek ,,od'' krwędzi oryginalnej, jest wierzchołkiem ,,do'' brata.
+	Wierzchołki rodzeństwa są zamienione tj. wierzchołek ,,od'' krawędzi oryginalnej, jest wierzchołkiem ,,do'' brata.
 
 	Klasa ta dostarcza metody dostępowe do swych pól prywatnych a~także metodę która pozwala na wywołanie funkcji użytkownika na każdym z~atrybutów krawędzi.
 	Dodatkowo jak wcześniej opisane klasy, umożliwia również wyprowadzenie jej zawartości na strumień.
@@ -306,7 +306,7 @@ Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzon
 
 	\item[SCGL::Vertex]
 	Klasa ta reprezentuje wierzchołek grafu.
-	Podobnie jak SCGL::Graph posiada indentyfikator \code{ID}, który jest ciągiem znaków, oraz metody pozwalające na manipulacje nim.
+	Podobnie jak SCGL::Graph posiada identyfikator \code{ID}, który jest ciągiem znaków, oraz metody pozwalające na manipulacje nim.
 	Przechowuje ona dwie listy krawędzi z~nią związanych:
 	\begin{itemize}
 		\item \code{in} --- wchodzących do węzła,
@@ -337,7 +337,7 @@ Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzon
 	\end{figure}
 
 	\item[SCGL::Algorithms]
-	Jest to klasa, która dostaracza jedynie implementacje algorytmów teorii grafów.
+	Jest to klasa, która dostarcza jedynie implementacje algorytmów teorii grafów.
 	Aktualnie zawiera jedynie funkcję obsługującą algorytm Dijkstry, podczas działania którego wykorzystuje klasy Pair oraz PQueue.
 	\begin{figure}[htb]
 	\begin{center}
@@ -538,7 +538,7 @@ struct scgl_graph {
 	list_head_t edges;
 };
 \end{lstlisting}
-Taka metoda przechowywania informacji przypmina nieco listy sąsiedztwa (czyt. na str. \pageref{neigh_list}), nie jest jednak dokładną ich implementacją.
+Taka metoda przechowywania informacji przypomina nieco listy sąsiedztwa (czyt. na str. \pageref{neigh_list}), nie jest jednak dokładną ich implementacją.
 
 Zastosowanie list powiązanych, zapożyczonych z~jądra Linuksa, pozwoliło na oszczędzenie pamięci oraz szybkości działania.
 Przyśpieszyło i ułatwiło to również sam proces tworzenia biblioteki SCGL.
@@ -1194,7 +1194,7 @@ Testom zostały poddane aplikacje wykorzystane przy, wcześniej opisanych, testa
 	\item \code{dijkstra} --- test szybkości działania algorytmu Dijkstry
 \end{itemize}
 \begin{table}[htb]
-\caption{Wyniki pomiaru rozmiarów plików wynikowych z~zastosowaniem różnych typów konsolidacji}
+\caption{Wyniki pomiaru rozmiarów plików wykonywalnych z~zastosowaniem różnych typów konsolidacji}
 \label{tab:static}
 \centering
 \begin{tabular}{ | c | l | r | r |}
@@ -1214,7 +1214,7 @@ Testom zostały poddane aplikacje wykorzystane przy, wcześniej opisanych, testa
 \end{tabular}
 \end{table}
 Dla porównania zamieszczono również rozmiary aplikacji po linkowaniu dynamicznym.
-Jak można zauważyć na powyższej tabeli, rozwiązanie proponowane przez autora pracy, charakteryzuje się najmniejszymi rozmiarami plików. Cecha ta może być ogromną zaletą podczas tworzenia aplikacji na wspomnane systemy wbudowane.
+Jak można zauważyć na powyższej tabeli, rozwiązanie proponowane przez autora pracy, charakteryzuje się najmniejszymi rozmiarami plików. Cecha ta może być ogromną zaletą podczas tworzenia aplikacji na wspominane systemy wbudowane.
 Widać również, że fakt wykorzystania języka C++ do stworzenia biblioteki BLG znacząco wpływa na jej rozmiary (podobną zależność autor pracy zaobserwował we wszystkich, nawet najprostszych programach napisanych w~C++).
 
 Jako ciekawostkę można dodać, że kody źródłowe oparte na bibliotece BGL, jak i~wszystkie rozwiązania oparte na języku C++, mają przeciętnie 3---4 razy dłuższe czasy kompilacji, niż ich odpowiedniki w~języku C~(zarówno dla biblioteki igraph, jak i~SCGL).
@@ -1222,8 +1222,50 @@ Jako ciekawostkę można dodać, że kody źródłowe oparte na bibliotece BGL, 
 
 \chapter*{Podsumowanie}
 \addcontentsline{toc}{chapter}{Podsumowanie}
-%ze można zmniejszyć narzut, ze można usprawnić kopiec, ze można dodać haslistę  ze można dodać algorytmy, 
-%ze działa ze dynamiczne ze atrybuty (w igraph to dopiero eksperymentalna opcja), ze szybkie i w miarę małe, 
+W~ramach niniejszej pracy naukowej, według opinii jej autora, zrealizowano wszystkie postawione w~niej cele i~wymagania.
+
+Zaimplementowano podstawową bibliotekę grafów w~języku C --- \emph{Simple C~Graph Library: SCGL}.
+Biblioteka ta podzielona została na moduły zajmujące się obsługą poszczególnych elementów teorii grafów.
+Zaprojektowano oraz wdrożono jednolity interfejs programisty (API), który pozwala na dodanie obsługi grafów w~aplikacjach innego użytkownika.
+Dodatkowo do biblioteki została załączona pełna dokumentacja owego API, stworzona w~języku angielskim.
+SCGL obsługuje również jeden z~najważniejszych algorytmów teorii grafów --- algorytm wyszukiwania najkrótszych ścieżek Dijkstry.
+
+Praca ta nie stanowi nowego podejścia do problemu, istnieje bowiem ogromna ilość bibliotek grafowych, w~tym również te napisane w~języku C. Jednakże jest to jedna z~bardzo nielicznych (o~ile nie jedyna) prosta implementacja podstawowych elementów teorii grafów. Dzięki temu może ona stanowić przykład pozwalający zrozumieć zasady działania algorytmów grafowych.
+
+Zaimplementowana biblioteka potrafi tworzyć, manipulować oraz usuwać zarówno grafy jak i~ich elementy składowe (wierzchołki oraz krawędzie) a~także wyznaczać najkrótsze ścieżki przy pomocy algorytmu Dijkstry.
+Pozwala ona również na przechowywanie dowolnej liczby, dowolnych typów atrybutów krawędzi, a~także dostosowanie typu atrybutu kosztu krawędzi do potrzeb użytkownika (typ kompilowany statycznie).
+Cechuje się przede wszystkim prostotą oraz niezbyt dużą ilością kodów źródłowych.
+Dzięki czemu pozostaje czytelna, co znacznie ułatwi przyszły rozwój tego oprogramowania.
+Dodatkowo załączone do pracy, na płycie CD, repozytorium programu \emph{git}, pozwoli na poznanie historii tworzenia biblioteki.
+
+Prostota zaproponowanego rozwiązania przekłada się również na jego wydajność.
+Wykorzystując grafy skierowane SCGL zużywa mniej pamięci RAM niż biblioteka igraph.
+Jest ona również dużo szybsza w~przypadku tworzenia oraz usuwania obiektów od rozwiązania proponowanego przez twórców Boost::Graph.
+Dodatkowo wykazała się podobnym (do BGL) czasem wykonywania algorytmu Dijkstry dla niewielkich grafów, a~dużo mniejszym do igraph.
+Biblioteka SCGL cechuje się również najmniejszymi, spośród badanych rozwiązań, rozmiarami plików wykonywalnych (zarówno w~wyniku konsolidacji dynamicznej jak i~statycznej).
+Dzięki temu może być stosowana w~rozwiązaniach wbudowanych (embedded) gdzie występuje potrzeba minimalizacji zużywanej pamięci masowej FLASH/EEPROM.
+
+Pomimo faktu, że biblioteka ta została napisana z~myślą o~systemach operacyjnych rodziny Unix/Linux, z~całą pewnością może być ona przeniesiona na inne systemy operacyjne (np. firmy Microsoft).
+Pewność ta wynika z~braku zależności biblioteki od jakichkolwiek specyficznych mechanizmów systemów Unix/Linux.
+
+Stworzoną do celów pracy bibliotekę, można by w~przyszłości rozbudować realizując zaproponowane przez autora pracy pomysły:
+\begin{itemize}
+	\item Dodanie kolejnych algorytmów teorii grafów, np. algorytm Bellmana-Forda, lub Prima.
+	\item Przyśpieszenie działania algorytmu Dijkstry poprzez zastosowanie tabel asocjacyjnych.
+	\item Ukrycie przed użytkownikiem biblioteki zawartości wszystkich struktur, wymuszając korzystanie jedynie z~dostarczonego API.
+	\item Dodanie mechanizmu serializacji grafów, dzięki któremu biblioteka mogłaby być wykorzystana w~aplikacjach korzystających z~MPI\footnote{MPI (ang. \emph{Message Passing Interface}, protokół komunikacyjny będący standardem przesyłania komunikatów pomiędzy procesami programów równoległych działających na jednym lub więcej komputerach.}.
+\end{itemize}
+W~dalszym rozwoju biblioteki może pomóc fakt istnienia szeregu testów jednostkowych, napisanych przy wykorzystaniu platformy DejaGNU. Pozwalają one zweryfikować poprawność działania istniejących już modułów/jednostek biblioteki SCGL, przez co programista może mieć pewność, że jego zmiany nie wprowadziły dodatkowych błędów.
+
+Autor pracy zebrał oraz przyswoił wiedzę na temat podstawowych aspektów teorii grafów, oraz działania algorytmów wyszukiwania najkrótszych ścieżek.
+Pogłębił również wiedzę z~tematyki programowania w~języku C.
+Zapoznał się dokładniej z~technologiami wykorzystywanymi w~jądrze systemów Linux, oraz platformą testową DejaGNU.
+Posiadł umiejętności z~zakresu tworzenia bibliotek zarówno statycznych jak i~dynamicznych, oraz testów jednostkowych.
+Poszerzył także wiedzę o~dobrych praktykach programistycznych.
+
+Podsumowując można stwierdzić, że zrealizowana w~ramach niniejszej pracy implementacja podstawowej biblioteki grafów, może być skutecznie wykorzystywana do modelowania zjawisk świata rzeczywistego (np. sieci komputerowych).
+Może być również niezwykle użyteczna w~procesie analizy zasad działania algorytmów teorii grafów, a~także do przybliżenia technik programistycznych umożliwiających tworzenie wydajnego oprogramowania.
+
 \chapter*{Summary}
 \addcontentsline{toc}{chapter}{Summary}
 
