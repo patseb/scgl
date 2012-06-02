@@ -58,10 +58,11 @@ scgl: $(OBJECTS)
 	@echo "Linking object files into $(TOPDIR)lib/libscgl.a library"
 	@mkdir -p $(TOPDIR)lib
 	@ar sr $(TOPDIR)lib/libscgl.a $^
+	@$(CC) -shared -Wl,-soname,libscgl.so.1 -o $(TOPDIR)lib/libscgl.so.1.0.0 $^
 
 $(OBJECTS): $(SOURCES)
 	@echo "Building $@ object"
-	@$(CC) $(CFLAGS) $(MFLAGS) -c $*.c -o $@
+	@$(CC) $(CFLAGS) $(MFLAGS) -c -fPIC $*.c -o $@
 
 tests:
 	@echo "Building DejaGNU's tests interface"
