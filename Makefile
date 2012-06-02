@@ -73,6 +73,6 @@ tests:
 clean::
 	@echo "Removing object (src/), library (lib/), and DejaGNU's test files"
 	@rm -rf $(TOPDIR)src/*.o
-	@rm -rf $(TOPDIR)lib/libscgl.a
+	@rm -rf $(TOPDIR)lib/libscgl.*
 	@rm -rf $(TOPDIR)unit_tests/scgl.test/tests.out
 	@rm -rf $(TOPDIR)unit_tests/scgl.log $(TOPDIR)unit_tests/scgl.sum
