@@ -83,8 +83,8 @@ Celem pracy jest stworzenie oprogramowania komputerowego umożliwiającego tworz
 Oprogramowanie to, dalej zwane \emph{biblioteką} powinno dostarczyć interfejs programistyczny (API), pozwalający na tworzenie oraz działanie na podstawowych elementach grafów.
 Biblioteka ta powinna również implementować jeden z~wybranych algorytmów teorii grafów.
 
-Oprogramowanie to powinna poprawnie działać na systemach operacyjnych rodziny Linux, przy zachowaniu jak najmniejszych wymagań na ich zasoby pamięciowe oraz obliczeniowe.
-Powinna również dostarczać mechanizm testów jednostkowych --- bazujących na dowolnej platformie testowej --- pozwalających na dalszy rozwój oprogramowania.
+Oprogramowanie to powinno poprawnie działać na systemach operacyjnych rodziny Linux, przy zachowaniu jak najmniejszych wymagań na ich zasoby pamięciowe oraz obliczeniowe.
+Rozwiązanie to powinno również dostarczać mechanizm testów jednostkowych --- bazujących na dowolnej platformie testowej --- pozwalających na dalszy rozwój oprogramowania.
 
 Spełniając powyższe wymagania, biblioteka ta powinna zostać stworzona przy użyciu języka C. Zachowując przy tym prostotę oraz przejrzystość kodu źródłowego.
 Kod ten powinien być również dobrze udokumentowany, zarówno za pomocą poniższej pracy jak i~wygenerowanej automatycznie dokumentacji.
@@ -153,7 +153,7 @@ Przedstawiając obrazowo powyższe definicje można posłużyć się prostym rys
 	\end{center}
 \end{figure}
 
-Punkty A, B, C oraz D znajdujące się na rysunku \ref{fig:smallgraph} nazywamy \emph{wierzchołkami}, łączące je linie \emph{krawędziami} (nieskierowanymi), zaś całość tworzy strukturę \emph{grafu} (skierowanego).
+Punkty A, B, C oraz D znajdujące się na rysunku \ref{fig:smallgraph} nazywamy \emph{wierzchołkami}, łączące je linie \emph{krawędziami} (skierowanymi), zaś całość tworzy strukturę \emph{grafu} (skierowanego).
 Krawędzie o~wagach 1, 2 oraz 3 tworzą \emph{drogę}, z~węzła A do węzła D. Rozpoczynając trasę z~wierzchołka D nie mamy możliwości przedostania się do węzła A.
 \emph{Sąsiadem} wierzchołka B jest wierzchołek C.
 
@@ -161,14 +161,14 @@ Wszystkie grafy mogą być reprezentowane na wiele sposobów.
 Najbardziej naturalnym i~najprostszym dla człowieka jest \emph{rysunek} grafu, jednakże jest to forma reprezentacji, której komputery nie potrafią (jeszcze) zrozumieć.
 Innymi metodami zapisu mogą być:
 \begin{itemize}
-	\item Macierz sąsiedztwa --- macierz kwadratowa o~rozmiarze \emph{n} równym ilości wierzchołków w~grafie.
+	\item Macierz sąsiedztwa --- macierz kwadratowa o~rozmiarze \emph{n}, równym ilości wierzchołków w~grafie.
 	Każdy jej element oznacza liczbę krawędzi łączącą \emph{i}-ty i~\emph{j}-ty węzeł.
 	Tak zaimplementowana komputerowa struktura danych gwarantuje, że operacje sprawdzenia, czy dodania oraz usunięcia krawędzi odbywają się w stałym czasie.
 	Do jej wad należy duża ilość potrzebnej pamięci – O($n^2$).
 
 	\label{neigh_list}
 	\item Lista sąsiedztwa --- dla każdego wierzchołka zapamiętywana jest lista sąsiadujących z~nim węzłów.
-	Metoda ta wymaga ilości pamięci proporcjonalnej do liczby krawędzi, także przejrzenie całego zbioru krawędzi jest proporcjonalne do jego rozmiaru.
+	Metoda ta wymaga ilości pamięci proporcjonalnej do liczby krawędzi, także czas potrzebny na przejrzenie całego zbioru krawędzi jest proporcjonalny do jego rozmiaru.
 	Wadą jest tu zwiększona złożoność operacji elementarnych (np. usunięcie krawędzi).
 
 	\item Macierz incydencji --- macierz o~wymiarach odpowiadających ilości węzłów na ilość krawędzi.
@@ -205,12 +205,13 @@ Informacje przytoczone w~powyższym rodziale, są podstawowymi pojęciami teorii
 
 \section{Algorytm Dijkstry}
 \label{chap:dijkstra_theory}
-Problem najkrótszej ścieżki polega na znalezieniu w~spójnym\footnote{Graf możemy nazwać spójnym wówczas, gdy dla każdej pary wierzchołków istnieje droga pomiędzy nimi.} i~ważonym\footnote{Graf możemy nazwać ważonym wówczas, gdy każda z~jego krawędzi posiada atrybut wagi/kosztu.} grafie najkrótszego połączenia pomiędzy danymi wierzchołkami.
-Przez najkrótszą ścieżkę rozumiemy takie połączenie między wierzchołkami, które ma najmniejszy koszt przejścia przy czym koszt przejścia określony jest jako suma wag na krawędziach ścieżki\cite{dijkstra}.
-Problem ten możemy zobrazować jako problem znalezienia najszybciej drogi dla pakietów pomiędzy dwoma routerami w~sieci.
+Problemem najkrótszej ścieżki, określamy chęć odnalezienia takiego połączenia między wierzchołkami, które ma najmniejszy koszt przejścia, przy czym koszt przejścia określony jest jako suma wag na krawędziach ścieżki\cite{dijkstra}.
+Problemy te rozwiązuje się w~oparciu o grafy spójne\footnote{Graf możemy nazwać spójnym wówczas, gdy dla każdej pary wierzchołków istnieje droga pomiędzy nimi.} oraz ważone\footnote{Graf możemy nazwać ważonym wówczas, gdy każda z~jego krawędzi posiada atrybut wagi/kosztu.}.
+
+Problem ten możemy zobrazować jako próbę znalezienia najszybciej drogi dla pakietów pomiędzy dwoma routerami w~sieci.
 Każde z~urządzeń trasujących reprezentowane jest wówczas przez węzeł grafu a waga krawędzi może oznaczać przepustowość łącza pomiędzy nimi (informacja przydatna dla protokołów trasowania stanu łącza, np. \emph{OSPF}\cite{ospf}).
 
-Algorytm opracowany przez holenderskiego informatyka Edsgera Dijkstrę, służy do rozwiązywania problemu najkrótszej ścieżki.
+Algorytm opracowany przez holenderskiego informatyka Edsgera Dijkstrę, służy do rozwiązywania tego typu problemów.
 Jest jednym z~najważniejszych algorytmów teorii grafów, wykorzystywanym m. in. właśnie w~protokole trasowania \emph{OSPF}.
 Warunkiem ograniczającym jego działanie jest wymóg istnienia wyłącznie nieujemnych wag krawędzi\footnote{Algorytm Forda-Bellmana pozbawiony jest tej wady, jednakże przez to charakteryzuje się dużo większą złożonością czasową\cite{graphtheory}}.
 Mając dany graf z~wyróżnionym wierzchołkiem (źródłem) algorytm znajduje odległości od niego do wszystkich pozostałych węzłów.
@@ -243,7 +244,7 @@ Jest to sprawdzenie, czy odległość pomiędzy sąsiadem (\code{v}) badanego w�
 Jeśli tak jest, to znaczy, że algorytm znalazł ,,krótszą'' ścieżkę i~należy zaktualizować tablice dystansu \code{d} oraz poprzedników \code{p}.
 
 Istnieje kilka odmian implementacji algorytmu Dijkstry.
-Najprostsza używa tablicy do przechowywania wierzchołków ze zbioru Q.
+Najprostsza wykorzystuje tablicę do przechowywania wierzchołków ze zbioru Q.
 Inne wersje algorytmu używają kolejki priorytetowej lub kopca Fibonacciego.
 Przy implementacji bez użycia kopca, złożoność obliczeniowa wynosi: O($n^2$), dzięki jego zastosowaniu może spaść do O($n \cdot log_{10}(n)$)\cite{graphtheory2}.
 %chapterBiblioteki w systemach Unix  Linux
@@ -255,28 +256,28 @@ Przy implementacji bez użycia kopca, złożoność obliczeniowa wynosi: O($n^2$
 
 
 \chapter{Realizacja biblioteki}
-Do zrealizowania postawionych w~pracy celów zaprojektowano oraz zaimplementowano bibliotekę nazwaną \emph{Simple C~Graph Library}, dalej określaną akronimowi \emph{SCGL}.
+Do zrealizowania postawionych w~pracy celów, zaprojektowano oraz zaimplementowano bibliotekę nazwaną \emph{Simple C~Graph Library}, dalej określaną akronimem \emph{SCGL}.
 Projekt ten stworzony został w~oparciu o~język C~oraz jego bibliotekę standardową (w systemach Unix/Linux: \emph{GNU libc - glibc}).
-Postanowiono również, że biblioteka będzie implementować algorytm Dijkstry --- najkrótszych ścieżek --- ze względu na jego popularność oraz istotność dla modelowania sieci komputerowych.
+Postanowiono również, że biblioteka będzie implementować algorytm Dijkstry --- najkrótszych ścieżek --- ze względu na jego popularność oraz istotność dla działania sieci komputerowych (w~tym internetu).
 
-Wyboru tego dokonano przede wszystkim ze względu na możliwość redukcji wszelkich narzutów wynikających z~cech charakterystycznych dla języków obiektowych (dziedziczenie, polimorfizm, szablony).
-Dodatkowym atutem było bardzo dobre wsparcie kompilatorów oraz szeroki wybór dostępnych narzędzi dla języka C.
+Wyboru tego języka programowania dokonano przede wszystkim ze względu na możliwość redukcji wszelkich narzutów wynikających z~cech charakterystycznych dla języków obiektowych (dziedziczenie, polimorfizm, szablony).
+Dodatkowym atutem było bardzo dobre wsparcie kompilatorów oraz szeroki wybór dostępnych narzędzi.
 
-Projekty takie jak ten przedstawiony w niniejszej pracy często charakteryzują się dynamicznym rozwojem, zwłaszcza w początkowych fazach tworzenia.
+Projekty takie jak ten, często charakteryzują się dynamicznym rozwojem, zwłaszcza w początkowych fazach tworzenia.
 W~celu zapewnienia poprawności zaimplementowanych już funkcjonalności, zdecydowano się skorzystać z~mechanizmu testów jednostkowych oraz platformy \emph{DejaGNU}.
 
 Dodatkowo biblioteka wykorzystuje program \emph{make} oraz pliki reguł \emph{Makefile} do automatyzacji procesu kompilacji.
 
-Podczas projektowania każdego z~modułów biblioteki wykorzystano wiedzę zawartą w publikacjach (\cite{unix}, \cite{ansi}) oraz stosowano się do reguły KISS (ang. \emph{Keep It Simple, Stupid}), która traktuje o tym, że im coś jest prostsze (jako koncept, oraz jako wykonanie) tym lepiej (\cite{unix}).
+Podczas projektowania każdego z~modułów biblioteki wykorzystano wiedzę zawartą w~publikacjach (\cite{unix}, \cite{ansi}) oraz stosowano się do reguły KISS (ang. \emph{Keep It Simple, Stupid}), która traktuje o tym, że im coś jest prostsze (jako koncept, oraz jako wykonanie) tym lepiej (\cite{unix}).
 \label{kiss}
 
 \section{Budowa projektu}
 Rozdział ten ma za zadanie przybliżenie czytelnikowi pomysłów projektowych biblioteki SCGL.
 Zawiera on opis zastosowanej architektury oraz struktury plików.
 \subsection{Diagramy klas}
-Diagramy przedstawione poniżej mają na celu jedynie przekazanie informacji na temat zamysłów projektowych.
-Przedstawiają one strukturę systemu (biblioteki SCGL) w~modelu obiektowym, poprzez ilustracje struktur klas i~zależności między nimi.
-Ponieważ do implementacji projektu wybrano język w~pełni strukturalny (\emph{C}) nie było możliwe dokładne odwzorowanie modelu UML\footnote{UML --- (ang. \emph{Unified Modeling Language} język formalny wykorzystywany do modelowania różnego rodzaju systemów.}.
+Diagramy, przedstawione w~tej części pracy, mają na celu jedynie przekazanie informacji na temat zamysłów projektowych.
+Poprzez ilustracje struktur klas i~zależności między nimi, ukazują one system (bibliotekę SCGL) w~modelu obiektowym.
+Ponieważ do implementacji projektu wybrano język w~pełni strukturalny (\emph{C}) nie było możliwe dokładne odwzorowanie diagramów UML\footnote{UML --- (ang. \emph{Unified Modeling Language} język formalny wykorzystywany do modelowania różnego rodzaju systemów.}.
 
 \begin{figure}[htb]
 	\begin{center}
@@ -380,14 +381,14 @@ Pozostałe klasy są jedynie dodatkiem, lub kodem spoza biblioteki (nie stworzon
 
 
 \subsection{Struktura plików}
-Całość projektu, kod źródłowy biblioteki, platformę testów jednostkowych, oraz dodatkowe elementy wykorzystane podczas pisania niniejszej pracy, przechowywane są przy wykorzystaniu repozytorium \emph{git}\footnote{Git --- rozproszony system kontroli wersji, stworzony przez Linusa Torvaldsa jako narzędzie wspomagające rozwój jądra Linux.}.
+Całość projektu: kod źródłowy biblioteki, platformę testów jednostkowych, oraz dodatkowe elementy wykorzystane podczas pisania niniejszej pracy, przechowywana jest przy wykorzystaniu repozytorium \emph{git}\footnote{Git --- rozproszony system kontroli wersji, stworzony przez Linusa Torvaldsa jako narzędzie wspomagające rozwój jądra Linux.}.
 Owe repozytorium umieszczone jest na serwerach darmowego serwisu \url{https://github.com/}, a~jego lokalna kopia na płycie CD dołączonej do pracy (więcej na str. \pageref{chap:cd}).
 
 Zgodnie z~dobrą praktyką programistyczną, oraz w~celu uporządkowania plików źródłowych, zastosowana została standardowa hierarchia plików.
-W~katalogu głównym \emph{scgl/} (w~pliku \code{LICENSE}) znaleźć można treść licencji (dwu-klauzulowa licencja BSD) biblioteki, krótki opis projektu (\code{README}) oraz plik ułatwiający m. in. kompilację kodu \code{Makefile} (więcej na str. \pageref{chap:make}).
-Kod źródłowy poszczególnych modułów SCGL znajduje się w~podkatalogu \code{src}, a~pliki definicji struktur oraz funkcje użytkownika (\emph{API}), w~podkatalogu \code{include}.
+W~katalogu głównym \code{scgl/} (w~pliku \code{LICENSE}) znaleźć można treść licencji (dwu-klauzulowa licencja BSD) biblioteki, krótki opis projektu (\code{README}) oraz plik ułatwiający m. in. kompilację kodu \code{Makefile} (więcej na str. \pageref{chap:make}).
+Kod źródłowy poszczególnych modułów SCGL znajduje się w~podkatalogu \code{src/}, a~pliki definicji struktur oraz funkcje użytkownika (\emph{API}), w~podkatalogu \code{include/}.
 
-Dodatkowo wewnątrz katalogu \emph{scgl/} znajdziemy pliki stworzone przez generator dokumentacji ---  \emph{doxygen} (\code{doc/latex}).
+Dodatkowo wewnątrz katalogu \code{scgl/} znajdziemy pliki stworzone przez generator dokumentacji ---  \emph{doxygen} (\code{doc/latex}).
 Są to pliki tworzące dokumentację interfejsu użytkownika, przy wykorzystaniu komentarzy zawartych w~kodzie źródłowym SCGL.
 
 Katalog \code{unit\_tests/scgl.test} zawiera definicje testów \emph{DejaGNU} oraz sam moduł wykorzystywany do testowania biblioteki.
@@ -401,7 +402,7 @@ Jest to język strukturalny, nie posiadający cech obiektowości, brak jest tu m
 Wymusiło to odseparowanie projektu biblioteki od jej ściślej implementacji.
 
 SCGL nie posiada wewnątrz struktur pól prywatnych, wszystko jest dostępne dla użytkownika, jednak nie zalecane jest odwoływanie się do nich bezpośrednio.
-W~przyszłości planowane jest jednak ukrycie owych definicji struktur przed użytkownikiem, dlatego zaleca się korzystać z~nazw alternatywnych \code{typedef}.
+W~przyszłości planowane jest jednak ukrycie owych definicji struktur, dlatego zaleca się korzystać z~nazw alternatywnych \code{typedef}.
 
 Język C nie posiada ,,klas'' przez co nie można za jego pomocą wywoływać metod na rzecz obiektów (jak to ma miejsce w~języku C++ np. \code{my_edge::getID()}).
 Stworzono zatem specjalny system nazw (przestrzeń nazw) opisany dokładniej w~rozdziale \ref{chap:api}.
@@ -416,7 +417,7 @@ Przykładowo, w~miarę rozwoju firmy na rynku, rozwija się jej infrastruktura w
 Fakt ciągłych zmian w~budowie grafów, narzuca niejako implementującej go bibliotece, wymaganie obsługi tego typu zdarzeń.
 Musi być ona w~stanie dynamicznie zmienić rozmiary struktur, tak aby w~każdej chwili dodać (lub usunąć) wybrane elementy.
 
-W~językach takich jak \emph{C++} najczęściej do tego celu wykorzystywane są tzw. wektory, czyli tablice o~dynamicznych rozmiarach.
+W~językach takich jak \emph{C++} do tego celu wykorzystywane są najczęściej tzw. wektory, czyli tablice o~dynamicznych rozmiarach.
 Korzystając z~nich nie musimy podawać, podczas tworzenia, ilości elementów jakie będą w~nich przechowywane.
 A~w~trakcie dodawania/usuwania elementów, rozmiar tablicy dostosowuje się automatycznie.
 
@@ -427,7 +428,7 @@ Użycie ich może jednak wiązać się z~dodatkowymi dużymi narzutami na rozmia
 Aby zniwelować wpływ (negatywny) kodu ,,trzeciego'' na SCGL, postanowiono wykorzystać mechanizm list dowiązanych do przechowywania informacji na temat wszystkich krawędzi (ich atrybutów) oraz węzłów w~grafie.
 Zasada działania jak i~implementacja tego typu list jest niezwykle prosta, a~jednocześnie nie wpływa znacząco na ilość zużywanej pamięci.
 
-Wg klasycznego podejścia do problemu, lista jest to obiekt (struktura/klasa) zawierająca dane właściwie, oraz wskaźnik na kolejny obiekt tego samego typu.\cite{algo}
+Według klasycznego podejścia do problemu, lista jest to obiekt (struktura/klasa) zawierająca dane właściwie, oraz wskaźnik na kolejny obiekt tego samego typu.\cite{algo}
 \begin{lstlisting}[style=code,caption=Idea listy powiązanej w~C]
 struct list {
 	struct list *prev
@@ -447,8 +448,9 @@ Posiadając wskaźnik, wskazujący na pierwszy element listy (\code{head}), moż
 W~niniejszej pracy postanowiono jednak skorzystać z~mechanizmu nazwanego \emph{Linux Kernel List}.
 Jest to implementacja listy dowiązanej, (dwukierunkowej; cyrkulacyjnej), wykorzystywana w~jądrze (ang. \emph{kernel}) systemów operacyjnych \emph{Linux}\cite{lkl}.
 Jest to jeden plik nagłówkowy (\code{*.h}) języka C.
-Zawiera on definicję struktury \code{list\_head} oraz definicje i~deklaracje funkcji oraz makr preprocesora, obsługujących tą strukturę.
-Linux Kernel Lists są wyjątkowe, z~powodu trochę innego podejścia do tematu.
+Zawiera on definicję struktury \code{list\_head} oraz definicje i~deklaracje funkcji oraz makr preprocesora, obsługujących tę strukturę.
+
+Linux Kernel Lists są wyjątkowe, z~powodu odmiennego podejścia do tematu list.
 Struktura \code{list\_head} zawiera jedynie informację (wskaźniki) na następny oraz poprzedni element listy.
 Brak jest tu standardowego pola \code{data}, które przechowywałoby informacje użytkownika (tak jak jest to realizowane w~standardowej implementacji listy).
 W~rozwiązaniu Linuksowym, realizacja listy daje złudzenie, że lista zawarta jest w~obiekcie który łączy (który powinien być wewnątrz niej).
@@ -492,7 +494,7 @@ Najważniejsze przy obcowaniu z~listami jądra Linuksa to:
 	\item Zmienna typu \code{list\_head} może mieć dowolną nazwę.
 	\item Rozwiązanie to nie ogranicza nas do jednej listy, na cały kod źródłowy.
 \end{itemize}
-Ponieważ jest to mechanizm zapożyczony z jądra systemu Linux, istnieje pewność iż jest dobrze przetestowane, przenośne, szybkie oraz zajmuje niewiele pamięci.
+Ponieważ jest to mechanizm zapożyczony z jądra systemu Linux, istnieje pewność iż jest dobrze przetestowany, przenośny, szybki oraz zajmuje niewiele pamięci.
 Warto również wspomnieć, iż ten sam plik nagłówkowy, dostarcza podstaw do implementacji tablic asocjacyjnych (ang. \emph{hash list}).
 
 Potrzebne były pewne modyfikacje, aby plik nagłówkowy \code{list.h} dostosować do zwykłego kodu, przestrzeni użytkownika (ang. \emph{userspace}):
@@ -517,9 +519,10 @@ list_count(const struct list_head *head) {
 \end{lstlisting}
 
 Jak już zostało wspomniane, łącząc kolejne elementy, łączymy ze sobą struktury \code{list\_head}.
-Wymusza to na programiście, zmianę toku myślenia.
+Wymusza to na programiście, zmianę sposobu myślenia.
 Chcąc przechowywać listę krawędzi wewnątrz struktury grafu, musimy w~obu tych obiektach dołączyć strukturę \code{list\_head}.
 Im więcej list krawędzi chce się stworzyć, tym więcej zmiennych typu \code{list\_head} należy wpisać w~budowę obiektu.
+
 I~tak biblioteka SCGL posiadając pięć list:
 \begin{enumerate}
 	\item krawędzi w grafie,
@@ -559,16 +562,15 @@ struct scgl_graph {
 \end{lstlisting}
 Taka metoda przechowywania informacji przypomina nieco listy sąsiedztwa (czyt. na str. \pageref{neigh_list}), nie jest jednak dokładną ich implementacją.
 
-Zastosowanie list powiązanych, zapożyczonych z~jądra Linuksa, pozwoliło na oszczędzenie pamięci oraz szybkości działania.
-Przyśpieszyło i ułatwiło to również sam proces tworzenia biblioteki SCGL.
-Nie warto tworzyć kolejnych rozwiązań od nowa, jeśli istniejące są dobrze zaimplementowane.
+Zastosowanie list powiązanych, zapożyczonych z~jądra Linuksa, pozwoliło na oszczędzenie zużywanej przez struktury pamięci oraz wzrost szybkości działania.
+Przyśpieszyło i ułatwiło to również sam proces tworzenia biblioteki SCGL, gdyż nie warto tworzyć kolejnych rozwiązań od nowa, jeśli istniejące są dobrze zaimplementowane.
 
 \subsection{Statycznie kompilowany typ zmiennej}
 \label{chap:costtype}
 Sporym oraz ciekawym wyzwaniem projektowym okazał się niepozorny atrybut kosztu (wagi) krawędzi, a~właściwie typ zmiennej przechowującej tą wartość.
 Jak już zostało wcześniej wspomniane, element ten wykorzystywany jest przy wyborze ścieżki pomiędzy zadanymi węzłami.
 Wymaganiem postawionym przed biblioteką SCGL była elastyczność typu zmiennej określającej koszt krawędzi.
-Biblioteka powinna pozwalać użytkownikowi na wybór typu owego parametru według własnych preferencji, bez ingerencji w~sam kod projektu.
+Powinna ona pozwalać użytkownikowi na wybór typu owego parametru według własnych preferencji, bez ingerencji w~sam kod projektu.
 
 Problem ten dotyka tematyki paradygmatu programowania uogólnionego (generycznego, ang, \emph{generic programming}).
 Pozwala on na pisanie kodu programu bez wcześniejszej znajomości typów danych, na których kod ten będzie pracował.
@@ -602,7 +604,7 @@ void scgl_dijkstra_float(/*...*/)
 void scgl_dijkstra_double(/*...*/)
 \end{lstlisting}
 Zmniejszyłoby to narzut wynikający z~każdorazowego sprawdzania typu zmiennej kosztu (sprawdzanie odbywałoby się przez warper \code{scgl\_dijkstra()}, który wywoływałby odpowiednią funkcję).
-Niestety rozwiązanie to jednocześnie zwiększyłoby znacznie ilość rozmiar biblioteki, dodatkowo narażając kod na błędy rodzaju copy-paste (wynikające z powielania ciała funkcji poprzez kopiowanie i~wklejanie).
+Niestety rozwiązanie to jednocześnie zwiększyłoby znacznie rozmiar biblioteki, dodatkowo narażając kod na błędy rodzaju copy-paste (wynikające z powielania ciała funkcji poprzez kopiowanie i~wklejanie).
 Dodatkową wadą tego rozwiązania, jest fakt, iż unia zajmuje tyle miejsca co jej największa składowa. Gdyby w~jej wnętrzu znalazła się zmienna typu \code{long double} to mimo iż programista wykorzystywał by \code{cost} jako zmienną short, to pole zajmowałoby tyle bajtów ile \code{long double} na danej architekturze.
 
 Z~powodu wyżej wymienionych cech, zdecydowano się zastosować zupełnie inne rozwiązanie.
@@ -622,7 +624,8 @@ gcc -Dname=definition
 gcc -Dcost_type=double
 gcc -Dcost_type=int
 \end{lstlisting}
-Kompilując kod z~tym parametrem słowo \code{cost\_type} jest podmieniane na wybrany przez użytkownika typ, co za tym idzie zmienna \code{cost} przybiera wybrany typ.
+Kompilując kod z~tym parametrem słowo \code{cost\_type} jest podmieniane na wybrane przez użytkownika, co za tym idzie zmienna \code{cost} przybiera pożądany typ.
+
 Statyczny typ zmiennej, dobierany podczas procesu kompilacji nie powoduje dodatkowego narzutu przed jej użyciem (jak to miało miejsce w~przypadku unii), czy na rozmiar biblioteki (szablony języka C++).
 Wadą jest tu jednak potrzeba rekompilacji całej biblioteki (wszystkich modułów, które korzystają ze zmiennej), za każdym razem gdy użytkownik zechce zmienić jej typ.
 Jest to jednak niedogodność, którą można zaakceptować, zważywszy na możliwości, którą oferuje owe rozwiązanie.
@@ -632,8 +635,8 @@ Wybór typu zmiennej powinien dostarczać dodatkowych informacji takich jak mini
 Aby ułatwić proces budowania biblioteki, oraz zmniejszyć ewentualną możliwość popełnienia błędu przez użytkownika, postanowiono, że doborem wcześniej wymienionych wartości zajmie się plik \emph{Makefile}.
 Wewnątrz tego pliku zdefiniowane są reguły budowania całej biblioteki (oraz dodatkowych elementów).
 Makefile definiuje zmienną \code{COST\_TYPE}, która może przyjąć wartości odpowiadające określonemu typowi zmiennej \code{cost}.
-Na podstawie wyboru użytkownika (zmiennej \code{COST\_TYPE}), Makefile dobierze odpowiednie opcję tak by biblioteka została skompilowana z~obsługą kosztu krawędzi o~wybranym typie.
-W~tym celu wewnątrz pliku Makefile stworzono blok decydujący o~następującej strukturze:
+Na podstawie wyboru użytkownika (zmiennej \code{COST\_TYPE}), Makefile dobierze odpowiednie opcje tak aby biblioteka została skompilowana z~obsługą kosztu krawędzi o~wybranym typie.
+W~tym celu wewnątrz pliku Makefile stworzono blok decydujący o~następującej treści:
 
 \begin{lstlisting}[style=code,caption=Makefile - blok decydujący o zmiennej cost]
 ifneq (,$(findstring s,$(COST_TYPE)))
@@ -714,13 +717,14 @@ Dzięki zaproponowanemu rozwiązaniu, biblioteka SCGL zdecydowanie zyskuje na wy
 
 \subsection{Algorytm Dijkstry}
 \label{chap:dijkstra}
-Do realizacji celu implementacji jednego z~algorytmów teorii grafów wybrano algorytm Dijkstry.
+Do implementacji jednego z~algorytmów teorii grafów wybrano algorytm Dijkstry.
 Wyboru tego dokonano ze względu na jego wydajność oraz istotny udział w~rozwoju sieci komputerowych, które są tematem przewodnim studiów autora pracy.
 
 W~opisie teoretycznym algorytmu (rozdział \ref{chap:dijkstra_theory}) wspomniano, że złożoność czasowa algorytmu zależy od wykorzystanej metody przechowywania węzłów.
 Aby rozwiązanie dostarczone przez bibliotekę SCGL, było możliwie jak najszybsze, zdecydowano się na użycie kolejki priorytetowej opartej na kopcu.
-Złożoność algorytmu powinna wówczas wynosić O($n \cdot log_{10}{n}$).
+Złożoność algorytmu powinna wówczas wynosić O($n \cdot log_{10}{(n)}$)\cite{art1}.
 Kolejka ta powinna priorytetować węzły na podstawie ich odległości od węzła źródłowego, oraz dostarczać operacje wyciągania elementu o~najwyższym priorytecie (najniższej odległości) oraz modyfikowania priorytetu (tzw. \emph{decrease-key}).
+
 Postanowiono wykorzystać gotową implementację, stworzoną przez \emph{Andrei Ciobanu}\footnote{Rozwiązanie to udostępnione jest publicznie, bez licencji, a~autor kodu wyraził zgodę na użycie go w~bibliotece SCGL: \url{http://andreinc.net/2011/06/01/}}.
 Kod ten zmieniono pod względem stylistycznym, tak aby pasował do reszty biblioteki SCGL, dopisano funkcję \code{pqueue_replace_data}, która realizuje operację zmiany priorytetu, oraz poprawiono kilka błędów logicznych.
 
@@ -753,7 +757,7 @@ while (Q is not empty)
 end while
 \end{lstlisting}
 Jest to rozwiązanie bardzo optymalne, wykorzystanie mechanizmu kolorowania eliminuje dodatkowe (niepotrzebne) analizy mogące pojawić się w~trakcie działania algorytmu.
-W~przypadku napotkania wierzchołka ,,o kolorze szarym'' wywoływana jest operacja zmiany priorytetu tego węzła w~kolejce, tak aby był on jak najniższy, wówczas będzie brany on pod uwagę w~ostatniej kolejności (w~dalszych przejściach pętli).
+W~przypadku napotkania wierzchołka o ,,kolorze szarym'' wywoływana jest operacja zmiany priorytetu tego węzła w~kolejce, tak aby był on jak najniższy, wówczas będzie brany on pod uwagę w~ostatniej kolejności (w~dalszych przejściach pętli).
 Niestety z~powodu zastosowania list dowiązanych w~bibliotece SCGL, realna implementacja powyższego algorytmu wymaga ciągłego obliczania jaki numer kolejny posiada określony węzeł.
 Jest to operacja przechodząca po wszystkich elementach listy, do momentu odnalezienia określonego wierzchołka, co w~przypadku dużych grafów skutkować będzie znacznym spowolnieniem funkcji.
 Sytuację tą poprawiłoby zastosowanie tablic asocjacyjnych (ang. \emph{hash table}), które jednoznacznie odwzorowywałby adres w~pamięci RAM z~identyfikatorem węzła.
@@ -761,26 +765,27 @@ Sytuację tą poprawiłoby zastosowanie tablic asocjacyjnych (ang. \emph{hash ta
 \subsection{Testy jednostkowe - DejaGNU}
 Testy jednostkowe są nieodłączną częścią każdego większego projektu programistycznego.
 Jest to metoda testowania tworzonego oprogramowania poprzez weryfikowanie poprawności działania, każdego z~pojedynczych elementów (jednostek --- ang. \emph{units}) programu.
-Testowany fragment poddawany jest weryfikacji, otrzymanego wyniku z~oczekiwanym (tak pozytywnym, jak i~niepozytywnym).
+Testowany fragment poddawany jest weryfikacji otrzymanego wyniku z~oczekiwanym (tak pozytywnym, jak i~negatywnym).
 Testy jednostkowe pomagają weryfikować poprawność funkcji, mimo wprowadzanych zmian.
-Programista wprowadzając kolejne zmiany, usprawniania, funkcjonalności, po wykonaniu testów, może mieć pewność, że jego zmiany w~kodzie nie wprowadziły kolejnych błędów.
-Projektując bibliotekę SCGL, postanowiono wykorzystać właśnie tą metodę testowania, aby usprawnić przyszły jej rozwój.
+Programista wprowadzając kolejne usprawniania, funkcjonalności, po wykonaniu testów, może mieć pewność, że jego zmiany w~kodzie nie wprowadziły kolejnych błędów.
+Projektując bibliotekę SCGL, postanowiono wykorzystać właśnie tę metodę testowania, aby usprawnić przyszły jej rozwój.
 
-Zdecydowano wykorzystać się framework DejaGNU, jako platformę do testowania.
-Przeznaczeniem DejaGNU, jest stworzenie warstwy abstrakcyjnej dla wszelakich testów programistycznych\cite{dejagnu}.
+Zdecydowano wykorzystać do tego celu framework DejaGNU.
+Przeznaczeniem tego oprogramowania, jest stworzenie warstwy abstrakcyjnej dla wszelakich testów\cite{dejagnu}.
 Napisany został z~wykorzystaniem pakietu \emph{expect}, który jest częścią języka \emph{Tcl} (ang. \emph{Tool Command Language}).
 Expect, tworzy własny terminal, który symuluje działanie użytkownika obsługującego testujący program (najczęściej konsolowy)\cite{expect}.
-Pozwala on na dość elastyczną interakcję, wygodne porównywanie oraz reagowanie na wyjście docelowego programu.
+Pozwala on na dość elastyczną interakcję, wygodne porównywanie oraz reagowanie na wyjście testowanego programu.
 
-Konsekwentnie stosując zasadę \emph{KISS} (czyt. str. \pageref{kiss}), również testy jednostkowe dla biblioteki SCGL zostały napisane w~sposób jasny i przejrzysty.
+Konsekwentnie stosując zasadę \emph{KISS} (czyt. str. \pageref{kiss}) postanowiono, że również testy jednostkowe dla biblioteki SCGL będą napisane w~sposób jasny i przejrzysty.
 Platforma testowa składa się z~dwóch plików, znajdujących się w~katalogu \code{scgl/unit\_test/scgl.test}:
 \begin{itemize}
-	\item tests.c --- plik zawierający kody aplikacji wykorzystujących bibliotekę SCGL
-	\item test.exp --- plik definiujący testy, oraz wartości oczekiwane tych testów
+	\item tests.c --- zawierają kody aplikacji/podprogramów wykorzystujących bibliotekę SCGL
+	\item test.exp --- definiuje testy, oraz wartości oczekiwane tych testów
 \end{itemize}
 Program budowany przy pomocy pliku \code{tests.c} zawiera 23 podprogramy, każdy z~nich korzysta/testuje konkretną ,,jednostkę'' biblioteki SCGL.
 Program ten oczekuje na wpisanie przez użytkownika: rodzaju podprogramu (wybór modułu), oraz jego numeru (wybór jednostki), a~następnie uruchamia przykładowy kod.
 DejaGNU, uruchamiając kolejne testy, porównuje wartości oczekiwane, z~tymi zwróconymi przez program \code{tests.out}.
+
 Przy pomocy wyżej opisanych plików, testowane jest:
 \begin{enumerate}
 	\item Tworzenie/usuwanie węzłów
@@ -847,7 +852,7 @@ foreach pattern $test_data {
 \end{lstlisting}
 Plik opisujący procedurę testowania \code{test.exp}, przechowuje tabelę \code{test_data} (linie 2--28) zawierającą kolejno: nazwę testu, argumenty przekazywane programowi oraz wartości oczekiwane (zapisane przy pomocy języka wyrażeń regularnych --- \emph{regexp}).
 Część wykonawcza testu, to pętla \code{foreach} (wiersze 30-35) wywołująca kolejno testy z~tabeli \code{test_data} oraz porównująca wyniki programu z~wartościami oczekiwanymi.
-Testy wywoływane są w~kolejności, która zapewnia spójność logiczną całości, np.: test dodawania atrybutu do krawędzi, jest zależy od testu tworzenia krawędzi oraz od testu tworzenia atrybutu.
+Testy wywoływane są w~kolejności, która zapewnia spójność logiczną całości, np.: test dodawania atrybutu do krawędzi, jest zależy od testu tworzenia krawędzi oraz od testu tworzenia atrybutu, dlatego też jest wywoływany w~ostatniej kolejności.
 Testy algorytmu Dijkstry są przeprowadzane na grafach zaprezentowanych na rysunkach \ref{fig:test_directed}, \ref{fig:test_undirected}.
 
 Wymogiem niezbędnym do uruchomienia testów jest kompilujący się kod biblioteki SCGL, oraz posiadanie zainstalowanego w~systemie pakietu DejaGNU.
@@ -855,7 +860,8 @@ Testy uruchamiane są przez Makefile znajdujący się w~katalogu \code{scgl/}, m
 \begin{lstlisting}[style=coden]
 make tests
 \end{lstlisting}
-Polecenie to wywoła kompilację pliku \code{scg/unit_tests/scgl.test/tests.c} oraz uruchomienie programu \code{runtest} (część pakietu DejaGNU) z~plikiem definicji testów: \code{test.exp}.
+Polecenie to wywoła kompilację pliku \code{scg/unit_tests/scgl.test/tests.c} oraz uruchomi program \code{runtest} (część pakietu DejaGNU) z~plikiem definicji testów: \code{test.exp}.
+
 Jak zostało wcześniej wspomniane, testy jednostkowe są bardzo ważnym elementem oprogramowania, które będzie rozwijane.
 Należy jednak pamiętać, że w~samych testach również może wkraść się błąd, należy je zatem tworzyć ze szczególną starannością.
 
@@ -877,12 +883,12 @@ Należy jednak pamiętać, że w~samych testach również może wkraść się b�
 
 \section{Instrukcja użytkownika}
 Niniejszy rozdział pracy ma na celu przybliżenie użytkownikowi ideologi zastosowanej dla interfejsu API oraz wyjaśnić budowę oraz sposób działania skryptów kompilujących --- Makefile.
-Bardziej szczegółowe informacje na temat, każdej z~funkcji zaimplementowanej w~bibliotece SCGL dostarcza dodatek C niniejszej pracy.
+Bardziej szczegółowe informacje na temat, każdej z~funkcji zaimplementowanej w~bibliotece SCGL dostarcza, załączona na płycie CD, dokumentacja wygenerowana przez program \emph{Doxygen}.
 
 \subsection{Interfejs programisty - API}
 \label{chap:api}
 \begin{description}
-	\item[API] (ang. \emph{Application Programming Interface}), interfejs programowania aplikacji. Jego zadaniem jest dostarczenie struktur danych oraz funkcji ułatwiających manipulowanie nimi.
+	\item[API] (ang. \emph{Application Programming Interface}), interfejs programowania aplikacji. Jego zadaniem jest dostarczenie struktur danych oraz funkcji ułatwiających manipulowanie nimi\cite{dejagnu}.
 \end{description}
 Biblioteka SCGL, jak wiele innych projektów korzystających z~języka C, wykorzystuje system prefiksów do nazewnictwa funkcji.
 Wszystkie funkcje rozpoczynają się od przestrzeni nazw \code{scgl\_}, następnie występuje nazwa modułu np. \code{edge\_} i~właściwa nazwa funkcji np.:
@@ -895,8 +901,8 @@ scgl_graph_destroy(...);
 Definicje obiektów, czyli struktury, również posiadają przedrostek \code{scgl\_}.
 Użytkownik powinien jednak, korzystać z~alternatywnej definicji nazwy typu (\code{typedef}), czyli typów zakończonych literą ,,\code{t}'' np. \code{scgl\_edge\_t}:
 \begin{lstlisting}[style=coden]
-scgl_edge_t moja_krawedz;
-scgl_graph_t *wskaznik_na_moj_graf;
+scgl_edge_t my_edge;
+scgl_graph_t *ptr_my_graph;
 \end{lstlisting}
 Docelowo nazwy te powinny być wykorzystywane do ukrycia zawartości poszczególnych struktur (odpowiednik pól prywatnych klas).
 
@@ -916,9 +922,7 @@ v::get_edges_out_count();
 \subsubsection*{Funkcje tworzące i niszczące obiekty}
 Najważniejszymi funkcjami biblioteki SCGL, są oczywiście te pozwalające na stworzenie oraz zniszczenie obiektów grafowych (grafu, węzła, krawędzi).
 Funkcje te, we wszystkich modułach, przyjmują te same sufiksy (końcówki nazwy), odpowiednio dla tworzenia \code{\_create} i~niszczenia \code{\_destroy}.
-Przykłady tych funkcji znajdują się na listingu \ref{lst:funsuffix} w~liniach 2-3.
-
-Podczas korzystania z~tych funkcji należy pamiętać o~pewnych elementach:
+Przykłady tych funkcji znajdują się na listingu \ref{lst:funsuffix} w~liniach 2-3. Podczas korzystania z~tych metod należy pamiętać o:
 \begin{itemize}
 	\item Funkcje tworzące alokują potrzebną ilość pamięci zwracając wskaźnik na początek struktury.
 	\item Funkcje niszczące wymagają podania referencji do wskaźnika, dzięki temu po uwolnieniu pamięci jest on zerowany.
@@ -937,7 +941,7 @@ Każda z~krawędzi posiada listę (więcej na str. \pageref{chap:lists}) obiekt�
 Dzięki temu istnieje możliwość przechowywania dowolnej ilości atrybutów w~pojedynczej krawędzi (ograniczeniem jest jedynie pamięć RAM oraz SWAP systemu).
 
 Manipulowanie atrybutami z~poziomu krawędzi umożliwiają metody:
-\begin{enumerate}
+\begin{itemize}
 	\item \code{scgl_edge_add_attribute}
 	\item \code{scgl_edge_add_attribute_object}
 	\item \code{scgl_edge_del_attribute}
@@ -945,10 +949,8 @@ Manipulowanie atrybutami z~poziomu krawędzi umożliwiają metody:
 	\item \code{scgl_edge_get_attribute_at}
 	\item \code{scgl_edge_get_attributes_count}
 	\item \code{scgl_edge_foreach_attribute}
-\end{enumerate}
-Dokładny opis działania oraz zwracane wartości opisuje dokumentacja znajdująca się w~dodatku A.
-
-Wyjaśnienie zasad programowania przy pomocy funkcji \code{scgl\_edge\_foreach\_attribute}, zostało przedstawione na stronie \pageref{sec:foreach}.
+\end{itemize}
+Dokładny opis działania oraz zwracane wartości opisuje dokumentacja znajdująca się na dołączonej płycie CD. Wyjaśnienie zasad programowania przy pomocy funkcji \code{scgl\_edge\_foreach\_attribute}, zostało przedstawione na stronie \pageref{sec:foreach} pracy.
 
 Ponieważ wartości atrybutów przetrzymywane są jako wskaźnik ogólny (\code{void*}), brak jest tu informacji na temat jej typu.
 Może być to problematyczne podczas pisania funkcji niszczącej atrybuty (uwalniającej dynamicznie przydzieloną im pamięć).
@@ -958,7 +960,7 @@ Chcąc jednak posiadać szereg atrybutów o~różnych typach, można skorzystać
 	\item[enum] --- wykorzystać typ wyliczeniowy \code{enum} do przechowywania informacji o~typie wartości.
 	Programista musiałby wówczas stworzyć własną strukturę, w~której przechowywałby docelową wartość atrybutu krawędzi oraz jej typ.
 	\item[sufiks] --- do klucza atrybutu można dołączyć ciąg znaków, który będzie definiował typ wartości atrybutu.
-	Ciąg ten może być poprzedzany znakiem ,,:'' dzięki czemu łatwiej będzie parsować wartość klucza przed użyciem wartości atrybutu.
+	Ciąg ten może być poprzedzany znakiem ,,:'' (np. \code{lenght:d}, \code{lenght:s}) dzięki czemu łatwiej będzie parsować wartość klucza przed użyciem wartości atrybutu.
 	Można wykorzystać do tego funkcję \code{strtok} znajdującą się w~pliku nagłówkowym \code{string.h}.
 \end{description}
 
@@ -968,14 +970,14 @@ Przy projektowaniu biblioteki postanowiono, że atrybuty krawędzi są najistotn
 
 \subsubsection*{Funkcje \code{foreach}}
 \label{sec:foreach}
-Każdy z~trzech modułów (graph, edge, vertex) posiada specjalną funkcję z~sufiksem \code{foreach}, jest to metoda służąca do wykonania funkcji użytkownika na kolejno wszystkich elementach (w~przypadku krawędzi będą to atrybuty, w~przypadku grafu krawędzie lub węzły).
+Każdy z~trzech modułów (graph, edge, vertex) posiada specjalną funkcję z~sufiksem \code{\_foreach}, jest to metoda służąca do wykonania funkcji użytkownika na kolejno wszystkich elementach (w~przypadku krawędzi będą to atrybuty, w~przypadku grafu krawędzie lub węzły).
 Może ona zostać wykorzystana do dowolnego celu, np. wypisania wszystkich atrybutów na ekran, lub przetworzenia ich wartości do kosztu/wagi krawędzi.
 
 Funkcje użytkownika zdefiniowane są w~odpowiednich plikach nagłówkowych, jednakże najczęściej przyjmują one następującą formę:
 \begin{lstlisting}[style=coden,caption=Przykładowa definicja funkcji użytkownika na potrzeby funkcji \code{foreach}]
 typedef void (*edge_foreach_function)(scgl_edge_t *edge, void **data);
 \end{lstlisting}
-Funkcje te nie zwracają żadnych zmiennych.
+Metody te nie zwracają żadnych zmiennych.
 Jako pierwszy argument przyjmują obiekt na którym wykonane zostaną działania, jako drugi dodatkowe dane, lub wskaźnik który przechowa referencję do rezultatów.
 
 Przykładem użycia może być funkcja zrzucająca atrybut krawędzi do strumienia:
@@ -1001,13 +1003,13 @@ Jest to plik opisujący reguły postępowania dla programu automatyzującego pro
 Plik Makefile, dla biblioteki SCGL znajduje się w~jej głównym katalogu \code{scgl/}.
 Można wydzielić w~nim trzy sekcje logiczne:
 \begin{itemize}
-	\item część definiującą potrzebne zmienne, oraz pliki poddawane kompilacji
-	\item część decydującą o~typie kosztu krawędzi (więcej na str. \pageref{chap:costtype})
-	\item część definiującą zależności oraz przebieg procesu kompilacji
+	\item część definiującą potrzebne zmienne, oraz pliki poddawane kompilacji,
+	\item część decydującą o~typie kosztu krawędzi (więcej na str. \pageref{chap:costtype}),
+	\item część definiującą zależności oraz przebieg procesu kompilacji.
 \end{itemize}
 Dopisując nowy moduł do biblioteki SCGL powinniśmy dopisać jego pliki źródłowe (\code{*.c}) do zmiennej \code{SOURCES}.
 Makefile automatycznie wygeneruje reguły budowy plików obiektowych (\code{*.o}) bazując na nazwie pliku źródłowego.
-Pliki obiektowe linkowane (dołączane) są później do pliku biblioteki SCGL \code{libscgl.a}, który może zostać załączony do kodów źródłowych użytkownika.
+Pliki obiektowe linkowane (dołączane) są później do pliku biblioteki SCGL \code{libscgl.*}, który może zostać załączony do kodów źródłowych użytkownika.
 
 Chcąc skompilować bibliotekę z~użyciem domyślnego typu kosztu krawędzi (\code{unsigned int}) wystarczy wywołać:
 \begin{lstlisting}[style=coden]
@@ -1022,7 +1024,7 @@ Powyższe wywołanie skompiluje bibliotekę z~użyciem kosztu krawędzi jako \co
 \begin{lstlisting}[style=coden]
 make clean
 \end{lstlisting}
-Skasuje pliki cząstkowe (pliki obiektowe), wynikowe (libscgl.a) oraz te wyprodukowane przez DejaGNU.
+Skasuje pliki cząstkowe (pliki obiektowe), wynikowe (libscgl.*) oraz te wyprodukowane przez DejaGNU.
 Warto wykonywać to polecenie, jeśli wprowadzamy jakieś zmiany w~samej bibliotece SCGL.
 
 Aby uruchomić procedurę testów jednostkowych, użytkownik powinien wywołać program \code{make} z~celem \code{tests}:
@@ -1106,7 +1108,7 @@ Programy zostały skompilowane przy użyciu:
 
 Testy mające na celu porównanie użycia czasu procesora, powtarzane były w~pętli tysiąckrotnie, a~następnie uśredniane.
 Skrypt odpowiadający za powtarzanie testu przedstawiony jest na poniższym listingu:
-\begin{lstlisting}[style=code]
+\begin{lstlisting}[style=code,caption=Skrypt uśredniający czas wykonywania określonego określonego poleceniaa]
 #!/bin/bash
 TIMEFORMAT="%U"
 sum=0
@@ -1148,7 +1150,7 @@ Nie jest to wymagane, gdyż krawędź ta (odpowiednik), jest niejako zawieszony 
 Wyniki pomiarów, zamieszczone w~tabeli \ref{tab:mem_size}, ukazują także, że zużycie pamięci dla dostarczonego przez autora pracy rozwiązania, są dużo mniejsze niż biblioteki igraph --- w~przypadku grafów skierowanych.
 Niestety nie udało się zmniejszyć zapotrzebowania, poniżej poziomu biblioteki BGL, mimo że osiągnięto porównywalną liczbę alokacji.
 Program \code{valgrind} pokazał w~przypadku kodu stosującego oprogramowanie igraph, bardzo niską liczbę alokacji (21).
-Może to wynikać z~faktu zastosowania w~tym rozwiązaniu niestandardowego mechanizmu przydzielania pamięci (.
+Może to wynikać z~faktu zastosowania w~tym rozwiązaniu niestandardowego mechanizmu przydzielania pamięci.
 
 Celem kolejnego z~przeprowadzonych testów, było porównanie czasu procesora, jaki zostanie zużyty do tysiąckrotnej alokacji i~uwolnienia obiektów z~poprzedniego testu (1~graf, 1000 krawędzi, 1001 węzłów).
 \begin{table}[htb]
@@ -1166,6 +1168,7 @@ Celem kolejnego z~przeprowadzonych testów, było porównanie czasu procesora, j
 	igraph  & 0.295 & 0.295 \\ \hline
 \end{tabular}
 \end{table}
+
 Jak wynika z~powyższych rezultatów, niska ilość alokacji biblioteki igraph przekłada się na szybkość wykonywania tych operacji.
 Czasy osiągane przez to oprogramowanie są niemal dwukrotnie niższe, niż w~przypadku biblioteki BGL.
 Ponownie w~przypadku SCGL oraz BLG, wyniki dla grafów nieskierowanych są gorsze niż dla skierowanych.
@@ -1193,8 +1196,9 @@ Z~powodu niewielkich rozmiarów badanych grafów, operacja wyznaczania ścieżek
 \end{table}
 Jak można zauważyć w~powyższej tabeli, wyniki biblioteki igraph znacząco odstają od rozwiązań SCGL oraz BGL.
 Powód tego faktu pozostaje nieznany, jednakże może to wynikać ze sposobu przechowywania informacji (na temat grafu) w~pamięci.
+
 Stworzona na potrzeby celów pracy, biblioteka SCGL, osiąga porównywalne czasy do biblioteki BGL.
-Warto zauważyć, iż SCGL korzysta z~mniej wydajnych list powiązanych, co za tym idzie, musi wykonywać dodatkowe czynności w~czasie wybierania kolejnych węzłów.
+Warto zauważyć, że SCGL korzysta z~mniej wydajnych list powiązanych, co za tym idzie, musi wykonywać dodatkowe czynności w~czasie wybierania kolejnych węzłów.
 Z~tego powodu, w~przypadku dużych grafów, implementacja ta będzie mniej wydajna niż BGL.
 Różnica pomiędzy czasami dla grafu skierowanego i~nieskierowanego, dla biblioteki SCGL, wynika z~dodatkowej ilości obiektów (dodatkowe krawędzie symulują ,,bezkierunkowości''), które musi przeszukać algorytm.
 
@@ -1203,7 +1207,7 @@ Z~tego powodu postanowiono przeprowadzić również porównanie rozmiarów plik�
 
 Konsolidacja statyczna, polega na umieszczeniu plików biblioteki (pliki z~rozszerzeniem \code{*.a}) wewnątrz aplikacji użytkownika.
 Dzięki temu zabiegowi, aplikacja ta uniezależniona jest od współdzielonych plików (znajdujących się najczęściej w~\code{/usr/lib/}), które mogą ulec zmianie lub zniszczeniu --- co czyni ją w~pełni przenośną (pomijając kwestie architektury komputera).
-Taki tym kompilacji wykorzystuje się również często w~rozwiązaniach opartych o~systemy wbudowane (ang. \emph{embedded}), gdzie środowisko systemowe jest ograniczone, a~aplikacja użytkownika powinna być przenośna.
+Taki sposób kompilacji wykorzystuje się również często w~rozwiązaniach opartych o~systemy wbudowane (ang. \emph{embedded}), gdzie środowisko systemowe jest ograniczone, a~aplikacja użytkownika powinna być przenośna.
 
 Testom zostały poddane aplikacje wykorzystane przy, wcześniej opisanych, testach wydajnościowych.
 \begin{itemize}
@@ -1319,6 +1323,9 @@ Kernighan B.W., Ritchie D.M., \emph{Język ANSI C. Programowanie.} Helion, 2010
 
 \bibitem{algo}
 Banachowski L., \emph{Algorytmy i struktury danych}, WNT 2011
+
+\bibitem{art1}
+Chen M., Roche D.L., \emph{Priority Queues and Dijkstra's Algorithm}, Fujitsu, 2007
 
 \bibitem{bgl}
 Boost Graph Library: Dijkstra's Shortest Paths, \url{http://www.boost.org/doc/libs/1_49_0/libs/graph/doc/dijkstra_shortest_paths.html}, stan na dzień 15.03.2012
