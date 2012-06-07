@@ -73,7 +73,14 @@
 
 \stronaTytulowa
 
-%TODO podziękowania
+\cleardoublepage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{flushright}
+\begin{minipage}{1.0\textwidth}
+\flushright{\small{Serdeczne podziękowania \\dla Pana dra Ireneusza Szcześniaka \\za poświęcony mi czas oraz nieocenioną pomoc \\w~przygotowaniu niniejszej pracy dyplomowej.}}
+\end{minipage}
+\end{flushright}
 
 \tableofcontents
 
@@ -728,13 +735,13 @@ Kolejka ta powinna priorytetować węzły na podstawie ich odległości od węz�
 
 Postanowiono wykorzystać gotową implementację, stworzoną przez \emph{Andrei Ciobanu} \url{http://andreinc.net/2011/06/01/}.
 Rozwiązanie to udostępnione jest publicznie, bez licencji, a~autor kodu wyraził zgodę na użycie go w~bibliotece SCGL:
-\begin{lstlisting}[style=coden]
+\begin{quote}
 Yes, you can freely use the priority queue implementation.
 What I recommend you to do is to see test it very good to see if it's not bugged.
 Good luck with your thesis.
 
 Andrei
-\end{lstlisting}
+\end{quote}
 Kod ten zmieniono pod względem stylistycznym, tak aby pasował do reszty biblioteki SCGL, dopisano funkcję \code{pqueue_replace_data}, która realizuje operację zmiany priorytetu, oraz poprawiono kilka błędów logicznych.
 
 Implementacja algorytmu Dijkstry napisana dla biblioteki SCGL wzoruje się na rozwiązaniu zastosowanym w~Boost::BGL\cite{bgl}.
