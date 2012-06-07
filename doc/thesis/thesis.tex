@@ -101,7 +101,7 @@ Ta dziedzina matematyki jest równie przydatna w~biologii, gdzie wierzchołek mo
 
 Dzięki możliwościom jakie dają dzisiejsze komputery w~przetwarzaniu informacji, powstało wiele bibliotek obsługujących obliczenia oparte o~teorię grafów.
 Rozwiązania te pojawiają się w~niemal każdym języku programowania, od \emph{C++}, przez \emph{D}, aż do \emph{Pythona} czy \emph{Matlaba}.
-Tematyka teorii grafów, ze względu na szeroką gamę zastosowań oraz dużą przydatność --- zwłaszcza przy analizie, projektowaniu oraz udoskonalaniu sieci komputerowych --- została wybrana przez autora, jako temat przewodni niniejszej pracy naukowej.
+Tematyka teorii grafów, ze względu na szeroką gamę zastosowań oraz dużą przydatność --- zwłaszcza przy analizie, projektowaniu oraz udoskonalaniu sieci komputerowych --- została wybrana przez autora, jako temat przewodni niniejszej pracy dyplomowej.
 Mimo istnienia dużej ilości bibliotek komputerowych implementujących zagadnienia tej tematyki, niewiele z~nich cechuje się prostotą oraz przejrzystością kodu źródłowego.
 Zaś wiele z~nich zazwyczaj zużywa wiele zasobów pamięciowych, oraz działa względnie powolnie.
 Potrzeba ograniczenia zużywanych zasobów, oraz stworzenia projektu prostego i~czytelnego, była główną motywacją autora do podjęcia się stworzenia ,,\emph{Implementacji podstawowej biblioteki grafów w~języku C}''.
@@ -385,7 +385,7 @@ Całość projektu: kod źródłowy biblioteki, platformę testów jednostkowych
 Owe repozytorium umieszczone jest na serwerach darmowego serwisu \url{https://github.com/}, a~jego lokalna kopia na płycie CD dołączonej do pracy (więcej na str. \pageref{chap:cd}).
 
 Zgodnie z~dobrą praktyką programistyczną, oraz w~celu uporządkowania plików źródłowych, zastosowana została standardowa hierarchia plików.
-W~katalogu głównym \code{scgl/} (w~pliku \code{LICENSE}) znaleźć można treść licencji (dwu-klauzulowa licencja BSD) biblioteki, krótki opis projektu (\code{README}) oraz plik ułatwiający m. in. kompilację kodu \code{Makefile} (więcej na str. \pageref{chap:make}).
+W~katalogu głównym \code{scgl/} (w~pliku \code{LICENSE}) znaleźć można treść licencji (GPL --- \emph{General Public License}) biblioteki, krótki opis projektu (\code{README}) oraz plik ułatwiający m. in. kompilację kodu \code{Makefile} (więcej na str. \pageref{chap:make}).
 Kod źródłowy poszczególnych modułów SCGL znajduje się w~podkatalogu \code{src/}, a~pliki definicji struktur oraz funkcje użytkownika (\emph{API}), w~podkatalogu \code{include/}.
 
 Dodatkowo wewnątrz katalogu \code{scgl/} znajdziemy pliki stworzone przez generator dokumentacji ---  \emph{doxygen} (\code{doc/latex}).
@@ -711,7 +711,7 @@ ifneq (,$(findstring nowy,$(COST_TYPE)))
 	override MFLAGS:=-Dcost_type=nowy -Dcost_fmt=\"%format\" -Dcost_max=99 -Dcost_min=-99
 endif
 \end{lstlisting}
-Należy pamiętać o~uciekaniu znaków przy definiowaniu wartości \code{cost\_fmt}.
+Należy pamiętać o~modyfikowaniu znaków (ang. \emph{characters escaping}) przy definiowaniu wartości \code{cost\_fmt}.
 
 Dzięki zaproponowanemu rozwiązaniu, biblioteka SCGL zdecydowanie zyskuje na wydajności zarówno czasowej jak i~pamięciowej, nie wprowadzając przy tym zbytniej komplikacji kodu.
 
@@ -1136,7 +1136,7 @@ Test mający na celu porównać poziom wykorzystania sterty przez wybrane biblio
 		& Graf skierowany & Graf nieskierowany \\
 	\hline \hline
 	SCGL    & 76~048  (2002) & 124~048 (3003) \\ \hline
-	BLG     & 44~753  (2012) &  76~745 (3012) \\ \hline
+	BGL     & 44~753  (2012) &  76~745 (3012) \\ \hline
 	igraph  & 112~160 (0021) & 112~160 (0021) \\ \hline
 \end{tabular}
 \end{table}
@@ -1164,14 +1164,14 @@ Celem kolejnego z~przeprowadzonych testów, było porównanie czasu procesora, j
 		& Graf skierowany & Graf nieskierowany \\
 	\hline \hline
 	SCGL    & 0.384 & 0.560 \\ \hline
-	BLG     & 0.563 & 0.740 \\ \hline
+	BGL     & 0.563 & 0.740 \\ \hline
 	igraph  & 0.295 & 0.295 \\ \hline
 \end{tabular}
 \end{table}
 
 Jak wynika z~powyższych rezultatów, niska ilość alokacji biblioteki igraph przekłada się na szybkość wykonywania tych operacji.
 Czasy osiągane przez to oprogramowanie są niemal dwukrotnie niższe, niż w~przypadku biblioteki BGL.
-Ponownie w~przypadku SCGL oraz BLG, wyniki dla grafów nieskierowanych są gorsze niż dla skierowanych.
+Ponownie w~przypadku SCGL oraz BGL, wyniki dla grafów nieskierowanych są gorsze niż dla skierowanych.
 Biblioteka SCGL osiągnęła niższe czasy tworzenia i czyszczenia pamięci niż jej odpowiednik napisany w~C++.
 
 Ostatni test polegał na wytyczeniu najkrótszych ścieżek z~pierwszego węzła w~grafie (indeks zerowy), do wszystkich pozostałych, przy zastosowaniu algorytmu Dijkstry (więcej na str. \pageref{chap:dijkstra}).
@@ -1190,7 +1190,7 @@ Z~powodu niewielkich rozmiarów badanych grafów, operacja wyznaczania ścieżek
 		& Graf skierowany & Graf nieskierowany \\
 	\hline \hline
 	SCGL    & 0.036 & 0.052 \\ \hline
-	BLG     & 0.036 & 0.049 \\ \hline
+	BGL     & 0.036 & 0.049 \\ \hline
 	igraph  & 0.477 & 0.800 \\ \hline
 \end{tabular}
 \end{table}
@@ -1237,14 +1237,14 @@ Testom zostały poddane aplikacje wykorzystane przy, wcześniej opisanych, testa
 \end{table}
 Dla porównania zamieszczono również rozmiary aplikacji po linkowaniu dynamicznym.
 Jak można zauważyć na powyższej tabeli, rozwiązanie proponowane przez autora pracy, charakteryzuje się najmniejszymi rozmiarami plików. Cecha ta może być ogromną zaletą podczas tworzenia aplikacji na wspominane systemy wbudowane.
-Widać również, że fakt wykorzystania języka C++ do stworzenia biblioteki BLG znacząco wpływa na jej rozmiary (podobną zależność autor pracy zaobserwował we wszystkich, nawet najprostszych programach napisanych w~C++).
+Widać również, że fakt wykorzystania języka C++ do stworzenia biblioteki BGL znacząco wpływa na jej rozmiary (podobną zależność autor pracy zaobserwował we wszystkich, nawet najprostszych programach napisanych w~C++).
 
 Jako ciekawostkę można dodać, że kody źródłowe oparte na bibliotece BGL, jak i~wszystkie rozwiązania oparte na języku C++, mają przeciętnie 3---4 razy dłuższe czasy kompilacji, niż ich odpowiedniki w~języku C~(zarówno dla biblioteki igraph, jak i~SCGL).
 
 
 \chapter*{Podsumowanie}
 \addcontentsline{toc}{chapter}{Podsumowanie}
-W~ramach niniejszej pracy naukowej, według opinii jej autora, zrealizowano wszystkie postawione w~niej cele i~wymagania.
+W~ramach niniejszej pracy dyplomowej, według opinii jej autora, zrealizowano wszystkie postawione w~niej cele i~wymagania.
 
 Zaimplementowano podstawową bibliotekę grafów w~języku C --- \emph{Simple C~Graph Library: SCGL}.
 Biblioteka ta podzielona została na moduły zajmujące się obsługą poszczególnych elementów teorii grafów.
@@ -1274,9 +1274,14 @@ Stworzoną do celów pracy bibliotekę, można by w~przyszłości rozbudować re
 \begin{itemize}
 	\item Dodanie kolejnych algorytmów teorii grafów, np. algorytm Bellmana-Forda, lub Prima.
 	\item Przyśpieszenie działania algorytmu Dijkstry poprzez zastosowanie tabel asocjacyjnych.
+	\item Dostosowanie ilości zmiennych ,,koszt'', wewnątrz krawędzi, do potrzeb użytkownika.
 	\item Ukrycie przed użytkownikiem biblioteki zawartości wszystkich struktur, wymuszając korzystanie jedynie z~dostarczonego API.
 	\item Dodanie mechanizmu serializacji grafów, dzięki któremu biblioteka mogłaby być wykorzystana w~aplikacjach korzystających z~MPI\footnote{MPI (ang. \emph{Message Passing Interface}, protokół komunikacyjny będący standardem przesyłania komunikatów pomiędzy procesami programów równoległych działających na jednym lub więcej komputerach.}.
 \end{itemize}
+Można by również pokusić się o~stosowanie statycznie kompilowanych zmiennych w~miejsce aktualnych atrybutów dynamicznych.
+Pozwoliłoby to na jeszcze dokładniejsze dostosowanie biblioteki do aktualnych potrzeb użytkownika, jak również przyśpieszyłoby jej działanie.
+Wiązałoby się to jednak ze wzrostem komplikacji problemu zależności, jednakże dużym ułatwieniem byłoby zastosowanie oprogramowania \emph{kconfig}.
+
 W~dalszym rozwoju biblioteki może pomóc fakt istnienia szeregu testów jednostkowych, napisanych przy wykorzystaniu platformy DejaGNU. Pozwalają one zweryfikować poprawność działania istniejących już modułów/jednostek biblioteki SCGL, przez co programista może mieć pewność, że jego zmiany nie wprowadziły dodatkowych błędów.
 
 Autor pracy zebrał oraz przyswoił wiedzę na temat podstawowych aspektów teorii grafów, oraz działania algorytmów wyszukiwania najkrótszych ścieżek.
