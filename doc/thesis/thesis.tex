@@ -726,7 +726,15 @@ Aby rozwiązanie dostarczone przez bibliotekę SCGL, było możliwie jak najszyb
 Złożoność algorytmu powinna wówczas wynosić O($n \cdot log_{10}{(n)}$)\cite{art1}.
 Kolejka ta powinna priorytetować węzły na podstawie ich odległości od węzła źródłowego, oraz dostarczać operacje wyciągania elementu o~najwyższym priorytecie (najniższej odległości) oraz modyfikowania priorytetu (tzw. \emph{decrease-key}).
 
-Postanowiono wykorzystać gotową implementację, stworzoną przez \emph{Andrei Ciobanu}\footnote{Rozwiązanie to udostępnione jest publicznie, bez licencji, a~autor kodu wyraził zgodę na użycie go w~bibliotece SCGL: \url{http://andreinc.net/2011/06/01/}}.
+Postanowiono wykorzystać gotową implementację, stworzoną przez \emph{Andrei Ciobanu} \url{http://andreinc.net/2011/06/01/}.
+Rozwiązanie to udostępnione jest publicznie, bez licencji, a~autor kodu wyraził zgodę na użycie go w~bibliotece SCGL:
+\begin{lstlisting}[style=coden]
+Yes, you can freely use the priority queue implementation.
+What I recommend you to do is to see test it very good to see if it's not bugged.
+Good luck with your thesis.
+
+Andrei
+\end{lstlisting}
 Kod ten zmieniono pod względem stylistycznym, tak aby pasował do reszty biblioteki SCGL, dopisano funkcję \code{pqueue_replace_data}, która realizuje operację zmiany priorytetu, oraz poprawiono kilka błędów logicznych.
 
 Implementacja algorytmu Dijkstry napisana dla biblioteki SCGL wzoruje się na rozwiązaniu zastosowanym w~Boost::BGL\cite{bgl}.
@@ -856,6 +864,22 @@ Część wykonawcza testu, to pętla \code{foreach} (wiersze 30-35) wywołująca
 Testy wywoływane są w~kolejności, która zapewnia spójność logiczną całości, np.: test dodawania atrybutu do krawędzi, jest zależy od testu tworzenia krawędzi oraz od testu tworzenia atrybutu, dlatego też jest wywoływany w~ostatniej kolejności.
 Testy algorytmu Dijkstry są przeprowadzane na grafach zaprezentowanych na rysunkach \ref{fig:test_directed}, \ref{fig:test_undirected}.
 
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{gfx/test_graph_undirected.eps}
+		\caption{Wykorzystywany do testów graf nieskierowany}
+		\label{fig:test_undirected}
+	\end{center}
+\end{figure}
+\clearpage
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{gfx/test_graph_directed.eps}
+		\caption{Wykorzystywany do testów graf skierowany}
+		\label{fig:test_directed}
+	\end{center}
+\end{figure}
+
 Wymogiem niezbędnym do uruchomienia testów jest kompilujący się kod biblioteki SCGL, oraz posiadanie zainstalowanego w~systemie pakietu DejaGNU.
 Testy uruchamiane są przez Makefile znajdujący się w~katalogu \code{scgl/}, można dokonać tego w~następujący sposób:
 \begin{lstlisting}[style=coden]
@@ -865,22 +889,6 @@ Polecenie to wywoła kompilację pliku \code{scg/unit_tests/scgl.test/tests.c} o
 
 Jak zostało wcześniej wspomniane, testy jednostkowe są bardzo ważnym elementem oprogramowania, które będzie rozwijane.
 Należy jednak pamiętać, że w~samych testach również może wkraść się błąd, należy je zatem tworzyć ze szczególną starannością.
-
-\begin{figure}[htb]
-	\begin{center}
-		\includegraphics[width=0.65\textwidth]{gfx/test_graph_undirected.eps}
-		\caption{Wykorzystywany do testów graf nieskierowany}
-		\label{fig:test_undirected}
-	\end{center}
-\end{figure}
-\begin{figure}[htb]
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{gfx/test_graph_directed.eps}
-		\caption{Wykorzystywany do testów graf skierowany}
-		\label{fig:test_directed}
-	\end{center}
-\end{figure}
-
 
 \section{Instrukcja użytkownika}
 Niniejszy rozdział pracy ma na celu przybliżenie użytkownikowi ideologi zastosowanej dla interfejsu API oraz wyjaśnić budowę oraz sposób działania skryptów kompilujących --- Makefile.
