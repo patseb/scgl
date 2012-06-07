@@ -91,6 +91,7 @@ Kod ten powinien być również dobrze udokumentowany, zarówno za pomocą poni�
 
 \chapter*{Wstęp}
 \addcontentsline{toc}{chapter}{Wstęp}
+\markboth{Wstęp}{~}
 Systemy nawigacji GPS, sieć Internet, gry komputerowe, translatory języków obcych, biologia, chemia, socjologia --- to wszystko, i~wiele innych dziedzin życia, łączy jeden wspólny element --- teoria grafów.
 Kiedy rozwój informatyki pozwolił na reprezentowanie grafów za pomocą komputera, okazało się, że algorytmy na nich oparte znajdują wiele praktycznych zastosowań.
 Grafy są jednymi z~najbardziej wszechobecnych modeli zarówno świata naturalnego jak i~stworzonego przez człowieka.
@@ -117,7 +118,7 @@ Zawiera on też kilka przykładów wykorzystania interfejsu użytkownika.
 Ostatnia część pracy przedstawia porównanie stworzonego na cele pracy projektu, z~istniejącymi już rozwiązaniami.
 Porównania te zostały przeprowadzone pod kątem ilości zużywanej pamięci, oraz czasu jaki jest potrzebny na wykonanie podstawowych funkcji tego typu biblioteki.
 
-%Dodatkowo na końcu pracy, jako załącznik, zamieszczona została automatycznie wygenerowana, anglojęzyczna dokumentacja niniejszej biblioteki.
+Dodatkowo na końcu pracy, jako załącznik, zamieszczone zostały przykłady użycia stworzonego oprogramowania, wraz z~krótkimi komentarzami w~języku angielskim.
 
 \chapter{Wybrane zagadnienia teorii grafów}
 Rozdział ten, powstał w~celu zdefiniowania oraz wyjaśnienia elementarnych pojęć związanych z~teorią grafów. Wiadomości w~nim zawarte opierają się na publikacjach \cite{graphtheory} oraz \cite{graphtheory2}, w~których można odnaleźć więcej szczegółowych informacji.
@@ -1244,6 +1245,7 @@ Jako ciekawostkę można dodać, że kody źródłowe oparte na bibliotece BGL, 
 
 \chapter*{Podsumowanie}
 \addcontentsline{toc}{chapter}{Podsumowanie}
+\markboth{Podsumowanie}{~}
 W~ramach niniejszej pracy dyplomowej, według opinii jej autora, zrealizowano wszystkie postawione w~niej cele i~wymagania.
 
 Zaimplementowano podstawową bibliotekę grafów w~języku C --- \emph{Simple C~Graph Library: SCGL}.
@@ -1279,7 +1281,7 @@ Stworzoną do celów pracy bibliotekę, można by w~przyszłości rozbudować re
 	\item Dodanie mechanizmu serializacji grafów, dzięki któremu biblioteka mogłaby być wykorzystana w~aplikacjach korzystających z~MPI\footnote{MPI (ang. \emph{Message Passing Interface}, protokół komunikacyjny będący standardem przesyłania komunikatów pomiędzy procesami programów równoległych działających na jednym lub więcej komputerach.}.
 \end{itemize}
 Można by również pokusić się o~stosowanie statycznie kompilowanych zmiennych w~miejsce aktualnych atrybutów dynamicznych.
-Pozwoliłoby to na jeszcze dokładniejsze dostosowanie biblioteki do aktualnych potrzeb użytkownika, jak również przyśpieszyłoby jej działanie.
+Pozwoliłoby to na jeszcze dokładniejsze dostosowanie biblioteki do aktulanych potrzeb użytkownika, jak również przyśpieszyłoby jej działanie.
 Wiązałoby się to jednak ze wzrostem komplikacji problemu zależności, jednakże dużym ułatwieniem byłoby zastosowanie oprogramowania \emph{kconfig}.
 
 W~dalszym rozwoju biblioteki może pomóc fakt istnienia szeregu testów jednostkowych, napisanych przy wykorzystaniu platformy DejaGNU. Pozwalają one zweryfikować poprawność działania istniejących już modułów/jednostek biblioteki SCGL, przez co programista może mieć pewność, że jego zmiany nie wprowadziły dodatkowych błędów.
@@ -1352,14 +1354,140 @@ The igraph library for complex network research, \url{http://igraph.sourceforge.
 
 \end{thebibliography}
 
+\chapter*{Dodatek A. SCGL Tutorial}
+\addcontentsline{toc}{chapter}{Dodatek A. SCGL Tutorial}
+\markboth{Dodatek A. SCGL Tutorial}{~}
+This appendix was written to help getting started with the SCGL.
+It contains descriptions of simple examples of using that library.
 
+In all the following examples user have to attach appropriate include files (eg \code{stdlib.h}).
+To use the SCGL library is needed only to include additional \code{scgl.h}.
+\begin{lstlisting}[style=code,caption={Creating a graph, vertexes and edges}]
+scgl_graph_t *g1;
+scgl_vertex_t *v1, *v2;
+scgl_edge_t *e1;
+char *buf;
 
-%chapter*{Dodatek A. Dokumentacja}
-%addcontentsline{toc}{chapter}{Dodatek A. Dokumentacja}
-%includepdf[scale=0.8,pages=1-25]{refman}
+buf = (char*) malloc(4);
+sprintf(buf, "V-1");
+v1 = scgl_vertex_create(buf, NULL, 0, NULL, 0);
+v2 = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
+e1 = scgl_edge_create(v1, v2, 0, 123, NULL, 0);
+g1 = scgl_graph_create(NULL, NULL, 0, NULL, 0);
 
-\chapter*{Dodatek A. Oświadczenie}
-\addcontentsline{toc}{chapter}{Dodatek A. Oświadczenie}
+scgl_graph_add_vertex(g1, v1);
+scgl_graph_add_vertex(g1, v2);
+scgl_graph_add_edge(g1, e1);
+
+scgl_graph_destroy(&g1);
+\end{lstlisting}
+The above listing shows how to create basic SCGL's objects: graph, vertex, edge.
+It use pointers because of author's habits.
+It is important to use typedefined variable types eg \code{scgl\_graph\_t}, because in future access to struct's members will be limited, through that mechanism.
+
+It isn't required to create objects (vertexes, graphs) with id, but vertex \code{v1} was created in that way.
+Lines 6--7 shows how to fill allocated memory with proper string, and next how to pass that buffer into vertex's constructor.
+
+In this example also created directed edge (agr no. 3), with travel cost equals 123.
+That edge connects vertex \code{v1} with \code{v2}.
+In that case, connection were created through edge's constructor, but it can be replaced by the use of function \code{scgl\_edge\_add\_vertex} or \code{scgl\_vertex\_add\_edge}.
+
+Because code doesn't store vertexes and edges in arrays, it can't pass that information to graph's constructor (arg no. 2, 3, 4 and 5), so it forces the use of other functions (lines 13--15) to add objects to graph.
+
+A good practice is to release the previously allocated memory (by object creation).
+In the last line of listing, there is a call of graph's destroy function, which will destroy all objects (also vertex id) linked with graph instance passed as argument.
+
+\begin{lstlisting}[style=code,caption={Managing edge's attributes}]
+void edge_attr_free(char *key, void *value, void **data) {
+	free(value);
+}
+
+scgl_edge_t *e1;
+char *buf1, buf2;
+
+buf1 = (char*) malloc(5);
+buf2 = (char*) malloc(5);
+sprintf(buf1, "key1");
+sprintf(buf2, "val1");
+
+e1 = scgl_edge_create(NULL, NULL, 0, 1, NULL, 0);
+scgl_edge_add_attribute(e1, buf1, buf2);
+printf("%s \n", (char*)scgl_edge_get_attribute_value(e1, "key1"));
+
+scgl_edge_destroy(&e1, edge_attr_free);
+\end{lstlisting}
+The above listing is an example of creating, getting and destroying edge's attributes.
+As before, buffers are filled by \code{sprintf} function, and passed to function which will add new attribute to edge.
+Attribute will have key equals \code{buf1} and value equals \code{buf2}.
+To get attribute value it is necessary to pass key to function \code{scgl\_edge\_get\_attribute\_value}. It will look for that key among all edge's attributes.
+
+Attribute's value can be everything (\code{void*}), so it is important to write a user function which will destroy memory occupied by that pointer.
+Lines 1--3 show example of that function.
+It just only free value because in that case value is simple string.
+In the last line of listing, that function is passed into edge's destroy method.
+
+Last example in this chapter shows complete code setting out shortest path from vertex 0, using Dijkstra's algorithm.
+Figure \ref{fig:smallgraph} shows graph which will be created in the following code:
+\begin{lstlisting}[style=code,caption={Use of Dijkstra's algorithm example}]
+scgl_graph_t *g1;
+scgl_vertex_t **v;
+scgl_edge_t **e;
+
+unsigned int *p;
+cost_type_t *d;
+unsigned int i, n = 4, m = 5;
+
+v = (scgl_vertex_t**) malloc(sizeof(scgl_vertex_t*) * n);
+for(i=0; i<n; ++i)
+	v[i] = scgl_vertex_create(NULL, NULL, 0, NULL, 0);
+
+e = (scgl_edge_t**) malloc(sizeof(scgl_edge_t*) * m);
+for(i=0; i<m; ++i)
+	e[i] = scgl_edge_create(NULL, NULL, undirected, 0, NULL, 0);
+
+g1 = scgl_graph_create(NULL, v, n, e, m);
+
+scgl_edge_add_vertex(e[0], v[0], 0);
+scgl_edge_add_vertex(e[0], v[1], 1);
+scgl_edge_add_vertex(e[1], v[1], 0);
+scgl_edge_add_vertex(e[1], v[2], 1);
+scgl_edge_add_vertex(e[2], v[2], 0);
+scgl_edge_add_vertex(e[2], v[3], 1);
+scgl_edge_add_vertex(e[3], v[3], 0);
+scgl_edge_add_vertex(e[3], v[1], 1);
+scgl_edge_add_vertex(e[4], v[0], 0);
+scgl_edge_add_vertex(e[4], v[2], 1);
+scgl_edge_set_cost(e[0], 1);
+scgl_edge_set_cost(e[1], 2);
+scgl_edge_set_cost(e[2], 3);
+scgl_edge_set_cost(e[3], 4);
+scgl_edge_set_cost(e[4], 5);
+
+p = (unsigned int*) malloc(sizeof(unsigned int) * n);
+d = (cost_type_t*) malloc(sizeof(cost_type_t) * n);
+
+scgl_dijkstra(g1, v[0], p, d);
+for(i=0; i<n; ++i)
+	printf("%d, ", p[i]);
+for(i=0; i<n; ++i)
+	printf(cost_fmt ", ", d[i]);
+printf("\n");
+
+scgl_graph_destroy(&g1, edge_attr_free);
+free(p);
+free(d);
+free(v);
+free(e);
+\end{lstlisting}
+Table \code{d} is an array of \code{cost\_type}, it will contain distances to every vertex in graph, from vertex 0.
+\code{Cost_type} is an typedef replaced by compilator with user chosen type.
+Table \code{p} is an array of predecessors, by reading it user can restore shortest path from vertex 0~to desired point.
+
+This set of examples is only to help user get started with the SCGL library.
+The real source of information is the documentation written in English, located on the CD, attached to this thesis.
+
+\chapter*{Dodatek B. Oświadczenie}
+\addcontentsline{toc}{chapter}{Dodatek B. Oświadczenie}
 \newlength{\oldparskip}
 \setlength{\oldparskip}{\parskip}
 \setlength{\parindent}{0pt}.
@@ -1405,8 +1533,8 @@ Niezależnie od art.239 Prawo o~szkolnictwie wyższym wyrażam zgodę na nieodp�
 
 \setlength{\parskip}{\oldparskip}
 
-\chapter*{Dodatek B. Opis zawartości płyty CD}
-\addcontentsline{toc}{chapter}{Dodatek B. Opis zawartości płyty CD}
+\chapter*{Dodatek C. Opis zawartości płyty CD}
+\addcontentsline{toc}{chapter}{Dodatek C. Opis zawartości płyty CD}
 \label{chap:cd}
 \begin{lstlisting}[style=coden,caption={Struktura plików zamieszczonych na płycie CD}]
 .
